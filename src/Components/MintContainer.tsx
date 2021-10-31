@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useWallet } from "use-wallet";
 import Vine from "../Media/vine.png";
 import Dirt from "../Media/dirt.png";
 import { Button } from "elementz";
 import { locations, soilTypes } from "../Utils/utils";
-import { newVineyards } from "../Utils/vineyardContract";
-import { GridContainer, GridItem, Page } from "../Styles/Components"
+import { newVineyards, historicalUri } from "../Utils/vineyardContract";
+import { GridContainer, GridItem, Page, TokenFrame } from "../Styles/Components"
+import { ipfs_gateway } from "../Utils/constants"
+import { useVineVersions } from "../Hooks/useUriVersions"
 import styled from "styled-components"
 
 const Step = styled.div`
@@ -14,11 +16,20 @@ const Step = styled.div`
 
 const MintContainer = () => {
   const wallet = useWallet();
+  const uriVersions = useVineVersions();
   const [step, setStep] = useState(0);
   const [city, setCity] = useState(0);
   const [elev, setElev] = useState(0);
   const [soil, setSoil] = useState(0);
   const [mintHash, setMintHash] = useState("");
+  const [imageUri, setImageUri] = useState("")
+  const [baseUri, setBaseUri] = useState("")
+
+  useEffect(() => {
+    const fetchBaseUri = async () => 
+      setBaseUri(await historicalUri(uriVersions[uriVersions.length - 1]))
+    fetchBaseUri()
+  }, []);
 
   const minElev = (num: number) => locations[num].elevation[0];
   const maxElev = (num: number) => locations[num].elevation[1];
@@ -50,11 +61,15 @@ const MintContainer = () => {
   const selectSoil = (num: number) => {
     setSoil(num);
     setStep(3);
+    setImageUri(renderImg(num))
   };
 
   const handleElev = (event: any) => {
     setElev(event.target.value);
   };
+
+  const renderImg = (soilNow: number) => 
+      ipfs_gateway + baseUri + "/?seed=" + city + "-" + Math.abs(elev) + "-" + (elev < 0 ? "1" : "0") + "-" + soilNow + "-0"
 
   const mint = async () => {
     const tx = await newVineyards([city, elev, soil], wallet);
@@ -129,7 +144,8 @@ const MintContainer = () => {
         </Step>
       ) : (
         <Step>
-          <h3>Does this look good?</h3>
+          <TokenFrame src={imageUri} frameBorder="0" />
+          <p><i>Your vineyard willl grow and develop as you care for it over time</i></p>
           <br />
           <div>Location: {locations[city].name}</div>
           <div>Elevation: {elev} feet</div>

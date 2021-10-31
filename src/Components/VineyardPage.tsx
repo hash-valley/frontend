@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useWallet } from "use-wallet";
 import { useParams } from "react-router-dom";
-import { Menu, Button } from 'elementz';
 import {
   Farmable,
   plant,
@@ -18,7 +17,7 @@ import { useCurrSeason } from "../Hooks/useCurrSeason";
 import { useQuery } from '@apollo/client';
 import { VINEYARD_QUERY } from "../Utils/queries"
 import { Page, SuccessText, FailText, Spaced, GreyLink, TokenFrame, CenteredSelect } from "../Styles/Components"
-import { ipfs_gateway, vineImage } from "../Utils/constants"
+import { ipfs_gateway } from "../Utils/constants"
 import { useVineVersions } from "../Hooks/useUriVersions"
 
 const VineyardPage = () => {
