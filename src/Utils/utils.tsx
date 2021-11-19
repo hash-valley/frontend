@@ -39,7 +39,7 @@ export const correctNetwork = async () => {
   return network.chainId === chainId;
 };
 
-export const getBottleEra = (bottleAge: string) => {
+export const getBottleEra = (bottleAge: string | number) => {
   let bigAge = BigInt(bottleAge);
   for (let i = 0; i < bottleEras.length; ++i) {
     let range = bottleEras[i].range;
