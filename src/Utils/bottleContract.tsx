@@ -92,7 +92,6 @@ export const rejuvenate = async (wallet: any, tokenId: number) => {
   const signer = provider.getSigner();
   const BottleContract = new Contract(BottleAddress, bottleABI, provider);
   const bottleWithSigner = BottleContract.connect(signer);
-  console.log(tokenId);
   const tx = await bottleWithSigner.rejuvenate(tokenId);
   return tx;
 };

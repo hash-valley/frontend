@@ -1,14 +1,11 @@
 import { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-import { Button } from "elementz";
 import { useQuery } from "@apollo/client";
 import { VINEPROTOCOL_QUERY } from "../Utils/queries";
-import discord from "../Media/discord.svg";
-import twitter from "../Media/twitter.svg";
-import github from "../Media/github.svg";
-import docs from "../Media/docs.svg";
+import Image from "next/image";
 import styled from "styled-components";
 import { Page } from "../Styles/Components";
+import { useRouter } from "next/router";
+import { Button } from "antd";
 
 const Progress = styled.div`
   margin: 0 auto;
@@ -78,7 +75,7 @@ const FooterLink = styled.a`
 `;
 
 const Splash = () => {
-  const history = useHistory();
+  const router = useRouter();
   const [minted, setMinted] = useState(0);
   const [max, setMax] = useState(Infinity);
   const [price, setPrice] = useState(0.05);
@@ -101,7 +98,7 @@ const Splash = () => {
 
   useEffect(() => {
     refetch();
-  }, [history]);
+  }, [router]);
 
   return (
     <div>
@@ -131,7 +128,12 @@ const Splash = () => {
         <br />
         <br />
         {minted < max ? (
-          <Button primary rounded onClick={() => history.push(`/mint`)}>
+          <Button
+            type="primary"
+            shape="round"
+            size="large"
+            onClick={() => router.push(`/mint`)}
+          >
             Mint
           </Button>
         ) : (
@@ -140,16 +142,24 @@ const Splash = () => {
       </Page>
       <Footer>
         <FooterLink href="https://www.github.com">
-          <img src={github} />
+          <a>
+            <Image src="/github.svg" height={24} width={24} />
+          </a>
         </FooterLink>
         <FooterLink href="https://www.twitter.com">
-          <img src={twitter} />
+          <a>
+            <Image src="/twitter.svg" height={24} width={24} />
+          </a>
         </FooterLink>
         <FooterLink href="https://www.discord.com">
-          <img src={discord} />
+          <a>
+            <Image src="/discord.svg" height={24} width={24} />
+          </a>
         </FooterLink>
-        <FooterLink href="https://www.github.com">
-          <img src={docs} />
+        <FooterLink href="https://www.medium.com">
+          <a>
+            <Image src="/medium.svg" height={24} width={24} />
+          </a>
         </FooterLink>
       </Footer>
     </div>

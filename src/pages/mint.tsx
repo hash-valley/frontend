@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { useWallet } from "use-wallet";
-import Vine from "../Media/vine.png";
-import Dirt from "../Media/dirt.png";
-import { Button } from "elementz";
+import Image from "next/image";
+import { Button } from "antd";
 import { locations, soilTypes } from "../Utils/utils";
 import { newVineyards, historicalUri } from "../Utils/vineyardContract";
 import {
@@ -101,7 +100,7 @@ const MintContainer = () => {
           <GridContainer>
             {locations.map((loc, index) => (
               <GridItem key={loc.name} onClick={() => selectCity(index)}>
-                <img src={Vine} height="120" />
+                <Image src="/vine.png" height={120} width={120} />
                 <div>{loc.name}</div>
                 <div>{loc.climate.name}</div>
               </GridItem>
@@ -128,10 +127,10 @@ const MintContainer = () => {
           <br />
           <br />
           <br />
-          <Button onClick={() => selectElev(elev)}>Select Elevation</Button>
+          <Button size="large" onClick={() => selectElev(elev)}>Select Elevation</Button>
           <br />
           <br />
-          <Button onClick={back}>BacK</Button>
+          <Button size="large" onClick={back}>Back</Button>
         </Step>
       ) : step == 2 ? (
         <Step>
@@ -141,14 +140,14 @@ const MintContainer = () => {
             <GridContainer>
               {soilTypes.map((soil, index) => (
                 <GridItem key={soil.name} onClick={() => selectSoil(index)}>
-                  <img src={Dirt} height="120" />
+                  <Image src="/dirt.png" height={120} width={120} />
                   <div>{soil.name}</div>
                 </GridItem>
               ))}
             </GridContainer>
             <br />
             <br />
-            <Button onClick={back}>BacK</Button>
+            <Button size="large" onClick={back}>BacK</Button>
           </div>
         </Step>
       ) : (
@@ -167,7 +166,7 @@ const MintContainer = () => {
           {mintHash ? (
             <p>Transaction sent: {mintHash}</p>
           ) : wallet.status === "connected" ? (
-            <Button primary onClick={mint}>
+            <Button size="large" type="primary" shape="round" onClick={mint}>
               Mint
             </Button>
           ) : (
@@ -175,7 +174,7 @@ const MintContainer = () => {
           )}
           <br />
           <br />
-          <Button onClick={startOver}>
+          <Button size="large" onClick={startOver}>
             {mintHash ? "Mint Another" : "Start Over"}
           </Button>
         </Step>

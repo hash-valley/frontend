@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { Button, Select } from "elementz";
-import { Link } from "react-router-dom";
+import Link from "next/link";
+import { Button, Select } from "antd";
 
 export const CenteredSelect = styled(Select)`
   display: inline-block;
@@ -33,7 +33,7 @@ export const Page = styled.div`
   margin-top: 96px;
   margin-left: 10%;
   margin-right: 10%;
-  margin-bottom: 60px;
+  padding-bottom: 60px;
 `;
 
 export const GridItem = styled.div`

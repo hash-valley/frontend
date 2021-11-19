@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import { useWallet } from "use-wallet";
-import { useHistory } from "react-router-dom";
+import { useRouter } from "next/router";
 import { utils } from "ethers";
 import {
   Farmable,
@@ -9,19 +8,18 @@ import {
   waterMultiple,
   harvestMultiple,
   fetchTokenFarmingStats,
-} from "../Utils/vineyardContract";
-import { locations, soilTypes, formatNum } from "../Utils/utils";
-import Vine from "../Media/vine.png";
-import Bottle from "../Media/bottle.png";
+} from "../../Utils/vineyardContract";
+import { locations, soilTypes, formatNum } from "../../Utils/utils";
+import Image from "next/image";
 import { useQuery } from "@apollo/client";
-import { ACCOUNT_QUERY } from "../Utils/queries";
+import { ACCOUNT_QUERY } from "../../Utils/queries";
 import {
   GridContainer,
   GridItem,
   Page,
   SuccessText,
   Spaced,
-} from "../Styles/Components";
+} from "../../Styles/Components";
 
 interface Mults {
   canWater: number;
@@ -31,8 +29,9 @@ interface Mults {
 
 const AccountPage = () => {
   const wallet = useWallet();
-  const history = useHistory();
-  const { userAddress, view } = useParams();
+  const router = useRouter();
+  const { userAddress } = router.query;
+  const [view, setView] = useState('vineyards')
   const [nullData, setNullData] = useState(true);
   const [farmables, setFarmables] = useState<Array<Farmable>>([]);
   const [mults, setMults] = useState<Mults>({
@@ -42,7 +41,7 @@ const AccountPage = () => {
   });
 
   const { loading, error, data, refetch } = useQuery(ACCOUNT_QUERY, {
-    variables: { userAddress: userAddress.toLowerCase() },
+    variables: { userAddress: userAddress?.toString().toLowerCase() },
   });
 
   useEffect(() => {
@@ -133,28 +132,20 @@ const AccountPage = () => {
             {view == "bottles" && (
               <div>
                 <Spaced
-                  primary
-                  onClick={() =>
-                    history.push(`/account/${userAddress}/vineyards`)
-                  }
+                  type="primary"
+                  onClick={() => setView('vineyards')}
                 >
                   Vineyards
                 </Spaced>
-                <Spaced primary reverse active>
-                  Bottles
-                </Spaced>
+                <Spaced type="primary">Bottles</Spaced>
               </div>
             )}
             {(view == "vineyards" || view == undefined) && (
               <div>
-                <Spaced primary reverse active>
-                  Vineyards
-                </Spaced>
+                <Spaced type="primary">Vineyards</Spaced>
                 <Spaced
-                  primary
-                  onClick={() =>
-                    history.push(`/account/${userAddress}/bottles`)
-                  }
+                  type="primary"
+                  onClick={() => setView('bottles')}
                 >
                   Bottles
                 </Spaced>
@@ -165,17 +156,17 @@ const AccountPage = () => {
             {wallet.status === "connected" && userAddress === wallet.account ? (
               <div>
                 {mults.canPlant > 0 ? (
-                  <Spaced primary onClick={sendPlantMultiple}>
+                  <Spaced type="primary" onClick={sendPlantMultiple}>
                     Plant All
                   </Spaced>
                 ) : null}
                 {mults.canWater > 0 ? (
-                  <Spaced primary onClick={sendWaterMultiple}>
+                  <Spaced type="primary" onClick={sendWaterMultiple}>
                     Water All
                   </Spaced>
                 ) : null}
                 {mults.canHarvest > 0 ? (
-                  <Spaced primary onClick={sendHarvestMultiple}>
+                  <Spaced type="primary" onClick={sendHarvestMultiple}>
                     Harvest All
                   </Spaced>
                 ) : null}
@@ -187,9 +178,9 @@ const AccountPage = () => {
               {data.account.vineyards.map((token: any, index: number) => (
                 <GridItem
                   key={token.tokenId}
-                  onClick={() => history.push(`/vineyard/${token.tokenId}`)}
+                  onClick={() => router.push(`/vineyard/${token.tokenId}`)}
                 >
-                  <img src={Vine} height="120" />
+                  <Image src="/vine.png" height={120} width={120} />
                   <div>TokenId: {token.tokenId}</div>
                   <div>Location: {locations[token.location].name}</div>
                   <div>Climate: {locations[token.location].climate.name}</div>
@@ -214,9 +205,9 @@ const AccountPage = () => {
               {data.account.bottles.map((token: any) => (
                 <GridItem
                   key={token.tokenId}
-                  onClick={() => history.push(`/bottle/${token.tokenId}`)}
+                  onClick={() => router.push(`/bottle/${token.tokenId}`)}
                 >
-                  <img src={Bottle} height="120" />
+                  <Image src="/bottle.png" height={120} width={120} />
                   <div>TokenId: {token.tokenId}</div>
                   <div>Attributes: {token.attributes}</div>
                   {token.inCellar && <div>Aging in cellar</div>}

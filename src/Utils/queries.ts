@@ -45,7 +45,6 @@ export const VINEYARD_QUERY = gql`
       elevation
       location
       xp
-      streak
       owner {
         id
       }

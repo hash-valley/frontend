@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { Dropdown, Menu, Button } from "elementz";
 import { useWallet } from "use-wallet";
-import { useHistory } from "react-router-dom";
-import Logo from "../Media/logo.png";
+import Image from "next/image";
+import Link from "next/link";
+import { Menu, Dropdown, Button } from "antd";
 import { providers, utils } from "ethers";
 import {
   formatNum,
@@ -13,6 +12,8 @@ import {
 } from "../Utils/utils";
 import { useCurrSeason } from "../Hooks/useCurrSeason";
 import styled from "styled-components";
+import { useRouter } from "next/router";
+import { UserOutlined, CloseOutlined } from "@ant-design/icons";
 
 const TitleBar = styled.div`
   position: fixed;
@@ -24,9 +25,7 @@ const TitleBar = styled.div`
 
 const AccountButton = styled.span`
   float: right;
-  margin-top: 12px;
-  margin-bottom: 12px;
-  margin-right: 64px;
+  margin: 15px 64px 0px 0px;
 `;
 
 const AccountEth = styled.div`
@@ -36,7 +35,7 @@ const AccountEth = styled.div`
   margin-right: 12px;
   border: 2px solid black;
   border-radius: 16px;
-  padding: 12px;
+  padding: 0.48rem;
 `;
 
 const AccountName = styled.div`
@@ -52,14 +51,12 @@ const Inline = styled.div`
 
 const LogoBox = styled.span`
   float: left;
-  margin-top: 12px;
-  margin-bottom: 12px;
-  margin-left: 64px;
+  margin: 8px 0px 8px 64px;
 `;
 
-const Account = (props: any) => {
+const Account = () => {
   const wallet = useWallet();
-  const history = useHistory();
+  const router = useRouter();
   const season = useCurrSeason();
   const [userBalance, setUserBalance] = useState("0.00");
   const [userAddress, setUserAddress] = useState("");
@@ -85,33 +82,35 @@ const Account = (props: any) => {
 
   useEffect(() => {
     const user = async () => {
-      if (props.account) {
+      if (wallet.account) {
         const provider = new providers.Web3Provider(wallet.ethereum);
-        const balance = await provider.getBalance(props.account);
+        const balance = await provider.getBalance(wallet.account);
         const balNum = formatNum(utils.formatEther(balance), 4);
-        const ens = await getENS(props.account);
+        const ens = await getENS(wallet.account);
         if (ens) {
           setUserAddress(ens);
         } else {
-          setUserAddress(shortenAddress(props.account));
+          setUserAddress(shortenAddress(wallet.account));
         }
         setUserBalance(balNum);
       }
     };
-    setUserAddress(shortenAddress(props.account));
+    setUserAddress(shortenAddress(wallet.account));
     user();
   }, [wallet]);
 
   return (
     <TitleBar>
       <LogoBox>
-        <Link to="/">
-          <img src={Logo} height="51px" />
+        <Link href="/">
+          <a>
+            <Image src="/logo.png" height={50} width={50} />
+          </a>
         </Link>
       </LogoBox>
 
       <AccountButton>
-        {props.account ? (
+        {wallet.account ? (
           <Inline>
             <AccountEth>
               <b>{season === 0 ? "Pre-season" : `Season ${season}`}</b>
@@ -121,29 +120,32 @@ const Account = (props: any) => {
             </AccountEth>
             <AccountName>
               <Dropdown
-                hover
-                noMobile
-                handle={
-                  <Button
-                    primary
-                    rounded
-                    onClick={() => history.push(`/account/${props.account}`)}
-                  >
-                    <b>{userAddress}</b>
-                  </Button>
+                overlay={
+                  <Menu>
+                    <Menu.Item
+                      icon={<UserOutlined />}
+                      onClick={() => router.push(`/account/${wallet.account}`)}
+                    >
+                      Account
+                    </Menu.Item>
+                    <Menu.Item
+                      icon={<CloseOutlined />}
+                      danger
+                      onClick={() => wallet.reset()}
+                    >
+                      Disconnect
+                    </Menu.Item>
+                  </Menu>
                 }
               >
-                <Menu noBorder>
-                  <Menu.Item
-                    icon="user"
-                    onClick={() => history.push(`/account/${props.account}`)}
-                  >
-                    Account
-                  </Menu.Item>
-                  <Menu.Item icon="close" danger onClick={() => wallet.reset()}>
-                    Disconnect
-                  </Menu.Item>
-                </Menu>
+                <Button
+                  type="primary"
+                  shape="round"
+                  size="large"
+                  onClick={() => router.push(`/account/${wallet.account}`)}
+                >
+                  <b>{userAddress}</b>
+                </Button>
               </Dropdown>
             </AccountName>
           </Inline>
@@ -154,30 +156,28 @@ const Account = (props: any) => {
             </AccountEth>
             <AccountName>
               <Dropdown
-                hover
-                noMobile
-                handle={
-                  <Button primary rounded>
-                    <b>Connect Wallet</b>
-                  </Button>
+                overlay={
+                  <Menu>
+                    <Menu.Item onClick={() => wallet.connect()}>
+                      MetaMask
+                    </Menu.Item>
+                    <Menu.Item onClick={() => wallet.connect("walletconnect")}>
+                      WalletConnect
+                    </Menu.Item>
+                    <Menu.Item onClick={() => wallet.connect("frame")}>
+                      Frame
+                    </Menu.Item>
+                  </Menu>
                 }
               >
-                <Menu noBorder>
-                  <Menu.Item onClick={() => wallet.connect()}>
-                    MetaMask
-                  </Menu.Item>
-                  <Menu.Item onClick={() => wallet.connect("walletconnect")}>
-                    WalletConnect
-                  </Menu.Item>
-                  <Menu.Item onClick={() => wallet.connect("frame")}>
-                    Frame
-                  </Menu.Item>
-                </Menu>
+                <Button type="primary" shape="round" size="large">
+                  <b>Connect Wallet</b>
+                </Button>
               </Dropdown>
             </AccountName>
           </Inline>
         ) : (
-          <Button danger rounded>
+          <Button danger type="primary" shape="round" size="large">
             <b>Wrong Network</b>
           </Button>
         )}

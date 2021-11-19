@@ -1,37 +1,38 @@
 import { useEffect, useState } from "react";
 import { useWallet } from "use-wallet";
-import { useParams } from "react-router-dom";
-import { Menu, Button } from "elementz";
+import { useRouter } from "next/router";
 import {
   bottleAge,
   isCellarApproved,
   approveCellar,
   rejuvenate,
   historicalUri,
-} from "../Utils/bottleContract";
-import { stake, withdraw } from "../Utils/cellarContract";
+} from "../../Utils/bottleContract";
+import { stake, withdraw } from "../../Utils/cellarContract";
 import { useQuery } from "@apollo/client";
-import { BOTTLE_QUERY } from "../Utils/queries";
+import { BOTTLE_QUERY } from "../../Utils/queries";
 import {
   Page,
   Spaced,
   GreyLink,
   TokenFrame,
   CenteredSelect,
-} from "../Styles/Components";
-import { ZERO_ADDRESS } from "../Utils/constants";
+} from "../../Styles/Components";
+import { ZERO_ADDRESS } from "../../Utils/constants";
 import {
   secondsToString,
   getBottleEra,
   getBottleType,
   BottleType,
-} from "../Utils/utils";
-import { ipfs_gateway, bottleImage } from "../Utils/constants";
-import { useBottleVersions } from "../Hooks/useUriVersions";
+} from "../../Utils/utils";
+import { ipfs_gateway } from "../../Utils/constants";
+import { useBottleVersions } from "../../Hooks/useUriVersions";
+import Select from "rc-select";
 
 const BottlePage = () => {
   const wallet = useWallet();
-  const { id } = useParams();
+  const router = useRouter();
+  const { id } = router.query;
   const uriVersions = useBottleVersions();
   const [uriVersion, setUriVersion] = useState(0);
   const [age, setAge] = useState("0");
@@ -46,7 +47,7 @@ const BottlePage = () => {
   const [imageUri, setImageUri] = useState("");
 
   const { loading, error, data, refetch } = useQuery(BOTTLE_QUERY, {
-    variables: { id: "0x" + id.toString() },
+    variables: { id: "0x" + id?.toString() },
   });
 
   const changeImage = async (n: number) => {
@@ -55,6 +56,7 @@ const BottlePage = () => {
       uri = ipfs_gateway + uri + "/?seed=" + "3000" + "-" + 127000000000000000;
       setUriVersion(n);
       setImageUri(uri);
+      console.log(uri)
     }
   };
 
@@ -67,7 +69,7 @@ const BottlePage = () => {
       if (data.bottle) {
         setIsApproved(await isCellarApproved(data.bottle.owner.id));
 
-        let fetchedAge = await bottleAge(parseInt(id));
+        let fetchedAge = await bottleAge(parseInt(id.toString()));
         setAge(fetchedAge);
         setNullData(false);
         setBottleType(getBottleType(data.bottle.attributes));
@@ -105,9 +107,9 @@ const BottlePage = () => {
         onChange={(event: any) => changeImage(event.target.value)}
       >
         {uriVersions.map((n) => (
-          <option key={n} value={n}>
+          <Select.Option key={n} value={n}>
             Version {n}
-          </option>
+          </Select.Option>
         ))}
       </CenteredSelect>
       <br />
@@ -147,9 +149,11 @@ const BottlePage = () => {
         <div>
           Burnt to revive{" "}
           <GreyLink
-            to={"/bottle/" + parseInt(data.bottle.rejuvenatedTo.id).toString()}
+            href={
+              "/bottle/" + parseInt(data.bottle.rejuvenatedTo.id).toString()
+            }
           >
-            Bottle #{parseInt(data.bottle.rejuvenatedTo.id)}
+            <a>Bottle #{parseInt(data.bottle.rejuvenatedTo.id)}</a>
           </GreyLink>
         </div>
       )}
@@ -157,11 +161,11 @@ const BottlePage = () => {
         <div>
           Rejuvenated from{" "}
           <GreyLink
-            to={
+            href={
               "/bottle/" + parseInt(data.bottle.rejuvenatedFrom.id).toString()
             }
           >
-            Bottle #{parseInt(data.bottle.rejuvenatedFrom.id)}
+            <a>Bottle #{parseInt(data.bottle.rejuvenatedFrom.id)}</a>
           </GreyLink>
         </div>
       )}
@@ -169,9 +173,9 @@ const BottlePage = () => {
         <div>
           Harvested from{" "}
           <GreyLink
-            to={"/vineyard/" + parseInt(data.bottle.from.id).toString()}
+            href={"/vineyard/" + parseInt(data.bottle.from.id).toString()}
           >
-            Vineyard #{parseInt(data.bottle.from.id)}
+            <a>Vineyard #{parseInt(data.bottle.from.id)}</a>
           </GreyLink>
         </div>
       )}
@@ -181,16 +185,16 @@ const BottlePage = () => {
         isApproved ? (
           <div>
             <Spaced
-              disabled={data.bottle.canEnterCellar ? "" : "disabled"}
-              onClick={() => stake(wallet, id)}
+              disabled={data.bottle.canEnterCellar ? false : true}
+              onClick={() => stake(wallet, Number(id))}
             >
               Add to Cellar
             </Spaced>
             <Spaced
               disabled={
-                data.bottle.inCellar && !data.bottle.spoiled ? "" : "disabled"
+                data.bottle.inCellar && !data.bottle.spoiled ? false : true
               }
-              onClick={() => withdraw(wallet, id)}
+              onClick={() => withdraw(wallet, Number(id))}
             >
               Withdraw from Cellar
             </Spaced>
@@ -199,10 +203,10 @@ const BottlePage = () => {
                 disabled={
                   BigInt(data.bottle.rejuvenateCost) <=
                   BigInt(data.bottle.owner.vinegarBalance)
-                    ? ""
-                    : "disabled"
+                    ? false
+                    : true
                 }
-                onClick={() => rejuvenate(wallet, id)}
+                onClick={() => rejuvenate(wallet, Number(id))}
               >
                 Rejuvenate for {data.bottle.rejuvenateCost} Vinegar
               </Spaced>
@@ -210,7 +214,7 @@ const BottlePage = () => {
           </div>
         ) : (
           <Spaced
-            disabled={data.bottle.canEnterCellar ? "" : "disabled"}
+            disabled={data.bottle.canEnterCellar ? false : true}
             onClick={() => approveCellar(wallet)}
           >
             Approve Cellar

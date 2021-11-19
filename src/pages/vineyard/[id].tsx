@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useWallet } from "use-wallet";
-import { useParams } from "react-router-dom";
+import { useRouter } from "next/router";
 import {
   Farmable,
   plant,
@@ -11,11 +11,11 @@ import {
   canWaterUntil,
   historicalUri,
   getStreak,
-} from "../Utils/vineyardContract";
-import { locations, soilTypes } from "../Utils/utils";
-import { useCurrSeason } from "../Hooks/useCurrSeason";
+} from "../../Utils/vineyardContract";
+import { locations, soilTypes } from "../../Utils/utils";
+import { useCurrSeason } from "../../Hooks/useCurrSeason";
 import { useQuery } from "@apollo/client";
-import { VINEYARD_QUERY } from "../Utils/queries";
+import { VINEYARD_QUERY } from "../../Utils/queries";
 import {
   Page,
   SuccessText,
@@ -24,13 +24,15 @@ import {
   GreyLink,
   TokenFrame,
   CenteredSelect,
-} from "../Styles/Components";
-import { ipfs_gateway } from "../Utils/constants";
-import { useVineVersions } from "../Hooks/useUriVersions";
+} from "../../Styles/Components";
+import { ipfs_gateway } from "../../Utils/constants";
+import { useVineVersions } from "../../Hooks/useUriVersions";
+import Select from "rc-select";
 
 const VineyardPage = () => {
   const wallet = useWallet();
-  const { id } = useParams();
+  const router = useRouter();
+  const { id } = router.query;
   const uriVersions = useVineVersions();
   const season = useCurrSeason();
   const [nullData, setNullData] = useState(true);
@@ -46,7 +48,7 @@ const VineyardPage = () => {
   });
 
   const { loading, error, data, refetch } = useQuery(VINEYARD_QUERY, {
-    variables: { id: "0x" + id.toString() },
+    variables: { id: "0x" + id?.toString() },
   });
 
   const changeImage = async (n: number) => {
@@ -78,16 +80,18 @@ const VineyardPage = () => {
     let myInterval: any;
     const fetchBalance = async () => {
       if (data.vineyard) {
-        setStreak(await getStreak(id));
-        const farmableParams = await fetchTokenFarmingStats(parseInt(id));
+        setStreak(await getStreak(Number(id)));
+        const farmableParams = await fetchTokenFarmingStats(
+          parseInt(id.toString())
+        );
         setFarmable(farmableParams);
 
         let waterCountdown: number = -1;
         if (!farmableParams.canPlant) {
           if (farmableParams.canWater) {
-            waterCountdown = await canWaterUntil(id);
+            waterCountdown = await canWaterUntil(Number(id));
           } else {
-            waterCountdown = await untilCanWater(id);
+            waterCountdown = await untilCanWater(Number(id));
           }
         }
         setWaterStatus(waterCountdown);
@@ -144,9 +148,9 @@ const VineyardPage = () => {
         onChange={(event: any) => changeImage(event.target.value)}
       >
         {uriVersions.map((n) => (
-          <option key={n} value={n}>
+          <Select.Option key={n} value={n}>
             Version {n}
-          </option>
+          </Select.Option>
         ))}
       </CenteredSelect>
       <br />
@@ -196,20 +200,20 @@ const VineyardPage = () => {
       {wallet.account?.toLowerCase() === data.vineyard.owner.id ? (
         <div>
           <Spaced
-            disabled={farmable.canWater ? "" : "disabled"}
-            onClick={() => water(wallet, id)}
+            disabled={farmable.canWater ? false : true}
+            onClick={() => water(wallet, Number(id))}
           >
             Water
           </Spaced>
           <Spaced
-            disabled={farmable.canPlant ? "" : "disabled"}
-            onClick={() => plant(wallet, id)}
+            disabled={farmable.canPlant ? false : true}
+            onClick={() => plant(wallet, Number(id))}
           >
             Plant
           </Spaced>
           <Spaced
-            disabled={farmable.canHarvest ? "" : "disabled"}
-            onClick={() => harvest(wallet, id)}
+            disabled={farmable.canHarvest ? false : true}
+            onClick={() => harvest(wallet, Number(id))}
           >
             Harvest
           </Spaced>
@@ -223,8 +227,8 @@ const VineyardPage = () => {
           <br />
           {data.vineyard.bottles.map((bottle: any) => (
             <div key={bottle.id}>
-              <GreyLink to={"/bottle/" + parseInt(bottle.id).toString()}>
-                Bottle #{parseInt(bottle.id)}
+              <GreyLink href={"/bottle/" + parseInt(bottle.id).toString()}>
+                <a>Bottle #{parseInt(bottle.id)}</a>
               </GreyLink>
             </div>
           ))}
