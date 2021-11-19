@@ -6,25 +6,28 @@ import { useHistory } from "react-router-dom";
 import Logo from "../Media/logo.png";
 import { providers, utils } from "ethers";
 import {
-  formatNum, getENS, shortenAddress, correctNetwork,
+  formatNum,
+  getENS,
+  shortenAddress,
+  correctNetwork,
 } from "../Utils/utils";
 import { useCurrSeason } from "../Hooks/useCurrSeason";
-import styled from "styled-components"
+import styled from "styled-components";
 
 const TitleBar = styled.div`
   position: fixed;
   top: 0;
-  width: 100%; 
+  width: 100%;
   z-index: 100;
   background-color: whitesmoke;
-`
+`;
 
 const AccountButton = styled.span`
   float: right;
   margin-top: 12px;
   margin-bottom: 12px;
   margin-right: 64px;
-`
+`;
 
 const AccountEth = styled.div`
   display: inline-block;
@@ -34,39 +37,39 @@ const AccountEth = styled.div`
   border: 2px solid black;
   border-radius: 16px;
   padding: 12px;
-`
+`;
 
 const AccountName = styled.div`
   display: inline-block;
   order: 2;
-`
+`;
 
 const Inline = styled.div`
-  display: flex; 
-  flex-direction: row; 
+  display: flex;
+  flex-direction: row;
   float: right;
-`
+`;
 
 const LogoBox = styled.span`
   float: left;
   margin-top: 12px;
   margin-bottom: 12px;
   margin-left: 64px;
-`
+`;
 
 const Account = (props: any) => {
   const wallet = useWallet();
   const history = useHistory();
   const season = useCurrSeason();
-  const [userBalance, setUserBalance] = useState("0.00")
-  const [userAddress, setUserAddress] = useState("")
+  const [userBalance, setUserBalance] = useState("0.00");
+  const [userAddress, setUserAddress] = useState("");
   const [isCorrectNetwork, setIsCorrectNetwork] = useState(true);
 
   useEffect(() => {
     setTimeout(() => {
       //@ts-ignore
-      if (window.ethereum.selectedAddress) wallet.connect()
-    }, 300)
+      if (window.ethereum.selectedAddress) wallet.connect();
+    }, 300);
   }, []);
 
   useEffect(() => {
@@ -160,7 +163,9 @@ const Account = (props: any) => {
                 }
               >
                 <Menu noBorder>
-                  <Menu.Item onClick={() => wallet.connect()}>MetaMask</Menu.Item>
+                  <Menu.Item onClick={() => wallet.connect()}>
+                    MetaMask
+                  </Menu.Item>
                   <Menu.Item onClick={() => wallet.connect("walletconnect")}>
                     WalletConnect
                   </Menu.Item>

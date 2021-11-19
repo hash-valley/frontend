@@ -18,7 +18,11 @@ const bottleABI = [
 
 const viewProvider = new providers.JsonRpcProvider(providerUrl);
 
-export const viewBottleContract = new Contract(BottleAddress, bottleABI, viewProvider);
+export const viewBottleContract = new Contract(
+  BottleAddress,
+  bottleABI,
+  viewProvider
+);
 
 export const totalSupply = async () => {
   const totalSupply = await viewBottleContract.totalSupply();
@@ -39,12 +43,12 @@ export const userBalance = async (userAddress: string) => {
 };
 
 export const tokenOwner = async (tokenId: number) => {
-  let owner = await viewBottleContract.ownerOf(tokenId)
+  let owner = await viewBottleContract.ownerOf(tokenId);
   if (owner == CellarAddress) {
-    owner = await cellarTokenOwner(tokenId)
+    owner = await cellarTokenOwner(tokenId);
   }
-  return owner
-}
+  return owner;
+};
 
 export const tokenIdsByOwner = async (userAddress: string) => {
   const balance = await userBalance(userAddress);
@@ -53,23 +57,26 @@ export const tokenIdsByOwner = async (userAddress: string) => {
     const id = await viewBottleContract.tokenOfOwnerByIndex(userAddress, i);
     tokenIds.push(id.toNumber());
   }
-  return tokenIds
+  return tokenIds;
 };
 
 export const bottleAge = async (tokenId: number) => {
   const age = await viewBottleContract.bottleAge(tokenId);
-  return age.toString()
-}
+  return age.toString();
+};
 
 export const bottleAttributes = async (tokenId: number) => {
   const attr = await viewBottleContract.attributes(tokenId);
-  return attr.toNumber()
-}
+  return attr.toNumber();
+};
 
 export const isCellarApproved = async (owner: string) => {
-  const approved = await viewBottleContract.isApprovedForAll(owner, CellarAddress);
-  return approved
-}
+  const approved = await viewBottleContract.isApprovedForAll(
+    owner,
+    CellarAddress
+  );
+  return approved;
+};
 
 export const approveCellar = async (wallet: any) => {
   const provider = new providers.Web3Provider(wallet.ethereum);
@@ -78,14 +85,14 @@ export const approveCellar = async (wallet: any) => {
   const bottleWithSigner = BottleContract.connect(signer);
   const tx = await bottleWithSigner.setApprovalForAll(CellarAddress, true);
   return tx;
-}
+};
 
 export const rejuvenate = async (wallet: any, tokenId: number) => {
   const provider = new providers.Web3Provider(wallet.ethereum);
   const signer = provider.getSigner();
   const BottleContract = new Contract(BottleAddress, bottleABI, provider);
   const bottleWithSigner = BottleContract.connect(signer);
-  console.log(tokenId)
+  console.log(tokenId);
   const tx = await bottleWithSigner.rejuvenate(tokenId);
   return tx;
-}
+};

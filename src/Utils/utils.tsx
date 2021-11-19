@@ -12,18 +12,18 @@ export const shortenAddress = (addr: string | null) => {
 };
 
 export const secondsToString = (seconds: string): string => {
-  let bigSeconds = BigInt(seconds)
-  const years = bigSeconds / BigInt(31536000)
+  let bigSeconds = BigInt(seconds);
+  const years = bigSeconds / BigInt(31536000);
   if (years > 0) {
-    bigSeconds %= years
+    bigSeconds %= years;
   }
-  const days = bigSeconds / BigInt(86400)
+  const days = bigSeconds / BigInt(86400);
   if (days > 0) {
-    bigSeconds %= days
+    bigSeconds %= days;
   }
-  const hours = bigSeconds / BigInt(3600)
-  return `${years} years, ${days} days, ${hours} hours`
-}
+  const hours = bigSeconds / BigInt(3600);
+  return `${years} years, ${days} days, ${hours} hours`;
+};
 
 export const getENS = async (address: string) => {
   const provider = new providers.JsonRpcProvider(
@@ -40,14 +40,14 @@ export const correctNetwork = async () => {
 };
 
 export const getBottleEra = (bottleAge: string) => {
-  let bigAge = BigInt(bottleAge)
+  let bigAge = BigInt(bottleAge);
   for (let i = 0; i < bottleEras.length; ++i) {
-    let range = bottleEras[i].range
+    let range = bottleEras[i].range;
     if (range[0] <= bigAge && bigAge < range[1]) {
-      return bottleEras[i].name
+      return bottleEras[i].name;
     }
   }
-}
+};
 
 export interface BottleType {
   type: string;
@@ -57,18 +57,18 @@ export interface BottleType {
 }
 
 export const getBottleType = (attributes: number): BottleType => {
-  let type = 0
-  let subtype = 0
-  let note = 0
-  let name = 0
+  let type = 0;
+  let subtype = 0;
+  let note = 0;
+  let name = 0;
 
   return {
     type: bottleTypes[type].name,
     subtype: bottleTypes[type].subtypes[subtype].name,
     note: bottleTypes[type].subtypes[subtype].notes[note].name,
-    name: bottleTypes[type].subtypes[subtype].notes[note].type[name]
-  }
-}
+    name: bottleTypes[type].subtypes[subtype].notes[note].type[name],
+  };
+};
 
 export const locations = [
   {
@@ -223,53 +223,118 @@ export const bottleTypes = [
         notes: [
           {
             name: "Blueberry Blackberry",
-            type: ["Shiraz", "Monastrell", "Mencia", "Nero Buono", "Petit Verdot", "Pinotage"]
+            type: [
+              "Shiraz",
+              "Monastrell",
+              "Mencia",
+              "Nero Buono",
+              "Petit Verdot",
+              "Pinotage",
+            ],
           },
           {
             name: "Black Cherry Rasberry",
-            type: ["Cabernet Suavignon", "Merlot", "Super Tuscan", "Amarone", "Valpolicalla", "Cabernet France", "Sangiovese", "Priorat"]
+            type: [
+              "Cabernet Suavignon",
+              "Merlot",
+              "Super Tuscan",
+              "Amarone",
+              "Valpolicalla",
+              "Cabernet France",
+              "Sangiovese",
+              "Priorat",
+            ],
           },
           {
             name: "Strawberry Cherry",
-            type: ["Garnacha", "Pinot Nior", "Carmenere", "Primitivo", "Counoise", "Barbera", "Grenache"]
+            type: [
+              "Garnacha",
+              "Pinot Nior",
+              "Carmenere",
+              "Primitivo",
+              "Counoise",
+              "Barbera",
+              "Grenache",
+            ],
           },
           {
             name: "Tart Cherry Cranberry",
-            type: ["Zweigelt", "Gamay", "Blaufrankisch", "St. Laurent", "Spatburgunder"]
-          }
-        ]
+            type: [
+              "Zweigelt",
+              "Gamay",
+              "Blaufrankisch",
+              "St. Laurent",
+              "Spatburgunder",
+            ],
+          },
+        ],
       },
       {
         name: "Herbal Dry Red",
         notes: [
           {
             name: "Clay and Cured Meats",
-            type: ["Barolo", "Barbaresco", "Chianti", "Vacqueyras", "Gigondas", "Brunello di Montalcino"]
+            type: [
+              "Barolo",
+              "Barbaresco",
+              "Chianti",
+              "Vacqueyras",
+              "Gigondas",
+              "Brunello di Montalcino",
+            ],
           },
           {
             name: "Truffle & Forest",
-            type: ["Bourgogne", "Dolcetto", "Grignolino", "Barbera", "Beaujolais"]
+            type: [
+              "Bourgogne",
+              "Dolcetto",
+              "Grignolino",
+              "Barbera",
+              "Beaujolais",
+            ],
           },
           {
             name: "Smoke Tobacco Leather",
-            type: ["Taurasi", "Cahors", "Rioja", "Aglianico", "Graves", "Rioja", "Pessac-Leognan"]
+            type: [
+              "Taurasi",
+              "Cahors",
+              "Rioja",
+              "Aglianico",
+              "Graves",
+              "Rioja",
+              "Pessac-Leognan",
+            ],
           },
           {
             name: "Black Pepper Gravel",
-            type: ["Cahors", "Medoc", "Sagrantino", "Tannat", "Pauillac", "Saint-Julien", "Chinon", "Lagrein", "Hermitage", "Bandol", "Cotes de Castillon", "Fronsac", "Rhone"]
-          }
-        ]
+            type: [
+              "Cahors",
+              "Medoc",
+              "Sagrantino",
+              "Tannat",
+              "Pauillac",
+              "Saint-Julien",
+              "Chinon",
+              "Lagrein",
+              "Hermitage",
+              "Bandol",
+              "Cotes de Castillon",
+              "Fronsac",
+              "Rhone",
+            ],
+          },
+        ],
       },
       {
         name: "Sweet Red",
         notes: [
           {
             name: "Sweet Red",
-            type: ["Recioto della Valpolicella", "Occhio di Pernice", "Freisa"]
-          }
-        ]
+            type: ["Recioto della Valpolicella", "Occhio di Pernice", "Freisa"],
+          },
+        ],
       },
-    ]
+    ],
   },
   {
     name: "White",
@@ -279,40 +344,98 @@ export const bottleTypes = [
         notes: [
           {
             name: "Light Grapefruit Floral",
-            type: ["Cortese", "Vermentino", "Moschofilero", "Verdicchio", "Orvieto", "Pinot Blanc", "Greco di Tufo"]
+            type: [
+              "Cortese",
+              "Vermentino",
+              "Moschofilero",
+              "Verdicchio",
+              "Orvieto",
+              "Pinot Blanc",
+              "Greco di Tufo",
+            ],
           },
           {
             name: "Light Citrus Lemon",
-            type: ["Chablis", "Picpoul", "Garganega", "Fiano", "Muscadet", "Assyrtiko", "Silvaner", "Albarino"]
+            type: [
+              "Chablis",
+              "Picpoul",
+              "Garganega",
+              "Fiano",
+              "Muscadet",
+              "Assyrtiko",
+              "Silvaner",
+              "Albarino",
+            ],
           },
           {
             name: "Light Herbal Grassy",
-            type: ["Pouilly Fume", "Entre-deux-Mers", "Ugni Blanc", "Touraine", "Sauvignon Blanc", "Chevemy", "Verdejo"]
+            type: [
+              "Pouilly Fume",
+              "Entre-deux-Mers",
+              "Ugni Blanc",
+              "Touraine",
+              "Sauvignon Blanc",
+              "Chevemy",
+              "Verdejo",
+            ],
           },
           {
             name: "Rich Creamy Nutty",
-            type: ["Chardonnay", "Montrachet", "Macconais", "Soave", "pessac-Leognan", "Savennieres", "Antao Vaz", "Cote de Beaune"]
+            type: [
+              "Chardonnay",
+              "Montrachet",
+              "Macconais",
+              "Soave",
+              "pessac-Leognan",
+              "Savennieres",
+              "Antao Vaz",
+              "Cote de Beaune",
+            ],
           },
           {
             name: "Medium Perfume Floral",
-            type: ["Torrontes", "Vouvray Sec", "Malvasiz Secco", "Condrieu", "Roussanne", "Tokaji", "Viognier", "Fiano", "Marsanne"]
-          }
-        ]
+            type: [
+              "Torrontes",
+              "Vouvray Sec",
+              "Malvasiz Secco",
+              "Condrieu",
+              "Roussanne",
+              "Tokaji",
+              "Viognier",
+              "Fiano",
+              "Marsanne",
+            ],
+          },
+        ],
       },
       {
         name: "Sweet White",
         notes: [
           {
             name: "Off-Dry Apricots Peaches",
-            type: ["Chenin Blanc", "Spatlese", "Kaniett", "Demi-sec", "Gewurztraminer", "Muller-Thurgau"]
+            type: [
+              "Chenin Blanc",
+              "Spatlese",
+              "Kaniett",
+              "Demi-sec",
+              "Gewurztraminer",
+              "Muller-Thurgau",
+            ],
           },
           {
             name: "Sweet Tropical Honey",
-            type: ["Late Harvest", "Muscat Blanc", "Aboccato", "Sauternes", "Auslese", "Moelleux"]
-          }
-        ]
-      }
-    ]
+            type: [
+              "Late Harvest",
+              "Muscat Blanc",
+              "Aboccato",
+              "Sauternes",
+              "Auslese",
+              "Moelleux",
+            ],
+          },
+        ],
+      },
+    ],
   },
   {
     name: "Rose",
@@ -322,24 +445,44 @@ export const bottleTypes = [
         notes: [
           {
             name: "Herbal Savory",
-            type: ["Loire Rose", "Bandol Rose", "Cabernet Franc Rose", "Syrah Rose", "Cabernet Sauvignon Rose"]
+            type: [
+              "Loire Rose",
+              "Bandol Rose",
+              "Cabernet Franc Rose",
+              "Syrah Rose",
+              "Cabernet Sauvignon Rose",
+            ],
           },
           {
             name: "Fruity Floral",
-            type: ["Pinot Noir Rose", "Grenache Rose", "Provence Rose", "Sangiovese Rose", "Rosado", "Tavel"]
-          }
-        ]
+            type: [
+              "Pinot Noir Rose",
+              "Grenache Rose",
+              "Provence Rose",
+              "Sangiovese Rose",
+              "Rosado",
+              "Tavel",
+            ],
+          },
+        ],
       },
       {
         name: "Off Dry Rose",
         notes: [
           {
             name: "Off Dry Rose",
-            type: ["Blush", "Merlot", "Zinfandel", "Vin Gris", "Garnacha Rosado", "Rose d' Anjou"]
-          }
-        ]
-      }
-    ]
+            type: [
+              "Blush",
+              "Merlot",
+              "Zinfandel",
+              "Vin Gris",
+              "Garnacha Rosado",
+              "Rose d' Anjou",
+            ],
+          },
+        ],
+      },
+    ],
   },
   {
     name: "Sparkling",
@@ -349,108 +492,133 @@ export const bottleTypes = [
         notes: [
           {
             name: "Dry Creamy Rich",
-            type: ["Vintage Champagne", "Blance de Noirs", "Blanc de Blancs", "Metodo Classico"]
+            type: [
+              "Vintage Champagne",
+              "Blance de Noirs",
+              "Blanc de Blancs",
+              "Metodo Classico",
+            ],
           },
           {
             name: "Dry Light Citrus",
-            type: ["Brut Nature", "Sec", "Cava", "Brut", "Extra-Brut", "Metodo Classico", "Proseco Extra-Brut"]
+            type: [
+              "Brut Nature",
+              "Sec",
+              "Cava",
+              "Brut",
+              "Extra-Brut",
+              "Metodo Classico",
+              "Proseco Extra-Brut",
+            ],
           },
           {
             name: "Off Dry Floral",
-            type: ["Champagne Extra Dry", "Proseco", "Sparkling Riesling", "Valdobbiadene", "Malvasia Secco"]
+            type: [
+              "Champagne Extra Dry",
+              "Proseco",
+              "Sparkling Riesling",
+              "Valdobbiadene",
+              "Malvasia Secco",
+            ],
           },
           {
             name: "Sweet Apricots Rich",
-            type: ["Moscato d'Asti", "Vouvray Mousseux", "Demi-Sec", "Doux", "Asti Spumante"]
-          }
-        ]
+            type: [
+              "Moscato d'Asti",
+              "Vouvray Mousseux",
+              "Demi-Sec",
+              "Doux",
+              "Asti Spumante",
+            ],
+          },
+        ],
       },
       {
         name: "Red",
         notes: [
           {
             name: "Dry Raspberry Blueberry",
-            type: ["Lambrusco Spumante", "Lambrusco Secco", "Sparkling Shiraz"]
+            type: ["Lambrusco Spumante", "Lambrusco Secco", "Sparkling Shiraz"],
           },
           {
             name: "Sweet Blueberry Cherry",
-            type: ["Brachetto d'Acqui", "Lambrusco Dolce"]
+            type: ["Brachetto d'Acqui", "Lambrusco Dolce"],
           },
           {
             name: "Off Dry Raspberry Cherry",
-            type: ["Lambrusco Amabile", "Brachetto d'Acqui"]
+            type: ["Lambrusco Amabile", "Brachetto d'Acqui"],
           },
-        ]
+        ],
       },
       {
         name: "Rose",
         notes: [
           {
             name: "Dry Strawberry Floral",
-            type: ["Champagne Rose", "Cremant Rose", "Cava Rose Brut"]
+            type: ["Champagne Rose", "Cremant Rose", "Cava Rose Brut"],
           },
           {
             name: "Off Dry Strawberry Orange",
-            type: ["Moscato Rose", "Brachetto d'Acqui Rose", "Cava Rose"]
-          }
-        ]
-      }
-    ]
-  }
-]
+            type: ["Moscato Rose", "Brachetto d'Acqui Rose", "Cava Rose"],
+          },
+        ],
+      },
+    ],
+  },
+];
 
-const year = BigInt(365 * 24 * 60 * 60)
+const year = BigInt(365 * 24 * 60 * 60);
 const bottleEras = [
   {
     name: "Contemporary",
-    range: [BigInt(0), BigInt(100) * year]
+    range: [BigInt(0), BigInt(100) * year],
   },
   {
     name: "Modern",
-    range: [BigInt(100) * year, BigInt(250) * year]
+    range: [BigInt(100) * year, BigInt(250) * year],
   },
   {
     name: "Romantic",
-    range: [BigInt(250) * year, BigInt(500) * year]
+    range: [BigInt(250) * year, BigInt(500) * year],
   },
   {
     name: "Renaissance",
-    range: [BigInt(500) * year, BigInt(800) * year]
+    range: [BigInt(500) * year, BigInt(800) * year],
   },
   {
     name: "Medeival",
-    range: [BigInt(800) * year, BigInt(1600) * year]
+    range: [BigInt(800) * year, BigInt(1600) * year],
   },
   {
     name: "Classical",
-    range: [BigInt(1600) * year, BigInt(2700) * year]
+    range: [BigInt(1600) * year, BigInt(2700) * year],
   },
   {
     name: "Ancient",
-    range: [BigInt(2700) * year, BigInt(4000) * year]
+    range: [BigInt(2700) * year, BigInt(4000) * year],
   },
   {
     name: "Neolithic",
-    range: [BigInt(4000) * year, BigInt(10000) * year]
+    range: [BigInt(4000) * year, BigInt(10000) * year],
   },
   {
     name: "Prehistoric",
-    range: [BigInt(10000) * year, BigInt(100000) * year]
+    range: [BigInt(10000) * year, BigInt(100000) * year],
   },
   {
     name: "Primordial",
-    range: [BigInt(100000) * year, BigInt(1000000000) * year]
+    range: [BigInt(100000) * year, BigInt(1000000000) * year],
   },
   {
     name: "Archean",
-    range: [BigInt(1000000000) * year, BigInt(4000000000) * year]
+    range: [BigInt(1000000000) * year, BigInt(4000000000) * year],
   },
   {
     name: "Astral",
-    range: [BigInt(4000000000) * year, BigInt(13000000000) * year]
+    range: [BigInt(4000000000) * year, BigInt(13000000000) * year],
   },
   {
     name: "Akashic",
-    range: [BigInt(13000000000) * year, BigInt(13000000001) * year]
-  }
-]
+    range: [BigInt(13000000000) * year, BigInt(13000000001) * year],
+  },
+];

@@ -15,17 +15,17 @@ const viewProvider = new providers.JsonRpcProvider(providerUrl);
 const viewCellarContract = new Contract(CellarAddress, cellarABI, viewProvider);
 
 export const stakeStatus = async (tokenId: number) => {
-  const stakedAt = (await viewCellarContract.staked(tokenId)).toNumber()
-  const withdrawnAt = (await viewCellarContract.withdrawn(tokenId)).toNumber()
+  const stakedAt = (await viewCellarContract.staked(tokenId)).toNumber();
+  const withdrawnAt = (await viewCellarContract.withdrawn(tokenId)).toNumber();
   return {
     canStake: stakedAt == 0 && withdrawnAt == 0,
     canWithdraw: stakedAt != 0 && withdrawnAt == 0,
-  }
-}
+  };
+};
 
 export const tokenOwner = async (tokenId: number) => {
-  return await viewCellarContract.owner(tokenId)
-}
+  return await viewCellarContract.owner(tokenId);
+};
 
 export const stake = async (wallet: any, tokenId: number) => {
   const provider = new providers.Web3Provider(wallet.ethereum);
@@ -34,7 +34,7 @@ export const stake = async (wallet: any, tokenId: number) => {
   const cellarWithSigner = CellarContract.connect(signer);
   const tx = await cellarWithSigner.stake(tokenId);
   return tx;
-}
+};
 
 export const withdraw = async (wallet: any, tokenId: number) => {
   const provider = new providers.Web3Provider(wallet.ethereum);
@@ -43,4 +43,4 @@ export const withdraw = async (wallet: any, tokenId: number) => {
   const cellarWithSigner = CellarContract.connect(signer);
   const tx = await cellarWithSigner.withdraw(tokenId);
   return tx;
-}
+};

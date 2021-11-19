@@ -5,14 +5,19 @@ import Dirt from "../Media/dirt.png";
 import { Button } from "elementz";
 import { locations, soilTypes } from "../Utils/utils";
 import { newVineyards, historicalUri } from "../Utils/vineyardContract";
-import { GridContainer, GridItem, Page, TokenFrame } from "../Styles/Components"
-import { ipfs_gateway } from "../Utils/constants"
-import { useVineVersions } from "../Hooks/useUriVersions"
-import styled from "styled-components"
+import {
+  GridContainer,
+  GridItem,
+  Page,
+  TokenFrame,
+} from "../Styles/Components";
+import { ipfs_gateway } from "../Utils/constants";
+import { useVineVersions } from "../Hooks/useUriVersions";
+import styled from "styled-components";
 
 const Step = styled.div`
   margin-top: 32px;
-`
+`;
 
 const MintContainer = () => {
   const wallet = useWallet();
@@ -22,13 +27,13 @@ const MintContainer = () => {
   const [elev, setElev] = useState(0);
   const [soil, setSoil] = useState(0);
   const [mintHash, setMintHash] = useState("");
-  const [imageUri, setImageUri] = useState("")
-  const [baseUri, setBaseUri] = useState("")
+  const [imageUri, setImageUri] = useState("");
+  const [baseUri, setBaseUri] = useState("");
 
   useEffect(() => {
-    const fetchBaseUri = async () => 
-      setBaseUri(await historicalUri(uriVersions[uriVersions.length - 1]))
-    fetchBaseUri()
+    const fetchBaseUri = async () =>
+      setBaseUri(await historicalUri(uriVersions[uriVersions.length - 1]));
+    fetchBaseUri();
   }, []);
 
   const minElev = (num: number) => locations[num].elevation[0];
@@ -61,15 +66,25 @@ const MintContainer = () => {
   const selectSoil = (num: number) => {
     setSoil(num);
     setStep(3);
-    setImageUri(renderImg(num))
+    setImageUri(renderImg(num));
   };
 
   const handleElev = (event: any) => {
     setElev(event.target.value);
   };
 
-  const renderImg = (soilNow: number) => 
-      ipfs_gateway + baseUri + "/?seed=" + city + "-" + Math.abs(elev) + "-" + (elev < 0 ? "1" : "0") + "-" + soilNow + "-0"
+  const renderImg = (soilNow: number) =>
+    ipfs_gateway +
+    baseUri +
+    "/?seed=" +
+    city +
+    "-" +
+    Math.abs(elev) +
+    "-" +
+    (elev < 0 ? "1" : "0") +
+    "-" +
+    soilNow +
+    "-0";
 
   const mint = async () => {
     const tx = await newVineyards([city, elev, soil], wallet);
@@ -85,10 +100,7 @@ const MintContainer = () => {
           <h3>Select a Location</h3>
           <GridContainer>
             {locations.map((loc, index) => (
-              <GridItem
-                key={loc.name}
-                onClick={() => selectCity(index)}
-              >
+              <GridItem key={loc.name} onClick={() => selectCity(index)}>
                 <img src={Vine} height="120" />
                 <div>{loc.name}</div>
                 <div>{loc.climate.name}</div>
@@ -128,10 +140,7 @@ const MintContainer = () => {
             <br />
             <GridContainer>
               {soilTypes.map((soil, index) => (
-                <GridItem
-                  key={soil.name}
-                  onClick={() => selectSoil(index)}
-                >
+                <GridItem key={soil.name} onClick={() => selectSoil(index)}>
                   <img src={Dirt} height="120" />
                   <div>{soil.name}</div>
                 </GridItem>
@@ -145,7 +154,11 @@ const MintContainer = () => {
       ) : (
         <Step>
           <TokenFrame src={imageUri} frameBorder="0" />
-          <p><i>Your vineyard willl grow and develop as you care for it over time</i></p>
+          <p>
+            <i>
+              Your vineyard willl grow and develop as you care for it over time
+            </i>
+          </p>
           <br />
           <div>Location: {locations[city].name}</div>
           <div>Elevation: {elev} feet</div>
@@ -154,13 +167,17 @@ const MintContainer = () => {
           {mintHash ? (
             <p>Transaction sent: {mintHash}</p>
           ) : wallet.status === "connected" ? (
-            <Button primary onClick={mint}>Mint</Button>
+            <Button primary onClick={mint}>
+              Mint
+            </Button>
           ) : (
             <p>Connect Wallet to continue</p>
           )}
           <br />
           <br />
-          <Button onClick={startOver}>{mintHash ? "Mint Another" : "Start Over"}</Button>
+          <Button onClick={startOver}>
+            {mintHash ? "Mint Another" : "Start Over"}
+          </Button>
         </Step>
       )}
     </Page>

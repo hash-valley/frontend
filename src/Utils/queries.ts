@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const VINEPROTOCOL_QUERY = gql`
   query GetVineyardProtocol {
@@ -7,10 +7,11 @@ export const VINEPROTOCOL_QUERY = gql`
       maxVineyards
       mintedVineyards
     }
-  }`
+  }
+`;
 
 export const ACCOUNT_QUERY = gql`
-  query GetAccount($userAddress: Bytes!) {  
+  query GetAccount($userAddress: Bytes!) {
     account(id: $userAddress) {
       bottles {
         tokenId
@@ -33,7 +34,8 @@ export const ACCOUNT_QUERY = gql`
       }
       vinegarBalance
     }
-  }`
+  }
+`;
 
 export const VINEYARD_QUERY = gql`
   query GetVineyard($id: String!) {
@@ -52,7 +54,8 @@ export const VINEYARD_QUERY = gql`
       }
       seasonsHarvested
     }
-  }`
+  }
+`;
 
 export const BOTTLE_QUERY = gql`
   query GetBottle($id: String!) {
@@ -80,4 +83,5 @@ export const BOTTLE_QUERY = gql`
         id
       }
     }
-  }`
+  }
+`;
