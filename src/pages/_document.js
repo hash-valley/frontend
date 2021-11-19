@@ -33,6 +33,7 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
+          <title>Hash Valley Winery</title>
           <link rel="icon" href="/favicon.ico" />
           <meta name="theme-color" content="#000000" />
           <meta

@@ -101,7 +101,7 @@ const Splash = () => {
   }, [router]);
 
   return (
-    <div>
+    <>
       <Page>
         <h1>Hash Valley Winery</h1>
         <br />
@@ -142,27 +142,19 @@ const Splash = () => {
       </Page>
       <Footer>
         <FooterLink href="https://www.github.com">
-          <a>
-            <Image src="/github.svg" height={24} width={24} />
-          </a>
+          <Image src="/github.svg" height={24} width={24} />
         </FooterLink>
         <FooterLink href="https://www.twitter.com">
-          <a>
-            <Image src="/twitter.svg" height={24} width={24} />
-          </a>
+          <Image src="/twitter.svg" height={24} width={24} />
         </FooterLink>
         <FooterLink href="https://www.discord.com">
-          <a>
-            <Image src="/discord.svg" height={24} width={24} />
-          </a>
+          <Image src="/discord.svg" height={24} width={24} />
         </FooterLink>
         <FooterLink href="https://www.medium.com">
-          <a>
-            <Image src="/medium.svg" height={24} width={24} />
-          </a>
+          <Image src="/medium.svg" height={24} width={24} />
         </FooterLink>
       </Footer>
-    </div>
+    </>
   );
 };
 
