@@ -18,7 +18,5 @@ export default async function handler(req: any, res: any) {
     data[5]
   );
 
-  console.log(metadata)
-
   res.send(metadata);
 }

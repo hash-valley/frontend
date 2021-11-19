@@ -56,7 +56,6 @@ const BottlePage = () => {
       uri = ipfs_gateway + uri + "/?seed=" + "3000" + "-" + 127000000000000000;
       setUriVersion(n);
       setImageUri(uri);
-      console.log(uri)
     }
   };
 
