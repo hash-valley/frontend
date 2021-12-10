@@ -16,11 +16,9 @@ import { useRouter } from "next/router";
 import { UserOutlined, CloseOutlined } from "@ant-design/icons";
 
 const TitleBar = styled.div`
-  position: fixed;
-  top: 0;
   width: 100%;
-  z-index: 100;
-  background-color: whitesmoke;
+  margin-top: 0.6rem;
+  height: 1rem;
 `;
 
 const AccountButton = styled.span`
