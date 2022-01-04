@@ -1,7 +1,7 @@
 import { providers, Contract } from "ethers";
 import { providerUrl } from "./constants";
 import { tokenOwner as cellarTokenOwner } from "./cellarContract";
-import { BottleAddress, CellarAddress } from "./constants";
+import { BottleAddress, CellarAddress, ipfs_gateway } from "./constants";
 
 const bottleABI = [
   "function rejuvenate(uint256 _oldTokenID) public returns (uint256)",
@@ -14,9 +14,20 @@ const bottleABI = [
   "function isApprovedForAll(address owner, address operator) public view returns (bool)",
   "function imgVersionCount() public view returns (uint256)",
   "function imgVersions(uint256 id) public view returns (string)",
+  "function suggest(uint256 _tokenId, string calldata _newUri, address _artist) public",
+  "function support(uint256 _tokenId) public",
+  "function retort(uint256 _tokenId) public",
+  "function complete() public",
 ];
 
 const viewProvider = new providers.JsonRpcProvider(providerUrl);
+
+const withSigner = (wallet: any) => {
+  const provider = new providers.Web3Provider(wallet.ethereum);
+  const signer = provider.getSigner();
+  const BottleContract = new Contract(BottleAddress, bottleABI, provider);
+  return BottleContract.connect(signer);
+};
 
 export const viewBottleContract = new Contract(
   BottleAddress,
@@ -24,20 +35,24 @@ export const viewBottleContract = new Contract(
   viewProvider
 );
 
-export const totalSupply = async () => {
+export const totalSupply = async (): Promise<number> => {
   const totalSupply = await viewBottleContract.totalSupply();
   return parseInt(totalSupply.toString());
 };
 
-export const latestUriVersion = async () => {
+export const latestUriVersion = async (): Promise<number> => {
   return await viewBottleContract.imgVersionCount();
 };
 
-export const historicalUri = async (n: number) => {
+export const historicalUri = async (n: number): Promise<string> => {
   return await viewBottleContract.imgVersions(n);
 };
 
-export const userBalance = async (userAddress: string) => {
+export const historicalUriIpfs = async (n: number): Promise<string> => {
+  return ipfs_gateway + (await historicalUri(n)).substring(7);
+};
+
+export const userBalance = async (userAddress: string): Promise<number> => {
   const balance = await viewBottleContract.balanceOf(userAddress);
   return parseInt(balance.toString());
 };
@@ -79,19 +94,42 @@ export const isCellarApproved = async (owner: string) => {
 };
 
 export const approveCellar = async (wallet: any) => {
-  const provider = new providers.Web3Provider(wallet.ethereum);
-  const signer = provider.getSigner();
-  const BottleContract = new Contract(BottleAddress, bottleABI, provider);
-  const bottleWithSigner = BottleContract.connect(signer);
+  const bottleWithSigner = withSigner(wallet);
   const tx = await bottleWithSigner.setApprovalForAll(CellarAddress, true);
   return tx;
 };
 
 export const rejuvenate = async (wallet: any, tokenId: number) => {
-  const provider = new providers.Web3Provider(wallet.ethereum);
-  const signer = provider.getSigner();
-  const BottleContract = new Contract(BottleAddress, bottleABI, provider);
-  const bottleWithSigner = BottleContract.connect(signer);
+  const bottleWithSigner = withSigner(wallet);
   const tx = await bottleWithSigner.rejuvenate(tokenId);
+  return tx;
+};
+
+export const bottleProposal = async (
+  wallet: any,
+  tokenId: number,
+  uri: string,
+  address: string
+) => {
+  const bottleWithSigner = withSigner(wallet);
+  const tx = await bottleWithSigner.suggest(tokenId, uri, address);
+  return tx;
+};
+
+export const bottleSupport = async (wallet: any, tokenId: number) => {
+  const bottleWithSigner = withSigner(wallet);
+  const tx = await bottleWithSigner.support(tokenId);
+  return tx;
+};
+
+export const bottleRetort = async (wallet: any, tokenId: number) => {
+  const bottleWithSigner = withSigner(wallet);
+  const tx = await bottleWithSigner.retort(tokenId);
+  return tx;
+};
+
+export const bottleFinalize = async (wallet: any) => {
+  const bottleWithSigner = withSigner(wallet);
+  const tx = await bottleWithSigner.complete();
   return tx;
 };

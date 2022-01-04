@@ -5,7 +5,8 @@ export const bottleMetadata = (
   age: number,
   imgUri: string,
   feeRecipient: string,
-  sellerFee: number
+  sellerFee: number,
+  token: number
 ) => {
   const type = 0;
   const subtype = 1;
@@ -14,8 +15,8 @@ export const bottleMetadata = (
 
   return {
     image: `ipfs://${imgUri}/?seed=${attributes}-${age}`,
-    external_uri: "https://hashvalley.xyz",
-    name: "Hash Valley Winery Bottle",
+    external_url: "https://hashvalley.xyz",
+    name: `Hash Valley Winery Bottle ${token}`,
     seller_fee_basis_points: sellerFee,
     fee_recipient: feeRecipient,
     attributes: [

@@ -84,3 +84,73 @@ export const BOTTLE_QUERY = gql`
     }
   }
 `;
+
+export const GET_BOTTLES = gql`
+  query GetBottles($address: Bytes!) {
+    bottles(where: { owner: $address }) {
+      tokenId
+    }
+  }
+`;
+
+export const BOTTLE_URIS = gql`
+  query BottleUris {
+    newUris(
+      orderBy: startTimestamp
+      orderDirection: desc
+      first: 1
+      where: { type: BOTTLE }
+    ) {
+      startTimestamp
+      completed
+      votesFor
+      votesAgainst
+    }
+  }
+`;
+
+export const VINE_URIS = gql`
+  query VineUris {
+    newUris(
+      orderBy: startTimestamp
+      orderDirection: desc
+      first: 1
+      where: { type: VINEYARD }
+    ) {
+      startTimestamp
+      completed
+      votesFor
+      votesAgainst
+    }
+  }
+`;
+
+export const NEW_URI = gql`
+  query GetUri($type: String!, $address: Bytes!) {
+    newUris(
+      where: { type: $type }
+      orderBy: startTimestamp
+      orderDirection: desc
+    ) {
+      type
+      startTimestamp
+      votesFor
+      votesAgainst
+      artist
+      newUri
+      votes
+      completed
+    }
+    bottles(where: { owner: $address }) {
+      tokenId
+      attributes
+    }
+    vineyards(where: { owner: $address }) {
+      tokenId
+      location
+      elevation
+      soil
+      xp
+    }
+  }
+`;

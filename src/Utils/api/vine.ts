@@ -9,14 +9,15 @@ export const vineMetadata = (
   vine_streak: number,
   imgUri: string,
   feeRecipient: string,
-  sellerFee: number
+  sellerFee: number,
+  token: number
 ) => {
   if (vine_elevation_neg) vine_elevation *= -1;
 
   return {
     image: `ipfs://${imgUri}/?seed=${vine_location}-${vine_elevation}-${vine_elevation_neg}-${vine_soil}-${vine_xp}`,
-    external_uri: "https://hashvalley.xyz",
-    name: "Hash Valley Winery Vineyard",
+    external_url: "https://hashvalley.xyz",
+    name: `Hash Valley Winery Vineyard ${token}`,
     seller_fee_basis_points: sellerFee,
     fee_recipient: feeRecipient,
     attributes: [

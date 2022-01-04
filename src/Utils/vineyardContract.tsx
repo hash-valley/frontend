@@ -1,5 +1,5 @@
 import { providers, Contract, utils } from "ethers";
-import { VineyardAddress, providerUrl } from "./constants";
+import { VineyardAddress, providerUrl, ipfs_gateway } from "./constants";
 import { locations, soilTypes } from "./utils";
 
 const VineyardABI = [
@@ -29,9 +29,20 @@ const VineyardABI = [
   "function currentStreak(uint256 _tokenId) public view returns (uint16)",
   "function imgVersionCount() public view returns (uint256)",
   "function imgVersions(uint256 id) public view returns (string)",
+  "function suggest(uint256 _tokenId, string calldata _newUri, address _artist) public",
+  "function support(uint256 _tokenId) public",
+  "function retort(uint256 _tokenId) public",
+  "function complete() public",
 ];
 
 const viewProvider = new providers.JsonRpcProvider(providerUrl);
+
+const withSigner = (wallet: any) => {
+  const provider = new providers.Web3Provider(wallet.ethereum);
+  const signer = provider.getSigner();
+  const VineyardContract = new Contract(VineyardAddress, VineyardABI, provider);
+  return VineyardContract.connect(signer);
+};
 
 export const viewVineyardContract = new Contract(
   VineyardAddress,
@@ -54,17 +65,17 @@ export interface Farmable {
   canHarvest: boolean;
 }
 
-export const maxVineyards = async () => {
+export const maxVineyards = async (): Promise<number> => {
   const maxVineyards = await viewVineyardContract.maxVineyards();
   return parseInt(maxVineyards.toString());
 };
 
-export const totalSupply = async () => {
+export const totalSupply = async (): Promise<number> => {
   const totalSupply = await viewVineyardContract.totalSupply();
   return parseInt(totalSupply.toString());
 };
 
-export const currentSeason = async () => {
+export const currentSeason = async (): Promise<number> => {
   const currSeason = await viewVineyardContract.currSeason();
   return parseInt(currSeason.toNumber());
 };
@@ -73,8 +84,12 @@ export const latestUriVersion = async () => {
   return await viewVineyardContract.imgVersionCount();
 };
 
-export const historicalUri = async (n: number) => {
+export const historicalUri = async (n: number): Promise<string> => {
   return await viewVineyardContract.imgVersions(n);
+};
+
+export const historicalUriIpfs = async (n: number): Promise<string> => {
+  return ipfs_gateway + (await historicalUri(n)).substring(7);
 };
 
 /**
@@ -82,10 +97,7 @@ export const historicalUri = async (n: number) => {
  * @param params [location, elevation, elevationIsNegative, soil]
  */
 export const newVineyards = async (params: number[], wallet: any) => {
-  const provider = new providers.Web3Provider(wallet.ethereum);
-  const signer = provider.getSigner();
-  const VineyardContract = new Contract(VineyardAddress, VineyardABI, provider);
-  const vineyardWithSigner = VineyardContract.connect(signer);
+  const vineyardWithSigner = withSigner(wallet);
   let negative: number = 0;
   if (params[1] < 0) negative = 1;
   const processedParams: number[] = [
@@ -181,28 +193,19 @@ export const canWaterUntil = async (tokenId: number): Promise<number> => {
 };
 
 export const water = async (wallet: any, tokenId: number) => {
-  const provider = new providers.Web3Provider(wallet.ethereum);
-  const signer = provider.getSigner();
-  const VineyardContract = new Contract(VineyardAddress, VineyardABI, provider);
-  const vineyardWithSigner = VineyardContract.connect(signer);
+  const vineyardWithSigner = withSigner(wallet);
   const tx = await vineyardWithSigner.water(tokenId);
   return tx;
 };
 
 export const plant = async (wallet: any, tokenId: number) => {
-  const provider = new providers.Web3Provider(wallet.ethereum);
-  const signer = provider.getSigner();
-  const VineyardContract = new Contract(VineyardAddress, VineyardABI, provider);
-  const vineyardWithSigner = VineyardContract.connect(signer);
+  const vineyardWithSigner = withSigner(wallet);
   const tx = await vineyardWithSigner.plant(tokenId);
   return tx;
 };
 
 export const harvest = async (wallet: any, tokenId: number) => {
-  const provider = new providers.Web3Provider(wallet.ethereum);
-  const signer = provider.getSigner();
-  const VineyardContract = new Contract(VineyardAddress, VineyardABI, provider);
-  const vineyardWithSigner = VineyardContract.connect(signer);
+  const vineyardWithSigner = withSigner(wallet);
   const tx = await vineyardWithSigner.harvest(tokenId);
   return tx;
 };
@@ -211,10 +214,7 @@ export const plantMultiple = async (
   wallet: any,
   tokenIds: number[] | string[]
 ) => {
-  const provider = new providers.Web3Provider(wallet.ethereum);
-  const signer = provider.getSigner();
-  const VineyardContract = new Contract(VineyardAddress, VineyardABI, provider);
-  const vineyardWithSigner = VineyardContract.connect(signer);
+  const vineyardWithSigner = withSigner(wallet);
   const tx = await vineyardWithSigner.plantMultiple(tokenIds);
   return tx;
 };
@@ -223,10 +223,7 @@ export const waterMultiple = async (
   wallet: any,
   tokenIds: number[] | string[]
 ) => {
-  const provider = new providers.Web3Provider(wallet.ethereum);
-  const signer = provider.getSigner();
-  const VineyardContract = new Contract(VineyardAddress, VineyardABI, provider);
-  const vineyardWithSigner = VineyardContract.connect(signer);
+  const vineyardWithSigner = withSigner(wallet);
   const tx = await vineyardWithSigner.waterMultiple(tokenIds);
   return tx;
 };
@@ -235,10 +232,36 @@ export const harvestMultiple = async (
   wallet: any,
   tokenIds: number[] | string[]
 ) => {
-  const provider = new providers.Web3Provider(wallet.ethereum);
-  const signer = provider.getSigner();
-  const VineyardContract = new Contract(VineyardAddress, VineyardABI, provider);
-  const vineyardWithSigner = VineyardContract.connect(signer);
+  const vineyardWithSigner = withSigner(wallet);
   const tx = await vineyardWithSigner.harvestMultiple(tokenIds);
+  return tx;
+};
+
+export const vineProposal = async (
+  wallet: any,
+  tokenId: number,
+  uri: string,
+  address: string
+) => {
+  const vineyardWithSigner = withSigner(wallet);
+  const tx = await vineyardWithSigner.suggest(tokenId, uri, address);
+  return tx;
+};
+
+export const vineSupport = async (wallet: any, tokenId: number) => {
+  const vineyardWithSigner = withSigner(wallet);
+  const tx = await vineyardWithSigner.support(tokenId);
+  return tx;
+};
+
+export const vineRetort = async (wallet: any, tokenId: number) => {
+  const vineyardWithSigner = withSigner(wallet);
+  const tx = await vineyardWithSigner.retort(tokenId);
+  return tx;
+};
+
+export const vineFinalize = async (wallet: any) => {
+  const vineyardWithSigner = withSigner(wallet);
+  const tx = await vineyardWithSigner.complete();
   return tx;
 };

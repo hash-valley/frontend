@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useQuery } from "@apollo/client";
 import { VINEPROTOCOL_QUERY } from "../Utils/queries";
-import Image from "next/image";
 import styled from "styled-components";
 import { Page } from "../Styles/Components";
 import { useRouter } from "next/router";
@@ -52,26 +51,10 @@ const ProgressBar = styled.span`
   animation: progress-animation 2s linear infinite;
 `;
 
-const Footer = styled.div`
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 60px;
-  color: rgb(168, 168, 168);
-  text-align: center;
-  padding-top: 12px;
-`;
-
-const FooterLink = styled.a`
-  margin-right: 24px;
-  margin-left: 24px;
-  opacity: 0.35;
-
-  &:hover {
-    opacity: 0.6;
-    transition-duration: 0.2s;
-  }
+const Header = styled.h1`
+  margin: 9rem 0 7rem 0;
+  font-size: 3rem;
+  font-family: FancyFont;
 `;
 
 const Splash = () => {
@@ -101,60 +84,41 @@ const Splash = () => {
   }, [router]);
 
   return (
-    <>
-      <Page>
-        <h1>Hash Valley Winery</h1>
-        <br />
-        <br />
-        <br />
-        <Progress>
-          <ProgressBar
-            style={{ width: ((100 * minted) / max).toString() + "%" }}
-          ></ProgressBar>
-        </Progress>
-        <br />
+    <Page>
+      <Header>Hash Valley Winery</Header>
+      <Progress>
+        <ProgressBar
+          style={{ width: ((100 * minted) / max).toString() + "%" }}
+        ></ProgressBar>
+      </Progress>
+      <br />
+      <h3>
+        {minted} / {max} minted
+      </h3>
+      {price == 0 ? (
         <h3>
-          {minted} / {max} minted
+          <i>{100 - minted} free vineyards remaining (then 0.05 ETH/mint)</i>
         </h3>
-        {price == 0 ? (
-          <h3>
-            <i>{100 - minted} free vineyards remaining (then 0.05 ETH/mint)</i>
-          </h3>
-        ) : (
-          <h3>
-            <i>{price} ETH</i>
-          </h3>
-        )}
-        <br />
-        <br />
-        {minted < max ? (
-          <Button
-            type="primary"
-            shape="round"
-            size="large"
-            onClick={() => router.push(`/mint`)}
-          >
-            Mint
-          </Button>
-        ) : (
-          <h2>All Vineyards have been minted already!</h2>
-        )}
-      </Page>
-      <Footer>
-        <FooterLink href="https://www.github.com">
-          <Image src="/github.svg" height={24} width={24} />
-        </FooterLink>
-        <FooterLink href="https://www.twitter.com">
-          <Image src="/twitter.svg" height={24} width={24} />
-        </FooterLink>
-        <FooterLink href="https://www.discord.com">
-          <Image src="/discord.svg" height={24} width={24} />
-        </FooterLink>
-        <FooterLink href="https://www.medium.com">
-          <Image src="/medium.svg" height={24} width={24} />
-        </FooterLink>
-      </Footer>
-    </>
+      ) : (
+        <h3>
+          <i>{price} ETH</i>
+        </h3>
+      )}
+      <br />
+      <br />
+      {minted < max ? (
+        <Button
+          type="primary"
+          shape="round"
+          size="large"
+          onClick={() => router.push(`/mint`)}
+        >
+          Mint
+        </Button>
+      ) : (
+        <h2>All Vineyards have been minted already!</h2>
+      )}
+    </Page>
   );
 };
 

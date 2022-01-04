@@ -33,8 +33,8 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <title>Hash Valley Winery</title>
           <link rel="icon" href="/favicon.ico" />
+          <link rel="preload" href="/fancy-font.ttf" as="font" crossOrigin="" />
           <meta name="theme-color" content="#000000" />
           <meta
             name="description"

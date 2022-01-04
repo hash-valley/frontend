@@ -25,11 +25,30 @@ export const secondsToString = (seconds: string): string => {
   return `${years} years, ${days} days, ${hours} hours`;
 };
 
+export const hours = (time: number): string => `${Math.floor(time / 3600)}`;
+
+export const minutes = (time: number): string => {
+  const num = Math.floor(time / 60) % 60;
+  return num < 10 ? `0${num}` : `${num}`;
+};
+
+export const seconds = (time: number): string => {
+  const num = time % 60;
+  return num < 10 ? `0${num}` : `${num}`;
+};
+
 export const getENS = async (address: string) => {
   const provider = new providers.JsonRpcProvider(
     "https://eth-mainnet.alchemyapi.io/v2/" + alchemyKey
   );
   return await provider.lookupAddress(address);
+};
+
+export const ensToAddress = async (ens: string) => {
+  const provider = new providers.JsonRpcProvider(
+    "https://eth-mainnet.alchemyapi.io/v2/" + alchemyKey
+  );
+  return await provider.getResolver(ens);
 };
 
 export const correctNetwork = async () => {

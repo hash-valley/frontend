@@ -9,10 +9,16 @@ import {
   fetchTokenFarmingStats,
   untilCanWater,
   canWaterUntil,
-  historicalUri,
   getStreak,
+  historicalUriIpfs,
 } from "../../Utils/vineyardContract";
-import { locations, soilTypes } from "../../Utils/utils";
+import {
+  locations,
+  soilTypes,
+  hours,
+  minutes,
+  seconds,
+} from "../../Utils/utils";
 import { useCurrSeason } from "../../Hooks/useCurrSeason";
 import { useQuery } from "@apollo/client";
 import { VINEYARD_QUERY } from "../../Utils/queries";
@@ -25,7 +31,6 @@ import {
   TokenFrame,
   CenteredSelect,
 } from "../../Styles/Components";
-import { ipfs_gateway } from "../../Utils/constants";
 import { useVineVersions } from "../../Hooks/useUriVersions";
 import Select from "rc-select";
 
@@ -53,9 +58,8 @@ const VineyardPage = () => {
 
   const changeImage = async (n: number) => {
     if (!loading) {
-      let uri = await historicalUri(n);
+      let uri = await historicalUriIpfs(n);
       uri =
-        ipfs_gateway +
         uri +
         "/?seed=" +
         data.vineyard.location +
@@ -113,16 +117,6 @@ const VineyardPage = () => {
   useEffect(() => {
     refetch();
   }, [wallet, id]);
-
-  const hours = (time: number): string => `${Math.floor(time / 3600)}`;
-  const minutes = (time: number): string => {
-    const num = Math.floor(time / 60) % 60;
-    return num < 10 ? `0${num}` : `${num}`;
-  };
-  const seconds = (time: number): string => {
-    const num = time % 60;
-    return num < 10 ? `0${num}` : `${num}`;
-  };
 
   return loading ? (
     <Page>

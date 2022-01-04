@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useWallet } from "use-wallet";
 import Image from "next/image";
 import Link from "next/link";
-import { Menu, Dropdown, Button } from "antd";
+import { Menu, Dropdown, Button, Input } from "antd";
 import { providers, utils } from "ethers";
 import {
   formatNum,
@@ -13,7 +13,7 @@ import {
 import { useCurrSeason } from "../Hooks/useCurrSeason";
 import styled from "styled-components";
 import { useRouter } from "next/router";
-import { UserOutlined, CloseOutlined } from "@ant-design/icons";
+import { UserOutlined, CloseOutlined, SearchOutlined } from "@ant-design/icons";
 
 const TitleBar = styled.div`
   width: 100%;
@@ -36,6 +36,11 @@ const AccountEth = styled.div`
   padding: 0.48rem;
 `;
 
+const Search = styled(AccountEth)`
+  padding: 0.48rem 0.7rem 0.48rem 0.7rem;
+  border-radius: 100%;
+`;
+
 const AccountName = styled.div`
   display: inline-block;
   order: 2;
@@ -50,6 +55,14 @@ const Inline = styled.div`
 const LogoBox = styled.span`
   float: left;
   margin: 8px 0px 8px 64px;
+`;
+
+const DropdownGap = styled(Dropdown)`
+  margin-right: 8px;
+`;
+
+const SearchBar = styled(Input)`
+  height: 1.3rem;
 `;
 
 const Account = () => {
@@ -98,40 +111,44 @@ const Account = () => {
   }, [wallet]);
 
   return (
-    <TitleBar>
-      <LogoBox>
-        <Link href="/">
-          <a>
-            <Image src="/logo.png" height={50} width={50} />
-          </a>
-        </Link>
-      </LogoBox>
+    <>
+      <TitleBar>
+        <LogoBox>
+          <Link href="/">
+            <a>
+              <Image src="/logo.png" height={50} width={50} />
+            </a>
+          </Link>
+        </LogoBox>
 
-      <AccountButton>
-        {wallet.account ? (
+        <AccountButton>
           <Inline>
+            {/* <AccountEth>
+              <SearchBar id="search-bar" placeholder="Enter a token number"></SearchBar>
+            </AccountEth>
+            <Search>
+              <SearchOutlined />
+            </Search> */}
             <AccountEth>
               <b>{season === 0 ? "Pre-season" : `Season ${season}`}</b>
             </AccountEth>
-            <AccountEth>
-              <b>{userBalance} ETH</b>
-            </AccountEth>
+            {wallet.account && (
+              <AccountEth>
+                <b>{userBalance} ETH</b>
+              </AccountEth>
+            )}
             <AccountName>
-              <Dropdown
+              <DropdownGap
                 overlay={
                   <Menu>
-                    <Menu.Item
-                      icon={<UserOutlined />}
-                      onClick={() => router.push(`/account/${wallet.account}`)}
-                    >
-                      Account
+                    <Menu.Item onClick={() => router.push(`/council/vineyard`)}>
+                      Vineyards
                     </Menu.Item>
-                    <Menu.Item
-                      icon={<CloseOutlined />}
-                      danger
-                      onClick={() => wallet.reset()}
-                    >
-                      Disconnect
+                    <Menu.Item onClick={() => router.push(`/council/bottle`)}>
+                      Bottles
+                    </Menu.Item>
+                    <Menu.Item onClick={() => router.push(`/council/new`)}>
+                      New Proposal
                     </Menu.Item>
                   </Menu>
                 }
@@ -140,47 +157,74 @@ const Account = () => {
                   type="primary"
                   shape="round"
                   size="large"
-                  onClick={() => router.push(`/account/${wallet.account}`)}
+                  onClick={() => router.push(`/council/vineyard`)}
                 >
-                  <b>{userAddress}</b>
+                  <b>Council</b>
                 </Button>
-              </Dropdown>
+              </DropdownGap>
+              {wallet.account ? (
+                <Dropdown
+                  overlay={
+                    <Menu>
+                      <Menu.Item
+                        icon={<UserOutlined />}
+                        onClick={() =>
+                          router.push(`/account/${wallet.account}`)
+                        }
+                      >
+                        Account
+                      </Menu.Item>
+                      <Menu.Item
+                        icon={<CloseOutlined />}
+                        danger
+                        onClick={() => wallet.reset()}
+                      >
+                        Disconnect
+                      </Menu.Item>
+                    </Menu>
+                  }
+                >
+                  <Button
+                    type="primary"
+                    shape="round"
+                    size="large"
+                    onClick={() => router.push(`/account/${wallet.account}`)}
+                  >
+                    <b>{userAddress}</b>
+                  </Button>
+                </Dropdown>
+              ) : isCorrectNetwork ? (
+                <Dropdown
+                  overlay={
+                    <Menu>
+                      <Menu.Item onClick={() => wallet.connect()}>
+                        MetaMask
+                      </Menu.Item>
+                      <Menu.Item
+                        onClick={() => wallet.connect("walletconnect")}
+                      >
+                        WalletConnect
+                      </Menu.Item>
+                      <Menu.Item onClick={() => wallet.connect("frame")}>
+                        Frame
+                      </Menu.Item>
+                    </Menu>
+                  }
+                >
+                  <Button type="primary" shape="round" size="large">
+                    <b>Connect Wallet</b>
+                  </Button>
+                </Dropdown>
+              ) : (
+                <Button danger type="primary" shape="round" size="large">
+                  <b>Wrong Network</b>
+                </Button>
+              )}
             </AccountName>
           </Inline>
-        ) : isCorrectNetwork ? (
-          <Inline>
-            <AccountEth>
-              <b>{season === 0 ? "Pre-season" : `Season ${season}`}</b>
-            </AccountEth>
-            <AccountName>
-              <Dropdown
-                overlay={
-                  <Menu>
-                    <Menu.Item onClick={() => wallet.connect()}>
-                      MetaMask
-                    </Menu.Item>
-                    <Menu.Item onClick={() => wallet.connect("walletconnect")}>
-                      WalletConnect
-                    </Menu.Item>
-                    <Menu.Item onClick={() => wallet.connect("frame")}>
-                      Frame
-                    </Menu.Item>
-                  </Menu>
-                }
-              >
-                <Button type="primary" shape="round" size="large">
-                  <b>Connect Wallet</b>
-                </Button>
-              </Dropdown>
-            </AccountName>
-          </Inline>
-        ) : (
-          <Button danger type="primary" shape="round" size="large">
-            <b>Wrong Network</b>
-          </Button>
-        )}
-      </AccountButton>
-    </TitleBar>
+        </AccountButton>
+      </TitleBar>
+    </>
   );
 };
 

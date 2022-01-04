@@ -6,7 +6,7 @@ export default async function handler(req: any, res: any) {
   const token = Number(req.query.token);
 
   const data = await bottleData(version, token);
-  const metadata = bottleMetadata(...data);
+  const metadata = bottleMetadata(...data, token);
 
   res.send(metadata);
 }

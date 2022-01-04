@@ -12,3 +12,11 @@ body {
   height: auto !important;
   width: auto !important;
 }
+
+@font-face {
+  font-family: "FancyFont";
+  src: url("/fancy-font.ttf");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}

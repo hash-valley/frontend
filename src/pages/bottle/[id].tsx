@@ -6,7 +6,7 @@ import {
   isCellarApproved,
   approveCellar,
   rejuvenate,
-  historicalUri,
+  historicalUriIpfs,
 } from "../../Utils/bottleContract";
 import { stake, withdraw } from "../../Utils/cellarContract";
 import { useQuery } from "@apollo/client";
@@ -25,7 +25,6 @@ import {
   getBottleType,
   BottleType,
 } from "../../Utils/utils";
-import { ipfs_gateway } from "../../Utils/constants";
 import { useBottleVersions } from "../../Hooks/useUriVersions";
 import Select from "rc-select";
 
@@ -52,8 +51,9 @@ const BottlePage = () => {
 
   const changeImage = async (n: number) => {
     if (!loading) {
-      let uri = await historicalUri(n);
-      uri = ipfs_gateway + uri + "/?seed=" + "3000" + "-" + 127000000000000000;
+      let uri = await historicalUriIpfs(n);
+      uri = uri + "/?seed=" + "3-0-0-0" + "-" + "127000000000000000"; //TODO: actual values
+      console.log(uri);
       setUriVersion(n);
       setImageUri(uri);
     }
