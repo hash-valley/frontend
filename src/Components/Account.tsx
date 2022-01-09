@@ -19,6 +19,7 @@ const TitleBar = styled.div`
   width: 100%;
   margin-top: 0.6rem;
   height: 1rem;
+  font-family: Nunito;
 `;
 
 const AccountButton = styled.span`
@@ -33,7 +34,7 @@ const AccountEth = styled.div`
   margin-right: 12px;
   border: 2px solid black;
   border-radius: 16px;
-  padding: 0.48rem;
+  padding: 0.49rem;
 `;
 
 const Search = styled(AccountEth)`

@@ -31,7 +31,7 @@ const AccountPage = () => {
   const wallet = useWallet();
   const router = useRouter();
   const { userAddress } = router.query;
-  const [view, setView] = useState('vineyards')
+  const [view, setView] = useState("vineyards");
   const [nullData, setNullData] = useState(true);
   const [farmables, setFarmables] = useState<Array<Farmable>>([]);
   const [mults, setMults] = useState<Mults>({
@@ -132,20 +132,26 @@ const AccountPage = () => {
             {view == "bottles" && (
               <div>
                 <Spaced
-                  type="primary"
-                  onClick={() => setView('vineyards')}
+                  type="default"
+                  shape="round"
+                  onClick={() => setView("vineyards")}
                 >
                   Vineyards
                 </Spaced>
-                <Spaced type="primary">Bottles</Spaced>
+                <Spaced type="primary" shape="round">
+                  Bottles
+                </Spaced>
               </div>
             )}
             {(view == "vineyards" || view == undefined) && (
               <div>
-                <Spaced type="primary">Vineyards</Spaced>
+                <Spaced type="primary" shape="round">
+                  Vineyards
+                </Spaced>
                 <Spaced
-                  type="primary"
-                  onClick={() => setView('bottles')}
+                  type="default"
+                  shape="round"
+                  onClick={() => setView("bottles")}
                 >
                   Bottles
                 </Spaced>
@@ -156,17 +162,29 @@ const AccountPage = () => {
             {wallet.status === "connected" && userAddress === wallet.account ? (
               <div>
                 {mults.canPlant > 0 ? (
-                  <Spaced type="primary" onClick={sendPlantMultiple}>
+                  <Spaced
+                    type="primary"
+                    shape="round"
+                    onClick={sendPlantMultiple}
+                  >
                     Plant All
                   </Spaced>
                 ) : null}
                 {mults.canWater > 0 ? (
-                  <Spaced type="primary" onClick={sendWaterMultiple}>
+                  <Spaced
+                    type="primary"
+                    shape="round"
+                    onClick={sendWaterMultiple}
+                  >
                     Water All
                   </Spaced>
                 ) : null}
                 {mults.canHarvest > 0 ? (
-                  <Spaced type="primary" onClick={sendHarvestMultiple}>
+                  <Spaced
+                    type="primary"
+                    shape="round"
+                    onClick={sendHarvestMultiple}
+                  >
                     Harvest All
                   </Spaced>
                 ) : null}

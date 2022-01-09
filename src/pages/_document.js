@@ -35,6 +35,7 @@ class MyDocument extends Document {
         <Head>
           <link rel="icon" href="/favicon.ico" />
           <link rel="preload" href="/fancy-font.ttf" as="font" crossOrigin="" />
+          <link rel="preload" href="/NunitoSans-Regular.ttf" as="font" crossOrigin="" />
           <meta name="theme-color" content="#000000" />
           <meta
             name="description"

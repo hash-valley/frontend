@@ -12,7 +12,8 @@ import Head from "next/head";
 
 const AppContainer = styled.div`
   text-align: center;
-  min-height: calc(100vh - 80px);
+  min-height: calc(100vh - 70px);
+  margin-top: -10px;
 `;
 
 const client = new ApolloClient({

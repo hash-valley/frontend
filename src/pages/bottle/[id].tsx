@@ -17,6 +17,8 @@ import {
   GreyLink,
   TokenFrame,
   CenteredSelect,
+  TokenPage,
+  TokenSign,
 } from "../../Styles/Components";
 import { ZERO_ADDRESS } from "../../Utils/constants";
 import {
@@ -66,11 +68,11 @@ const BottlePage = () => {
   useEffect(() => {
     const fetchBalance = async () => {
       if (data.bottle) {
+        setNullData(false);
         setIsApproved(await isCellarApproved(data.bottle.owner.id));
 
         let fetchedAge = await bottleAge(parseInt(id.toString()));
         setAge(fetchedAge);
-        setNullData(false);
         setBottleType(getBottleType(data.bottle.attributes));
       }
     };
@@ -96,8 +98,8 @@ const BottlePage = () => {
       <h4>Bottle not found</h4>
     </Page>
   ) : (
-    <Page>
-      <h3>Bottle: {id}</h3>
+    <TokenPage>
+      <h3>Bottle {id}</h3>
       <br />
       <TokenFrame src={imageUri} frameBorder="0" />
       <br />
@@ -111,39 +113,40 @@ const BottlePage = () => {
           </Select.Option>
         ))}
       </CenteredSelect>
-      <br />
-      <div>
-        <b>TokenId:</b> {id}
-      </div>
-      <br />
-      <div>
-        <b>Age:</b> {secondsToString(age)}
-      </div>
-      <div>
-        <b>Era:</b> {getBottleEra(age)}
-      </div>
-      <br />
-      <div>
-        <b>Raw Attributes:</b> {data.bottle.attributes}
-      </div>
-      <div>
-        <b>Type:</b> {bottleType.type}
-      </div>
-      <div>
-        <b>Subtype:</b> {bottleType.subtype}
-      </div>
-      <div>
-        <b>Notes:</b> {bottleType.note}
-      </div>
-      <div>
-        <b>Name:</b> {bottleType.name}
-      </div>
-      {data.bottle.inCellar && <div>Aging in cellar</div>}
-      {!data.bottle.inCellar && !data.bottle.canEnterCellar && (
-        <div>Already aged in cellar</div>
-      )}
-      {data.bottle.spoiled && <div>Spoiled to vinegar</div>}
-      <br />
+      <TokenSign>
+        <div>
+          <b>TokenId:</b> {id}
+        </div>
+        <br />
+        <div>
+          <b>Age:</b> {secondsToString(age)}
+        </div>
+        <div>
+          <b>Era:</b> {getBottleEra(age)}
+        </div>
+        <br />
+        <div>
+          <b>Raw Attributes:</b> {data.bottle.attributes}
+        </div>
+        <div>
+          <b>Type:</b> {bottleType.type}
+        </div>
+        <div>
+          <b>Subtype:</b> {bottleType.subtype}
+        </div>
+        <div>
+          <b>Notes:</b> {bottleType.note}
+        </div>
+        <div>
+          <b>Name:</b> {bottleType.name}
+        </div>
+        {data.bottle.inCellar && <div>Aging in cellar</div>}
+        {!data.bottle.inCellar && !data.bottle.canEnterCellar && (
+          <div>Already aged in cellar</div>
+        )}
+        {data.bottle.spoiled && <div>Spoiled to vinegar</div>}
+      </TokenSign>
+
       {data.bottle.rejuvenatedTo && (
         <div>
           Burnt to revive{" "}
@@ -184,12 +187,16 @@ const BottlePage = () => {
         isApproved ? (
           <div>
             <Spaced
+              type="primary"
+              shape="round"
               disabled={data.bottle.canEnterCellar ? false : true}
               onClick={() => stake(wallet, Number(id))}
             >
               Add to Cellar
             </Spaced>
             <Spaced
+              type="primary"
+              shape="round"
               disabled={
                 data.bottle.inCellar && !data.bottle.spoiled ? false : true
               }
@@ -199,6 +206,8 @@ const BottlePage = () => {
             </Spaced>
             {data.bottle.spoiled && (
               <Spaced
+                type="default"
+                shape="round"
                 disabled={
                   BigInt(data.bottle.rejuvenateCost) <=
                   BigInt(data.bottle.owner.vinegarBalance)
@@ -213,6 +222,8 @@ const BottlePage = () => {
           </div>
         ) : (
           <Spaced
+            type="default"
+            shape="round"
             disabled={data.bottle.canEnterCellar ? false : true}
             onClick={() => approveCellar(wallet)}
           >
@@ -222,7 +233,7 @@ const BottlePage = () => {
       ) : data.bottle.owner.id != ZERO_ADDRESS ? (
         <p>Owned by {data.bottle.owner.id}</p>
       ) : null}
-    </Page>
+    </TokenPage>
   );
 };
 

@@ -30,6 +30,8 @@ import {
   GreyLink,
   TokenFrame,
   CenteredSelect,
+  TokenPage,
+  TokenSign,
 } from "../../Styles/Components";
 import { useVineVersions } from "../../Hooks/useUriVersions";
 import Select from "rc-select";
@@ -84,6 +86,7 @@ const VineyardPage = () => {
     let myInterval: any;
     const fetchBalance = async () => {
       if (data.vineyard) {
+        setNullData(false);
         setStreak(await getStreak(Number(id)));
         const farmableParams = await fetchTokenFarmingStats(
           parseInt(id.toString())
@@ -99,7 +102,6 @@ const VineyardPage = () => {
           }
         }
         setWaterStatus(waterCountdown);
-        setNullData(false);
 
         myInterval = setInterval(() => {
           if (waterCountdown === 0) {
@@ -133,8 +135,8 @@ const VineyardPage = () => {
       <h4>Vineyard not found</h4>
     </Page>
   ) : (
-    <Page>
-      <h3>Vineyard: {id}</h3>
+    <TokenPage>
+      <h3>Vineyard {id}</h3>
       <TokenFrame src={imageUri} frameBorder="0" />
       <br />
       <CenteredSelect
@@ -147,65 +149,72 @@ const VineyardPage = () => {
           </Select.Option>
         ))}
       </CenteredSelect>
-      <br />
-      <div>
-        <b>TokenId:</b> {id}
-      </div>
-      <br />
-      <div>
-        <b>Location:</b> {locations[data.vineyard.location].name}
-      </div>
-      <div>
-        <b>Climate:</b> {locations[data.vineyard.location].climate.name}
-      </div>
-      <div>
-        <b>Elevation:</b> {data.vineyard.elevation}
-      </div>
-      <div>
-        <b>Soil:</b> {soilTypes[data.vineyard.soil].name}
-      </div>
-      <div>
-        <b>XP:</b> {data.vineyard.xp}
-      </div>
-      <div>
-        <b>Streak:</b> {streak}
-      </div>
-      <br />
+      <TokenSign>
+        <div>
+          <b>TokenId:</b> {id}
+        </div>
+        <br />
+        <div>
+          <b>Location:</b> {locations[data.vineyard.location].name}
+        </div>
+        <div>
+          <b>Climate:</b> {locations[data.vineyard.location].climate.name}
+        </div>
+        <div>
+          <b>Elevation:</b> {data.vineyard.elevation}
+        </div>
+        <div>
+          <b>Soil:</b> {soilTypes[data.vineyard.soil].name}
+        </div>
+        <div>
+          <b>XP:</b> {data.vineyard.xp}
+        </div>
+        <div>
+          <b>Streak:</b> {streak}
+        </div>
 
-      {farmable.canHarvest ? (
-        <SuccessText>Harvestable</SuccessText>
-      ) : data.vineyard.seasonsHarvested.includes(season) ? (
-        <SuccessText>Already harvested this season</SuccessText>
-      ) : farmable.canWater ? (
-        <SuccessText>
-          Can water until {hours(waterStatus)}:{minutes(waterStatus)}:
-          {seconds(waterStatus)}
-        </SuccessText>
-      ) : waterStatus >= 0 ? (
-        <SuccessText>
-          Can water in {hours(waterStatus)}:{minutes(waterStatus)}:
-          {seconds(waterStatus)}
-        </SuccessText>
-      ) : farmable.canPlant ? (
-        <SuccessText>Plantable</SuccessText>
-      ) : (
-        <FailText>Vineyard is dead for this season</FailText>
-      )}
+        {farmable.canHarvest ? (
+          <SuccessText>Harvestable</SuccessText>
+        ) : data.vineyard.seasonsHarvested.includes(season) ? (
+          <SuccessText>Already harvested this season</SuccessText>
+        ) : farmable.canWater ? (
+          <SuccessText>
+            Can water until {hours(waterStatus)}:{minutes(waterStatus)}:
+            {seconds(waterStatus)}
+          </SuccessText>
+        ) : waterStatus >= 0 ? (
+          <SuccessText>
+            Can water in {hours(waterStatus)}:{minutes(waterStatus)}:
+            {seconds(waterStatus)}
+          </SuccessText>
+        ) : farmable.canPlant ? (
+          <SuccessText>Plantable</SuccessText>
+        ) : (
+          <FailText>Vineyard is dead for this season</FailText>
+        )}
+      </TokenSign>
+
       {wallet.account?.toLowerCase() === data.vineyard.owner.id ? (
         <div>
           <Spaced
+            type="primary"
+            shape="round"
             disabled={farmable.canWater ? false : true}
             onClick={() => water(wallet, Number(id))}
           >
             Water
           </Spaced>
           <Spaced
+            type="primary"
+            shape="round"
             disabled={farmable.canPlant ? false : true}
             onClick={() => plant(wallet, Number(id))}
           >
             Plant
           </Spaced>
           <Spaced
+            type="primary"
+            shape="round"
             disabled={farmable.canHarvest ? false : true}
             onClick={() => harvest(wallet, Number(id))}
           >
@@ -228,7 +237,7 @@ const VineyardPage = () => {
           ))}
         </div>
       ) : null}
-    </Page>
+    </TokenPage>
   );
 };
 

@@ -11,12 +11,19 @@ export const CenteredSelect = styled(Select)`
 export const TokenFrame = styled.iframe`
   width: 400px;
   height: 400px;
+  padding: 8px;
+  margin-top: 12px;
+  margin-bottom: 12px;
+
+  border-radius: 12px;
+  background: ;
+  box-shadow: 15px 15px 30px #d9d9d9, -15px -15px 30px #ffffff;
 `;
 
 export const GreyLink = styled(Link)`
   cursor: pointer;
   opacity: 0.7;
-  text-decoration: underline;
+  transition-duration: 0.2s;
 
   &:hover {
     opacity: 0.4;
@@ -35,6 +42,7 @@ export const Page = styled.div`
   margin-left: 10%;
   margin-right: 10%;
   padding-bottom: 60px;
+  font-family: Nunito;
 `;
 
 export const GridItem = styled.div`
@@ -44,11 +52,12 @@ export const GridItem = styled.div`
   border-radius: 19px;
   background: #eeeeee;
   box-shadow: 5px 5px 10px #bebebe, -5px -5px 10px #ffffff;
+  transition: all 200ms ease-out;
 
   &:hover {
     background: #f7f7f7;
     transform: translate(0, -4px);
-    transition-duration: 0.2s;
+    transition: all 200ms ease-out;
   }
 `;
 
@@ -78,11 +87,25 @@ export const FailText = styled.div`
 
 export const BigLink = styled.h2`
   cursor: pointer;
-  text-decoration: underline; 
+  text-decoration: underline;
   font-style: italic;
+  transition: color 200ms ease-out;
 
   &:hover {
     color: #999;
-    transition-duration: 0.2s;
+    transition: color 200ms ease-out;
   }
-`
+`;
+
+export const TokenSign = styled.div`
+  margin: 16px 100px 12px 100px;
+  padding: 16px 0px;
+
+  border-radius: 12px;
+  border: 1px solid lightgrey;
+`;
+
+export const TokenPage = styled(Page)`
+  max-width: 600px;
+  margin-left: calc(50% - 300px);
+`;

@@ -270,15 +270,28 @@ const InProgress: FC<any> = ({ uri, bottles, vineyards }) => {
               ))}
             </CenteredSelect>
 
-            <Spaced onClick={support} disabled={bottleId == "Token ID #"}>
+            <Spaced
+              type="default"
+              shape="round"
+              onClick={support}
+              disabled={bottleId == "Token ID #"}
+            >
               Support
             </Spaced>
-            <Spaced onClick={retort} disabled={bottleId == "Token ID #"}>
+            <Spaced
+              danger
+              type="default"
+              shape="round"
+              onClick={retort}
+              disabled={bottleId == "Token ID #"}
+            >
               Retort
             </Spaced>
           </>
         ) : completedAt > now ? (
-          <Spaced onClick={finalize}>Finalize</Spaced>
+          <Spaced type="default" shape="round" onClick={finalize}>
+            Finalize
+          </Spaced>
         ) : null}
       </div>
     </>

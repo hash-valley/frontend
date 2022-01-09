@@ -123,18 +123,18 @@ const NewProposal = () => {
       <h2>New Proposal</h2>
       <br />
       <p>
-        Enter the IPFS cid your script is hosted at (
-        <i>please make sure this is functional and pinned!</i>)
+        Enter the cid your script is hosted at{" "}
+        <i>(if its on IPFS please make sure this is functional and pinned!)</i>
       </p>
       <ProposalInput
-        placeholder="i.e. QmVXLRguzqMfDN59BrGpHKdCXK3Fj7mYHcVEY8aKn3JehQ"
+        placeholder="i.e. ipfs://QmVXLRguzqMfDN59BrGpHKdCXK3Fj7mYHcVEY8aKn3JehQ"
         value={cid}
         onChange={(e) => setCid(e.target.value)}
       />
       <Error hidden={open || !cidError}>Invalid cid</Error>
       <br />
       <br />
-      <p>Enter the address to receieve royalties</p>
+      <p>Enter an address to receive secondary market royalties</p>
       <ProposalInput
         id="address"
         placeholder="0x..."
@@ -182,7 +182,9 @@ const NewProposal = () => {
       <br />
       <br />
       {wallet.account ? (
-        <Button onClick={sendProposal}>Submit</Button>
+        <Button type="primary" shape="round" onClick={sendProposal}>
+          Submit
+        </Button>
       ) : (
         <p>Please connect your wallet to continue</p>
       )}

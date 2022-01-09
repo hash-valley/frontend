@@ -3,19 +3,24 @@ import { useWallet } from "use-wallet";
 import Image from "next/image";
 import { Button } from "antd";
 import { locations, soilTypes } from "../Utils/utils";
-import { newVineyards, historicalUri } from "../Utils/vineyardContract";
+import { newVineyards, historicalUriIpfs } from "../Utils/vineyardContract";
 import {
+  GreyLink,
   GridContainer,
   GridItem,
   Page,
   TokenFrame,
+  Spaced,
 } from "../Styles/Components";
-import { ipfs_gateway } from "../Utils/constants";
 import { useVineVersions } from "../Hooks/useUriVersions";
 import styled from "styled-components";
 
 const Step = styled.div`
   margin-top: 32px;
+`;
+
+const Sign = styled.div`
+  margin: 32px 0 12px 0;
 `;
 
 const MintContainer = () => {
@@ -31,7 +36,7 @@ const MintContainer = () => {
 
   useEffect(() => {
     const fetchBaseUri = async () =>
-      setBaseUri(await historicalUri(uriVersions[uriVersions.length - 1]));
+      setBaseUri(await historicalUriIpfs(uriVersions[uriVersions.length - 1]));
     fetchBaseUri();
   }, []);
 
@@ -73,7 +78,6 @@ const MintContainer = () => {
   };
 
   const renderImg = (soilNow: number) =>
-    ipfs_gateway +
     baseUri +
     "/?seed=" +
     city +
@@ -127,10 +131,17 @@ const MintContainer = () => {
           <br />
           <br />
           <br />
-          <Button size="large" onClick={() => selectElev(elev)}>Select Elevation</Button>
-          <br />
-          <br />
-          <Button size="large" onClick={back}>Back</Button>
+          <Spaced size="large" type="default" shape="round" onClick={back}>
+            Back
+          </Spaced>
+          <Spaced
+            size="large"
+            type="primary"
+            shape="round"
+            onClick={() => selectElev(elev)}
+          >
+            Confirm
+          </Spaced>
         </Step>
       ) : step == 2 ? (
         <Step>
@@ -147,7 +158,9 @@ const MintContainer = () => {
             </GridContainer>
             <br />
             <br />
-            <Button size="large" onClick={back}>BacK</Button>
+            <Button size="large" type="default" shape="round" onClick={back}>
+              Back
+            </Button>
           </div>
         </Step>
       ) : (
@@ -158,25 +171,50 @@ const MintContainer = () => {
               Your vineyard willl grow and develop as you care for it over time
             </i>
           </p>
-          <br />
-          <div>Location: {locations[city].name}</div>
-          <div>Elevation: {elev} feet</div>
-          <div>Soil Type: {soilTypes[soil].name}</div>
-          <br />
+          <Sign>
+            <div>
+              <b>Location:</b> {locations[city].name}
+            </div>
+            <div>
+              <b>Elevation:</b> {elev} feet
+            </div>
+            <div>
+              <b>Soil Type:</b> {soilTypes[soil].name}
+            </div>
+          </Sign>
           {mintHash ? (
-            <p>Transaction sent: {mintHash}</p>
+            <>
+              <GreyLink href={`https://etherscan.io/tx/${mintHash}`}>
+                <a target={"_blank"}>Transaction sent: {mintHash}</a>
+              </GreyLink>
+              <br />
+              <br />
+              <Button
+                size="large"
+                type="default"
+                shape="round"
+                onClick={startOver}
+              >
+                Mint Another
+              </Button>
+            </>
           ) : wallet.status === "connected" ? (
-            <Button size="large" type="primary" shape="round" onClick={mint}>
-              Mint
-            </Button>
+            <>
+              <Spaced
+                size="large"
+                type="default"
+                shape="round"
+                onClick={startOver}
+              >
+                Start over
+              </Spaced>
+              <Spaced size="large" type="primary" shape="round" onClick={mint}>
+                Mint
+              </Spaced>
+            </>
           ) : (
             <p>Connect Wallet to continue</p>
           )}
-          <br />
-          <br />
-          <Button size="large" onClick={startOver}>
-            {mintHash ? "Mint Another" : "Start Over"}
-          </Button>
         </Step>
       )}
     </Page>
