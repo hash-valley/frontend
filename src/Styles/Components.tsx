@@ -16,7 +16,6 @@ export const TokenFrame = styled.iframe`
   margin-bottom: 12px;
 
   border-radius: 12px;
-  background: ;
   box-shadow: 15px 15px 30px #d9d9d9, -15px -15px 30px #ffffff;
 `;
 
@@ -107,5 +106,5 @@ export const TokenSign = styled.div`
 
 export const TokenPage = styled(Page)`
   max-width: 600px;
-  margin-left: calc(50% - 300px);
+  margin: 0 auto;
 `;

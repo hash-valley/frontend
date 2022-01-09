@@ -6,9 +6,19 @@ import { Page } from "../Styles/Components";
 import { useRouter } from "next/router";
 import { Button } from "antd";
 
+const ProgressContainer = styled.div`
+  padding: 7px;
+  max-width: 60%;
+  margin: 0 auto;
+  margin-bottom: 12px;
+
+  border-radius: 50px;
+  background: #ffffff;
+  box-shadow: 5px 5px 10px #dbdbdb, -5px -5px 10px #ffffff;
+`;
+
 const Progress = styled.div`
   margin: 0 auto;
-  max-width: 60%;
   height: 24px;
   background: #e1e4e8;
   border-radius: 12px;
@@ -86,11 +96,13 @@ const Splash = () => {
   return (
     <Page>
       <Header>Hash Valley Winery</Header>
-      <Progress>
-        <ProgressBar
-          style={{ width: ((100 * minted) / max).toString() + "%" }}
-        ></ProgressBar>
-      </Progress>
+      <ProgressContainer>
+        <Progress>
+          <ProgressBar
+            style={{ width: ((100 * minted) / max).toString() + "%" }}
+          ></ProgressBar>
+        </Progress>
+      </ProgressContainer>
       <br />
       <h3>
         {minted} / {max} minted
