@@ -1,6 +1,11 @@
 import styled from "styled-components";
 import Link from "next/link";
+import Image from "next/image";
 import { Button, Select } from "antd";
+
+export const RoundedImg = styled(Image)`
+  border-radius: 4px;
+`;
 
 export const CenteredSelect = styled(Select)`
   display: inline-block;

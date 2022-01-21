@@ -16,7 +16,6 @@ import {
   getBottleClass,
   getBottleName,
 } from "../../Utils/utils";
-import Image from "next/image";
 import { useQuery } from "@apollo/client";
 import { ACCOUNT_QUERY } from "../../Utils/queries";
 import {
@@ -25,6 +24,7 @@ import {
   Page,
   SuccessText,
   Spaced,
+  RoundedImg,
 } from "../../Styles/Components";
 
 interface Mults {
@@ -204,7 +204,7 @@ const AccountPage = () => {
                   key={token.tokenId}
                   onClick={() => router.push(`/vineyard/${token.tokenId}`)}
                 >
-                  <Image
+                  <RoundedImg
                     src={`/thumbnails/vineyards/${token.location}.png`}
                     height={120}
                     width={120}
@@ -235,7 +235,7 @@ const AccountPage = () => {
                   key={token.tokenId}
                   onClick={() => router.push(`/bottle/${token.tokenId}`)}
                 >
-                  <Image
+                  <RoundedImg
                     src={`/thumbnails/bottles/${token.attributes[0]}.png`}
                     height={120}
                     width={120}

@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useWallet } from "use-wallet";
-import Image from "next/image";
 import { Button } from "antd";
 import { locations, soilTypes } from "../Utils/utils";
 import { newVineyards, historicalUriIpfs } from "../Utils/vineyardContract";
@@ -11,6 +10,7 @@ import {
   Page,
   TokenFrame,
   Spaced,
+  RoundedImg,
 } from "../Styles/Components";
 import { useVineVersions } from "../Hooks/useUriVersions";
 import styled from "styled-components";
@@ -104,7 +104,11 @@ const MintContainer = () => {
           <GridContainer>
             {locations.map((loc, index) => (
               <GridItem key={loc.name} onClick={() => selectCity(index)}>
-                <Image src={`/thumbnails/vineyards/${index}.png`} height={120} width={120} />
+                <RoundedImg
+                  src={`/thumbnails/vineyards/${index}.png`}
+                  height={120}
+                  width={120}
+                />
                 <div>{loc.name}</div>
                 <div>{loc.climate.name}</div>
               </GridItem>
@@ -151,7 +155,11 @@ const MintContainer = () => {
             <GridContainer>
               {soilTypes.map((soil, index) => (
                 <GridItem key={soil.name} onClick={() => selectSoil(index)}>
-                  <Image src={`/thumbnails/dirt/${index}.png`} height={130} width={120} />
+                  <RoundedImg
+                    src={`/thumbnails/dirt/${index}.png`}
+                    height={130}
+                    width={120}
+                  />
                   <div>{soil.name}</div>
                 </GridItem>
               ))}
