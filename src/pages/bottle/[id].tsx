@@ -54,8 +54,18 @@ const BottlePage = () => {
   const changeImage = async (n: number) => {
     if (!loading) {
       let uri = await historicalUriIpfs(n);
-      uri = uri + "/?seed=" + "3-0-0-0" + "-" + "127000000000000000"; //TODO: actual values
-      console.log(uri);
+      uri =
+        uri +
+        "/?seed=" +
+        data.bottle.attributes[0] +
+        "-" +
+        data.bottle.attributes[1] +
+        "-" +
+        data.bottle.attributes[2] +
+        "-" +
+        data.bottle.attributes[3] +
+        "-" +
+        age;
       setUriVersion(n);
       setImageUri(uri);
     }

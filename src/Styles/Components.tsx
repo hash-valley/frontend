@@ -106,5 +106,5 @@ export const TokenSign = styled.div`
 
 export const TokenPage = styled(Page)`
   max-width: 600px;
-  margin: 0 auto;
+  margin: 6rem auto 1.8rem auto;
 `;

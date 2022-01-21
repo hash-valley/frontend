@@ -104,7 +104,7 @@ const MintContainer = () => {
           <GridContainer>
             {locations.map((loc, index) => (
               <GridItem key={loc.name} onClick={() => selectCity(index)}>
-                <Image src="/vine.png" height={120} width={120} />
+                <Image src={`/thumbnails/vineyards/${index}.png`} height={120} width={120} />
                 <div>{loc.name}</div>
                 <div>{loc.climate.name}</div>
               </GridItem>
@@ -151,7 +151,7 @@ const MintContainer = () => {
             <GridContainer>
               {soilTypes.map((soil, index) => (
                 <GridItem key={soil.name} onClick={() => selectSoil(index)}>
-                  <Image src="/dirt.png" height={120} width={120} />
+                  <Image src={`/thumbnails/dirt/${index}.png`} height={130} width={120} />
                   <div>{soil.name}</div>
                 </GridItem>
               ))}

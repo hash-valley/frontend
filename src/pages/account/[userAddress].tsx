@@ -198,7 +198,7 @@ const AccountPage = () => {
                   key={token.tokenId}
                   onClick={() => router.push(`/vineyard/${token.tokenId}`)}
                 >
-                  <Image src="/vine.png" height={120} width={120} />
+                  <Image src={`/thumbnails/vineyards/${token.location}.png`} height={120} width={120} />
                   <div>TokenId: {token.tokenId}</div>
                   <div>Location: {locations[token.location].name}</div>
                   <div>Climate: {locations[token.location].climate.name}</div>
@@ -225,7 +225,7 @@ const AccountPage = () => {
                   key={token.tokenId}
                   onClick={() => router.push(`/bottle/${token.tokenId}`)}
                 >
-                  <Image src="/bottle.png" height={120} width={120} />
+                  <Image src={`/thumbnails/bottles/${token.attributes[0]}.png`} height={120} width={120} />
                   <div>TokenId: {token.tokenId}</div>
                   <div>Attributes: {token.attributes}</div>
                   {token.inCellar && <div>Aging in cellar</div>}

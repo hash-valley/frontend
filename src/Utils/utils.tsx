@@ -75,11 +75,11 @@ export interface BottleType {
   name: string;
 }
 
-export const getBottleType = (attributes: number): BottleType => {
-  let type = 0;
-  let subtype = 0;
-  let note = 0;
-  let name = 0;
+export const getBottleType = (attributes: number[]): BottleType => {
+  let type = attributes[0]
+  let subtype = attributes[1]
+  let note = attributes[2]
+  let name = attributes[3]
 
   return {
     type: bottleTypes[type].name,
