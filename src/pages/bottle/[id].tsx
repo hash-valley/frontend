@@ -73,7 +73,7 @@ const BottlePage = () => {
 
   useEffect(() => {
     changeImage(uriVersions[uriVersions.length - 1]);
-  }, [uriVersions]);
+  }, [uriVersions, id]);
 
   useEffect(() => {
     const fetchBalance = async () => {
@@ -135,9 +135,6 @@ const BottlePage = () => {
           <b>Era:</b> {getBottleEra(age)}
         </div>
         <br />
-        <div>
-          <b>Raw Attributes:</b> {data.bottle.attributes}
-        </div>
         <div>
           <b>Type:</b> {bottleType.type}
         </div>

@@ -80,7 +80,7 @@ const VineyardPage = () => {
 
   useEffect(() => {
     changeImage(uriVersions[uriVersions.length - 1]);
-  }, [uriVersions]);
+  }, [uriVersions, id]);
 
   useEffect(() => {
     let myInterval: any;
@@ -172,6 +172,7 @@ const VineyardPage = () => {
         <div>
           <b>Streak:</b> {streak}
         </div>
+        <br />
 
         {farmable.canHarvest ? (
           <SuccessText>Harvestable</SuccessText>

@@ -76,10 +76,10 @@ export interface BottleType {
 }
 
 export const getBottleType = (attributes: number[]): BottleType => {
-  let type = attributes[0]
-  let subtype = attributes[1]
-  let note = attributes[2]
-  let name = attributes[3]
+  const type = attributes[0];
+  const subtype = attributes[1];
+  const note = attributes[2];
+  const name = attributes[3];
 
   return {
     type: bottleTypes[type].name,
@@ -87,6 +87,19 @@ export const getBottleType = (attributes: number[]): BottleType => {
     note: bottleTypes[type].subtypes[subtype].notes[note].name,
     name: bottleTypes[type].subtypes[subtype].notes[note].type[name],
   };
+};
+
+export const getBottleClass = (attributes: number[]): string => {
+  const type = attributes[0];
+  return bottleTypes[type].name;
+};
+
+export const getBottleName = (attributes: number[]): string => {
+  const type = attributes[0];
+  const subtype = attributes[1];
+  const note = attributes[2];
+  const name = attributes[3];
+  return bottleTypes[type].subtypes[subtype].notes[note].type[name];
 };
 
 export const locations = [

@@ -9,7 +9,13 @@ import {
   harvestMultiple,
   fetchTokenFarmingStats,
 } from "../../Utils/vineyardContract";
-import { locations, soilTypes, formatNum } from "../../Utils/utils";
+import {
+  locations,
+  soilTypes,
+  formatNum,
+  getBottleClass,
+  getBottleName,
+} from "../../Utils/utils";
 import Image from "next/image";
 import { useQuery } from "@apollo/client";
 import { ACCOUNT_QUERY } from "../../Utils/queries";
@@ -198,7 +204,11 @@ const AccountPage = () => {
                   key={token.tokenId}
                   onClick={() => router.push(`/vineyard/${token.tokenId}`)}
                 >
-                  <Image src={`/thumbnails/vineyards/${token.location}.png`} height={120} width={120} />
+                  <Image
+                    src={`/thumbnails/vineyards/${token.location}.png`}
+                    height={120}
+                    width={120}
+                  />
                   <div>TokenId: {token.tokenId}</div>
                   <div>Location: {locations[token.location].name}</div>
                   <div>Climate: {locations[token.location].climate.name}</div>
@@ -225,9 +235,14 @@ const AccountPage = () => {
                   key={token.tokenId}
                   onClick={() => router.push(`/bottle/${token.tokenId}`)}
                 >
-                  <Image src={`/thumbnails/bottles/${token.attributes[0]}.png`} height={120} width={120} />
+                  <Image
+                    src={`/thumbnails/bottles/${token.attributes[0]}.png`}
+                    height={120}
+                    width={120}
+                  />
                   <div>TokenId: {token.tokenId}</div>
-                  <div>Attributes: {token.attributes}</div>
+                  <div>Type: {getBottleClass(token.attributes)}</div>
+                  <div>Name: {getBottleName(token.attributes)}</div>
                   {token.inCellar && <div>Aging in cellar</div>}
                   {token.canEnterCellar && <div>Can be aged in cellar</div>}
                   {!token.canEnterCellar && !token.inCellar && (
