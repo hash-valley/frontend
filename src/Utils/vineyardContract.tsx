@@ -4,6 +4,7 @@ import { locations, soilTypes } from "./utils";
 
 const VineyardABI = [
   "function newVineyards(uint16[] calldata) public payable",
+  "function newVineyardGiveaway(uint16[] calldata) public",
   "function name() view returns (string)",
   "function symbol() view returns (string)",
   "function balanceOf(address) view returns (uint256 balance)",
@@ -115,6 +116,21 @@ export const newVineyards = async (params: number[], wallet: any) => {
       value: utils.parseEther("0.05"),
     });
   }
+  return tx;
+};
+
+export const newVineyardsGiveaway = async (params: number[], wallet: any) => {
+  const vineyardWithSigner = withSigner(wallet);
+  let negative: number = 0;
+  if (params[1] < 0) negative = 1;
+  const processedParams: number[] = [
+    params[0],
+    Math.abs(params[1]),
+    negative,
+    params[2],
+  ];
+  let tx;
+  tx = await vineyardWithSigner.newVineyards(processedParams);
   return tx;
 };
 

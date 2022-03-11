@@ -3,6 +3,7 @@ export const VineyardAddress = process.env.NEXT_PUBLIC_VINE_ADDRESS || "";
 export const CellarAddress = process.env.NEXT_PUBLIC_CELLAR_ADDRESS || "";
 export const BottleAddress = process.env.NEXT_PUBLIC_BOTTLE_ADDRESS || "";
 export const VinegarAddress = process.env.NEXT_PUBLIC_VINEGAR_ADDRESS || "";
+export const GiveawayAddress = process.env.NEXT_PUBLIC_GIVEAWAY_ADDRESS || "";
 export const chainId = Number(process.env.NEXT_PUBLIC_CHAIN_ID) || 31337;
 export const providerUrl = process.env.NEXT_PUBLIC_PROVIDER_URL || "";
 export const alchemyKey = process.env.NEXT_PUBLIC_ALCHEMY_KEY || "";

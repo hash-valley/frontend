@@ -2,7 +2,16 @@ import { useState, useEffect } from "react";
 import { useWallet } from "use-wallet";
 import { Button } from "antd";
 import { locations, soilTypes } from "../Utils/utils";
-import { newVineyards, historicalUriIpfs } from "../Utils/vineyardContract";
+import {
+  newVineyards,
+  historicalUriIpfs,
+  newVineyardsGiveaway,
+} from "../Utils/vineyardContract";
+import {
+  approveGiveaway,
+  giveawayBalance,
+  giveawayAllowance,
+} from "../Utils/giveawayToken";
 import {
   GreyLink,
   GridContainer,
@@ -14,6 +23,7 @@ import {
 } from "../Styles/Components";
 import { useVineVersions } from "../Hooks/useUriVersions";
 import styled from "styled-components";
+import { ethers } from "ethers";
 
 const Step = styled.div`
   margin-top: 32px;
@@ -34,11 +44,16 @@ const MintContainer = () => {
   const [imageUri, setImageUri] = useState("");
   const [baseUri, setBaseUri] = useState("");
 
+  const [giveBal, setGiveBal] = useState("0");
+  const [giveAllow, setGiveAllow] = useState("0");
+
   useEffect(() => {
     const fetchBaseUri = async () =>
       setBaseUri(await historicalUriIpfs(uriVersions[uriVersions.length - 1]));
     fetchBaseUri();
   }, []);
+
+  useEffect(() => checkGiveaway(), [wallet]);
 
   const minElev = (num: number) => locations[num].elevation[0];
   const maxElev = (num: number) => locations[num].elevation[1];
@@ -71,6 +86,15 @@ const MintContainer = () => {
     setSoil(num);
     setStep(3);
     setImageUri(renderImg(num));
+
+    checkGiveaway();
+  };
+
+  const checkGiveaway = () => {
+    if (wallet.status === "connected") {
+      giveawayBalance(wallet.account).then((val) => setGiveBal(val));
+      giveawayAllowance(wallet.account).then((val) => setGiveAllow(val));
+    }
   };
 
   const handleElev = (event: any) => {
@@ -93,6 +117,17 @@ const MintContainer = () => {
     const tx = await newVineyards([city, elev, soil], wallet);
     //@ts-ignore
     setMintHash(tx.hash);
+  };
+
+  const mintGiveaway = async () => {
+    const tx = await newVineyardsGiveaway([city, elev, soil], wallet);
+    //@ts-ignore
+    setMintHash(tx.hash);
+  };
+
+  const approveGive = async () => {
+    await approveGiveaway(wallet);
+    setGiveAllow(ethers.utils.parseEther("1").toString());
   };
 
   return (
@@ -219,6 +254,27 @@ const MintContainer = () => {
               <Spaced size="large" type="primary" shape="round" onClick={mint}>
                 Mint
               </Spaced>
+              {BigInt(giveBal) >= 1e18 ? (
+                BigInt(giveAllow) >= 1e18 ? (
+                  <Spaced
+                    size="large"
+                    type="primary"
+                    shape="round"
+                    onClick={mintGiveaway}
+                  >
+                    Use Giveaway Token
+                  </Spaced>
+                ) : (
+                  <Spaced
+                    size="large"
+                    type="primary"
+                    shape="round"
+                    onClick={approveGive}
+                  >
+                    Approve Giveaway Token
+                  </Spaced>
+                )
+              ) : null}
             </>
           ) : (
             <p>Connect Wallet to continue</p>

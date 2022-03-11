@@ -10,6 +10,15 @@ export const VINEPROTOCOL_QUERY = gql`
   }
 `;
 
+export const GIVEAWAY_QUERY = gql`
+  query GetAccount($userAddress: Bytes!) {
+    account(id: $userAddress) {
+      giveawayBalance
+      giveawayAllowance
+    }
+  }
+`;
+
 export const ACCOUNT_QUERY = gql`
   query GetAccount($userAddress: Bytes!) {
     account(id: $userAddress) {
