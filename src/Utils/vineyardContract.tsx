@@ -130,7 +130,7 @@ export const newVineyardsGiveaway = async (params: number[], wallet: any) => {
     params[2],
   ];
   let tx;
-  tx = await vineyardWithSigner.newVineyards(processedParams);
+  tx = await vineyardWithSigner.newVineyardGiveaway(processedParams);
   return tx;
 };
 

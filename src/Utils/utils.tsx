@@ -136,10 +136,10 @@ export const locations = [
     },
   },
   {
-    name: "Greenland",
-    elevation: [0, 12119],
+    name: "Madeira",
+    elevation: [0, 6106],
     climate: {
-      name: "Tundra",
+      name: "Subtropical",
       value: 4,
     },
   },
