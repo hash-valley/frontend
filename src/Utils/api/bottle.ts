@@ -1,20 +1,19 @@
-import { bottleTypes, getBottleEra } from "../utils";
+import { bottleTypes } from "../utils";
 
 export const bottleMetadata = (
-  attributes: number,
+  type: number,
+  subtype: number,
+  note: number,
+  name: number,
   age: number,
+  era: string,
   imgUri: string,
   feeRecipient: string,
   sellerFee: number,
   token: number
 ) => {
-  const type = 0;
-  const subtype = 1;
-  const note = 2;
-  const name = 3;
-
   return {
-    image: `ipfs://${imgUri}/?seed=${attributes}-${age}`,
+    image: `${imgUri}/?seed=${type}-${subtype}-${note}-${name}-${age}`,
     external_url: "https://hashvalley.xyz",
     name: `Hash Valley Winery Bottle ${token}`,
     seller_fee_basis_points: sellerFee,
@@ -42,7 +41,7 @@ export const bottleMetadata = (
       },
       {
         trait_type: "Era",
-        value: getBottleEra(age),
+        value: era,
       },
     ],
   };

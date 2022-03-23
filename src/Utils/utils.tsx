@@ -1,6 +1,9 @@
 import { providers } from "ethers";
 import { chainId, alchemyKey } from "./constants";
 
+export const day = 24 * 60 * 60;
+export const year = BigInt(365 * day);
+
 export const formatNum = (num: string, decimals: number = 3) => {
   const decimal = num.indexOf(".");
   return num.substring(0, decimal + decimals);
@@ -66,6 +69,29 @@ export const getBottleEra = (bottleAge: string | number) => {
       return bottleEras[i].name;
     }
   }
+};
+
+export const chanceOfSpoil = (stakedDays: number) => {
+  let chance;
+  if (stakedDays < 360) {
+    chance = 5 + ((365 - stakedDays) / 38) ** 2;
+  } else {
+    chance = 5;
+  }
+  return chance / 100;
+};
+
+// age in seconds
+export const ageOnRemove = (cellarTime: number): BigInt => {
+  if (cellarTime <= 360 * day) {
+    const months = (cellarTime / 30) * day;
+    const monthTime = cellarTime - months * 30 * day;
+    const eraTime =
+      bottleEras[months + 1].range[1] - bottleEras[months].range[1];
+    const monthFraction = (BigInt(monthTime) * eraTime) / BigInt(30 * day);
+    return bottleEras[months].range[1] + BigInt(monthFraction);
+  }
+  return bottleEras[12].range[1];
 };
 
 export interface BottleType {
@@ -599,7 +625,6 @@ export const bottleTypes = [
   },
 ];
 
-const year = BigInt(365 * 24 * 60 * 60);
 const bottleEras = [
   {
     name: "Contemporary",

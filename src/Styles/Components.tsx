@@ -37,7 +37,7 @@ export const GreyLink = styled(Link)`
 
 export const Spaced = styled(Button)`
   &&& {
-    margin: 32px 16px;
+    margin: 16px 16px;
   }
 `;
 

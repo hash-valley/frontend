@@ -16,7 +16,8 @@ const vineAbi = [
 
 const bottleAbi = [
   "function bottleAge(uint256 _tokenID) public view returns (uint256)",
-  "function attributes(uint _tokenID) public view returns(uint)",
+  "function attributes(uint _tokenID, uint index) public view returns(uint8)",
+  "function bottleEra(uint256 _tokenID) public view returns (string)",
   ...abi,
 ];
 
@@ -43,8 +44,12 @@ export const vineData = async (version: number, token: number) => {
 
 export const bottleData = async (version: number, token: number) => {
   const data = await Promise.all([
-    viewBottleContract.attributes(token),
+    viewBottleContract.attributes(token, 0),
+    viewBottleContract.attributes(token, 1),
+    viewBottleContract.attributes(token, 2),
+    viewBottleContract.attributes(token, 3),
     viewBottleContract.bottleAge(token),
+    viewBottleContract.bottleEra(token),
     viewBottleContract.imgVersions(version),
     viewBottleContract.artists(version),
     viewBottleContract.sellerFee(),

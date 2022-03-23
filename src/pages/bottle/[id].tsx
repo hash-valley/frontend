@@ -26,9 +26,14 @@ import {
   getBottleEra,
   getBottleType,
   BottleType,
+  chanceOfSpoil,
+  day,
+  ageOnRemove,
+  year,
 } from "../../Utils/utils";
 import { useBottleVersions } from "../../Hooks/useUriVersions";
 import Select from "rc-select";
+import { BigNumber } from "ethers";
 
 const BottlePage = () => {
   const wallet = useWallet();
@@ -46,6 +51,7 @@ const BottlePage = () => {
     name: "",
   });
   const [imageUri, setImageUri] = useState("");
+  let cellarStuff: any;
 
   const { loading, error, data, refetch } = useQuery(BOTTLE_QUERY, {
     variables: { id: "0x" + id?.toString() },
@@ -84,6 +90,17 @@ const BottlePage = () => {
         let fetchedAge = await bottleAge(parseInt(id.toString()));
         setAge(fetchedAge);
         setBottleType(getBottleType(data.bottle.attributes));
+
+        if (data.bottle.inCellar) {
+          const stakeTime = Date.now() / 1000 - data?.bottle?.stakedAt;
+          const ageR = BigNumber.from(ageOnRemove(stakeTime).toString());
+          cellarStuff = {
+            spoilChance: chanceOfSpoil(stakeTime / day),
+            vinegar: ageOnRemove(stakeTime).toString(),
+            age: ageR.div(year).toString(),
+            era: getBottleEra(ageR.toString()),
+          };
+        }
       }
     };
     if (!loading && !error) fetchBalance();
@@ -147,7 +164,15 @@ const BottlePage = () => {
         <div>
           <b>Name:</b> {bottleType.name}
         </div>
-        {data.bottle.inCellar && <div>Aging in cellar</div>}
+        {data.bottle.inCellar && (
+          <>
+            <div>Aging in cellar</div>
+            <div>Chance of spoil: {cellarStuff?.spoilChance}%</div>
+            <div>Vinegar received if spoil: {cellarStuff?.vinegar}</div>
+            <div>Age on removal if not spoiled: {cellarStuff?.age} years</div>
+            <div>Era on removal if not spoiled: {cellarStuff?.era}</div>
+          </>
+        )}
         {!data.bottle.inCellar && !data.bottle.canEnterCellar && (
           <div>Already aged in cellar</div>
         )}
