@@ -34,7 +34,7 @@ const BottleBoard = () => {
         <i>No Proposals have been made yet for Bottle Art</i>
       </h2>
       <br />
-      <Link href="/council/new">
+      <Link href="/council/new" passHref>
         <BigLink>Make one now!</BigLink>
       </Link>
     </Page>

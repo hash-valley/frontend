@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useWallet } from "use-wallet";
 import { useRouter } from "next/router";
 import {
@@ -51,7 +51,7 @@ const BottlePage = () => {
     name: "",
   });
   const [imageUri, setImageUri] = useState("");
-  let cellarStuff: any;
+  const cellarStuff: any = useRef(null)
 
   const { loading, error, data, refetch } = useQuery(BOTTLE_QUERY, {
     variables: { id: "0x" + id?.toString() },
@@ -94,7 +94,7 @@ const BottlePage = () => {
         if (data.bottle.inCellar) {
           const stakeTime = Date.now() / 1000 - data?.bottle?.stakedAt;
           const ageR = BigNumber.from(ageOnRemove(stakeTime).toString());
-          cellarStuff = {
+          cellarStuff.current = {
             spoilChance: chanceOfSpoil(stakeTime / day),
             vinegar: ageOnRemove(stakeTime).toString(),
             age: ageR.div(year).toString(),
@@ -167,10 +167,10 @@ const BottlePage = () => {
         {data.bottle.inCellar && (
           <>
             <div>Aging in cellar</div>
-            <div>Chance of spoil: {cellarStuff?.spoilChance}%</div>
-            <div>Vinegar received if spoil: {cellarStuff?.vinegar}</div>
-            <div>Age on removal if not spoiled: {cellarStuff?.age} years</div>
-            <div>Era on removal if not spoiled: {cellarStuff?.era}</div>
+            <div>Chance of spoil: {cellarStuff?.current.spoilChance}%</div>
+            <div>Vinegar received if spoil: {cellarStuff?.current.vinegar}</div>
+            <div>Age on removal if not spoiled: {cellarStuff?.current.age} years</div>
+            <div>Era on removal if not spoiled: {cellarStuff?.current.era}</div>
           </>
         )}
         {!data.bottle.inCellar && !data.bottle.canEnterCellar && (

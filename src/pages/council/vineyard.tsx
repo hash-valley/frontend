@@ -34,7 +34,7 @@ const VineBoard = () => {
         <i>No Proposals have been made yet for Vineyard Art</i>
       </h2>
       <br />
-      <Link href="/council/new">
+      <Link href="/council/new" passHref>
         <BigLink>Make one now!</BigLink>
       </Link>
     </Page>

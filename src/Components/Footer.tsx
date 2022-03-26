@@ -26,28 +26,28 @@ const Footer = () => {
   return (
     <FooterContainer>
       <FooterLink href="https://twitter.com/hash_valley" target={"_blank"}>
-        <Image src="/twitter.svg" height={24} width={24} />
+        <Image src="/twitter.svg" alt="twitter" height={24} width={24} />
       </FooterLink>
       <FooterLink href="https://www.discord.com" target={"_blank"}>
-        <Image src="/discord.svg" height={24} width={24} />
+        <Image src="/discord.svg" alt="discord" height={24} width={24} />
       </FooterLink>
       <FooterLink href="https://opensea.io" target={"_blank"}>
-        <Image src="/opensea.svg" height={24} width={24} />
+        <Image src="/opensea.svg" alt="opensea" height={24} width={24} />
       </FooterLink>
       <FooterLink
         href="https://etherscan.io/token/0xd6327ce1fb9d6020e8c2c0e124a1ec23dcab7536"
         target={"_blank"}
       >
-        <Image src="/etherscan.svg" height={24} width={24} />
+        <Image src="/etherscan.svg" alt="etherscan" height={24} width={24} />
       </FooterLink>
       <FooterLink href="https://github.com/hash-valley" target={"_blank"}>
-        <Image src="/github.svg" height={24} width={24} />
+        <Image src="/github.svg" alt="github" height={24} width={24} />
       </FooterLink>
       <FooterLink
         href="https://inathan-m.gitbook.io/hash-valley-winery/"
         target={"_blank"}
       >
-        <Image src="/docs.svg" height={24} width={24} />
+        <Image src="/docs.svg" alt="docs" height={24} width={24} />
       </FooterLink>
     </FooterContainer>
   );
