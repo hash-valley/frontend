@@ -9,6 +9,7 @@ import styled from "styled-components";
 import "../../public/index.css";
 import "antd/dist/antd.css";
 import Head from "next/head";
+import ComingSoon from "../Components/ComingSoon";
 
 const AppContainer = styled.div`
   text-align: center;
@@ -22,6 +23,15 @@ const client = new ApolloClient({
 });
 
 function MyApp({ Component, pageProps }) {
+  if (process.env.NEXT_PUBLIC_PREVIEW_MODE === "true") {
+    return (<>
+          <Head>
+            <title>Hash Valley Winery</title>
+          </Head>
+          <ComingSoon />
+          </>
+    );
+  }
   return (
     <UseWalletProvider
       chainId={chainId}

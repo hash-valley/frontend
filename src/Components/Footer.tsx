@@ -25,7 +25,7 @@ const FooterLink = styled.a`
 const Footer = () => {
   return (
     <FooterContainer>
-      <FooterLink href="https://www.twitter.com" target={"_blank"}>
+      <FooterLink href="https://twitter.com/hash_valley" target={"_blank"}>
         <Image src="/twitter.svg" height={24} width={24} />
       </FooterLink>
       <FooterLink href="https://www.discord.com" target={"_blank"}>
