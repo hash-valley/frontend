@@ -165,7 +165,7 @@ export const locations = [
     name: "Madeira",
     elevation: [0, 6106],
     climate: {
-      name: "Subtropical",
+      name: "Temperate Subtropical",
       value: 4,
     },
   },
@@ -230,7 +230,7 @@ export const locations = [
     elevation: [0, 7080],
     climate: {
       name: "Temperate Subtropical",
-      value: 10,
+      value: 4,
     },
   },
   {
