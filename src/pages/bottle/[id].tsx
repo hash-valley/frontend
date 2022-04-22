@@ -51,7 +51,7 @@ const BottlePage = () => {
     name: "",
   });
   const [imageUri, setImageUri] = useState("");
-  const cellarStuff: any = useRef(null)
+  const cellarStuff: any = useRef(null);
 
   const { loading, error, data, refetch } = useQuery(BOTTLE_QUERY, {
     variables: { id: "0x" + id?.toString() },
@@ -169,7 +169,9 @@ const BottlePage = () => {
             <div>Aging in cellar</div>
             <div>Chance of spoil: {cellarStuff?.current.spoilChance}%</div>
             <div>Vinegar received if spoil: {cellarStuff?.current.vinegar}</div>
-            <div>Age on removal if not spoiled: {cellarStuff?.current.age} years</div>
+            <div>
+              Age on removal if not spoiled: {cellarStuff?.current.age} years
+            </div>
             <div>Era on removal if not spoiled: {cellarStuff?.current.era}</div>
           </>
         )}

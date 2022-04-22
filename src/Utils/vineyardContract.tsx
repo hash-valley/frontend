@@ -1,5 +1,6 @@
 import { providers, Contract, utils } from "ethers";
 import { VineyardAddress, providerUrl, ipfs_gateway } from "./constants";
+import { toast } from "react-toastify";
 import { locations, soilTypes } from "./utils";
 
 const VineyardABI = [
@@ -110,13 +111,28 @@ export const newVineyards = async (params: number[], wallet: any) => {
   const supply = await totalSupply();
   let tx;
   if (supply < 100) {
-    tx = await vineyardWithSigner.newVineyards(processedParams);
+    try {
+      toast.info("Sending...");
+      tx = await vineyardWithSigner.newVineyards(processedParams);
+      toast.success("Success!");
+      return tx;
+    } catch (err: any) {
+      console.error(err);
+      toast.error(`Error! ${err?.message}`);
+    }
   } else {
-    tx = await vineyardWithSigner.newVineyards(processedParams, {
-      value: utils.parseEther("0.05"),
-    });
+    try {
+      toast.info("Sending...");
+      tx = await vineyardWithSigner.newVineyards(processedParams, {
+        value: utils.parseEther("0.05"),
+      });
+      toast.success("Success!");
+      return tx;
+    } catch (err: any) {
+      console.error(err);
+      toast.error(`Error! ${err?.message}`);
+    }
   }
-  return tx;
 };
 
 export const newVineyardsGiveaway = async (params: number[], wallet: any) => {
@@ -129,9 +145,16 @@ export const newVineyardsGiveaway = async (params: number[], wallet: any) => {
     negative,
     params[2],
   ];
-  let tx;
-  tx = await vineyardWithSigner.newVineyardGiveaway(processedParams);
-  return tx;
+
+  try {
+    toast.info("Sending...");
+    const tx = await vineyardWithSigner.newVineyardGiveaway(processedParams);
+    toast.success("Success!");
+    return tx;
+  } catch (err: any) {
+    console.error(err);
+    toast.error(`Error! ${err?.message}`);
+  }
 };
 
 export const userBalance = async (userAddress: string) => {
@@ -210,20 +233,44 @@ export const canWaterUntil = async (tokenId: number): Promise<number> => {
 
 export const water = async (wallet: any, tokenId: number) => {
   const vineyardWithSigner = withSigner(wallet);
-  const tx = await vineyardWithSigner.water(tokenId);
-  return tx;
+
+  try {
+    toast.info("Sending...");
+    const tx = await vineyardWithSigner.water(tokenId);
+    toast.success("Success!");
+    return tx;
+  } catch (err: any) {
+    console.error(err);
+    toast.error(`Error! ${err?.message}`);
+  }
 };
 
 export const plant = async (wallet: any, tokenId: number) => {
   const vineyardWithSigner = withSigner(wallet);
-  const tx = await vineyardWithSigner.plant(tokenId);
-  return tx;
+
+  try {
+    toast.info("Sending...");
+    const tx = await vineyardWithSigner.plant(tokenId);
+    toast.success("Success!");
+    return tx;
+  } catch (err: any) {
+    console.error(err);
+    toast.error(`Error! ${err?.message}`);
+  }
 };
 
 export const harvest = async (wallet: any, tokenId: number) => {
   const vineyardWithSigner = withSigner(wallet);
-  const tx = await vineyardWithSigner.harvest(tokenId);
-  return tx;
+
+  try {
+    toast.info("Sending...");
+    const tx = await vineyardWithSigner.harvest(tokenId);
+    toast.success("Success!");
+    return tx;
+  } catch (err: any) {
+    console.error(err);
+    toast.error(`Error! ${err?.message}`);
+  }
 };
 
 export const plantMultiple = async (
@@ -231,8 +278,16 @@ export const plantMultiple = async (
   tokenIds: number[] | string[]
 ) => {
   const vineyardWithSigner = withSigner(wallet);
-  const tx = await vineyardWithSigner.plantMultiple(tokenIds);
-  return tx;
+
+  try {
+    toast.info("Sending...");
+    const tx = await vineyardWithSigner.plantMultiple(tokenIds);
+    toast.success("Success!");
+    return tx;
+  } catch (err: any) {
+    console.error(err);
+    toast.error(`Error! ${err?.message}`);
+  }
 };
 
 export const waterMultiple = async (
@@ -240,8 +295,16 @@ export const waterMultiple = async (
   tokenIds: number[] | string[]
 ) => {
   const vineyardWithSigner = withSigner(wallet);
-  const tx = await vineyardWithSigner.waterMultiple(tokenIds);
-  return tx;
+
+  try {
+    toast.info("Sending...");
+    const tx = await vineyardWithSigner.waterMultiple(tokenIds);
+    toast.success("Success!");
+    return tx;
+  } catch (err: any) {
+    console.error(err);
+    toast.error(`Error! ${err?.message}`);
+  }
 };
 
 export const harvestMultiple = async (
@@ -249,8 +312,16 @@ export const harvestMultiple = async (
   tokenIds: number[] | string[]
 ) => {
   const vineyardWithSigner = withSigner(wallet);
-  const tx = await vineyardWithSigner.harvestMultiple(tokenIds);
-  return tx;
+
+  try {
+    toast.info("Sending...");
+    const tx = await vineyardWithSigner.harvestMultiple(tokenIds);
+    toast.success("Success!");
+    return tx;
+  } catch (err: any) {
+    console.error(err);
+    toast.error(`Error! ${err?.message}`);
+  }
 };
 
 export const vineProposal = async (
@@ -260,24 +331,56 @@ export const vineProposal = async (
   address: string
 ) => {
   const vineyardWithSigner = withSigner(wallet);
-  const tx = await vineyardWithSigner.suggest(tokenId, uri, address);
-  return tx;
+
+  try {
+    toast.info("Sending...");
+    const tx = await vineyardWithSigner.suggest(tokenId, uri, address);
+    toast.success("Success!");
+    return tx;
+  } catch (err: any) {
+    console.error(err);
+    toast.error(`Error! ${err?.message}`);
+  }
 };
 
 export const vineSupport = async (wallet: any, tokenId: number) => {
   const vineyardWithSigner = withSigner(wallet);
-  const tx = await vineyardWithSigner.support(tokenId);
-  return tx;
+
+  try {
+    toast.info("Sending...");
+    const tx = await vineyardWithSigner.support(tokenId);
+    toast.success("Success!");
+    return tx;
+  } catch (err: any) {
+    console.error(err);
+    toast.error(`Error! ${err?.message}`);
+  }
 };
 
 export const vineRetort = async (wallet: any, tokenId: number) => {
   const vineyardWithSigner = withSigner(wallet);
-  const tx = await vineyardWithSigner.retort(tokenId);
-  return tx;
+
+  try {
+    toast.info("Sending...");
+    const tx = await vineyardWithSigner.retort(tokenId);
+    toast.success("Success!");
+    return tx;
+  } catch (err: any) {
+    console.error(err);
+    toast.error(`Error! ${err?.message}`);
+  }
 };
 
 export const vineFinalize = async (wallet: any) => {
   const vineyardWithSigner = withSigner(wallet);
-  const tx = await vineyardWithSigner.complete();
-  return tx;
+
+  try {
+    toast.info("Sending...");
+    const tx = await vineyardWithSigner.complete();
+    toast.success("Success!");
+    return tx;
+  } catch (err: any) {
+    console.error(err);
+    toast.error(`Error! ${err?.message}`);
+  }
 };

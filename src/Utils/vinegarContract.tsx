@@ -1,6 +1,7 @@
 import { providers, Contract } from "ethers";
 import { providerUrl } from "./constants";
 import { VinegarAddress } from "./constants";
+import { toast } from "react-toastify";
 
 const vinegarABI = [
   "function balanceOf(address account) external view returns (uint256)",
@@ -34,8 +35,16 @@ export const approveVinegar = async (
   const signer = provider.getSigner();
   const VinegarContract = new Contract(VinegarAddress, vinegarABI, provider);
   const vinegarWithSigner = VinegarContract.connect(signer);
-  const tx = await vinegarWithSigner.approve(spender, amount);
-  return tx;
+
+  try {
+    toast.info("Sending...");
+    const tx = await vinegarWithSigner.approve(spender, amount);
+    toast.success("Success!");
+    return tx;
+  } catch (err: any) {
+    console.error(err);
+    toast.error(`Error! ${err?.message}`);
+  }
 };
 
 export const transferVinegar = async (
@@ -47,6 +56,14 @@ export const transferVinegar = async (
   const signer = provider.getSigner();
   const VinegarContract = new Contract(VinegarAddress, vinegarABI, provider);
   const vinegarWithSigner = VinegarContract.connect(signer);
-  const tx = await vinegarWithSigner.transfer(recipient, amount);
-  return tx;
+
+  try {
+    toast.info("Sending...");
+    const tx = await vinegarWithSigner.transfer(recipient, amount);
+    toast.success("Success!");
+    return tx;
+  } catch (err: any) {
+    console.error(err);
+    toast.error(`Error! ${err?.message}`);
+  }
 };

@@ -10,6 +10,7 @@ import "../../public/index.css";
 import "antd/dist/antd.css";
 import Head from "next/head";
 import ComingSoon from "../Components/ComingSoon";
+import { ToastContainer } from "react-toastify";
 
 const AppContainer = styled.div`
   text-align: center;
@@ -24,12 +25,13 @@ const client = new ApolloClient({
 
 function MyApp({ Component, pageProps }) {
   if (process.env.NEXT_PUBLIC_PREVIEW_MODE === "true") {
-    return (<>
-          <Head>
-            <title>Hash Valley Winery</title>
-          </Head>
-          <ComingSoon />
-          </>
+    return (
+      <>
+        <Head>
+          <title>Hash Valley Winery</title>
+        </Head>
+        <ComingSoon />
+      </>
     );
   }
   return (
@@ -47,6 +49,7 @@ function MyApp({ Component, pageProps }) {
           </Head>
           <Account />
           <Component {...pageProps} />
+          <ToastContainer position="bottom-right" />
         </AppContainer>
         <Footer />
       </ApolloProvider>

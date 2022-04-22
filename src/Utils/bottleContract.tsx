@@ -2,6 +2,7 @@ import { providers, Contract } from "ethers";
 import { providerUrl } from "./constants";
 import { tokenOwner as cellarTokenOwner } from "./cellarContract";
 import { BottleAddress, CellarAddress, ipfs_gateway } from "./constants";
+import { toast } from "react-toastify";
 
 const bottleABI = [
   "function rejuvenate(uint256 _oldTokenID) public returns (uint256)",
@@ -95,14 +96,28 @@ export const isCellarApproved = async (owner: string) => {
 
 export const approveCellar = async (wallet: any) => {
   const bottleWithSigner = withSigner(wallet);
-  const tx = await bottleWithSigner.setApprovalForAll(CellarAddress, true);
-  return tx;
+  try {
+    toast.info("Sending...");
+    const tx = await bottleWithSigner.setApprovalForAll(CellarAddress, true);
+    toast.success("Success!");
+    return tx;
+  } catch (err: any) {
+    console.error(err);
+    toast.error(`Error! ${err?.message}`);
+  }
 };
 
 export const rejuvenate = async (wallet: any, tokenId: number) => {
   const bottleWithSigner = withSigner(wallet);
-  const tx = await bottleWithSigner.rejuvenate(tokenId);
-  return tx;
+  try {
+    toast.info("Sending...");
+    const tx = await bottleWithSigner.rejuvenate(tokenId);
+    toast.success("Success!");
+    return tx;
+  } catch (err: any) {
+    console.error(err);
+    toast.error(`Error! ${err?.message}`);
+  }
 };
 
 export const bottleProposal = async (
@@ -112,24 +127,52 @@ export const bottleProposal = async (
   address: string
 ) => {
   const bottleWithSigner = withSigner(wallet);
-  const tx = await bottleWithSigner.suggest(tokenId, uri, address);
-  return tx;
+  try {
+    toast.info("Sending...");
+    const tx = await bottleWithSigner.suggest(tokenId, uri, address);
+    toast.success("Success!");
+    return tx;
+  } catch (err: any) {
+    console.error(err);
+    toast.error(`Error! ${err?.message}`);
+  }
 };
 
 export const bottleSupport = async (wallet: any, tokenId: number) => {
   const bottleWithSigner = withSigner(wallet);
-  const tx = await bottleWithSigner.support(tokenId);
-  return tx;
+  try {
+    toast.info("Sending...");
+    const tx = await bottleWithSigner.support(tokenId);
+    toast.success("Success!");
+    return tx;
+  } catch (err: any) {
+    console.error(err);
+    toast.error(`Error! ${err?.message}`);
+  }
 };
 
 export const bottleRetort = async (wallet: any, tokenId: number) => {
   const bottleWithSigner = withSigner(wallet);
-  const tx = await bottleWithSigner.retort(tokenId);
-  return tx;
+  try {
+    toast.info("Sending...");
+    const tx = await bottleWithSigner.retort(tokenId);
+    toast.success("Success!");
+    return tx;
+  } catch (err: any) {
+    console.error(err);
+    toast.error(`Error! ${err?.message}`);
+  }
 };
 
 export const bottleFinalize = async (wallet: any) => {
   const bottleWithSigner = withSigner(wallet);
-  const tx = await bottleWithSigner.complete();
-  return tx;
+  try {
+    toast.info("Sending...");
+    const tx = await bottleWithSigner.complete();
+    toast.success("Success!");
+    return tx;
+  } catch (err: any) {
+    console.error(err);
+    toast.error(`Error! ${err?.message}`);
+  }
 };

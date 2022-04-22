@@ -1,6 +1,7 @@
 import { providers, Contract, ethers } from "ethers";
 import { providerUrl } from "./constants";
 import { GiveawayAddress, VineyardAddress } from "./constants";
+import { toast } from "react-toastify";
 
 const giveawayABI = [
   "function balanceOf(address account) external view returns (uint256)",
@@ -30,11 +31,19 @@ export const approveGiveaway = async (wallet: any) => {
   const signer = provider.getSigner();
   const GiveawayContract = new Contract(GiveawayAddress, giveawayABI, provider);
   const giveawayWithSigner = GiveawayContract.connect(signer);
-  const tx = await giveawayWithSigner.approve(
-    VineyardAddress,
-    ethers.utils.parseEther("1")
-  );
-  return tx;
+
+  try {
+    toast.info("Sending...");
+    const tx = await giveawayWithSigner.approve(
+      VineyardAddress,
+      ethers.utils.parseEther("1")
+    );
+    toast.success("Success!");
+    return tx;
+  } catch (err: any) {
+    console.error(err);
+    toast.error(`Error! ${err?.message}`);
+  }
 };
 
 export const transferGiveaway = async (
@@ -46,6 +55,14 @@ export const transferGiveaway = async (
   const signer = provider.getSigner();
   const GiveawayContract = new Contract(GiveawayAddress, giveawayABI, provider);
   const giveawayWithSigner = GiveawayContract.connect(signer);
-  const tx = await giveawayWithSigner.transfer(recipient, amount);
-  return tx;
+
+  try {
+    toast.info("Sending...");
+    const tx = await giveawayWithSigner.transfer(recipient, amount);
+    toast.success("Success!");
+    return tx;
+  } catch (err: any) {
+    console.error(err);
+    toast.error(`Error! ${err?.message}`);
+  }
 };
