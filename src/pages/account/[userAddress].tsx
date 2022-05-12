@@ -120,25 +120,14 @@ const AccountPage = () => {
         <h3>No assets found for this account</h3>
       ) : (
         <div>
-          {userAddress === wallet.account ? (
-            <h3>
-              You own {data.account.vineyards.length} Vineyard
-              {data.account.vineyards.length === 1 ? "" : "s"},{" "}
-              {data.account.bottles.length} Bottle
-              {data.account.bottles.length === 1 ? "" : "s"} and{" "}
-              {formatNum(utils.formatEther(data.account.vinegarBalance))}{" "}
-              Vinegar
-            </h3>
-          ) : (
-            <h3>
-              {data.account.vineyards.length} Vineyard
-              {data.account.vineyards.length === 1 ? "" : "s"},{" "}
-              {data.account.bottles.length} Bottle
-              {data.account.bottles.length === 1 ? "" : "s"} and{" "}
-              {formatNum(utils.formatEther(data.account.vinegarBalance))}{" "}
-              Vinegar
-            </h3>
-          )}
+          <h3>
+            {userAddress === wallet.account && "You own"}{" "}
+            {data.account.vineyards.length} Vineyard
+            {data.account.vineyards.length === 1 ? "" : "s"},{" "}
+            {data.account.bottles.length} Bottle
+            {data.account.bottles.length === 1 ? "" : "s"} and{" "}
+            {formatNum(utils.formatEther(data.account.vinegarBalance))} Vinegar
+          </h3>
           <div>
             {view == "bottles" && (
               <div>
