@@ -135,7 +135,7 @@ const Account = () => {
             </AccountEth>
             {wallet.account && (
               <AccountEth>
-                <b>{userBalance} ETH</b>
+                <b>{userBalance} Ξ</b>
               </AccountEth>
             )}
             <AccountName>

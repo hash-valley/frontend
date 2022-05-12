@@ -109,11 +109,11 @@ const Splash = () => {
       </h3>
       {price == 0 ? (
         <h3>
-          <i>{100 - minted} free vineyards remaining (then 0.05 ETH/mint)</i>
+          <i>{100 - minted} free vineyards remaining (then 0.05 Ξ/mint)</i>
         </h3>
       ) : (
         <h3>
-          <i>{price} ETH</i>
+          <i>{price} Ξ</i>
         </h3>
       )}
       <br />

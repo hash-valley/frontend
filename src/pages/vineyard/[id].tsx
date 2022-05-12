@@ -11,6 +11,7 @@ import {
   canWaterUntil,
   getStreak,
   historicalUriIpfs,
+  buySprinkler,
 } from "../../Utils/vineyardContract";
 import {
   locations,
@@ -18,6 +19,7 @@ import {
   hours,
   minutes,
   seconds,
+  toDate,
 } from "../../Utils/utils";
 import { useCurrSeason } from "../../Hooks/useCurrSeason";
 import { useQuery } from "@apollo/client";
@@ -35,6 +37,7 @@ import {
 } from "../../Styles/Components";
 import { useVineVersions } from "../../Hooks/useUriVersions";
 import Select from "rc-select";
+import { Button } from "antd";
 
 const VineyardPage = () => {
   const wallet = useWallet();
@@ -171,6 +174,27 @@ const VineyardPage = () => {
         </div>
         <div>
           <b>Streak:</b> {streak}
+        </div>
+        <div>
+          {data.vineyard.sprinklerExpires &&
+          Number(data.vineyard.sprinklerExpires) > Date.now() / 1000 ? (
+            <>
+              <b>Sprinkler expires:</b> {toDate(data.vineyard.sprinklerExpires)}
+            </>
+          ) : (
+            <>
+              <b>No Sprinkler</b>
+              <Button
+                type="text"
+                size="middle"
+                onClick={() =>
+                  buySprinkler(wallet, Number(data.vineyard.tokenId))
+                }
+              >
+                Buy Sprinkler (0.01 Ξ)
+              </Button>
+            </>
+          )}
         </div>
         <br />
 

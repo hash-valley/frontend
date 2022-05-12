@@ -35,6 +35,7 @@ export const ACCOUNT_QUERY = gql`
         soil
         seasonsPlanted
         seasonsHarvested
+        sprinklerExpires
         bottles {
           id
         }
@@ -54,6 +55,7 @@ export const VINEYARD_QUERY = gql`
       elevation
       location
       xp
+      sprinklerExpires
       owner {
         id
       }

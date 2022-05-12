@@ -94,6 +94,11 @@ export const ageOnRemove = (cellarTime: number): BigInt => {
   return bottleEras[12].range[1];
 };
 
+export const toDate = (timestamp: number): string => {
+  const date = new Date(timestamp * 1000);
+  return date.toUTCString();
+};
+
 export interface BottleType {
   type: string;
   subtype: string;

@@ -35,6 +35,7 @@ const VineyardABI = [
   "function support(uint256 _tokenId) public",
   "function retort(uint256 _tokenId) public",
   "function complete() public",
+  "function buySprinkler(uint256 _tokenId) public payable",
 ];
 
 const viewProvider = new providers.JsonRpcProvider(providerUrl);
@@ -377,6 +378,20 @@ export const vineFinalize = async (wallet: any) => {
   try {
     toast.info("Sending...");
     const tx = await vineyardWithSigner.complete();
+    toast.success("Success!");
+    return tx;
+  } catch (err: any) {
+    console.error(err);
+    toast.error(`Error! ${err?.message}`);
+  }
+};
+
+export const buySprinkler = async (wallet: any, tokenId: number) => {
+  const vineyardWithSigner = withSigner(wallet);
+
+  try {
+    toast.info("Sending...");
+    const tx = await vineyardWithSigner.buySprinkler(tokenId);
     toast.success("Success!");
     return tx;
   } catch (err: any) {
