@@ -25,6 +25,7 @@ const client = new ApolloClient({
 });
 
 function MyApp({ Component, pageProps }) {
+  console.log(providerUrl)
   if (process.env.NEXT_PUBLIC_PREVIEW_MODE === "true") {
     return (
       <>
