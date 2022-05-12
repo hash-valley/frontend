@@ -1,7 +1,7 @@
 import Account from "../Components/Account";
 import Footer from "../Components/Footer";
 import { UseWalletProvider } from "use-wallet";
-import { providerUrl } from "../Utils/constants";
+import { providerUrl, walletConnectKey } from "../Utils/constants";
 import { ApolloProvider } from "@apollo/client";
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { subgraphUrl, chainId } from "../Utils/constants";
@@ -40,7 +40,7 @@ function MyApp({ Component, pageProps }) {
       chainId={chainId}
       connectors={{
         portis: { dAppId: "hash-walley-winery" },
-        walletconnect: { rpcUrl: providerUrl },
+        walletconnect: { rpcUrl: providerUrl, apiKey: walletConnectKey },
       }}
     >
       <ApolloProvider client={client}>

@@ -31,11 +31,15 @@ const Footer = () => {
       <FooterLink href="https://www.discord.com" target={"_blank"}>
         <Image src="/discord.svg" alt="discord" height={24} width={24} />
       </FooterLink>
-      <FooterLink href="https://opensea.io" target={"_blank"}>
-        <Image src="/opensea.svg" alt="opensea" height={24} width={24} />
+      <FooterLink href="https://quixotic.io" target={"_blank"}>
+        <Image src="/quixotic.svg" alt="quixotic" height={24} width={24} />
       </FooterLink>
       <FooterLink
-        href="https://etherscan.io/token/0xd6327ce1fb9d6020e8c2c0e124a1ec23dcab7536"
+        href={
+          process.env.NEXT_PUBLIC_CHAIN_ID === "69"
+            ? "https://kovan-optimistic.etherscan.io/token/0x725Ebff6DD72F7eA9d82bbccEF552Df0fC682122"
+            : "https://optimistic.etherscan.io/token/"
+        }
         target={"_blank"}
       >
         <Image src="/etherscan.svg" alt="etherscan" height={24} width={24} />

@@ -77,17 +77,20 @@ const Account = () => {
   useEffect(() => {
     setTimeout(() => {
       //@ts-ignore
-      if (window.ethereum.selectedAddress) wallet.connect();
+      if (window.ethereum && window.ethereum.selectedAddress) wallet.connect();
     }, 300);
   }, []);
 
   useEffect(() => {
     const checkNetwork = async () => {
       //@ts-ignore
-      const provider = new providers.Web3Provider(window.ethereum, "any");
-      provider.on("network", async (_, __) => {
-        setIsCorrectNetwork(await correctNetwork());
-      });
+      if (window.ethereum) {
+        //@ts-ignore
+        const provider = new providers.Web3Provider(window.ethereum, "any");
+        provider.on("network", async (_, __) => {
+          setIsCorrectNetwork(await correctNetwork());
+        });
+      }
     };
     checkNetwork();
   }, []);
@@ -142,13 +145,22 @@ const Account = () => {
               <DropdownGap
                 overlay={
                   <Menu>
-                    <Menu.Item onClick={() => router.push(`/council/vineyard`)}>
+                    <Menu.Item
+                      onClick={() => router.push(`/council/vineyard`)}
+                      key="1"
+                    >
                       Vineyards
                     </Menu.Item>
-                    <Menu.Item onClick={() => router.push(`/council/bottle`)}>
+                    <Menu.Item
+                      onClick={() => router.push(`/council/bottle`)}
+                      key="2"
+                    >
                       Bottles
                     </Menu.Item>
-                    <Menu.Item onClick={() => router.push(`/council/new`)}>
+                    <Menu.Item
+                      onClick={() => router.push(`/council/new`)}
+                      key="3"
+                    >
                       New Proposal
                     </Menu.Item>
                   </Menu>
@@ -172,6 +184,7 @@ const Account = () => {
                         onClick={() =>
                           router.push(`/account/${wallet.account}`)
                         }
+                        key="1"
                       >
                         Account
                       </Menu.Item>
@@ -179,6 +192,7 @@ const Account = () => {
                         icon={<CloseOutlined />}
                         danger
                         onClick={() => wallet.reset()}
+                        key="2"
                       >
                         Disconnect
                       </Menu.Item>
@@ -198,15 +212,19 @@ const Account = () => {
                 <Dropdown
                   overlay={
                     <Menu>
-                      <Menu.Item onClick={() => wallet.connect()}>
+                      <Menu.Item onClick={() => wallet.connect()} key="1">
                         MetaMask
                       </Menu.Item>
                       <Menu.Item
                         onClick={() => wallet.connect("walletconnect")}
+                        key="2"
                       >
                         WalletConnect
                       </Menu.Item>
-                      <Menu.Item onClick={() => wallet.connect("frame")}>
+                      <Menu.Item
+                        onClick={() => wallet.connect("frame")}
+                        key="3"
+                      >
                         Frame
                       </Menu.Item>
                     </Menu>

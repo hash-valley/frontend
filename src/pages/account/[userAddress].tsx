@@ -38,7 +38,8 @@ const AccountPage = () => {
   const router = useRouter();
   const { userAddress } = router.query;
   const [view, setView] = useState("vineyards");
-  const [nullData, setNullData] = useState(true);
+  const [loadingContract, setLoadingContract] = useState(true);
+  const [nullData, setNullData] = useState(false);
   const [farmables, setFarmables] = useState<Array<Farmable>>([]);
   const [mults, setMults] = useState<Mults>({
     canWater: 0,
@@ -53,6 +54,7 @@ const AccountPage = () => {
   useEffect(() => {
     const fetchBalance = async () => {
       if (data.account) {
+        setNullData(false);
         const farmables: Farmable[] = await Promise.all(
           data.account.vineyards.map(
             async (v: any) => await fetchTokenFarmingStats(v.tokenId)
@@ -71,7 +73,10 @@ const AccountPage = () => {
           multAccumulator.canHarvest += e.canHarvest ? 1 : 0;
         });
         setMults(multAccumulator);
-        setNullData(false);
+        setLoadingContract(false);
+      } else {
+        setLoadingContract(false);
+        setNullData(true);
       }
     };
     if (!loading && !error) fetchBalance();
@@ -107,7 +112,7 @@ const AccountPage = () => {
 
   return (
     <Page>
-      {loading ? (
+      {loading || loadingContract ? (
         <h3>
           <i>Loading...</i>
         </h3>

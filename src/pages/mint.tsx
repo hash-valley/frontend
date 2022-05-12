@@ -215,7 +215,13 @@ const MintContainer = () => {
           </Sign>
           {mintHash ? (
             <>
-              <GreyLink href={`https://etherscan.io/tx/${mintHash}`}>
+              <GreyLink
+                href={
+                  process.env.NEXT_PUBLIC_CHAIN_ID === "69"
+                    ? `https://kovan-optimistic.etherscan.io/tx/${mintHash}`
+                    : `https://optimistic.etherscan.io/tx/${mintHash}`
+                }
+              >
                 <a target={"_blank"}>Transaction sent: {mintHash}</a>
               </GreyLink>
               <br />
