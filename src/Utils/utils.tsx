@@ -74,22 +74,21 @@ export const getBottleEra = (bottleAge: string | number) => {
 export const chanceOfSpoil = (stakedDays: number) => {
   let chance;
   if (stakedDays < 360) {
-    chance = 5 + ((365 - stakedDays) / 38) ** 2;
+    chance = 5 + Math.floor((365 - stakedDays) / 38) ** 2;
   } else {
     chance = 5;
   }
-  return chance / 100;
+  return 100 - chance;
 };
 
 // age in seconds
 export const ageOnRemove = (cellarTime: number): BigInt => {
   if (cellarTime <= 360 * day) {
-    const months = (cellarTime / 30) * day;
+    const months = Math.floor(cellarTime / day / 30);
     const monthTime = cellarTime - months * 30 * day;
-    const eraTime =
-      bottleEras[months + 1].range[1] - bottleEras[months].range[1];
+    const eraTime = bottleEras[months].range[1] - bottleEras[months].range[0];
     const monthFraction = (BigInt(monthTime) * eraTime) / BigInt(30 * day);
-    return bottleEras[months].range[1] + BigInt(monthFraction);
+    return bottleEras[months].range[0] + BigInt(monthFraction);
   }
   return bottleEras[12].range[1];
 };

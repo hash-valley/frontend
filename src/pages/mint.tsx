@@ -7,9 +7,7 @@ import {
   historicalUriIpfs,
   newVineyardsGiveaway,
 } from "../Utils/vineyardContract";
-import {
-  giveawayBalance,
-} from "../Utils/giveawayToken";
+import { giveawayBalance } from "../Utils/giveawayToken";
 import {
   GreyLink,
   GridContainer,

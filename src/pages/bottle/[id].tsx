@@ -58,7 +58,7 @@ const BottlePage = () => {
   });
 
   const changeImage = async (n: number) => {
-    if (!loading) {
+    if (!loading && data.bottle) {
       let uri = await historicalUriIpfs(n);
       uri =
         uri +
@@ -88,14 +88,18 @@ const BottlePage = () => {
         setIsApproved(await isCellarApproved(data.bottle.owner.id));
 
         let fetchedAge = await bottleAge(parseInt(id.toString()));
+        console.log(fetchedAge)
         setAge(fetchedAge);
         setBottleType(getBottleType(data.bottle.attributes));
 
         if (data.bottle.inCellar) {
-          const stakeTime = Date.now() / 1000 - data?.bottle?.stakedAt;
+          const stakeTime = Math.floor(
+            Date.now() / 1000 - data?.bottle?.stakedAt
+          );
           const ageR = BigNumber.from(ageOnRemove(stakeTime).toString());
           cellarStuff.current = {
-            spoilChance: chanceOfSpoil(stakeTime / day),
+            stakeTime,
+            spoilChance: chanceOfSpoil(Math.floor(stakeTime / day)),
             vinegar: ageOnRemove(stakeTime).toString(),
             age: ageR.div(year).toString(),
             era: getBottleEra(ageR.toString()),
@@ -166,13 +170,29 @@ const BottlePage = () => {
         </div>
         {data.bottle.inCellar && (
           <>
-            <div>Aging in cellar</div>
-            <div>Chance of spoil: {cellarStuff?.current.spoilChance}%</div>
-            <div>Vinegar received if spoil: {cellarStuff?.current.vinegar}</div>
+            <br />
             <div>
-              Age on removal if not spoiled: {cellarStuff?.current.age} years
+              <i>Aging in cellar</i>
             </div>
-            <div>Era on removal if not spoiled: {cellarStuff?.current.era}</div>
+            <div>
+              <b>Staked for:</b>{" "}
+              {secondsToString(cellarStuff?.current?.stakeTime ?? 0)}
+            </div>
+            <div>
+              <b>Chance of spoil:</b> {cellarStuff?.current?.spoilChance}%
+            </div>
+            <div>
+              <b>Vinegar received if spoil: </b>
+              {cellarStuff?.current?.vinegar}
+            </div>
+            <div>
+              <b>Age on removal if not spoiled:</b> {cellarStuff?.current?.age}{" "}
+              years
+            </div>
+            <div>
+              <b>Era on removal if not spoiled: </b>
+              {cellarStuff?.current?.era}
+            </div>
           </>
         )}
         {!data.bottle.inCellar && !data.bottle.canEnterCellar && (

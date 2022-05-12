@@ -37,7 +37,6 @@ export const approveVinegar = async (
   const vinegarWithSigner = VinegarContract.connect(signer);
 
   try {
-    toast.info("Sending...");
     const tx = await vinegarWithSigner.approve(spender, amount);
     toast.success("Success!");
     return tx;
@@ -58,7 +57,6 @@ export const transferVinegar = async (
   const vinegarWithSigner = VinegarContract.connect(signer);
 
   try {
-    toast.info("Sending...");
     const tx = await vinegarWithSigner.transfer(recipient, amount);
     toast.success("Success!");
     return tx;

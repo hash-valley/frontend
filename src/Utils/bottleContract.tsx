@@ -97,7 +97,6 @@ export const isCellarApproved = async (owner: string) => {
 export const approveCellar = async (wallet: any) => {
   const bottleWithSigner = withSigner(wallet);
   try {
-    toast.info("Sending...");
     const tx = await bottleWithSigner.setApprovalForAll(CellarAddress, true);
     toast.success("Success!");
     return tx;
@@ -110,7 +109,6 @@ export const approveCellar = async (wallet: any) => {
 export const rejuvenate = async (wallet: any, tokenId: number) => {
   const bottleWithSigner = withSigner(wallet);
   try {
-    toast.info("Sending...");
     const tx = await bottleWithSigner.rejuvenate(tokenId);
     toast.success("Success!");
     return tx;
@@ -128,7 +126,6 @@ export const bottleProposal = async (
 ) => {
   const bottleWithSigner = withSigner(wallet);
   try {
-    toast.info("Sending...");
     const tx = await bottleWithSigner.suggest(tokenId, uri, address);
     toast.success("Success!");
     return tx;
@@ -141,7 +138,6 @@ export const bottleProposal = async (
 export const bottleSupport = async (wallet: any, tokenId: number) => {
   const bottleWithSigner = withSigner(wallet);
   try {
-    toast.info("Sending...");
     const tx = await bottleWithSigner.support(tokenId);
     toast.success("Success!");
     return tx;
@@ -154,7 +150,6 @@ export const bottleSupport = async (wallet: any, tokenId: number) => {
 export const bottleRetort = async (wallet: any, tokenId: number) => {
   const bottleWithSigner = withSigner(wallet);
   try {
-    toast.info("Sending...");
     const tx = await bottleWithSigner.retort(tokenId);
     toast.success("Success!");
     return tx;
@@ -167,7 +162,6 @@ export const bottleRetort = async (wallet: any, tokenId: number) => {
 export const bottleFinalize = async (wallet: any) => {
   const bottleWithSigner = withSigner(wallet);
   try {
-    toast.info("Sending...");
     const tx = await bottleWithSigner.complete();
     toast.success("Success!");
     return tx;

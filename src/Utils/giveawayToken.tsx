@@ -33,7 +33,6 @@ export const approveGiveaway = async (wallet: any) => {
   const giveawayWithSigner = GiveawayContract.connect(signer);
 
   try {
-    toast.info("Sending...");
     const tx = await giveawayWithSigner.approve(
       VineyardAddress,
       ethers.utils.parseEther("1")
@@ -57,7 +56,6 @@ export const transferGiveaway = async (
   const giveawayWithSigner = GiveawayContract.connect(signer);
 
   try {
-    toast.info("Sending...");
     const tx = await giveawayWithSigner.transfer(recipient, amount);
     toast.success("Success!");
     return tx;

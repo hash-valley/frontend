@@ -11,6 +11,7 @@ import "antd/dist/antd.css";
 import Head from "next/head";
 import ComingSoon from "../Components/ComingSoon";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AppContainer = styled.div`
   text-align: center;
