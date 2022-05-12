@@ -119,14 +119,14 @@ const VoteBar: FC<VoteBarTypes> = ({ votesFor, votesAgainst, completed }) => {
 };
 
 const defaultUri = (uri: string) =>
-  ipfs_gateway + uri + "/?seed=" + "0-0-0-0-0"; //TODO: actual values
+  ipfs_gateway + uri.substring(7) + "/?seed=" + "0-0-0-0-0"; //TODO: actual values
 
 const bottleUri = (uri: string, bottle: any) =>
-  ipfs_gateway + uri + "/?seed=" + "1-0-0-0-0"; //TODO: actual values
+  ipfs_gateway + uri.substring(7) + "/?seed=" + "1-0-0-0-0"; //TODO: actual values
 
 const vineyardUri = (uri: string, vineyard: any) =>
   ipfs_gateway +
-  uri +
+  uri.substring(7) +
   "/?seed=" +
   vineyard.location +
   "-" +

@@ -88,7 +88,6 @@ const BottlePage = () => {
         setIsApproved(await isCellarApproved(data.bottle.owner.id));
 
         let fetchedAge = await bottleAge(parseInt(id.toString()));
-        console.log(fetchedAge)
         setAge(fetchedAge);
         setBottleType(getBottleType(data.bottle.attributes));
 
