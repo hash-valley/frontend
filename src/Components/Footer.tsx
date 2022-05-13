@@ -1,5 +1,6 @@
 import Image from "next/image";
 import styled from "styled-components";
+import { VineyardAddress } from "../Utils/constants";
 
 const FooterContainer = styled.div`
   text-align: center;
@@ -31,14 +32,21 @@ const Footer = () => {
       <FooterLink href="https://www.discord.com" target={"_blank"}>
         <Image src="/discord.svg" alt="discord" height={24} width={24} />
       </FooterLink>
-      <FooterLink href="https://quixotic.io" target={"_blank"}>
+      <FooterLink
+        href={
+          process.env.NEXT_PUBLIC_CHAIN_ID === "69"
+            ? `https://testnet.quixotic.io/collection/${VineyardAddress}`
+            : `https://quixotic.io/collection/${VineyardAddress}`
+        }
+        target={"_blank"}
+      >
         <Image src="/quixotic.svg" alt="quixotic" height={24} width={24} />
       </FooterLink>
       <FooterLink
         href={
           process.env.NEXT_PUBLIC_CHAIN_ID === "69"
-            ? "https://kovan-optimistic.etherscan.io/token/0x725Ebff6DD72F7eA9d82bbccEF552Df0fC682122"
-            : "https://optimistic.etherscan.io/token/"
+            ? `https://kovan-optimistic.etherscan.io/token/${VineyardAddress}`
+            : `https://optimistic.etherscan.io/token/${VineyardAddress}`
         }
         target={"_blank"}
       >
