@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { Page } from "../Styles/Components";
 import { useRouter } from "next/router";
 import { Button } from "antd";
+import { useCurrSeason } from "../Hooks/useCurrSeason";
 
 const ProgressContainer = styled.div`
   padding: 7px;
@@ -69,29 +70,22 @@ const Header = styled.h1`
 
 const Splash = () => {
   const router = useRouter();
+  const protocol = useCurrSeason();
   const [minted, setMinted] = useState(0);
   const [max, setMax] = useState(Infinity);
   const [price, setPrice] = useState(0.05);
 
-  const { loading, error, data, refetch } = useQuery(VINEPROTOCOL_QUERY);
-
   useEffect(() => {
     const fetchData = async () => {
-      if (data.vineProtocol) {
-        const supply = data.vineProtocol.mintedVineyards;
-        setMinted(supply);
-        if (supply < 100) {
-          setPrice(0);
-        }
-        setMax(data.vineProtocol.maxVineyards);
+      const supply = protocol.mintedVineyards;
+      setMinted(supply);
+      if (supply < 100) {
+        setPrice(0);
       }
+      setMax(protocol.maxVineyards);
     };
-    if (!loading && !error) fetchData();
-  }, [loading]);
-
-  useEffect(() => {
-    refetch();
-  }, [router]);
+    if (protocol) fetchData();
+  }, [protocol]);
 
   return (
     <Page>

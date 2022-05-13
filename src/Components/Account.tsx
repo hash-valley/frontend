@@ -69,7 +69,7 @@ const SearchBar = styled(Input)`
 const Account = () => {
   const wallet = useWallet();
   const router = useRouter();
-  const season = useCurrSeason();
+  const protocol = useCurrSeason();
   const [userBalance, setUserBalance] = useState("0.00");
   const [userAddress, setUserAddress] = useState("");
   const [isCorrectNetwork, setIsCorrectNetwork] = useState(true);
@@ -134,7 +134,19 @@ const Account = () => {
               <SearchOutlined />
             </Search> */}
             <AccountEth>
-              <b>{season === 0 ? "Pre-season" : `Season ${season}`}</b>
+              <b>
+                {protocol.season === 0
+                  ? "Pre-season"
+                  : `Season ${protocol.season}`}
+              </b>
+              <b>{protocol.season > 0 ? ` | ${protocol.daysLeft} days` : ``}</b>
+              {protocol.plant ? (
+                <b> | Planting 🌱</b>
+              ) : protocol.harvest ? (
+                <b> | Harvesting 🍁</b>
+              ) : (
+                ""
+              )}
             </AccountEth>
             {wallet.account && (
               <AccountEth>

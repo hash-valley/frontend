@@ -4,8 +4,14 @@ export const VINEPROTOCOL_QUERY = gql`
   query GetVineyardProtocol {
     vineProtocol(id: "0") {
       gameStarted
+      startTime
       maxVineyards
       mintedVineyards
+      cellar
+      vinegar
+      vineyard
+      giveaway
+      bottle
     }
   }
 `;
