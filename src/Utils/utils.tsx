@@ -69,6 +69,18 @@ export const requestChain = () => {
       : chainId === 69
       ? "https://kovan.optimism.io"
       : "http://localhost:8545";
+  const blockExplorer =
+    chainId === 10
+      ? "https://optimistic.etherscan.io"
+      : chainId === 69
+      ? "https://kovan-optimistic.etherscan.io"
+      : "";
+  const chainName =
+    chainId === 10
+      ? "Optimism"
+      : chainId === 69
+      ? "Optimistic Kovan"
+      : "LocalHost";
   //@ts-ignore
   if (window.ethereum) {
     //@ts-ignore
@@ -76,6 +88,13 @@ export const requestChain = () => {
       method: "wallet_addEthereumChain",
       params: [
         {
+          chainName,
+          nativeCurrency: {
+            name: "Ethereum",
+            symbol: "ETH",
+            decimals: 18,
+          },
+          blockExplorerUrls: [blockExplorer],
           chainId: `0x${chainId.toString(16)}`,
           rpcUrls: [rpc],
         },
