@@ -1,4 +1,5 @@
 import { providers } from "ethers";
+import { toast } from "react-toastify";
 import { chainId, alchemyKey } from "./constants";
 
 export const day = 24 * 60 * 60;
@@ -59,6 +60,38 @@ export const correctNetwork = async () => {
   const provider = new providers.Web3Provider(window.ethereum);
   const network = await provider.getNetwork();
   return network.chainId === chainId;
+};
+
+export const requestChain = () => {
+  const rpc =
+    chainId === 10
+      ? "https://mainnet.optimism.io"
+      : chainId === 69
+      ? "https://kovan.optimism.io"
+      : "http://localhost:8545";
+  //@ts-ignore
+  if (window.ethereum) {
+    //@ts-ignore
+    window.ethereum?.request({
+      method: "wallet_addEthereumChain",
+      params: [
+        {
+          chainId: `0x${chainId.toString(16)}`,
+          rpcUrls: [rpc],
+        },
+      ],
+    });
+  } else {
+    toast.info(
+      `Please switch your wallet network to ${
+        chainId === 10
+          ? "Optimism"
+          : chainId === 69
+          ? "Optimistic Kovan"
+          : chainId
+      }`
+    );
+  }
 };
 
 export const getBottleEra = (bottleAge: string | number) => {

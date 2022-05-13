@@ -9,11 +9,14 @@ import {
   getENS,
   shortenAddress,
   correctNetwork,
+  requestChain,
 } from "../Utils/utils";
 import { useCurrSeason } from "../Hooks/useCurrSeason";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import { UserOutlined, CloseOutlined } from "@ant-design/icons";
+import { chainId } from "../Utils/constants";
+import { toast } from "react-toastify";
 
 const TitleBar = styled.div`
   width: 100%;
@@ -98,10 +101,21 @@ const Account = () => {
         provider.on("network", async (_, __) => {
           setIsCorrectNetwork(await correctNetwork());
         });
+      } else {
+        if (wallet.error) {
+          console.error(wallet.error);
+          if (wallet.error.toString().includes("ChainUnsupportedError")) {
+            toast.error(
+              `Wrong Chain: Please connect to Optimism (chain id: ${chainId})`
+            );
+          } else {
+            toast.error(`Error ${wallet.error}`);
+          }
+        }
       }
     };
     checkNetwork();
-  }, []);
+  }, [wallet]);
 
   useEffect(() => {
     const user = async () => {
@@ -250,7 +264,13 @@ const Account = () => {
                   </Button>
                 </Dropdown>
               ) : (
-                <Button danger type="primary" shape="round" size="large">
+                <Button
+                  danger
+                  type="primary"
+                  shape="round"
+                  size="large"
+                  onClick={requestChain}
+                >
                   <b>Wrong Network</b>
                 </Button>
               )}
@@ -385,7 +405,13 @@ const Account = () => {
               </Button>
             </Dropdown>
           ) : (
-            <Button danger type="primary" shape="round" size="large">
+            <Button
+              danger
+              type="primary"
+              shape="round"
+              size="large"
+              onClick={requestChain}
+            >
               <b>Wrong Network</b>
             </Button>
           )}
