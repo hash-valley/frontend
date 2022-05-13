@@ -13,7 +13,7 @@ import {
 import { useCurrSeason } from "../Hooks/useCurrSeason";
 import styled from "styled-components";
 import { useRouter } from "next/router";
-import { UserOutlined, CloseOutlined, SearchOutlined } from "@ant-design/icons";
+import { UserOutlined, CloseOutlined } from "@ant-design/icons";
 
 const TitleBar = styled.div`
   width: 100%;
@@ -22,9 +22,23 @@ const TitleBar = styled.div`
   font-family: Nunito;
 `;
 
-const AccountButton = styled.span`
+const AccountButtonList = styled.span`
   float: right;
   margin: 15px 64px 0px 0px;
+  @media screen and (max-width: 742px) {
+    display: none;
+  }
+`;
+
+const AccountButtonCondensed = styled.span`
+  float: right;
+  margin: 15px 64px 0px 0px;
+  @media screen and (min-width: 743px) {
+    display: none;
+  }
+  @media screen and (max-width: 425px) {
+    margin: 15px 16px 0px 0px;
+  }
 `;
 
 const AccountEth = styled.div`
@@ -35,11 +49,6 @@ const AccountEth = styled.div`
   border: 2px solid black;
   border-radius: 16px;
   padding: 0.49rem;
-`;
-
-const Search = styled(AccountEth)`
-  padding: 0.48rem 0.7rem 0.48rem 0.7rem;
-  border-radius: 100%;
 `;
 
 const AccountName = styled.div`
@@ -56,14 +65,13 @@ const Inline = styled.div`
 const LogoBox = styled.span`
   float: left;
   margin: 8px 0px 8px 64px;
+  @media screen and (max-width: 425px) {
+    margin: 8px 0px 8px 16px;
+  }
 `;
 
 const DropdownGap = styled(Dropdown)`
   margin-right: 8px;
-`;
-
-const SearchBar = styled(Input)`
-  height: 1.3rem;
 `;
 
 const Account = () => {
@@ -125,14 +133,9 @@ const Account = () => {
           </Link>
         </LogoBox>
 
-        <AccountButton>
+        {/* desktop */}
+        <AccountButtonList>
           <Inline>
-            {/* <AccountEth>
-              <SearchBar id="search-bar" placeholder="Enter a token number"></SearchBar>
-            </AccountEth>
-            <Search>
-              <SearchOutlined />
-            </Search> */}
             <AccountEth>
               <b>
                 {protocol.season === 0
@@ -253,7 +256,140 @@ const Account = () => {
               )}
             </AccountName>
           </Inline>
-        </AccountButton>
+        </AccountButtonList>
+
+        {/* mobile */}
+        <AccountButtonCondensed>
+          {wallet.account ? (
+            <Dropdown
+              overlay={
+                <Menu>
+                  <Menu.Item key="season">
+                    {protocol.season === 0
+                      ? "Pre-season"
+                      : `Season ${protocol.season}`}
+                  </Menu.Item>
+                  <Menu.Item key="daysLeft">
+                    {protocol.season > 0
+                      ? `${protocol.daysLeft} days left`
+                      : ``}
+                  </Menu.Item>
+                  <Menu.Item key="planting">
+                    {protocol.plant
+                      ? "Planting 🌱"
+                      : protocol.harvest
+                      ? "Harvesting 🍁"
+                      : ""}
+                  </Menu.Item>
+                  <Menu.Divider />
+                  <Menu.Item
+                    icon={<UserOutlined />}
+                    onClick={() => router.push(`/account/${wallet.account}`)}
+                    key="0"
+                  >
+                    Account
+                  </Menu.Item>
+                  <Menu.Divider />
+                  <Menu.Item
+                    onClick={() => router.push(`/council/vineyard`)}
+                    key="1"
+                  >
+                    Vineyard Council
+                  </Menu.Item>
+                  <Menu.Item
+                    onClick={() => router.push(`/council/bottle`)}
+                    key="2"
+                  >
+                    Bottle Council
+                  </Menu.Item>
+                  <Menu.Item
+                    onClick={() => router.push(`/council/new`)}
+                    key="3"
+                  >
+                    New Proposal
+                  </Menu.Item>
+                  <Menu.Divider />
+                  <Menu.Item
+                    icon={<CloseOutlined />}
+                    danger
+                    onClick={() => wallet.reset()}
+                    key="4"
+                  >
+                    Disconnect
+                  </Menu.Item>
+                </Menu>
+              }
+            >
+              <Button type="primary" shape="round" size="large">
+                <b>{userAddress}</b>
+              </Button>
+            </Dropdown>
+          ) : isCorrectNetwork ? (
+            <Dropdown
+              overlay={
+                <Menu>
+                  <Menu.Item key="season">
+                    {protocol.season === 0
+                      ? "Pre-season"
+                      : `Season ${protocol.season}`}
+                  </Menu.Item>
+                  <Menu.Item key="daysLeft">
+                    {protocol.season > 0
+                      ? `${protocol.daysLeft} days left`
+                      : ``}
+                  </Menu.Item>
+                  <Menu.Item key="planting">
+                    {protocol.plant
+                      ? "Planting 🌱"
+                      : protocol.harvest
+                      ? "Harvesting 🍁"
+                      : ""}
+                  </Menu.Item>
+                  <Menu.Divider />
+                  <Menu.Item onClick={() => wallet.connect()} key="1">
+                    Connect MetaMask
+                  </Menu.Item>
+                  <Menu.Item
+                    onClick={() => wallet.connect("walletconnect")}
+                    key="2"
+                  >
+                    Connect WalletConnect
+                  </Menu.Item>
+                  <Menu.Item onClick={() => wallet.connect("frame")} key="3">
+                    Connect Frame
+                  </Menu.Item>
+                  <Menu.Divider />
+                  <Menu.Item
+                    onClick={() => router.push(`/council/vineyard`)}
+                    key="3"
+                  >
+                    Vineyard Council
+                  </Menu.Item>
+                  <Menu.Item
+                    onClick={() => router.push(`/council/bottle`)}
+                    key="4"
+                  >
+                    Bottle Council
+                  </Menu.Item>
+                  <Menu.Item
+                    onClick={() => router.push(`/council/new`)}
+                    key="5"
+                  >
+                    New Proposal
+                  </Menu.Item>
+                </Menu>
+              }
+            >
+              <Button type="primary" shape="round" size="large">
+                <b>Connect Wallet</b>
+              </Button>
+            </Dropdown>
+          ) : (
+            <Button danger type="primary" shape="round" size="large">
+              <b>Wrong Network</b>
+            </Button>
+          )}
+        </AccountButtonCondensed>
       </TitleBar>
     </>
   );

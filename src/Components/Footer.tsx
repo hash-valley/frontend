@@ -12,8 +12,12 @@ const FooterContainer = styled.div`
 `;
 
 const FooterLink = styled.a`
-  margin-right: 24px;
-  margin-left: 24px;
+  margin-right: 12px;
+  margin-left: 12px;
+  @media screen and (min-width: 475px) {
+    margin-right: 24px;
+    margin-left: 24px;
+  }
   opacity: 0.35;
   transition: opacity 200ms ease-out;
 

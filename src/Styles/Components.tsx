@@ -14,14 +14,24 @@ export const CenteredSelect = styled(Select)`
 `;
 
 export const TokenFrame = styled.iframe`
-  width: 400px;
-  height: 400px;
+  width: 300px;
+  height: 300px;
   padding: 8px;
   margin-top: 12px;
   margin-bottom: 12px;
 
   border-radius: 12px;
   box-shadow: 15px 15px 30px #d9d9d9, -15px -15px 30px #ffffff;
+
+  @media screen and (min-width: 350px) {
+    width: 316px;
+    height: 316px;
+  }
+
+  @media screen and (min-width: 500px) {
+    width: 400px;
+    height: 400px;
+  }
 `;
 
 export const GreyLink = styled(Link)`
@@ -43,9 +53,9 @@ export const Spaced = styled(Button)`
 
 export const Page = styled.div`
   margin-top: 96px;
-  margin-left: 10%;
-  margin-right: 10%;
-  padding-bottom: 60px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 12px 60px 12px;
   font-family: Nunito;
 `;
 
