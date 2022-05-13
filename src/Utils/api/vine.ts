@@ -15,7 +15,7 @@ export const vineMetadata = (
   if (vine_elevation_neg) vine_elevation *= -1;
 
   return {
-    image: `ipfs://${imgUri}/?seed=${vine_location}-${vine_elevation}-${vine_elevation_neg}-${vine_soil}-${vine_xp}`,
+    image: `${imgUri}/?seed=${vine_location}-${Math.abs(vine_elevation)}-${vine_elevation_neg}-${vine_soil}-${vine_xp}`,
     external_url: "https://hashvalley.xyz",
     name: `Hash Valley Winery Vineyard ${token}`,
     seller_fee_basis_points: sellerFee,
