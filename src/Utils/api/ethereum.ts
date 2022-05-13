@@ -4,7 +4,7 @@ import { VineyardAddress, BottleAddress, providerUrl } from "../constants";
 const abi = [
   "function imgVersions(uint version) public view returns(string)",
   "function artists(uint version) public view returns(address)",
-  "function sellerFee() public view returns(uint8)",
+  "function sellerFee() public view returns(uint16)",
 ];
 
 const vineAbi = [
