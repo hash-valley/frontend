@@ -82,7 +82,7 @@ const About = () => {
       <Info2>
         <Subtitle side="right">How Do I Play?</Subtitle>
         <SubSubtitle>
-          After obtaining a Vineyard from the mint or on the{" "}
+          After obtaining a Vineyard from the <a href="/mint">Mint</a> or on the{" "}
           <a
             href={
               process.env.NEXT_PUBLIC_CHAIN_ID === "69"
