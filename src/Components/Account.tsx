@@ -157,9 +157,9 @@ const Account = () => {
                   : `Season ${protocol.season}`}
               </b>
               <b>{protocol.season > 0 ? ` | ${protocol.daysLeft} days` : ``}</b>
-              {protocol.plant ? (
+              {protocol.season > 0 && protocol.plant ? (
                 <b> | Planting 🌱</b>
-              ) : protocol.harvest ? (
+              ) : protocol.season > 0 && protocol.harvest ? (
                 <b> | Harvesting 🍁</b>
               ) : (
                 ""
