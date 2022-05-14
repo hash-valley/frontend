@@ -111,6 +111,11 @@ export const BigLink = styled.h2`
   }
 `;
 
+export const GreyBigLink = styled(BigLink)`
+  font-weight: 320;
+  font-size: 1.1rem;
+`;
+
 export const TokenSign = styled.div`
   margin: 16px 100px 12px 100px;
   padding: 16px 0px;

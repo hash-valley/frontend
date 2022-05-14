@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Page } from "../Styles/Components";
+import { GreyBigLink, Page } from "../Styles/Components";
 import { useRouter } from "next/router";
 import { Button } from "antd";
 import { useCurrSeason } from "../Hooks/useCurrSeason";
+import Link from "next/link";
 
 const ProgressContainer = styled.div`
   padding: 7px;
@@ -86,43 +87,49 @@ const Splash = () => {
   }, [protocol]);
 
   return (
-    <Page>
-      <Header>Hash Valley Winery</Header>
-      <ProgressContainer>
-        <Progress>
-          <ProgressBar
-            style={{ width: ((100 * minted) / max).toString() + "%" }}
-          ></ProgressBar>
-        </Progress>
-      </ProgressContainer>
-      <br />
-      <h3>
-        {minted} / {max} minted
-      </h3>
-      {price == 0 ? (
+    <>
+      <Page>
+        <Header>Hash Valley Winery</Header>
+        <ProgressContainer>
+          <Progress>
+            <ProgressBar
+              style={{ width: ((100 * minted) / max).toString() + "%" }}
+            ></ProgressBar>
+          </Progress>
+        </ProgressContainer>
+        <br />
         <h3>
-          <i>{100 - minted} free vineyards remaining (then 0.06 Ξ/mint)</i>
+          {minted} / {max} minted
         </h3>
-      ) : (
-        <h3>
-          <i>{price} Ξ</i>
-        </h3>
-      )}
-      <br />
-      <br />
-      {minted < max ? (
-        <Button
-          type="primary"
-          shape="round"
-          size="large"
-          onClick={() => router.push(`/mint`)}
-        >
-          Mint
-        </Button>
-      ) : (
-        <h2>All Vineyards have been minted already!</h2>
-      )}
-    </Page>
+        {price == 0 ? (
+          <h3>
+            <i>{100 - minted} free vineyards remaining (then 0.06 Ξ/mint)</i>
+          </h3>
+        ) : (
+          <h3>
+            <i>{price} Ξ</i>
+          </h3>
+        )}
+        <br />
+        <br />
+        {minted < max ? (
+          <Button
+            type="primary"
+            shape="round"
+            size="large"
+            onClick={() => router.push(`/mint`)}
+          >
+            Mint
+          </Button>
+        ) : (
+          <h2>All Vineyards have been minted already!</h2>
+        )}
+      </Page>
+
+      <Link href="/about" passHref>
+        <GreyBigLink>What am I looking at...?</GreyBigLink>
+      </Link>
+    </>
   );
 };
 
