@@ -222,7 +222,9 @@ const MintContainer = () => {
                     : `https://optimistic.etherscan.io/tx/${mintHash}`
                 }
               >
-                <a target={"_blank"}>Transaction sent: {mintHash}</a>
+                <a target={"_blank"} rel="noreferrer">
+                  Transaction sent: {mintHash}
+                </a>
               </GreyLink>
               <br />
               <br />

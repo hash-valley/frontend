@@ -243,6 +243,7 @@ const BottlePage = () => {
             : "https://testnet.quixotic.io/asset"
         }/${BottleAddress}/${id}`}
         target={"_blank"}
+        rel="noreferrer"
       >
         View on Marketplace
       </a>
