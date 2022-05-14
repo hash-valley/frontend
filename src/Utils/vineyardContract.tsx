@@ -1,7 +1,6 @@
 import { providers, Contract, utils } from "ethers";
 import { VineyardAddress, providerUrl, ipfs_gateway } from "./constants";
 import { toast } from "react-toastify";
-import { locations, soilTypes } from "./utils";
 
 const VineyardABI = [
   "function newVineyards(uint16[] calldata) public payable",
@@ -123,7 +122,7 @@ export const newVineyards = async (params: number[], wallet: any) => {
   } else {
     try {
       tx = await vineyardWithSigner.newVineyards(processedParams, {
-        value: utils.parseEther("0.05"),
+        value: utils.parseEther("0.06"),
       });
       toast.success("Success!");
       return tx;

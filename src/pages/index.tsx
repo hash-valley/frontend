@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import { useQuery } from "@apollo/client";
-import { VINEPROTOCOL_QUERY } from "../Utils/queries";
 import styled from "styled-components";
 import { Page } from "../Styles/Components";
 import { useRouter } from "next/router";
@@ -73,7 +71,7 @@ const Splash = () => {
   const protocol = useCurrSeason();
   const [minted, setMinted] = useState(0);
   const [max, setMax] = useState(Infinity);
-  const [price, setPrice] = useState(0.05);
+  const [price, setPrice] = useState(0.06);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -103,7 +101,7 @@ const Splash = () => {
       </h3>
       {price == 0 ? (
         <h3>
-          <i>{100 - minted} free vineyards remaining (then 0.05 Ξ/mint)</i>
+          <i>{100 - minted} free vineyards remaining (then 0.06 Ξ/mint)</i>
         </h3>
       ) : (
         <h3>
