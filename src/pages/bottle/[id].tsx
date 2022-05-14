@@ -20,7 +20,7 @@ import {
   TokenPage,
   TokenSign,
 } from "../../Styles/Components";
-import { ZERO_ADDRESS } from "../../Utils/constants";
+import { BottleAddress, chainId, ZERO_ADDRESS } from "../../Utils/constants";
 import {
   secondsToString,
   getBottleEra,
@@ -234,6 +234,19 @@ const BottlePage = () => {
           </GreyLink>
         </div>
       )}
+      <br />
+
+      <a
+        href={`${
+          chainId === 10
+            ? "https://quixotic.io/asset"
+            : "https://testnet.quixotic.io/asset"
+        }/${BottleAddress}/${id}`}
+        target={"_blank"}
+      >
+        View on Marketplace
+      </a>
+      <br />
       <br />
 
       {wallet.account?.toLowerCase() === data.bottle.owner.id ? (

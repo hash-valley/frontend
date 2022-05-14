@@ -1,6 +1,6 @@
 import Image from "next/image";
 import styled from "styled-components";
-import { VineyardAddress } from "../Utils/constants";
+import { chainId, VineyardAddress } from "../Utils/constants";
 
 const FooterContainer = styled.div`
   text-align: center;
@@ -48,9 +48,9 @@ const Footer = () => {
       </FooterLink>
       <FooterLink
         href={
-          process.env.NEXT_PUBLIC_CHAIN_ID === "69"
-            ? `https://kovan-optimistic.etherscan.io/token/${VineyardAddress}`
-            : `https://optimistic.etherscan.io/token/${VineyardAddress}`
+          chainId === 10
+            ? `https://optimistic.etherscan.io/token/${VineyardAddress}`
+            : `https://kovan-optimistic.etherscan.io/token/${VineyardAddress}`
         }
         target={"_blank"}
       >

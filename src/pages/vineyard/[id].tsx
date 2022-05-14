@@ -38,6 +38,7 @@ import {
 import { useVineVersions } from "../../Hooks/useUriVersions";
 import Select from "rc-select";
 import { Button } from "antd";
+import { chainId, VineyardAddress } from "../../Utils/constants";
 
 const VineyardPage = () => {
   const wallet = useWallet();
@@ -249,6 +250,20 @@ const VineyardPage = () => {
       ) : (
         <p>Owned by {data.vineyard.owner.id}</p>
       )}
+
+      <a
+        href={`${
+          chainId === 10
+            ? "https://quixotic.io/asset"
+            : "https://testnet.quixotic.io/asset"
+        }/${VineyardAddress}/${id}`}
+        target={"_blank"}
+      >
+        View on Marketplace
+      </a>
+      <br />
+      <br />
+
       {data.vineyard.bottles ? (
         <div>
           Wine Bottles harvested from this vineyard:
