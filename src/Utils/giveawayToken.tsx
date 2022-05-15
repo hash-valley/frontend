@@ -1,4 +1,6 @@
-import { providers, Contract, ethers } from "ethers";
+import { JsonRpcProvider, Web3Provider } from "@ethersproject/providers";
+import { Contract } from "@ethersproject/contracts";
+import { parseEther } from "@ethersproject/units";
 import { providerUrl } from "./constants";
 import { GiveawayAddress, VineyardAddress } from "./constants";
 import { toast } from "react-toastify";
@@ -10,7 +12,7 @@ const giveawayABI = [
   "function approve(address spender, uint256 amount) external returns (bool)",
 ];
 
-const viewProvider = new providers.JsonRpcProvider(providerUrl);
+const viewProvider = new JsonRpcProvider(providerUrl);
 
 const viewGiveawayContract = new Contract(
   GiveawayAddress,
@@ -27,7 +29,7 @@ export const giveawayAllowance = async (owner: string) => {
 };
 
 export const approveGiveaway = async (wallet: any) => {
-  const provider = new providers.Web3Provider(wallet.ethereum);
+  const provider = new Web3Provider(wallet.ethereum);
   const signer = provider.getSigner();
   const GiveawayContract = new Contract(GiveawayAddress, giveawayABI, provider);
   const giveawayWithSigner = GiveawayContract.connect(signer);
@@ -35,7 +37,7 @@ export const approveGiveaway = async (wallet: any) => {
   try {
     const tx = await giveawayWithSigner.approve(
       VineyardAddress,
-      ethers.utils.parseEther("1")
+      parseEther("1")
     );
     toast.success("Success!");
     return tx;
@@ -50,7 +52,7 @@ export const transferGiveaway = async (
   recipient: string,
   amount: number
 ) => {
-  const provider = new providers.Web3Provider(wallet.ethereum);
+  const provider = new Web3Provider(wallet.ethereum);
   const signer = provider.getSigner();
   const GiveawayContract = new Contract(GiveawayAddress, giveawayABI, provider);
   const giveawayWithSigner = GiveawayContract.connect(signer);

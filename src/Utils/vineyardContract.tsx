@@ -1,4 +1,6 @@
-import { providers, Contract, utils } from "ethers";
+import { JsonRpcProvider, Web3Provider } from "@ethersproject/providers";
+import { Contract } from "@ethersproject/contracts";
+import { parseEther } from "@ethersproject/units";
 import { VineyardAddress, providerUrl, ipfs_gateway } from "./constants";
 import { toast } from "react-toastify";
 
@@ -37,10 +39,10 @@ const VineyardABI = [
   "function buySprinkler(uint256 _tokenId) public payable",
 ];
 
-const viewProvider = new providers.JsonRpcProvider(providerUrl);
+const viewProvider = new JsonRpcProvider(providerUrl);
 
 const withSigner = (wallet: any) => {
-  const provider = new providers.Web3Provider(wallet.ethereum);
+  const provider = new Web3Provider(wallet.ethereum);
   const signer = provider.getSigner();
   const VineyardContract = new Contract(VineyardAddress, VineyardABI, provider);
   return VineyardContract.connect(signer);
@@ -122,7 +124,7 @@ export const newVineyards = async (params: number[], wallet: any) => {
   } else {
     try {
       tx = await vineyardWithSigner.newVineyards(processedParams, {
-        value: utils.parseEther("0.06"),
+        value: parseEther("0.06"),
       });
       toast.success("Success!");
       return tx;
@@ -377,7 +379,7 @@ export const buySprinkler = async (wallet: any, tokenId: number) => {
 
   try {
     const tx = await vineyardWithSigner.buySprinkler(tokenId, {
-      value: utils.parseEther("0.01"),
+      value: parseEther("0.01"),
     });
     toast.success("Success!");
     return tx;

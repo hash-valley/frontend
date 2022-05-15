@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useWallet } from "use-wallet";
 import { Page, CenteredSelect } from "../../Styles/Components";
 import { Input, Button } from "antd";
@@ -8,7 +8,8 @@ import Select from "rc-select";
 import { vineProposal } from "../../Utils/vineyardContract";
 import { bottleProposal } from "../../Utils/bottleContract";
 import styled from "styled-components";
-import { utils, BigNumber } from "ethers";
+import { BigNumber } from "@ethersproject/bignumber";
+import { isAddress } from "@ethersproject/address";
 
 const ProposalInput = styled(Input)`
   max-width: 32rem;
@@ -74,7 +75,7 @@ const NewProposal = () => {
     } else {
       setCidError(false);
     }
-    if (!utils.isAddress(address)) {
+    if (!isAddress(address)) {
       errors = true;
       setAddressError(true);
     } else {

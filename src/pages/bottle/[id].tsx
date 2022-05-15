@@ -33,7 +33,7 @@ import {
 } from "../../Utils/utils";
 import { useBottleVersions } from "../../Hooks/useUriVersions";
 import Select from "rc-select";
-import { BigNumber } from "ethers";
+import { BigNumber } from "@ethersproject/bignumber";
 
 const BottlePage = () => {
   const wallet = useWallet();

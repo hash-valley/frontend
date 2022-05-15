@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useWallet } from "use-wallet";
 import Image from "next/image";
 import Link from "next/link";
-import { Menu, Dropdown, Button, Input } from "antd";
-import { providers, utils } from "ethers";
+import { Dropdown, Button, Menu } from "antd";
+import { Web3Provider } from "@ethersproject/providers";
+import { formatEther } from "@ethersproject/units";
 import {
   formatNum,
   getENS,
@@ -97,7 +98,7 @@ const Account = () => {
       //@ts-ignore
       if (window.ethereum) {
         //@ts-ignore
-        const provider = new providers.Web3Provider(window.ethereum, "any");
+        const provider = new Web3Provider(window.ethereum, "any");
         provider.on("network", async (_, __) => {
           setIsCorrectNetwork(await correctNetwork());
         });
@@ -120,9 +121,9 @@ const Account = () => {
   useEffect(() => {
     const user = async () => {
       if (wallet.account) {
-        const provider = new providers.Web3Provider(wallet.ethereum);
+        const provider = new Web3Provider(wallet.ethereum);
         const balance = await provider.getBalance(wallet.account);
-        const balNum = formatNum(utils.formatEther(balance), 4);
+        const balNum = formatNum(formatEther(balance), 4);
         const ens = await getENS(wallet.account);
         if (ens) {
           setUserAddress(ens);
@@ -173,26 +174,34 @@ const Account = () => {
             <AccountName>
               <DropdownGap
                 overlay={
-                  <Menu>
-                    <Menu.Item
-                      onClick={() => router.push(`/council/vineyard`)}
-                      key="1"
-                    >
-                      Vineyards
-                    </Menu.Item>
-                    <Menu.Item
-                      onClick={() => router.push(`/council/bottle`)}
-                      key="2"
-                    >
-                      Bottles
-                    </Menu.Item>
-                    <Menu.Item
-                      onClick={() => router.push(`/council/new`)}
-                      key="3"
-                    >
-                      New Proposal
-                    </Menu.Item>
-                  </Menu>
+                  <Menu
+                    items={[
+                      {
+                        label: (
+                          <div onClick={() => router.push(`/council/vineyard`)}>
+                            Vineyards
+                          </div>
+                        ),
+                        key: "1",
+                      },
+                      {
+                        label: (
+                          <div onClick={() => router.push(`/council/bottle`)}>
+                            Bottles
+                          </div>
+                        ),
+                        key: "2",
+                      },
+                      {
+                        label: (
+                          <div onClick={() => router.push(`/council/new`)}>
+                            New Proposal
+                          </div>
+                        ),
+                        key: "3",
+                      },
+                    ]}
+                  />
                 }
               >
                 <Button
@@ -207,25 +216,31 @@ const Account = () => {
               {wallet.account ? (
                 <Dropdown
                   overlay={
-                    <Menu>
-                      <Menu.Item
-                        icon={<UserOutlined />}
-                        onClick={() =>
-                          router.push(`/account/${wallet.account}`)
-                        }
-                        key="1"
-                      >
-                        Account
-                      </Menu.Item>
-                      <Menu.Item
-                        icon={<CloseOutlined />}
-                        danger
-                        onClick={() => wallet.reset()}
-                        key="2"
-                      >
-                        Disconnect
-                      </Menu.Item>
-                    </Menu>
+                    <Menu
+                      items={[
+                        {
+                          label: (
+                            <div
+                              onClick={() =>
+                                router.push(`/account/${wallet.account}`)
+                              }
+                            >
+                              Account
+                            </div>
+                          ),
+                          icon: <UserOutlined />,
+                          key: "1",
+                        },
+                        {
+                          label: (
+                            <div onClick={() => wallet.reset()}>Disconnect</div>
+                          ),
+                          icon: <CloseOutlined />,
+                          danger: true,
+                          key: "2",
+                        },
+                      ]}
+                    />
                   }
                 >
                   <Button
@@ -240,23 +255,34 @@ const Account = () => {
               ) : isCorrectNetwork ? (
                 <Dropdown
                   overlay={
-                    <Menu>
-                      <Menu.Item onClick={() => wallet.connect()} key="1">
-                        MetaMask
-                      </Menu.Item>
-                      <Menu.Item
-                        onClick={() => wallet.connect("walletconnect")}
-                        key="2"
-                      >
-                        WalletConnect
-                      </Menu.Item>
-                      <Menu.Item
-                        onClick={() => wallet.connect("frame")}
-                        key="3"
-                      >
-                        Frame
-                      </Menu.Item>
-                    </Menu>
+                    <Menu
+                      items={[
+                        {
+                          label: (
+                            <div onClick={() => wallet.connect()}>Metamask</div>
+                          ),
+                          key: "1",
+                        },
+                        {
+                          label: (
+                            <div
+                              onClick={() => wallet.connect("walletconnect")}
+                            >
+                              WalletConnect
+                            </div>
+                          ),
+                          key: "2",
+                        },
+                        {
+                          label: (
+                            <div onClick={() => wallet.connect("frame")}>
+                              Frame
+                            </div>
+                          ),
+                          key: "3",
+                        },
+                      ]}
+                    />
                   }
                 >
                   <Button type="primary" shape="round" size="large">
@@ -282,62 +308,88 @@ const Account = () => {
         <AccountButtonCondensed>
           {wallet.account ? (
             <Dropdown
+              trigger={["click"]}
               overlay={
-                <Menu>
-                  <Menu.Item key="season">
-                    {protocol.season === 0
-                      ? "Pre-season"
-                      : `Season ${protocol.season}`}
-                  </Menu.Item>
-                  <Menu.Item key="daysLeft">
-                    {protocol.season > 0
-                      ? `${protocol.daysLeft} days left`
-                      : ``}
-                  </Menu.Item>
-                  <Menu.Item key="planting">
-                    {protocol.plant
-                      ? "Planting 🌱"
-                      : protocol.harvest
-                      ? "Harvesting 🍁"
-                      : ""}
-                  </Menu.Item>
-                  <Menu.Divider />
-                  <Menu.Item
-                    icon={<UserOutlined />}
-                    onClick={() => router.push(`/account/${wallet.account}`)}
-                    key="0"
-                  >
-                    Account
-                  </Menu.Item>
-                  <Menu.Divider />
-                  <Menu.Item
-                    onClick={() => router.push(`/council/vineyard`)}
-                    key="1"
-                  >
-                    Vineyard Council
-                  </Menu.Item>
-                  <Menu.Item
-                    onClick={() => router.push(`/council/bottle`)}
-                    key="2"
-                  >
-                    Bottle Council
-                  </Menu.Item>
-                  <Menu.Item
-                    onClick={() => router.push(`/council/new`)}
-                    key="3"
-                  >
-                    New Proposal
-                  </Menu.Item>
-                  <Menu.Divider />
-                  <Menu.Item
-                    icon={<CloseOutlined />}
-                    danger
-                    onClick={() => wallet.reset()}
-                    key="4"
-                  >
-                    Disconnect
-                  </Menu.Item>
-                </Menu>
+                <Menu
+                  items={[
+                    {
+                      label: (
+                        <div
+                          onClick={() =>
+                            router.push(`/account/${wallet.account}`)
+                          }
+                        >
+                          Account
+                        </div>
+                      ),
+                      icon: <UserOutlined />,
+                      key: "4",
+                    },
+                    {
+                      type: "divider",
+                    },
+                    {
+                      label:
+                        protocol.season === 0
+                          ? "Pre-season"
+                          : `Season ${protocol.season}`,
+                      key: "1",
+                    },
+                    {
+                      label:
+                        protocol.season > 0
+                          ? `${protocol.daysLeft} days left`
+                          : `Game not started`,
+                      key: "2",
+                    },
+                    {
+                      label: protocol.plant
+                        ? "Planting 🌱"
+                        : protocol.harvest
+                        ? "Harvesting 🍁"
+                        : "",
+                      key: "3",
+                    },
+                    {
+                      type: "divider",
+                    },
+                    {
+                      label: (
+                        <div onClick={() => router.push(`/council/vineyard`)}>
+                          Vineyards
+                        </div>
+                      ),
+                      key: "5",
+                    },
+                    {
+                      label: (
+                        <div onClick={() => router.push(`/council/bottle`)}>
+                          Bottles
+                        </div>
+                      ),
+                      key: "6",
+                    },
+                    {
+                      label: (
+                        <div onClick={() => router.push(`/council/new`)}>
+                          New Proposal
+                        </div>
+                      ),
+                      key: "7",
+                    },
+                    {
+                      type: "divider",
+                    },
+                    {
+                      label: (
+                        <div onClick={() => wallet.reset()}>Disconnect</div>
+                      ),
+                      icon: <CloseOutlined />,
+                      danger: true,
+                      key: "8",
+                    },
+                  ]}
+                />
               }
             >
               <Button type="primary" shape="round" size="large">
@@ -347,57 +399,82 @@ const Account = () => {
           ) : isCorrectNetwork ? (
             <Dropdown
               overlay={
-                <Menu>
-                  <Menu.Item key="season">
-                    {protocol.season === 0
-                      ? "Pre-season"
-                      : `Season ${protocol.season}`}
-                  </Menu.Item>
-                  <Menu.Item key="daysLeft">
-                    {protocol.season > 0
-                      ? `${protocol.daysLeft} days left`
-                      : ``}
-                  </Menu.Item>
-                  <Menu.Item key="planting">
-                    {protocol.plant
-                      ? "Planting 🌱"
-                      : protocol.harvest
-                      ? "Harvesting 🍁"
-                      : ""}
-                  </Menu.Item>
-                  <Menu.Divider />
-                  <Menu.Item onClick={() => wallet.connect()} key="1">
-                    Connect MetaMask
-                  </Menu.Item>
-                  <Menu.Item
-                    onClick={() => wallet.connect("walletconnect")}
-                    key="2"
-                  >
-                    Connect WalletConnect
-                  </Menu.Item>
-                  <Menu.Item onClick={() => wallet.connect("frame")} key="3">
-                    Connect Frame
-                  </Menu.Item>
-                  <Menu.Divider />
-                  <Menu.Item
-                    onClick={() => router.push(`/council/vineyard`)}
-                    key="3"
-                  >
-                    Vineyard Council
-                  </Menu.Item>
-                  <Menu.Item
-                    onClick={() => router.push(`/council/bottle`)}
-                    key="4"
-                  >
-                    Bottle Council
-                  </Menu.Item>
-                  <Menu.Item
-                    onClick={() => router.push(`/council/new`)}
-                    key="5"
-                  >
-                    New Proposal
-                  </Menu.Item>
-                </Menu>
+                <Menu
+                  items={[
+                    {
+                      label:
+                        protocol.season === 0
+                          ? "Pre-season"
+                          : `Season ${protocol.season}`,
+                      key: "1",
+                    },
+                    {
+                      label:
+                        protocol.season > 0
+                          ? `${protocol.daysLeft} days left`
+                          : `Game not started`,
+                      key: "2",
+                    },
+                    {
+                      label: protocol.plant
+                        ? "Planting 🌱"
+                        : protocol.harvest
+                        ? "Harvesting 🍁"
+                        : "",
+                      key: "3",
+                    },
+                    {
+                      type: "divider",
+                    },
+                    {
+                      label: (
+                        <div onClick={() => wallet.connect()}>Metamask</div>
+                      ),
+                      key: "mm",
+                    },
+                    {
+                      label: (
+                        <div onClick={() => wallet.connect("walletconnect")}>
+                          WalletConnect
+                        </div>
+                      ),
+                      key: "wc",
+                    },
+                    {
+                      label: (
+                        <div onClick={() => wallet.connect("frame")}>Frame</div>
+                      ),
+                      key: "frame",
+                    },
+                    {
+                      type: "divider",
+                    },
+                    {
+                      label: (
+                        <div onClick={() => router.push(`/council/vineyard`)}>
+                          Vineyards
+                        </div>
+                      ),
+                      key: "5",
+                    },
+                    {
+                      label: (
+                        <div onClick={() => router.push(`/council/bottle`)}>
+                          Bottles
+                        </div>
+                      ),
+                      key: "6",
+                    },
+                    {
+                      label: (
+                        <div onClick={() => router.push(`/council/new`)}>
+                          New Proposal
+                        </div>
+                      ),
+                      key: "7",
+                    },
+                  ]}
+                />
               }
             >
               <Button type="primary" shape="round" size="large">

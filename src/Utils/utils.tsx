@@ -1,4 +1,4 @@
-import { providers } from "ethers";
+import { JsonRpcProvider, Web3Provider } from "@ethersproject/providers";
 import { toast } from "react-toastify";
 import { chainId, alchemyKey } from "./constants";
 
@@ -42,14 +42,14 @@ export const seconds = (time: number): string => {
 };
 
 export const getENS = async (address: string) => {
-  const provider = new providers.JsonRpcProvider(
+  const provider = new JsonRpcProvider(
     "https://eth-mainnet.alchemyapi.io/v2/" + alchemyKey
   );
   return await provider.lookupAddress(address);
 };
 
 export const ensToAddress = async (ens: string) => {
-  const provider = new providers.JsonRpcProvider(
+  const provider = new JsonRpcProvider(
     "https://eth-mainnet.alchemyapi.io/v2/" + alchemyKey
   );
   return await provider.getResolver(ens);
@@ -57,7 +57,7 @@ export const ensToAddress = async (ens: string) => {
 
 export const correctNetwork = async () => {
   //@ts-ignore
-  const provider = new providers.Web3Provider(window.ethereum);
+  const provider = new Web3Provider(window.ethereum);
   const network = await provider.getNetwork();
   return network.chainId === chainId;
 };

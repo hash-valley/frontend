@@ -1,4 +1,5 @@
-import { providers, Contract } from "ethers";
+import { JsonRpcProvider, Web3Provider } from "@ethersproject/providers";
+import { Contract } from "@ethersproject/contracts";
 import { providerUrl } from "./constants";
 import { tokenOwner as cellarTokenOwner } from "./cellarContract";
 import { BottleAddress, CellarAddress, ipfs_gateway } from "./constants";
@@ -21,10 +22,10 @@ const bottleABI = [
   "function complete() public",
 ];
 
-const viewProvider = new providers.JsonRpcProvider(providerUrl);
+const viewProvider = new JsonRpcProvider(providerUrl);
 
 const withSigner = (wallet: any) => {
-  const provider = new providers.Web3Provider(wallet.ethereum);
+  const provider = new Web3Provider(wallet.ethereum);
   const signer = provider.getSigner();
   const BottleContract = new Contract(BottleAddress, bottleABI, provider);
   return BottleContract.connect(signer);

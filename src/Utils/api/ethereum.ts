@@ -1,4 +1,5 @@
-import { providers, Contract } from "ethers";
+import { JsonRpcProvider } from "@ethersproject/providers";
+import { Contract } from "@ethersproject/contracts";
 import { VineyardAddress, BottleAddress, providerUrl } from "../constants";
 
 const abi = [
@@ -21,7 +22,7 @@ const bottleAbi = [
   ...abi,
 ];
 
-const viewProvider = new providers.JsonRpcProvider(providerUrl);
+const viewProvider = new JsonRpcProvider(providerUrl);
 const viewVineyardContract = new Contract(
   VineyardAddress,
   vineAbi,

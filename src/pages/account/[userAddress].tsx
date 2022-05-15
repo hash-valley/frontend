@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useWallet } from "use-wallet";
 import { useRouter } from "next/router";
-import { utils } from "ethers";
+import { formatEther } from "@ethersproject/units";
 import {
   Farmable,
   plantMultiple,
@@ -126,7 +126,7 @@ const AccountPage = () => {
             {data.account.vineyards.length === 1 ? "" : "s"},{" "}
             {data.account.bottles.length} Bottle
             {data.account.bottles.length === 1 ? "" : "s"} and{" "}
-            {formatNum(utils.formatEther(data.account.vinegarBalance))} Vinegar
+            {formatNum(formatEther(data.account.vinegarBalance))} Vinegar
           </h3>
           <div>
             {view == "bottles" && (
