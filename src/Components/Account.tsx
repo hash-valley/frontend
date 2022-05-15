@@ -174,6 +174,7 @@ const Account = () => {
             <AccountName>
               <DropdownGap
                 overlay={
+                  //@ts-ignore
                   <Menu
                     items={[
                       {
@@ -216,6 +217,7 @@ const Account = () => {
               {wallet.account ? (
                 <Dropdown
                   overlay={
+                    //@ts-ignore
                     <Menu
                       items={[
                         {
@@ -255,6 +257,7 @@ const Account = () => {
               ) : isCorrectNetwork ? (
                 <Dropdown
                   overlay={
+                    //@ts-ignore
                     <Menu
                       items={[
                         {
@@ -310,6 +313,7 @@ const Account = () => {
             <Dropdown
               trigger={["click"]}
               overlay={
+                //@ts-ignore
                 <Menu
                   items={[
                     {
@@ -399,6 +403,7 @@ const Account = () => {
           ) : isCorrectNetwork ? (
             <Dropdown
               overlay={
+                //@ts-ignore
                 <Menu
                   items={[
                     {
