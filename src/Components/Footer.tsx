@@ -33,7 +33,7 @@ const Footer = () => {
       <FooterLink href="https://twitter.com/hash_valley" target={"_blank"}>
         <Image src="/twitter.svg" alt="twitter" height={24} width={24} />
       </FooterLink>
-      <FooterLink href="https://www.discord.com" target={"_blank"}>
+      <FooterLink href="https://discord.gg/8E4ZVguE" target={"_blank"}>
         <Image src="/discord.svg" alt="discord" height={24} width={24} />
       </FooterLink>
       <FooterLink
