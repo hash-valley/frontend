@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
+import { useWallet } from "use-wallet";
 import styled from "styled-components";
 import { GreyBigLink, Page } from "../Styles/Components";
 import { useRouter } from "next/router";
 import { Button } from "antd";
 import { useCurrSeason } from "../Hooks/useCurrSeason";
 import Link from "next/link";
+import { giveawayBalance } from "../Utils/giveawayToken";
+import { BigNumber } from "@ethersproject/bignumber";
+import { parseUnits } from "@ethersproject/units";
 
 const ProgressContainer = styled.div`
   padding: 7px;
@@ -68,11 +72,23 @@ const Header = styled.h1`
 `;
 
 const Splash = () => {
+  const wallet = useWallet();
   const router = useRouter();
   const protocol = useCurrSeason();
   const [minted, setMinted] = useState(0);
   const [max, setMax] = useState(Infinity);
   const [price, setPrice] = useState(0.06);
+  const [hasGive, setHasGive] = useState(false);
+
+  useEffect(() => {
+    if (wallet.status === "connected") {
+      giveawayBalance(wallet.account).then((val) =>
+        setHasGive(val.gte(BigNumber.from(parseUnits("1.0"))))
+      );
+    } else {
+      setHasGive(false);
+    }
+  }, [wallet.status]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -106,9 +122,11 @@ const Splash = () => {
             <i>{100 - minted} free vineyards remaining (then 0.06 Ξ/mint)</i>
           </h3>
         ) : (
-          <h3>
-            <i>{price} Ξ</i>
-          </h3>
+          minted < max && (
+            <h3>
+              <i>{price} Ξ</i>
+            </h3>
+          )
         )}
         <br />
         <br />
@@ -122,7 +140,17 @@ const Splash = () => {
             Mint
           </Button>
         ) : (
-          <h2>All Vineyards have been minted already!</h2>
+          <h2>All Vineyards have been minted!</h2>
+        )}
+        {minted >= max && hasGive && (
+          <Button
+            type="primary"
+            shape="round"
+            size="large"
+            onClick={() => router.push(`/mint`)}
+          >
+            <i>Use Giveaway Token</i>
+          </Button>
         )}
       </Page>
 

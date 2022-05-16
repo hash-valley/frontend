@@ -19,6 +19,7 @@ import {
 } from "../Styles/Components";
 import { useVineVersions } from "../Hooks/useUriVersions";
 import styled from "styled-components";
+import { useCurrSeason } from "../Hooks/useCurrSeason";
 
 const Step = styled.div`
   margin-top: 32px;
@@ -31,6 +32,7 @@ const Sign = styled.div`
 const MintContainer = () => {
   const wallet = useWallet();
   const uriVersions = useVineVersions();
+  const protocol = useCurrSeason();
   const [step, setStep] = useState(0);
   const [city, setCity] = useState(0);
   const [elev, setElev] = useState(0);
@@ -247,9 +249,16 @@ const MintContainer = () => {
               >
                 Start over
               </Spaced>
-              <Spaced size="large" type="primary" shape="round" onClick={mint}>
-                Mint
-              </Spaced>
+              {protocol.minted < protocol.maxVineyards && (
+                <Spaced
+                  size="large"
+                  type="primary"
+                  shape="round"
+                  onClick={mint}
+                >
+                  Mint
+                </Spaced>
+              )}
               {BigInt(giveBal) >= 1e18 ? (
                 <Spaced
                   size="large"
