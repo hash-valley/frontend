@@ -82,6 +82,21 @@ const About = () => {
       <Info2>
         <Subtitle side="right">How Do I Play?</Subtitle>
         <SubSubtitle>
+          You'll need to have some ETH on{" "}
+          <a href="https://www.optimism.io" target="_blank" rel="noreferrer">
+            Optimism
+          </a>{" "}
+          to get started. You can use{" "}
+          <a
+            href="https://www.optimism.io/apps/bridges"
+            target="_blank"
+            rel="noreferrer"
+          >
+            a bridge
+          </a>{" "}
+          to move your assets over.
+        </SubSubtitle>
+        <SubSubtitle>
           After obtaining a Vineyard from the <a href="/mint">Mint</a> or on the{" "}
           <a
             href={
@@ -89,7 +104,7 @@ const About = () => {
                 ? `https://testnet.quixotic.io/collection/${VineyardAddress}`
                 : `https://quixotic.io/collection/${VineyardAddress}`
             }
-            target={"_blank"}
+            target="_blank"
             rel="noreferrer"
           >
             Secondary Market
@@ -114,7 +129,7 @@ const About = () => {
           Check out the{" "}
           <a
             href="https://inathan-m.gitbook.io/hash-valley-winery/"
-            target={"_blank"}
+            target="_blank"
             rel="noreferrer"
           >
             full docs
@@ -122,7 +137,7 @@ const About = () => {
           or take a look at the{" "}
           <a
             href="https://github.com/hash-valley"
-            target={"_blank"}
+            target="_blank"
             rel="noreferrer"
           >
             codebase

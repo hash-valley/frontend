@@ -257,7 +257,7 @@ const VineyardPage = () => {
             ? "https://quixotic.io/asset"
             : "https://testnet.quixotic.io/asset"
         }/${VineyardAddress}/${id}`}
-        target={"_blank"}
+        target="_blank"
         rel="noreferrer"
       >
         View on Marketplace

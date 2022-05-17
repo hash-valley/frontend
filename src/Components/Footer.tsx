@@ -30,10 +30,10 @@ const FooterLink = styled.a`
 const Footer = () => {
   return (
     <FooterContainer>
-      <FooterLink href="https://twitter.com/hash_valley" target={"_blank"}>
+      <FooterLink href="https://twitter.com/hash_valley" target="_blank">
         <Image src="/twitter.svg" alt="twitter" height={24} width={24} />
       </FooterLink>
-      <FooterLink href="https://discord.gg/8E4ZVguE" target={"_blank"}>
+      <FooterLink href="https://discord.gg/8E4ZVguE" target="_blank">
         <Image src="/discord.svg" alt="discord" height={24} width={24} />
       </FooterLink>
       <FooterLink
@@ -42,7 +42,7 @@ const Footer = () => {
             ? `https://testnet.quixotic.io/collection/${VineyardAddress}`
             : `https://quixotic.io/collection/${VineyardAddress}`
         }
-        target={"_blank"}
+        target="_blank"
       >
         <Image src="/quixotic.svg" alt="quixotic" height={24} width={24} />
       </FooterLink>
@@ -52,16 +52,16 @@ const Footer = () => {
             ? `https://optimistic.etherscan.io/token/${VineyardAddress}`
             : `https://kovan-optimistic.etherscan.io/token/${VineyardAddress}`
         }
-        target={"_blank"}
+        target="_blank"
       >
         <Image src="/etherscan.svg" alt="etherscan" height={24} width={24} />
       </FooterLink>
-      <FooterLink href="https://github.com/hash-valley" target={"_blank"}>
+      <FooterLink href="https://github.com/hash-valley" target="_blank">
         <Image src="/github.svg" alt="github" height={24} width={24} />
       </FooterLink>
       <FooterLink
         href="https://inathan-m.gitbook.io/hash-valley-winery/"
-        target={"_blank"}
+        target="_blank"
       >
         <Image src="/docs.svg" alt="docs" height={24} width={24} />
       </FooterLink>
