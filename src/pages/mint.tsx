@@ -2,11 +2,7 @@ import { useState, useEffect } from "react";
 import { useWallet } from "use-wallet";
 import { Button } from "antd";
 import { locations, soilTypes } from "../Utils/utils";
-import {
-  newVineyards,
-  historicalUriIpfs,
-  newVineyardsGiveaway,
-} from "../Utils/vineyardContract";
+import { newVineyards, newVineyardsGiveaway } from "../Utils/vineyardContract";
 import { giveawayBalance } from "../Utils/giveawayToken";
 import {
   GreyLink,
@@ -17,9 +13,11 @@ import {
   Spaced,
   RoundedImg,
 } from "../Styles/Components";
-import { useVineVersions } from "../Hooks/useUriVersions";
 import styled from "styled-components";
 import { useCurrSeason } from "../Hooks/useCurrSeason";
+import { useQuery } from "@apollo/client";
+import { MINT_QUERY } from "../Utils/queries";
+import { ipfs_gateway } from "../Utils/constants";
 
 const Step = styled.div`
   margin-top: 32px;
@@ -31,7 +29,6 @@ const Sign = styled.div`
 
 const MintContainer = () => {
   const wallet = useWallet();
-  const uriVersions = useVineVersions();
   const protocol = useCurrSeason();
   const [step, setStep] = useState(0);
   const [city, setCity] = useState(0);
@@ -43,11 +40,11 @@ const MintContainer = () => {
 
   const [giveBal, setGiveBal] = useState("0");
 
-  useEffect(() => {
-    const fetchBaseUri = async () =>
-      setBaseUri(await historicalUriIpfs(uriVersions[uriVersions.length - 1]));
-    fetchBaseUri();
-  }, []);
+  const { loading, error, data } = useQuery(MINT_QUERY, {
+    onCompleted: (_data) => {
+      setBaseUri(ipfs_gateway +_data.newUris[0].newUri.substring(7));
+    },
+  });
 
   useEffect(() => checkGiveaway(), [wallet]);
 
@@ -82,7 +79,6 @@ const MintContainer = () => {
     setSoil(num);
     setStep(3);
     setImageUri(renderImg(num));
-
     checkGiveaway();
   };
 
@@ -249,7 +245,7 @@ const MintContainer = () => {
               >
                 Start over
               </Spaced>
-              {protocol.minted < protocol.maxVineyards && (
+              {protocol.mintedVineyards < protocol.maxVineyards && (
                 <Spaced
                   size="large"
                   type="primary"

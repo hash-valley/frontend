@@ -5,16 +5,7 @@ import { Page, TokenFrame, Spaced, CenteredSelect } from "../Styles/Components";
 import { ipfs_gateway } from "../Utils/constants";
 import styled from "styled-components";
 import Select from "rc-select";
-import {
-  bottleSupport,
-  bottleRetort,
-  bottleFinalize,
-} from "../Utils/bottleContract";
-import {
-  vineSupport,
-  vineRetort,
-  vineFinalize,
-} from "../Utils/vineyardContract";
+import { support, retort, complete } from "../Utils/votableUri";
 import { hours, minutes, seconds } from "../Utils/utils";
 
 interface BarProps {
@@ -122,7 +113,10 @@ const defaultUri = (uri: string) =>
   ipfs_gateway + uri.substring(7) + "/?seed=" + "0-0-0-0-0"; //TODO: actual values
 
 const bottleUri = (uri: string, bottle: any) =>
-  ipfs_gateway + uri.substring(7) + "/?seed=" + "1-0-0-0-0"; //TODO: actual values
+  ipfs_gateway +
+  uri.substring(7) +
+  "/?seed=" +
+  `${bottle.attributes[0]}-${bottle.attributes[1]}-${bottle.attributes[2]}-${bottle.attributes[3]}`;
 
 const vineyardUri = (uri: string, vineyard: any) =>
   ipfs_gateway +
@@ -174,28 +168,16 @@ const InProgress: FC<any> = ({ uri, bottles, vineyards }) => {
     (bottle: any) => !uri.votes.includes(bottle.tokenId)
   );
 
-  const support = () => {
-    if (uri.type == "VINEYARD") {
-      vineSupport(wallet, Number(bottleId));
-    } else if (uri.type == "BOTTLE") {
-      bottleSupport(wallet, Number(bottleId));
-    }
+  const sendSupport = () => {
+    support(wallet, Number(bottleId), uri.type);
   };
 
-  const retort = () => {
-    if (uri.type == "VINEYARD") {
-      vineRetort(wallet, Number(bottleId));
-    } else if (uri.type == "BOTTLE") {
-      bottleRetort(wallet, Number(bottleId));
-    }
+  const sendRetort = () => {
+    retort(wallet, Number(bottleId), uri.type);
   };
 
-  const finalize = () => {
-    if (uri.type == "VINEYARD") {
-      vineFinalize(wallet);
-    } else if (uri.type == "BOTTLE") {
-      bottleFinalize(wallet);
-    }
+  const sendComplete = () => {
+    complete(wallet, uri.type);
   };
 
   const previewFrame = (event: any) => {
@@ -273,7 +255,7 @@ const InProgress: FC<any> = ({ uri, bottles, vineyards }) => {
             <Spaced
               type="default"
               shape="round"
-              onClick={support}
+              onClick={sendSupport}
               disabled={bottleId == "Token ID #"}
             >
               Support
@@ -282,14 +264,14 @@ const InProgress: FC<any> = ({ uri, bottles, vineyards }) => {
               danger
               type="default"
               shape="round"
-              onClick={retort}
+              onClick={sendRetort}
               disabled={bottleId == "Token ID #"}
             >
               Retort
             </Spaced>
           </>
         ) : completedAt > now ? (
-          <Spaced type="default" shape="round" onClick={finalize}>
+          <Spaced type="default" shape="round" onClick={sendComplete}>
             Finalize
           </Spaced>
         ) : null}
@@ -301,20 +283,24 @@ const InProgress: FC<any> = ({ uri, bottles, vineyards }) => {
 const Council: FC<CouncilTypes> = ({ newUris, bottles, vineyards }) => {
   return (
     <Page>
-      {newUris.map((uri: any) => (
-        <>
-          {uri.completed ||
-          (Date.now() / 1000 > parseInt(uri.startTimestamp) + 172800 &&
-            BigNumber.from(uri.votesAgainst).gt(
-              BigNumber.from(uri.votesFor)
-            )) ? (
-            <Outcome uri={uri} />
-          ) : (
-            <InProgress uri={uri} bottles={bottles} vineyards={vineyards} />
-          )}
-          <hr />
-        </>
-      ))}
+      {newUris
+        .filter(
+          (uri: any) => !(uri.votesFor === "0" && uri.votesAgainst === "0")
+        )
+        .map((uri: any) => (
+          <>
+            {uri.completed ||
+            (Date.now() / 1000 > parseInt(uri.startTimestamp) + 172800 &&
+              BigNumber.from(uri.votesAgainst).gt(
+                BigNumber.from(uri.votesFor)
+              )) ? (
+              <Outcome uri={uri} />
+            ) : (
+              <InProgress uri={uri} bottles={bottles} vineyards={vineyards} />
+            )}
+            <hr />
+          </>
+        ))}
     </Page>
   );
 };

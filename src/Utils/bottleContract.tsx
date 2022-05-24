@@ -16,10 +16,6 @@ const bottleABI = [
   "function isApprovedForAll(address owner, address operator) public view returns (bool)",
   "function imgVersionCount() public view returns (uint256)",
   "function imgVersions(uint256 id) public view returns (string)",
-  "function suggest(uint256 _tokenId, string calldata _newUri, address _artist) public",
-  "function support(uint256 _tokenId) public",
-  "function retort(uint256 _tokenId) public",
-  "function complete() public",
 ];
 
 const viewProvider = new JsonRpcProvider(providerUrl);
@@ -44,14 +40,6 @@ export const totalSupply = async (): Promise<number> => {
 
 export const latestUriVersion = async (): Promise<number> => {
   return await viewBottleContract.imgVersionCount();
-};
-
-export const historicalUri = async (n: number): Promise<string> => {
-  return await viewBottleContract.imgVersions(n);
-};
-
-export const historicalUriIpfs = async (n: number): Promise<string> => {
-  return ipfs_gateway + (await historicalUri(n)).substring(7);
 };
 
 export const userBalance = async (userAddress: string): Promise<number> => {
@@ -111,59 +99,6 @@ export const rejuvenate = async (wallet: any, tokenId: number) => {
   const bottleWithSigner = withSigner(wallet);
   try {
     const tx = await bottleWithSigner.rejuvenate(tokenId);
-    toast.success("Success!");
-    return tx;
-  } catch (err: any) {
-    console.error(err);
-    toast.error(`Error! ${err?.message}`);
-  }
-};
-
-export const bottleProposal = async (
-  wallet: any,
-  tokenId: number,
-  uri: string,
-  address: string
-) => {
-  const bottleWithSigner = withSigner(wallet);
-  try {
-    const tx = await bottleWithSigner.suggest(tokenId, uri, address);
-    toast.success("Success!");
-    return tx;
-  } catch (err: any) {
-    console.error(err);
-    toast.error(`Error! ${err?.message}`);
-  }
-};
-
-export const bottleSupport = async (wallet: any, tokenId: number) => {
-  const bottleWithSigner = withSigner(wallet);
-  try {
-    const tx = await bottleWithSigner.support(tokenId);
-    toast.success("Success!");
-    return tx;
-  } catch (err: any) {
-    console.error(err);
-    toast.error(`Error! ${err?.message}`);
-  }
-};
-
-export const bottleRetort = async (wallet: any, tokenId: number) => {
-  const bottleWithSigner = withSigner(wallet);
-  try {
-    const tx = await bottleWithSigner.retort(tokenId);
-    toast.success("Success!");
-    return tx;
-  } catch (err: any) {
-    console.error(err);
-    toast.error(`Error! ${err?.message}`);
-  }
-};
-
-export const bottleFinalize = async (wallet: any) => {
-  const bottleWithSigner = withSigner(wallet);
-  try {
-    const tx = await bottleWithSigner.complete();
     toast.success("Success!");
     return tx;
   } catch (err: any) {

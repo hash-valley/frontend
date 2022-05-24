@@ -10,7 +10,6 @@ import {
   untilCanWater,
   canWaterUntil,
   getStreak,
-  historicalUriIpfs,
   buySprinkler,
 } from "../../Utils/vineyardContract";
 import {
@@ -35,16 +34,14 @@ import {
   TokenPage,
   TokenSign,
 } from "../../Styles/Components";
-import { useVineVersions } from "../../Hooks/useUriVersions";
 import Select from "rc-select";
 import { Button } from "antd";
-import { chainId, VineyardAddress } from "../../Utils/constants";
+import { chainId, ipfs_gateway, VineyardAddress } from "../../Utils/constants";
 
 const VineyardPage = () => {
   const wallet = useWallet();
   const router = useRouter();
   const { id } = router.query;
-  const uriVersions = useVineVersions();
   const season = useCurrSeason();
   const [nullData, setNullData] = useState(true);
   const [waterStatus, setWaterStatus] = useState(0);
@@ -64,9 +61,10 @@ const VineyardPage = () => {
 
   const changeImage = async (n: number) => {
     if (!loading) {
-      let uri = await historicalUriIpfs(n);
+      let uri = data.newUris.find((e: any) => e.version === n).newUri;
       uri =
-        uri +
+        ipfs_gateway +
+        uri.substring(7) +
         "/?seed=" +
         data.vineyard.location +
         "-" +
@@ -81,10 +79,6 @@ const VineyardPage = () => {
       setImageUri(uri);
     }
   };
-
-  useEffect(() => {
-    changeImage(uriVersions[uriVersions.length - 1]);
-  }, [uriVersions, id]);
 
   useEffect(() => {
     let myInterval: any;
@@ -106,6 +100,8 @@ const VineyardPage = () => {
           }
         }
         setWaterStatus(waterCountdown);
+
+        changeImage(data.newUris.length - 1);
 
         myInterval = setInterval(() => {
           if (waterCountdown === 0) {
@@ -145,11 +141,11 @@ const VineyardPage = () => {
       <br />
       <CenteredSelect
         value={uriVersion}
-        onChange={(event: any) => changeImage(event.target.value)}
+        onChange={(event: any) => changeImage(event)}
       >
-        {uriVersions.map((n) => (
-          <Select.Option key={n} value={n}>
-            Version {n}
+        {data.newUris.map((n: any) => (
+          <Select.Option key={n.version} value={n.version}>
+            Version {n.version}
           </Select.Option>
         ))}
       </CenteredSelect>

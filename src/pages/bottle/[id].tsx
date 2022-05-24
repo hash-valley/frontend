@@ -6,7 +6,6 @@ import {
   isCellarApproved,
   approveCellar,
   rejuvenate,
-  historicalUriIpfs,
 } from "../../Utils/bottleContract";
 import { stake, withdraw } from "../../Utils/cellarContract";
 import { useQuery } from "@apollo/client";
@@ -20,7 +19,12 @@ import {
   TokenPage,
   TokenSign,
 } from "../../Styles/Components";
-import { BottleAddress, chainId, ZERO_ADDRESS } from "../../Utils/constants";
+import {
+  BottleAddress,
+  chainId,
+  ipfs_gateway,
+  ZERO_ADDRESS,
+} from "../../Utils/constants";
 import {
   secondsToString,
   getBottleEra,
@@ -31,7 +35,6 @@ import {
   ageOnRemove,
   year,
 } from "../../Utils/utils";
-import { useBottleVersions } from "../../Hooks/useUriVersions";
 import Select from "rc-select";
 import { BigNumber } from "@ethersproject/bignumber";
 
@@ -39,7 +42,6 @@ const BottlePage = () => {
   const wallet = useWallet();
   const router = useRouter();
   const { id } = router.query;
-  const uriVersions = useBottleVersions();
   const [uriVersion, setUriVersion] = useState(0);
   const [age, setAge] = useState("0");
   const [isApproved, setIsApproved] = useState(false);
@@ -59,9 +61,10 @@ const BottlePage = () => {
 
   const changeImage = async (n: number) => {
     if (!loading && data.bottle) {
-      let uri = await historicalUriIpfs(n);
+      let uri = data.newUris.find((e: any) => e.version === n).newUri;
       uri =
-        uri +
+        ipfs_gateway +
+        uri.substring(7) +
         "/?seed=" +
         data.bottle.attributes[0] +
         "-" +
@@ -78,10 +81,6 @@ const BottlePage = () => {
   };
 
   useEffect(() => {
-    changeImage(uriVersions[uriVersions.length - 1]);
-  }, [uriVersions, id]);
-
-  useEffect(() => {
     const fetchBalance = async () => {
       if (data.bottle) {
         setNullData(false);
@@ -90,6 +89,8 @@ const BottlePage = () => {
         let fetchedAge = await bottleAge(parseInt(id.toString()));
         setAge(fetchedAge);
         setBottleType(getBottleType(data.bottle.attributes));
+
+        changeImage(data.newUris.length - 1);
 
         if (data.bottle.inCellar) {
           const stakeTime = Math.floor(
@@ -135,11 +136,11 @@ const BottlePage = () => {
       <br />
       <CenteredSelect
         value={uriVersion}
-        onChange={(event: any) => changeImage(event.target.value)}
+        onChange={(event: any) => changeImage(event)}
       >
-        {uriVersions.map((n) => (
-          <Select.Option key={n} value={n}>
-            Version {n}
+        {data.newUris.map((n: any) => (
+          <Select.Option key={n.version} value={n.version}>
+            Version {n.version}
           </Select.Option>
         ))}
       </CenteredSelect>

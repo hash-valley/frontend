@@ -53,6 +53,20 @@ export const ACCOUNT_QUERY = gql`
   }
 `;
 
+export const MINT_QUERY = gql`
+  query GetVineyard {
+    newUris(
+      orderBy: version
+      orderDirection: desc
+      first: 1
+      where: { completed: true, type: VINEYARD }
+    ) {
+      newUri
+      version
+    }
+  }
+`;
+
 export const VINEYARD_QUERY = gql`
   query GetVineyard($id: String!) {
     vineyard(id: $id) {
@@ -69,6 +83,14 @@ export const VINEYARD_QUERY = gql`
         id
       }
       seasonsHarvested
+    }
+    newUris(
+      orderBy: version
+      orderDirection: desc
+      where: { completed: true, type: VINEYARD }
+    ) {
+      newUri
+      version
     }
   }
 `;
@@ -98,6 +120,14 @@ export const BOTTLE_QUERY = gql`
       rejuvenatedTo {
         id
       }
+    }
+    newUris(
+      orderBy: version
+      orderDirection: desc
+      where: { completed: true, type: BOTTLE }
+    ) {
+      newUri
+      version
     }
   }
 `;

@@ -32,11 +32,8 @@ const VineyardABI = [
   "function currentStreak(uint256 _tokenId) public view returns (uint16)",
   "function imgVersionCount() public view returns (uint256)",
   "function imgVersions(uint256 id) public view returns (string)",
-  "function suggest(uint256 _tokenId, string calldata _newUri, address _artist) public",
-  "function support(uint256 _tokenId) public",
-  "function retort(uint256 _tokenId) public",
-  "function complete() public",
   "function buySprinkler(uint256 _tokenId) public payable",
+  "function newVineyardsDiscount(uint16[] calldata _tokenAttributes, uint256 index, bytes32[] calldata merkleProof) public payable",
 ];
 
 const viewProvider = new JsonRpcProvider(providerUrl);
@@ -88,20 +85,14 @@ export const latestUriVersion = async () => {
   return await viewVineyardContract.imgVersionCount();
 };
 
-export const historicalUri = async (n: number): Promise<string> => {
-  return await viewVineyardContract.imgVersions(n);
-};
-
-export const historicalUriIpfs = async (n: number): Promise<string> => {
-  return ipfs_gateway + (await historicalUri(n)).substring(7);
-};
-
 /**
  *
  * @param params [location, elevation, elevationIsNegative, soil]
  */
 export const newVineyards = async (params: number[], wallet: any) => {
   const vineyardWithSigner = withSigner(wallet);
+
+  //process params
   let negative: number = 0;
   if (params[1] < 0) negative = 1;
   const processedParams: number[] = [
@@ -112,6 +103,11 @@ export const newVineyards = async (params: number[], wallet: any) => {
   ];
   const supply = await totalSupply();
   let tx;
+
+  //discount check
+  const res = await fetch(`/api/merkle?address=${wallet.account}`);
+  const resjson = await res.json();
+
   if (supply < 100) {
     try {
       tx = await vineyardWithSigner.newVineyards(processedParams);
@@ -121,10 +117,12 @@ export const newVineyards = async (params: number[], wallet: any) => {
       console.error(err);
       toast.error(`Error! ${err?.message}`);
     }
+  } else if (resjson.hasClaim) {
+    return await newVineyardsDiscount(processedParams, wallet, resjson);
   } else {
     try {
       tx = await vineyardWithSigner.newVineyards(processedParams, {
-        value: parseEther("0.06"),
+        value: parseEther("0.07"),
       });
       toast.success("Success!");
       return tx;
@@ -148,6 +146,28 @@ export const newVineyardsGiveaway = async (params: number[], wallet: any) => {
 
   try {
     const tx = await vineyardWithSigner.newVineyardGiveaway(processedParams);
+    toast.success("Success!");
+    return tx;
+  } catch (err: any) {
+    console.error(err);
+    toast.error(`Error! ${err?.message}`);
+  }
+};
+
+const newVineyardsDiscount = async (
+  processedParams: number[],
+  wallet: any,
+  claim: any
+) => {
+  const vineyardWithSigner = withSigner(wallet);
+
+  try {
+    const tx = await vineyardWithSigner.newVineyardsDiscount(
+      processedParams,
+      claim.index,
+      claim.proof,
+      { value: parseEther("0.04") }
+    );
     toast.success("Success!");
     return tx;
   } catch (err: any) {
@@ -309,63 +329,6 @@ export const harvestMultiple = async (
 
   try {
     const tx = await vineyardWithSigner.harvestMultiple(tokenIds);
-    toast.success("Success!");
-    return tx;
-  } catch (err: any) {
-    console.error(err);
-    toast.error(`Error! ${err?.message}`);
-  }
-};
-
-export const vineProposal = async (
-  wallet: any,
-  tokenId: number,
-  uri: string,
-  address: string
-) => {
-  const vineyardWithSigner = withSigner(wallet);
-
-  try {
-    const tx = await vineyardWithSigner.suggest(tokenId, uri, address);
-    toast.success("Success!");
-    return tx;
-  } catch (err: any) {
-    console.error(err);
-    toast.error(`Error! ${err?.message}`);
-  }
-};
-
-export const vineSupport = async (wallet: any, tokenId: number) => {
-  const vineyardWithSigner = withSigner(wallet);
-
-  try {
-    const tx = await vineyardWithSigner.support(tokenId);
-    toast.success("Success!");
-    return tx;
-  } catch (err: any) {
-    console.error(err);
-    toast.error(`Error! ${err?.message}`);
-  }
-};
-
-export const vineRetort = async (wallet: any, tokenId: number) => {
-  const vineyardWithSigner = withSigner(wallet);
-
-  try {
-    const tx = await vineyardWithSigner.retort(tokenId);
-    toast.success("Success!");
-    return tx;
-  } catch (err: any) {
-    console.error(err);
-    toast.error(`Error! ${err?.message}`);
-  }
-};
-
-export const vineFinalize = async (wallet: any) => {
-  const vineyardWithSigner = withSigner(wallet);
-
-  try {
-    const tx = await vineyardWithSigner.complete();
     toast.success("Success!");
     return tx;
   } catch (err: any) {

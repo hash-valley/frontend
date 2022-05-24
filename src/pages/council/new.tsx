@@ -5,11 +5,10 @@ import { Input, Button } from "antd";
 import { useQuery } from "@apollo/client";
 import { GET_BOTTLES, VINE_URIS, BOTTLE_URIS } from "../../Utils/queries";
 import Select from "rc-select";
-import { vineProposal } from "../../Utils/vineyardContract";
-import { bottleProposal } from "../../Utils/bottleContract";
 import styled from "styled-components";
 import { BigNumber } from "@ethersproject/bignumber";
 import { isAddress } from "@ethersproject/address";
+import { suggest } from "../../Utils/votableUri";
 
 const ProposalInput = styled(Input)`
   max-width: 32rem;
@@ -45,6 +44,9 @@ const NewProposal = () => {
   const fortyEightHours = 48 * 60 * 60;
 
   const verifyCooldown = (uri: any): boolean => {
+    if (uri.votesFor === "0" && uri.votesAgainst === "0") {
+      return true;
+    }
     const rn = Date.now() / 1000;
     if (uri.completed && uri.startTimestamp + nineDays < rn) {
       return true;
@@ -112,9 +114,9 @@ const NewProposal = () => {
 
     if (!errors) {
       if (pType == "Vineyards") {
-        vineProposal(wallet, Number(bottleId), cid, address);
+        suggest(wallet, Number(bottleId), cid, address, "VINEYARD");
       } else if (pType == "Bottles") {
-        bottleProposal(wallet, Number(bottleId), cid, address);
+        suggest(wallet, Number(bottleId), cid, address, "BOTTLE");
       }
     }
   };

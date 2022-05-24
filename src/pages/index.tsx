@@ -71,20 +71,30 @@ const Header = styled.h1`
   font-family: FancyFont;
 `;
 
+const PromoText = styled.i`
+  color: green;
+`;
+
 const Splash = () => {
   const wallet = useWallet();
   const router = useRouter();
   const protocol = useCurrSeason();
   const [minted, setMinted] = useState(0);
   const [max, setMax] = useState(Infinity);
-  const [price, setPrice] = useState(0.06);
+  const [price, setPrice] = useState(0.07);
   const [hasGive, setHasGive] = useState(false);
+  const [hasDiscount, setHasDiscount] = useState(false);
 
   useEffect(() => {
     if (wallet.status === "connected") {
       giveawayBalance(wallet.account).then((val) =>
         setHasGive(val.gte(BigNumber.from(parseUnits("1.0"))))
       );
+      fetch(`/api/merkle?address=${wallet.account}`).then(async (res) => {
+        let rj = await res.json();
+        setHasDiscount(rj.hasClaim);
+        setPrice(rj.hasClaim ? 0.04 : 0.07);
+      });
     } else {
       setHasGive(false);
     }
@@ -119,12 +129,18 @@ const Splash = () => {
         </h3>
         {price == 0 ? (
           <h3>
-            <i>{100 - minted} free vineyards remaining (then 0.06 Ξ/mint)</i>
+            <i>{100 - minted} free vineyards remaining (then 0.07 Ξ/mint)</i>
           </h3>
         ) : (
           minted < max && (
             <h3>
               <i>{price} Ξ</i>
+              {hasDiscount && (
+                <>
+                  {" "}
+                  - <PromoText>Milady Pricing!</PromoText>
+                </>
+              )}
             </h3>
           )
         )}
