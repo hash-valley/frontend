@@ -16,7 +16,7 @@ export const vineMetadata = (
 
   return {
     image: `${imgUri}/?seed=${vine_location}-${Math.abs(vine_elevation)}-${vine_elevation_neg}-${vine_soil}-${vine_xp}`,
-    external_url: "https://hashvalley.xyz",
+    external_url: `https://hashvalley.xyz/vineyard/${token}`,
     name: `Hash Valley Winery Vineyard ${token}`,
     seller_fee_basis_points: sellerFee,
     fee_recipient: feeRecipient,

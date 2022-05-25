@@ -14,7 +14,7 @@ export const bottleMetadata = (
 ) => {
   return {
     image: `${imgUri}/?seed=${type}-${subtype}-${note}-${name}-${age}`,
-    external_url: "https://hashvalley.xyz",
+    external_url: `https://hashvalley.xyz/bottle/${token}`,
     name: `Hash Valley Winery Bottle ${token}`,
     seller_fee_basis_points: sellerFee,
     fee_recipient: feeRecipient,

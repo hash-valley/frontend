@@ -30,6 +30,7 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
+    "dev-hh": "export NODE_ENV=test && next dev",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",

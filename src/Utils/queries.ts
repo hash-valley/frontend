@@ -54,7 +54,7 @@ export const ACCOUNT_QUERY = gql`
 `;
 
 export const MINT_QUERY = gql`
-  query GetVineyard {
+  query GetUri {
     newUris(
       orderBy: version
       orderDirection: desc
