@@ -9,6 +9,24 @@ import Link from "next/link";
 import { giveawayBalance } from "../Utils/giveawayToken";
 import { BigNumber } from "@ethersproject/bignumber";
 import { parseUnits } from "@ethersproject/units";
+import Image from "next/image";
+
+const LeftCorner = styled.div`
+  float: left;
+  margin-top: -8rem;
+  margin-right: -22rem;
+  margin-left: auto;
+`;
+
+const RightCorner = styled.div`
+  float: right;
+  margin-top: -12rem;
+`;
+
+const HeadDiv = styled.div`
+  max-width: 48rem;
+  margin: auto;
+`;
 
 const ProgressContainer = styled.div`
   padding: 7px;
@@ -66,7 +84,7 @@ const ProgressBar = styled.span`
 `;
 
 const Header = styled.h1`
-  margin: 9rem 0 7rem 0;
+  margin: 10rem 4.2rem 7rem 4.2rem;
   font-size: 3rem;
   font-family: FancyFont;
 `;
@@ -115,7 +133,26 @@ const Splash = () => {
   return (
     <>
       <Page>
-        <Header>Hash Valley Winery</Header>
+        <HeadDiv>
+          <LeftCorner>
+            <Image
+              src="/vine_svgs/left_corner.svg"
+              alt="flourish"
+              height={220}
+              width={220}
+            />
+          </LeftCorner>
+          <Header>Hash Valley Winery</Header>
+          <RightCorner>
+            <Image
+              src="/vine_svgs/right_corner.svg"
+              alt="flourish"
+              height={160}
+              width={160}
+            />
+          </RightCorner>
+        </HeadDiv>
+
         <ProgressContainer>
           <Progress>
             <ProgressBar
