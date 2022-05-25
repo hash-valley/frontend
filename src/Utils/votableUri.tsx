@@ -30,10 +30,10 @@ export const suggest = async (
   address: string,
   uriType: UriType
 ) => {
-  const vineyardWithSigner = withSigner(wallet, uriType);
+  const contractWithSigner = withSigner(wallet, uriType);
 
   try {
-    const tx = await vineyardWithSigner.suggest(tokenId, uri, address);
+    const tx = await contractWithSigner.suggest(tokenId, uri, address);
     toast.success("Success!");
     return tx;
   } catch (err: any) {
@@ -47,10 +47,10 @@ export const support = async (
   tokenId: number,
   uriType: UriType
 ) => {
-  const vineyardWithSigner = withSigner(wallet, uriType);
+  const contractWithSigner = withSigner(wallet, uriType);
 
   try {
-    const tx = await vineyardWithSigner.support(tokenId);
+    const tx = await contractWithSigner.support(tokenId);
     toast.success("Success!");
     return tx;
   } catch (err: any) {
@@ -64,10 +64,10 @@ export const retort = async (
   tokenId: number,
   uriType: UriType
 ) => {
-  const vineyardWithSigner = withSigner(wallet, uriType);
+  const contractWithSigner = withSigner(wallet, uriType);
 
   try {
-    const tx = await vineyardWithSigner.retort(tokenId);
+    const tx = await contractWithSigner.retort(tokenId);
     toast.success("Success!");
     return tx;
   } catch (err: any) {
@@ -77,10 +77,10 @@ export const retort = async (
 };
 
 export const complete = async (wallet: any, uriType: UriType) => {
-  const vineyardWithSigner = withSigner(wallet, uriType);
+  const contractWithSigner = withSigner(wallet, uriType);
 
   try {
-    const tx = await vineyardWithSigner.complete();
+    const tx = await contractWithSigner.complete();
     toast.success("Success!");
     return tx;
   } catch (err: any) {
