@@ -137,7 +137,7 @@ const Splash = () => {
           <LeftCorner>
             <Image
               src="/vine_svgs/left_corner.svg"
-              alt="flourish"
+              alt="corner"
               height={220}
               width={220}
             />
@@ -146,7 +146,7 @@ const Splash = () => {
           <RightCorner>
             <Image
               src="/vine_svgs/right_corner.svg"
-              alt="flourish"
+              alt="corner"
               height={160}
               width={160}
             />
