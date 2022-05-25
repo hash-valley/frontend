@@ -128,3 +128,8 @@ export const TokenPage = styled(Page)`
   max-width: 600px;
   margin: 6rem auto 1.8rem auto;
 `;
+
+export const Flourish = styled.div`
+  margin-top: -8rem;
+  margin-bottom: 3rem;
+`;

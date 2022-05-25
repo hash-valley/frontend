@@ -1,6 +1,7 @@
-import { GridContainer, Page } from "../Styles/Components";
+import { Flourish, GridContainer, Page } from "../Styles/Components";
 import styled from "styled-components";
 import { VineyardAddress } from "../Utils/constants";
+import Image from "next/image";
 
 const Info1 = styled(Page)`
   padding-top: 3rem;
@@ -145,6 +146,17 @@ const About = () => {
           to see more.
         </SubSubtitle>
       </Info1>
+
+      <Flourish>
+        <br />
+        <Image
+          src="/vine_svgs/flourish.svg"
+          alt="flourish"
+          height={80}
+          width={300}
+        />
+        <br />
+      </Flourish>
     </>
   );
 };
