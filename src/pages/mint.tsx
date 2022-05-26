@@ -197,7 +197,7 @@ const MintContainer = () => {
           <TokenFrame src={imageUri} frameBorder="0" />
           <p>
             <i>
-              Your vineyard willl grow and develop as you care for it over time
+              Your vineyard will grow and develop as you care for it over time
             </i>
           </p>
           <Sign>

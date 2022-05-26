@@ -19,6 +19,7 @@ export const TokenFrame = styled.iframe`
   padding: 8px;
   margin-top: 12px;
   margin-bottom: 12px;
+  background-color: #fff;
 
   border-radius: 12px;
   box-shadow: 15px 15px 30px #d9d9d9, -15px -15px 30px #ffffff;
