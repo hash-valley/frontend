@@ -28,14 +28,14 @@ export const GIVEAWAY_QUERY = gql`
 export const ACCOUNT_QUERY = gql`
   query GetAccount($userAddress: Bytes!) {
     account(id: $userAddress) {
-      bottles {
+      bottles(orderBy: tokenId, orderDirection: asc) {
         tokenId
         attributes
         inCellar
         canEnterCellar
         spoiled
       }
-      vineyards {
+      vineyards(orderBy: tokenId, orderDirection: asc) {
         tokenId
         xp
         soil
