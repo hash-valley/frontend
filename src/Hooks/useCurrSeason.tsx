@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
+import { day } from "../Utils/constants";
 import { VINEPROTOCOL_QUERY } from "../Utils/queries";
-import { day } from "../Utils/utils";
 import { currentSeason } from "../Utils/vineyardContract";
 
 export const useCurrSeason = () => {
@@ -9,7 +9,7 @@ export const useCurrSeason = () => {
   const [daysLeft, setDaysLeft] = useState(0);
   const [fetched, setFetched] = useState(false);
 
-  const { loading, error, data, refetch } = useQuery(VINEPROTOCOL_QUERY);
+  const { loading, data } = useQuery(VINEPROTOCOL_QUERY);
 
   const sDays = (season: number, start: number) => {
     const now = Date.now() / 1000;

@@ -22,7 +22,9 @@ import {
 import {
   BottleAddress,
   chainId,
+  day,
   ipfs_gateway,
+  year,
   ZERO_ADDRESS,
 } from "../../Utils/constants";
 import {
@@ -31,9 +33,7 @@ import {
   getBottleType,
   BottleType,
   chanceOfSpoil,
-  day,
   ageOnRemove,
-  year,
 } from "../../Utils/utils";
 import Select from "rc-select";
 import { BigNumber } from "@ethersproject/bignumber";
@@ -56,7 +56,7 @@ const BottlePage = () => {
   const cellarStuff: any = useRef(null);
 
   const { loading, error, data, refetch } = useQuery(BOTTLE_QUERY, {
-    variables: { id: "0x" + id?.toString() },
+    variables: { id: id?.toString() },
   });
 
   const changeImage = async (n: number) => {

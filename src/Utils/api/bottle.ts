@@ -1,4 +1,4 @@
-import { bottleTypes } from "../utils";
+import { bottleTypes } from "../attributes";
 
 export const bottleMetadata = (
   type: number,

@@ -10,8 +10,6 @@ import {
   fetchTokenFarmingStats,
 } from "../../Utils/vineyardContract";
 import {
-  locations,
-  soilTypes,
   formatNum,
   getBottleClass,
   getBottleName,
@@ -26,6 +24,7 @@ import {
   Spaced,
   RoundedImg,
 } from "../../Styles/Components";
+import { locations, soilTypes } from "../../Utils/attributes";
 
 interface Mults {
   canWater: number;

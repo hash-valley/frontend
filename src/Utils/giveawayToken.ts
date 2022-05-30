@@ -1,7 +1,7 @@
-import { JsonRpcProvider, Web3Provider } from "@ethersproject/providers";
+import { Web3Provider } from "@ethersproject/providers";
 import { Contract } from "@ethersproject/contracts";
 import { parseEther } from "@ethersproject/units";
-import { providerUrl } from "./constants";
+import { viewProvider } from "./constants";
 import { GiveawayAddress, VineyardAddress } from "./constants";
 import { toast } from "react-toastify";
 
@@ -11,8 +11,6 @@ const giveawayABI = [
   "function allowance(address owner, address spender) external view returns (uint256)",
   "function approve(address spender, uint256 amount) external returns (bool)",
 ];
-
-const viewProvider = new JsonRpcProvider(providerUrl);
 
 const viewGiveawayContract = new Contract(
   GiveawayAddress,

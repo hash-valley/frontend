@@ -1,4 +1,4 @@
-import { locations, soilTypes } from "../utils";
+import { locations, soilTypes } from "../attributes";
 
 export const vineMetadata = (
   vine_location: number,

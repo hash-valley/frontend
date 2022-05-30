@@ -1,0 +1,176 @@
+import { JsonRpcProvider, Web3Provider } from "@ethersproject/providers";
+import { toast } from "react-toastify";
+import { bottleEras, bottleTypes } from "./attributes";
+import { chainId, alchemyKey, day } from "./constants";
+
+export const formatNum = (num: string, decimals: number = 3) => {
+  const decimal = num.indexOf(".");
+  return num.substring(0, decimal + decimals);
+};
+
+export const shortenAddress = (addr: string | null) => {
+  if (!addr) return "";
+  return addr.substring(0, 6) + "..." + addr.substring(addr.length - 4);
+};
+
+export const secondsToString = (seconds: string): string => {
+  let bigSeconds = BigInt(seconds);
+  const years = bigSeconds / BigInt(31536000);
+  if (years > 0) {
+    bigSeconds %= years;
+  }
+  const days = bigSeconds / BigInt(86400);
+  if (days > 0) {
+    bigSeconds %= days;
+  }
+  const hours = bigSeconds / BigInt(3600);
+  return `${years} years, ${days} days, ${hours} hours`;
+};
+
+export const hours = (time: number): string => `${Math.floor(time / 3600)}`;
+
+export const minutes = (time: number): string => {
+  const num = Math.floor(time / 60) % 60;
+  return num < 10 ? `0${num}` : `${num}`;
+};
+
+export const seconds = (time: number): string => {
+  const num = time % 60;
+  return num < 10 ? `0${num}` : `${num}`;
+};
+
+export const getENS = async (address: string) => {
+  const provider = new JsonRpcProvider(
+    "https://eth-mainnet.alchemyapi.io/v2/" + alchemyKey
+  );
+  return await provider.lookupAddress(address);
+};
+
+export const correctNetwork = async () => {
+  //@ts-ignore
+  const provider = new Web3Provider(window.ethereum);
+  const network = await provider.getNetwork();
+  return network.chainId === chainId;
+};
+
+export const requestChain = () => {
+  const rpc =
+    chainId === 10
+      ? "https://mainnet.optimism.io"
+      : chainId === 69
+      ? "https://kovan.optimism.io"
+      : "http://localhost:8545";
+  const blockExplorer =
+    chainId === 10
+      ? "https://optimistic.etherscan.io"
+      : chainId === 69
+      ? "https://kovan-optimistic.etherscan.io"
+      : "";
+  const chainName =
+    chainId === 10
+      ? "Optimism"
+      : chainId === 69
+      ? "Optimistic Kovan"
+      : "LocalHost";
+  //@ts-ignore
+  if (window.ethereum) {
+    //@ts-ignore
+    window.ethereum?.request({
+      method: "wallet_addEthereumChain",
+      params: [
+        {
+          chainName,
+          nativeCurrency: {
+            name: "Ethereum",
+            symbol: "ETH",
+            decimals: 18,
+          },
+          blockExplorerUrls: [blockExplorer],
+          chainId: `0x${chainId.toString(16)}`,
+          rpcUrls: [rpc],
+        },
+      ],
+    });
+  } else {
+    toast.info(
+      `Please switch your wallet network to ${
+        chainId === 10
+          ? "Optimism"
+          : chainId === 69
+          ? "Optimistic Kovan"
+          : chainId
+      }`
+    );
+  }
+};
+
+export const getBottleEra = (bottleAge: string | number) => {
+  let bigAge = BigInt(bottleAge);
+  for (let i = 0; i < bottleEras.length; ++i) {
+    let range = bottleEras[i].range;
+    if (range[0] <= bigAge && bigAge < range[1]) {
+      return bottleEras[i].name;
+    }
+  }
+};
+
+export const chanceOfSpoil = (stakedDays: number) => {
+  let chance;
+  if (stakedDays < 360) {
+    chance = 5 + Math.floor((365 - stakedDays) / 38) ** 2;
+  } else {
+    chance = 5;
+  }
+  return 100 - chance;
+};
+
+// age in seconds
+export const ageOnRemove = (cellarTime: number): BigInt => {
+  if (cellarTime <= 360 * day) {
+    const months = Math.floor(cellarTime / day / 30);
+    const monthTime = cellarTime - months * 30 * day;
+    const eraTime = bottleEras[months].range[1] - bottleEras[months].range[0];
+    const monthFraction = (BigInt(monthTime) * eraTime) / BigInt(30 * day);
+    return bottleEras[months].range[0] + BigInt(monthFraction);
+  }
+  return bottleEras[12].range[1];
+};
+
+export const toDate = (timestamp: number): string => {
+  const date = new Date(timestamp * 1000);
+  return date.toUTCString();
+};
+
+export interface BottleType {
+  type: string;
+  subtype: string;
+  note: string;
+  name: string;
+}
+
+export const getBottleType = (attributes: number[]): BottleType => {
+  const type = attributes[0];
+  const subtype = attributes[1];
+  const note = attributes[2];
+  const name = attributes[3];
+
+  return {
+    type: bottleTypes[type].name,
+    subtype: bottleTypes[type].subtypes[subtype].name,
+    note: bottleTypes[type].subtypes[subtype].notes[note].name,
+    name: bottleTypes[type].subtypes[subtype].notes[note].type[name],
+  };
+};
+
+export const getBottleClass = (attributes: number[]): string => {
+  const type = attributes[0];
+  return bottleTypes[type].name;
+};
+
+export const getBottleName = (attributes: number[]): string => {
+  const type = attributes[0];
+  const subtype = attributes[1];
+  const note = attributes[2];
+  const name = attributes[3];
+  return bottleTypes[type].subtypes[subtype].notes[note].type[name];
+};

@@ -1,17 +1,13 @@
-import { JsonRpcProvider, Web3Provider } from "@ethersproject/providers";
+import { Web3Provider } from "@ethersproject/providers";
 import { Contract } from "@ethersproject/contracts";
 import { parseEther } from "@ethersproject/units";
-import { VineyardAddress, providerUrl, ipfs_gateway } from "./constants";
+import { VineyardAddress, viewProvider } from "./constants";
 import { toast } from "react-toastify";
 
 const VineyardABI = [
   "function newVineyards(uint16[] calldata) public payable",
   "function newVineyardGiveaway(uint16[] calldata) public",
-  "function name() view returns (string)",
-  "function symbol() view returns (string)",
-  "function balanceOf(address) view returns (uint256 balance)",
   "function totalSupply() view returns (uint256)",
-  "function tokenOfOwnerByIndex(address owner, uint256 index) external view returns (uint256 tokenId)",
   "function getTokenAttributes(uint _tokenId) public view returns(uint16[] memory attributes)",
   "function xp(uint _tokenID) public view returns(uint)",
   "function plant(uint _tokenID) public",
@@ -23,20 +19,14 @@ const VineyardABI = [
   "function canWater(uint _tokenId) public view returns(bool)",
   "function canPlant(uint _tokenId) public view returns(bool)",
   "function canHarvest(uint _tokenId) public view returns(bool)",
-  "function ownerOf(uint256 tokenId) external view returns (address owner)",
   "function currSeason() public view returns (uint256)",
-  "function maxVineyards() public view returns (uint256)",
   "function minWaterTime(uint256 _tokenId) public view returns (uint256)",
   "function watered(uint256 _tokenId) public view returns (uint256)",
   "function waterWindow(uint256 _tokenId) public view returns (uint256)",
   "function currentStreak(uint256 _tokenId) public view returns (uint16)",
-  "function imgVersionCount() public view returns (uint256)",
-  "function imgVersions(uint256 id) public view returns (string)",
   "function buySprinkler(uint256 _tokenId) public payable",
   "function newVineyardsDiscount(uint16[] calldata _tokenAttributes, uint256 index, bytes32[] calldata merkleProof) public payable",
 ];
-
-const viewProvider = new JsonRpcProvider(providerUrl);
 
 const withSigner = (wallet: any) => {
   const provider = new Web3Provider(wallet.ethereum);
@@ -45,7 +35,7 @@ const withSigner = (wallet: any) => {
   return VineyardContract.connect(signer);
 };
 
-export const viewVineyardContract = new Contract(
+const viewVineyardContract = new Contract(
   VineyardAddress,
   VineyardABI,
   viewProvider
@@ -66,11 +56,6 @@ export interface Farmable {
   canHarvest: boolean;
 }
 
-export const maxVineyards = async (): Promise<number> => {
-  const maxVineyards = await viewVineyardContract.maxVineyards();
-  return parseInt(maxVineyards.toString());
-};
-
 export const totalSupply = async (): Promise<number> => {
   const totalSupply = await viewVineyardContract.totalSupply();
   return parseInt(totalSupply.toString());
@@ -79,10 +64,6 @@ export const totalSupply = async (): Promise<number> => {
 export const currentSeason = async (): Promise<number> => {
   const currSeason = await viewVineyardContract.currSeason();
   return parseInt(currSeason.toNumber());
-};
-
-export const latestUriVersion = async () => {
-  return await viewVineyardContract.imgVersionCount();
 };
 
 /**
@@ -176,11 +157,6 @@ const newVineyardsDiscount = async (
   }
 };
 
-export const userBalance = async (userAddress: string) => {
-  const balance = await viewVineyardContract.balanceOf(userAddress);
-  return parseInt(balance.toString());
-};
-
 export const getStreak = async (tokenId: number): Promise<number> => {
   const streak = await viewVineyardContract.currentStreak(tokenId);
   return streak;
@@ -209,25 +185,6 @@ export const fetchTokenFarmingStats = async (tokenId: number) => {
     canWater: await viewVineyardContract.canWater(tokenId),
     canPlant: await viewVineyardContract.canPlant(tokenId),
     canHarvest: await viewVineyardContract.canHarvest(tokenId),
-  };
-};
-
-export const tokenOwner = async (tokenId: number) => {
-  return await viewVineyardContract.ownerOf(tokenId);
-};
-
-export const tokenIdsByOwner = async (userAddress: string) => {
-  const balance = await userBalance(userAddress);
-  let tokenIds: TokenParams[] = [];
-  let farmables: Farmable[] = [];
-  for (let i = 0; i < balance; i++) {
-    const id = await viewVineyardContract.tokenOfOwnerByIndex(userAddress, i);
-    tokenIds.push(await fetchTokenParams(id.toNumber()));
-    farmables.push(await fetchTokenFarmingStats(id.toNumber()));
-  }
-  return {
-    tokenIds,
-    farmables,
   };
 };
 

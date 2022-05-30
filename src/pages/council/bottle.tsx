@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useWallet } from "use-wallet";
 import Council from "../../Components/Council";
 import { useQuery } from "@apollo/client";

@@ -1,6 +1,6 @@
-import { JsonRpcProvider, Web3Provider } from "@ethersproject/providers";
+import { Web3Provider } from "@ethersproject/providers";
 import { Contract } from "@ethersproject/contracts";
-import { providerUrl } from "./constants";
+import { viewProvider } from "./constants";
 import { CellarAddress } from "./constants";
 import { toast } from "react-toastify";
 
@@ -9,10 +9,7 @@ const cellarABI = [
   "function withdraw(uint256 _tokenID) public",
   "function staked(uint _tokenID) public view returns(uint)",
   "function withdrawn(uint _tokenID) public view returns(uint)",
-  "function owner(uint _tokenID) public view returns(address)",
 ];
-
-const viewProvider = new JsonRpcProvider(providerUrl);
 
 const viewCellarContract = new Contract(CellarAddress, cellarABI, viewProvider);
 
@@ -30,10 +27,6 @@ export const stakeStatus = async (tokenId: number) => {
     canStake: stakedAt == 0 && withdrawnAt == 0,
     canWithdraw: stakedAt != 0 && withdrawnAt == 0,
   };
-};
-
-export const tokenOwner = async (tokenId: number) => {
-  return await viewCellarContract.owner(tokenId);
 };
 
 export const stake = async (wallet: any, tokenId: number) => {

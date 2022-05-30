@@ -30,6 +30,7 @@ const NewProposal = () => {
   const [bottleError, setBottleError] = useState(false);
   const [vineCooldown, setVineCooldown] = useState(false);
   const [bottleCooldown, setBottleCooldown] = useState(false);
+
   const bottleData = useQuery(GET_BOTTLES, {
     variables: {
       address: wallet.account?.toString().toLowerCase(),

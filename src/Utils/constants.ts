@@ -1,3 +1,5 @@
+import { JsonRpcProvider } from "@ethersproject/providers";
+
 export const VineyardAddress = process.env.NEXT_PUBLIC_VINE_ADDRESS ?? "";
 export const CellarAddress = process.env.NEXT_PUBLIC_CELLAR_ADDRESS ?? "";
 export const BottleAddress = process.env.NEXT_PUBLIC_BOTTLE_ADDRESS ?? "";
@@ -14,3 +16,8 @@ export const ipfs_gateway = process.env.NEXT_PUBLIC_IPFS_GATEWAY ?? "";
 export const walletConnectKey = process.env.NEXT_PUBLIC_WALLET_CONNECT ?? "";
 
 export const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
+
+export const viewProvider = new JsonRpcProvider(providerUrl);
+
+export const day = 24 * 60 * 60;
+export const year = BigInt(365 * day);

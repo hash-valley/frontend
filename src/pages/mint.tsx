@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useWallet } from "use-wallet";
 import { Button } from "antd";
-import { locations, soilTypes } from "../Utils/utils";
+import { locations, soilTypes } from "../Utils/attributes";
 import { newVineyards, newVineyardsGiveaway } from "../Utils/vineyardContract";
 import { giveawayBalance } from "../Utils/giveawayToken";
 import {

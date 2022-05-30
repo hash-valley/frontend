@@ -13,8 +13,6 @@ import {
   buySprinkler,
 } from "../../Utils/vineyardContract";
 import {
-  locations,
-  soilTypes,
   hours,
   minutes,
   seconds,
@@ -37,6 +35,7 @@ import {
 import Select from "rc-select";
 import { Button } from "antd";
 import { chainId, ipfs_gateway, VineyardAddress } from "../../Utils/constants";
+import { locations, soilTypes } from "../../Utils/attributes";
 
 const VineyardPage = () => {
   const wallet = useWallet();
@@ -56,7 +55,7 @@ const VineyardPage = () => {
   });
 
   const { loading, error, data, refetch } = useQuery(VINEYARD_QUERY, {
-    variables: { id: "0x" + id?.toString() },
+    variables: { id: id?.toString() },
   });
 
   const changeImage = async (n: number) => {
@@ -83,7 +82,9 @@ const VineyardPage = () => {
   useEffect(() => {
     let myInterval: any;
     const fetchBalance = async () => {
+      console.log('bleh',data)
       if (data.vineyard) {
+        console.log(data)
         setNullData(false);
         setStreak(await getStreak(Number(id)));
         const farmableParams = await fetchTokenFarmingStats(
