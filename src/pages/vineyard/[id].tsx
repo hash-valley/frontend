@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useWallet } from "use-wallet";
 import { useRouter } from "next/router";
 import {
   Farmable,
@@ -12,12 +11,7 @@ import {
   getStreak,
   buySprinkler,
 } from "../../Utils/vineyardContract";
-import {
-  hours,
-  minutes,
-  seconds,
-  toDate,
-} from "../../Utils/utils";
+import { hours, minutes, seconds, toDate } from "../../Utils/utils";
 import { useCurrSeason } from "../../Hooks/useCurrSeason";
 import { useQuery } from "@apollo/client";
 import { VINEYARD_QUERY } from "../../Utils/queries";
@@ -36,9 +30,13 @@ import Select from "rc-select";
 import { Button } from "antd";
 import { chainId, ipfs_gateway, VineyardAddress } from "../../Utils/constants";
 import { locations, soilTypes } from "../../Utils/attributes";
+import { useAccount, useSigner } from "wagmi";
+import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
 
 const VineyardPage = () => {
-  const wallet = useWallet();
+  const wallet = useAccount();
+  const { data: signer } = useSigner();
+  const addRecentTransaction = useAddRecentTransaction();
   const router = useRouter();
   const { id } = router.query;
   const season = useCurrSeason();
@@ -82,9 +80,7 @@ const VineyardPage = () => {
   useEffect(() => {
     let myInterval: any;
     const fetchBalance = async () => {
-      console.log('bleh',data)
       if (data.vineyard) {
-        console.log(data)
         setNullData(false);
         setStreak(await getStreak(Number(id)));
         const farmableParams = await fetchTokenFarmingStats(
@@ -120,6 +116,26 @@ const VineyardPage = () => {
   useEffect(() => {
     refetch();
   }, [wallet, id]);
+
+  const sendWater = async () => {
+    const tx = await water(signer, Number(id));
+    addRecentTransaction({ hash: tx.hash, description: `Water vineyard ${Number(id)}` });
+  };
+
+  const sendPlant = async () => {
+    const tx = await plant(signer, Number(id));
+    addRecentTransaction({ hash: tx.hash, description: `Plant vineyard ${Number(id)}` });
+  };
+
+  const sendHarvest = async () => {
+    const tx = await harvest(signer, Number(id));
+    addRecentTransaction({ hash: tx.hash, description: `Harvest vineyard ${Number(id)}` });
+  };
+
+  const sendBuySprinkler = async () => {
+    const tx = await buySprinkler(signer, Number(id));
+    addRecentTransaction({ hash: tx.hash, description: `Buy sprinkler for Vineyard ${Number(id)}` });
+  };
 
   return loading ? (
     <Page>
@@ -182,13 +198,7 @@ const VineyardPage = () => {
           ) : (
             <>
               <b>No Sprinkler</b>
-              <Button
-                type="text"
-                size="middle"
-                onClick={() =>
-                  buySprinkler(wallet, Number(data.vineyard.tokenId))
-                }
-              >
+              <Button type="text" size="middle" onClick={sendBuySprinkler}>
                 Buy Sprinkler (0.01 Ξ)
               </Button>
             </>
@@ -217,13 +227,13 @@ const VineyardPage = () => {
         )}
       </TokenSign>
 
-      {wallet.account?.toLowerCase() === data.vineyard.owner.id ? (
+      {wallet.data?.address?.toLowerCase() === data.vineyard.owner.id ? (
         <div>
           <Spaced
             type="primary"
             shape="round"
             disabled={farmable.canWater ? false : true}
-            onClick={() => water(wallet, Number(id))}
+            onClick={sendWater}
           >
             Water
           </Spaced>
@@ -231,7 +241,7 @@ const VineyardPage = () => {
             type="primary"
             shape="round"
             disabled={farmable.canPlant ? false : true}
-            onClick={() => plant(wallet, Number(id))}
+            onClick={sendPlant}
           >
             Plant
           </Spaced>
@@ -239,7 +249,7 @@ const VineyardPage = () => {
             type="primary"
             shape="round"
             disabled={farmable.canHarvest ? false : true}
-            onClick={() => harvest(wallet, Number(id))}
+            onClick={sendHarvest}
           >
             Harvest
           </Spaced>

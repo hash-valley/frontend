@@ -1,8 +1,7 @@
-import { Web3Provider } from "@ethersproject/providers";
-import { Contract } from "@ethersproject/contracts";
 import { viewProvider } from "./constants";
 import { BottleAddress, CellarAddress } from "./constants";
 import { toast } from "react-toastify";
+import { Contract } from "ethers";
 
 const bottleABI = [
   "function rejuvenate(uint256 _oldTokenID) public returns (uint256)",
@@ -11,10 +10,8 @@ const bottleABI = [
   "function isApprovedForAll(address owner, address operator) public view returns (bool)",
 ];
 
-const withSigner = (wallet: any) => {
-  const provider = new Web3Provider(wallet.ethereum);
-  const signer = provider.getSigner();
-  const BottleContract = new Contract(BottleAddress, bottleABI, provider);
+const withSigner = (signer: any) => {
+  const BottleContract = new Contract(BottleAddress, bottleABI, signer);
   return BottleContract.connect(signer);
 };
 

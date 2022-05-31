@@ -1,16 +1,16 @@
-import { useWallet } from "use-wallet";
 import Council from "../../Components/Council";
 import { useQuery } from "@apollo/client";
 import { NEW_URI } from "../../Utils/queries";
 import { Page, BigLink } from "../../Styles/Components";
 import Link from "next/link";
+import { useAccount } from "wagmi";
 
 const BottleBoard = () => {
-  const wallet = useWallet();
+  const wallet = useAccount();
   const { loading, error, data } = useQuery(NEW_URI, {
     variables: {
       type: "BOTTLE",
-      address: wallet.account?.toString().toLowerCase(),
+      address: wallet.data?.address?.toString().toLowerCase(),
     },
     pollInterval: 10000,
   });

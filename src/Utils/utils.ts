@@ -1,16 +1,9 @@
-import { JsonRpcProvider, Web3Provider } from "@ethersproject/providers";
-import { toast } from "react-toastify";
 import { bottleEras, bottleTypes } from "./attributes";
-import { chainId, alchemyKey, day } from "./constants";
+import { day } from "./constants";
 
 export const formatNum = (num: string, decimals: number = 3) => {
   const decimal = num.indexOf(".");
   return num.substring(0, decimal + decimals);
-};
-
-export const shortenAddress = (addr: string | null) => {
-  if (!addr) return "";
-  return addr.substring(0, 6) + "..." + addr.substring(addr.length - 4);
 };
 
 export const secondsToString = (seconds: string): string => {
@@ -37,71 +30,6 @@ export const minutes = (time: number): string => {
 export const seconds = (time: number): string => {
   const num = time % 60;
   return num < 10 ? `0${num}` : `${num}`;
-};
-
-export const getENS = async (address: string) => {
-  const provider = new JsonRpcProvider(
-    "https://eth-mainnet.alchemyapi.io/v2/" + alchemyKey
-  );
-  return await provider.lookupAddress(address);
-};
-
-export const correctNetwork = async () => {
-  //@ts-ignore
-  const provider = new Web3Provider(window.ethereum);
-  const network = await provider.getNetwork();
-  return network.chainId === chainId;
-};
-
-export const requestChain = () => {
-  const rpc =
-    chainId === 10
-      ? "https://mainnet.optimism.io"
-      : chainId === 69
-      ? "https://kovan.optimism.io"
-      : "http://localhost:8545";
-  const blockExplorer =
-    chainId === 10
-      ? "https://optimistic.etherscan.io"
-      : chainId === 69
-      ? "https://kovan-optimistic.etherscan.io"
-      : "";
-  const chainName =
-    chainId === 10
-      ? "Optimism"
-      : chainId === 69
-      ? "Optimistic Kovan"
-      : "LocalHost";
-  //@ts-ignore
-  if (window.ethereum) {
-    //@ts-ignore
-    window.ethereum?.request({
-      method: "wallet_addEthereumChain",
-      params: [
-        {
-          chainName,
-          nativeCurrency: {
-            name: "Ethereum",
-            symbol: "ETH",
-            decimals: 18,
-          },
-          blockExplorerUrls: [blockExplorer],
-          chainId: `0x${chainId.toString(16)}`,
-          rpcUrls: [rpc],
-        },
-      ],
-    });
-  } else {
-    toast.info(
-      `Please switch your wallet network to ${
-        chainId === 10
-          ? "Optimism"
-          : chainId === 69
-          ? "Optimistic Kovan"
-          : chainId
-      }`
-    );
-  }
 };
 
 export const getBottleEra = (bottleAge: string | number) => {

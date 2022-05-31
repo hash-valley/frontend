@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
-import { useWallet } from "use-wallet";
 import { Button } from "antd";
 import { locations, soilTypes } from "../Utils/attributes";
 import { newVineyards, newVineyardsGiveaway } from "../Utils/vineyardContract";
 import { giveawayBalance } from "../Utils/giveawayToken";
 import {
-  GreyLink,
   GridContainer,
   GridItem,
   Page,
@@ -18,6 +16,8 @@ import { useCurrSeason } from "../Hooks/useCurrSeason";
 import { useQuery } from "@apollo/client";
 import { MINT_QUERY } from "../Utils/queries";
 import { ipfs_gateway } from "../Utils/constants";
+import { useAccount, useSigner } from "wagmi";
+import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
 
 const Step = styled.div`
   margin-top: 32px;
@@ -28,7 +28,9 @@ const Sign = styled.div`
 `;
 
 const MintContainer = () => {
-  const wallet = useWallet();
+  const wallet = useAccount();
+  const { data: signer } = useSigner();
+  const addRecentTransaction = useAddRecentTransaction();
   const protocol = useCurrSeason();
   const [step, setStep] = useState(0);
   const [city, setCity] = useState(0);
@@ -42,7 +44,7 @@ const MintContainer = () => {
 
   const { loading, error, data } = useQuery(MINT_QUERY, {
     onCompleted: (_data) => {
-      setBaseUri(ipfs_gateway +_data.newUris[0].newUri.substring(7));
+      setBaseUri(ipfs_gateway + _data.newUris[0].newUri.substring(7));
     },
   });
 
@@ -83,8 +85,8 @@ const MintContainer = () => {
   };
 
   const checkGiveaway = () => {
-    if (wallet.status === "connected") {
-      giveawayBalance(wallet.account).then((val) => setGiveBal(val));
+    if (wallet.status === "success" && wallet.data?.address) {
+      giveawayBalance(wallet.data?.address!).then((val) => setGiveBal(val));
     }
   };
 
@@ -105,13 +107,22 @@ const MintContainer = () => {
     "-0";
 
   const mint = async () => {
-    const tx = await newVineyards([city, elev, soil], wallet);
+    const tx = await newVineyards(
+      [city, elev, soil],
+      signer,
+      wallet.data?.address!
+    );
+    addRecentTransaction({ hash: tx.hash, description: "Mint new vineyard" });
     //@ts-ignore
     setMintHash(tx.hash);
   };
 
   const mintGiveaway = async () => {
-    const tx = await newVineyardsGiveaway([city, elev, soil], wallet);
+    const tx = await newVineyardsGiveaway([city, elev, soil], signer);
+    addRecentTransaction({
+      hash: tx.hash,
+      description: "Mint new vineyard with token",
+    });
     //@ts-ignore
     setMintHash(tx.hash);
   };
@@ -196,9 +207,7 @@ const MintContainer = () => {
         <Step>
           <TokenFrame src={imageUri} frameBorder="0" />
           <p>
-            <i>
-              Your vineyard will grow and develop as you care for it over time
-            </i>
+            <i>Your vineyard will develop as you care for it over time</i>
           </p>
           <Sign>
             <div>
@@ -212,30 +221,15 @@ const MintContainer = () => {
             </div>
           </Sign>
           {mintHash ? (
-            <>
-              <GreyLink
-                href={
-                  process.env.NEXT_PUBLIC_CHAIN_ID === "69"
-                    ? `https://kovan-optimistic.etherscan.io/tx/${mintHash}`
-                    : `https://optimistic.etherscan.io/tx/${mintHash}`
-                }
-              >
-                <a target="_blank" rel="noreferrer">
-                  Transaction sent: {mintHash}
-                </a>
-              </GreyLink>
-              <br />
-              <br />
-              <Button
-                size="large"
-                type="default"
-                shape="round"
-                onClick={startOver}
-              >
-                Mint Another
-              </Button>
-            </>
-          ) : wallet.status === "connected" ? (
+            <Button
+              size="large"
+              type="default"
+              shape="round"
+              onClick={startOver}
+            >
+              Mint Another
+            </Button>
+          ) : wallet.status === "success" && wallet.data?.address ? (
             <>
               <Spaced
                 size="large"

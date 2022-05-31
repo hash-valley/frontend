@@ -1,7 +1,6 @@
-import { Web3Provider } from "@ethersproject/providers";
-import { Contract } from "@ethersproject/contracts";
 import { VineUriAddress, WineUriAddress } from "./constants";
 import { toast } from "react-toastify";
+import { Contract } from "ethers";
 
 type UriType = "VINEYARD" | "BOTTLE";
 
@@ -12,13 +11,11 @@ const VotableAbi = [
   "function complete() public",
 ];
 
-const withSigner = (wallet: any, uriType: UriType) => {
-  const provider = new Web3Provider(wallet.ethereum);
-  const signer = provider.getSigner();
+const withSigner = (signer: any, uriType: UriType) => {
   const VineyardContract = new Contract(
     uriType === "VINEYARD" ? VineUriAddress : WineUriAddress,
     VotableAbi,
-    provider
+    signer
   );
   return VineyardContract.connect(signer);
 };

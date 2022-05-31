@@ -1,8 +1,7 @@
-import { Web3Provider } from "@ethersproject/providers";
-import { Contract } from "@ethersproject/contracts";
 import { viewProvider } from "./constants";
 import { VinegarAddress } from "./constants";
 import { toast } from "react-toastify";
+import { Contract } from "ethers";
 
 const vinegarABI = [
   "function balanceOf(address account) external view returns (uint256)",
@@ -26,13 +25,11 @@ export const vinegarAllowance = async (owner: string, spender: string) => {
 };
 
 export const approveVinegar = async (
-  wallet: any,
+  signer: any,
   spender: string,
   amount: number
 ) => {
-  const provider = new Web3Provider(wallet.ethereum);
-  const signer = provider.getSigner();
-  const VinegarContract = new Contract(VinegarAddress, vinegarABI, provider);
+  const VinegarContract = new Contract(VinegarAddress, vinegarABI, signer);
   const vinegarWithSigner = VinegarContract.connect(signer);
 
   try {
@@ -46,13 +43,11 @@ export const approveVinegar = async (
 };
 
 export const transferVinegar = async (
-  wallet: any,
+  signer: any,
   recipient: string,
   amount: number
 ) => {
-  const provider = new Web3Provider(wallet.ethereum);
-  const signer = provider.getSigner();
-  const VinegarContract = new Contract(VinegarAddress, vinegarABI, provider);
+  const VinegarContract = new Contract(VinegarAddress, vinegarABI, signer);
   const vinegarWithSigner = VinegarContract.connect(signer);
 
   try {

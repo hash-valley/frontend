@@ -1,9 +1,8 @@
-import { Web3Provider } from "@ethersproject/providers";
-import { Contract } from "@ethersproject/contracts";
-import { parseEther } from "@ethersproject/units";
 import { viewProvider } from "./constants";
 import { GiveawayAddress, VineyardAddress } from "./constants";
 import { toast } from "react-toastify";
+import { Contract } from "ethers";
+import { parseEther } from "ethers/lib/utils";
 
 const giveawayABI = [
   "function balanceOf(address account) external view returns (uint256)",
@@ -26,10 +25,8 @@ export const giveawayAllowance = async (owner: string) => {
   return await viewGiveawayContract.allowance(owner, VineyardAddress);
 };
 
-export const approveGiveaway = async (wallet: any) => {
-  const provider = new Web3Provider(wallet.ethereum);
-  const signer = provider.getSigner();
-  const GiveawayContract = new Contract(GiveawayAddress, giveawayABI, provider);
+export const approveGiveaway = async (signer: any) => {
+  const GiveawayContract = new Contract(GiveawayAddress, giveawayABI, signer);
   const giveawayWithSigner = GiveawayContract.connect(signer);
 
   try {
@@ -46,13 +43,11 @@ export const approveGiveaway = async (wallet: any) => {
 };
 
 export const transferGiveaway = async (
-  wallet: any,
+  signer: any,
   recipient: string,
   amount: number
 ) => {
-  const provider = new Web3Provider(wallet.ethereum);
-  const signer = provider.getSigner();
-  const GiveawayContract = new Contract(GiveawayAddress, giveawayABI, provider);
+  const GiveawayContract = new Contract(GiveawayAddress, giveawayABI, signer);
   const giveawayWithSigner = GiveawayContract.connect(signer);
 
   try {

@@ -1,8 +1,7 @@
-import { Web3Provider } from "@ethersproject/providers";
-import { Contract } from "@ethersproject/contracts";
-import { parseEther } from "@ethersproject/units";
 import { VineyardAddress, viewProvider } from "./constants";
 import { toast } from "react-toastify";
+import { Contract } from "ethers";
+import { parseEther } from "ethers/lib/utils";
 
 const VineyardABI = [
   "function newVineyards(uint16[] calldata) public payable",
@@ -28,10 +27,8 @@ const VineyardABI = [
   "function newVineyardsDiscount(uint16[] calldata _tokenAttributes, uint256 index, bytes32[] calldata merkleProof) public payable",
 ];
 
-const withSigner = (wallet: any) => {
-  const provider = new Web3Provider(wallet.ethereum);
-  const signer = provider.getSigner();
-  const VineyardContract = new Contract(VineyardAddress, VineyardABI, provider);
+const withSigner = (signer: any) => {
+  const VineyardContract = new Contract(VineyardAddress, VineyardABI, signer);
   return VineyardContract.connect(signer);
 };
 
@@ -70,7 +67,11 @@ export const currentSeason = async (): Promise<number> => {
  *
  * @param params [location, elevation, elevationIsNegative, soil]
  */
-export const newVineyards = async (params: number[], wallet: any) => {
+export const newVineyards = async (
+  params: number[],
+  wallet: any,
+  address: string
+) => {
   const vineyardWithSigner = withSigner(wallet);
 
   //process params
@@ -86,7 +87,7 @@ export const newVineyards = async (params: number[], wallet: any) => {
   let tx;
 
   //discount check
-  const res = await fetch(`/api/merkle?address=${wallet.account}`);
+  const res = await fetch(`/api/merkle?address=${address}`);
   const resjson = await res.json();
 
   if (supply < 100) {

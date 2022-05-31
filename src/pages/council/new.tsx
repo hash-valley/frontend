@@ -1,14 +1,15 @@
 import { useState } from "react";
-import { useWallet } from "use-wallet";
 import { Page, CenteredSelect } from "../../Styles/Components";
 import { Input, Button } from "antd";
 import { useQuery } from "@apollo/client";
 import { GET_BOTTLES, VINE_URIS, BOTTLE_URIS } from "../../Utils/queries";
 import Select from "rc-select";
 import styled from "styled-components";
-import { BigNumber } from "@ethersproject/bignumber";
-import { isAddress } from "@ethersproject/address";
 import { suggest } from "../../Utils/votableUri";
+import { BigNumber } from "ethers";
+import { isAddress } from "ethers/lib/utils";
+import { useAccount, useSigner } from "wagmi";
+import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
 
 const ProposalInput = styled(Input)`
   max-width: 32rem;
@@ -19,7 +20,9 @@ const Error = styled.p`
 `;
 
 const NewProposal = () => {
-  const wallet = useWallet();
+  const wallet = useAccount();
+  const { data: signer } = useSigner();
+  const addRecentTransaction = useAddRecentTransaction();
   const [cid, setCid] = useState("");
   const [address, setAddress] = useState("");
   const [bottleId, setBottleId] = useState("Token ID #");
@@ -33,7 +36,7 @@ const NewProposal = () => {
 
   const bottleData = useQuery(GET_BOTTLES, {
     variables: {
-      address: wallet.account?.toString().toLowerCase(),
+      address: wallet.data?.address?.toString().toLowerCase(),
     },
   });
 
@@ -69,7 +72,7 @@ const NewProposal = () => {
     return false;
   };
 
-  const sendProposal = () => {
+  const sendProposal = async () => {
     setOpen(false);
     let errors = false;
     if (cid == "") {
@@ -114,11 +117,18 @@ const NewProposal = () => {
     }
 
     if (!errors) {
+      let tx;
       if (pType == "Vineyards") {
-        suggest(wallet, Number(bottleId), cid, address, "VINEYARD");
+        tx = await suggest(signer, Number(bottleId), cid, address, "VINEYARD");
       } else if (pType == "Bottles") {
-        suggest(wallet, Number(bottleId), cid, address, "BOTTLE");
+        tx = await suggest(signer, Number(bottleId), cid, address, "BOTTLE");
       }
+      addRecentTransaction({
+        hash: tx.hash,
+        description: `Create proposal for ${pType} with bottle ${Number(
+          bottleId
+        )}`,
+      });
     }
   };
 
@@ -185,7 +195,7 @@ const NewProposal = () => {
       </Error>
       <br />
       <br />
-      {wallet.account ? (
+      {wallet.status === "success" ? (
         <Button type="primary" shape="round" onClick={sendProposal}>
           Submit
         </Button>

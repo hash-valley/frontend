@@ -1,6 +1,6 @@
-import { getAddress } from "@ethersproject/address";
 import { subgraphUrl } from "../../Utils/constants";
 import claims_data from "../../Utils/api/discount_claims.json";
+import { getAddress } from "ethers/lib/utils";
 
 export default async function handler(req: any, res: any) {
   const address = req.query.address.toLowerCase();

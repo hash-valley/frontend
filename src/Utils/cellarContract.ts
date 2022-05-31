@@ -1,8 +1,7 @@
-import { Web3Provider } from "@ethersproject/providers";
-import { Contract } from "@ethersproject/contracts";
 import { viewProvider } from "./constants";
 import { CellarAddress } from "./constants";
 import { toast } from "react-toastify";
+import { Contract } from "ethers";
 
 const cellarABI = [
   "function stake(uint256 _tokenID) public",
@@ -13,10 +12,8 @@ const cellarABI = [
 
 const viewCellarContract = new Contract(CellarAddress, cellarABI, viewProvider);
 
-const withSigner = (wallet: any) => {
-  const provider = new Web3Provider(wallet.ethereum);
-  const signer = provider.getSigner();
-  const CellarContract = new Contract(CellarAddress, cellarABI, provider);
+const withSigner = (signer: any) => {
+  const CellarContract = new Contract(CellarAddress, cellarABI, signer);
   return CellarContract.connect(signer);
 };
 

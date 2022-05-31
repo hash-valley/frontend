@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
-import { useWallet } from "use-wallet";
 import { useRouter } from "next/router";
-import { formatEther } from "@ethersproject/units";
 import {
   Farmable,
   plantMultiple,
@@ -9,11 +7,7 @@ import {
   harvestMultiple,
   fetchTokenFarmingStats,
 } from "../../Utils/vineyardContract";
-import {
-  formatNum,
-  getBottleClass,
-  getBottleName,
-} from "../../Utils/utils";
+import { formatNum, getBottleClass, getBottleName } from "../../Utils/utils";
 import { useQuery } from "@apollo/client";
 import { ACCOUNT_QUERY } from "../../Utils/queries";
 import {
@@ -25,6 +19,9 @@ import {
   RoundedImg,
 } from "../../Styles/Components";
 import { locations, soilTypes } from "../../Utils/attributes";
+import { formatEther } from "ethers/lib/utils";
+import { useAccount, useSigner } from "wagmi";
+import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
 
 interface Mults {
   canWater: number;
@@ -33,7 +30,9 @@ interface Mults {
 }
 
 const AccountPage = () => {
-  const wallet = useWallet();
+  const wallet = useAccount();
+  const { data: signer } = useSigner();
+  const addRecentTransaction = useAddRecentTransaction();
   const router = useRouter();
   const { userAddress } = router.query;
   const [view, setView] = useState("vineyards");
@@ -85,28 +84,40 @@ const AccountPage = () => {
     refetch();
   }, [wallet, userAddress]);
 
-  const sendPlantMultiple = () => {
+  const sendPlantMultiple = async () => {
     let tokens = data.account.vineyards.filter(
       (e: any, i: number) => farmables[i].canPlant
     );
     let ids: string[] = tokens.map((t: any) => t.tokenId);
-    plantMultiple(wallet, ids);
+    const tx = await plantMultiple(signer, ids);
+    addRecentTransaction({
+      hash: tx.hash,
+      description: "Plant multiple vineyards",
+    });
   };
 
-  const sendWaterMultiple = () => {
+  const sendWaterMultiple = async () => {
     let tokens = data.account.vineyards.filter(
       (e: any, i: number) => farmables[i].canWater
     );
     let ids: string[] = tokens.map((t: any) => t.tokenId);
-    waterMultiple(wallet, ids);
+    const tx = await waterMultiple(signer, ids);
+    addRecentTransaction({
+      hash: tx.hash,
+      description: "Water multiple vineyards",
+    });
   };
 
-  const sendHarvestMultiple = () => {
+  const sendHarvestMultiple = async () => {
     let tokens = data.account.vineyards.filter(
       (e: any, i: number) => farmables[i].canHarvest
     );
     let ids: string[] = tokens.map((t: any) => t.tokenId);
-    harvestMultiple(wallet, ids);
+    const tx = await harvestMultiple(signer, ids);
+    addRecentTransaction({
+      hash: tx.hash,
+      description: "Harvest multiple vineyards",
+    });
   };
 
   return (
@@ -120,7 +131,7 @@ const AccountPage = () => {
       ) : (
         <div>
           <h3>
-            {userAddress === wallet.account && "You own"}{" "}
+            {userAddress === wallet.data?.address && "You own"}{" "}
             {data.account.vineyards.length} Vineyard
             {data.account.vineyards.length === 1 ? "" : "s"},{" "}
             {data.account.bottles.length} Bottle
@@ -158,7 +169,8 @@ const AccountPage = () => {
             )}
           </div>
           <div>
-            {wallet.status === "connected" && userAddress === wallet.account ? (
+            {wallet.status === "success" &&
+            userAddress === wallet.data?.address ? (
               <div>
                 {mults.canPlant > 0 ? (
                   <Spaced

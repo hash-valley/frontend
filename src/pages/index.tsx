@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useWallet } from "use-wallet";
 import styled from "styled-components";
 import { GreyBigLink, Page } from "../Styles/Components";
 import { useRouter } from "next/router";
@@ -7,9 +6,10 @@ import { Button } from "antd";
 import { useCurrSeason } from "../Hooks/useCurrSeason";
 import Link from "next/link";
 import { giveawayBalance } from "../Utils/giveawayToken";
-import { BigNumber } from "@ethersproject/bignumber";
-import { parseUnits } from "@ethersproject/units";
 import Image from "next/image";
+import { BigNumber } from "ethers";
+import { parseUnits } from "ethers/lib/utils";
+import { useAccount } from "wagmi";
 
 const LeftCorner = styled.div`
   float: left;
@@ -94,7 +94,7 @@ const PromoText = styled.i`
 `;
 
 const Splash = () => {
-  const wallet = useWallet();
+  const wallet = useAccount();
   const router = useRouter();
   const protocol = useCurrSeason();
   const [minted, setMinted] = useState(0);
@@ -104,11 +104,11 @@ const Splash = () => {
   const [hasDiscount, setHasDiscount] = useState(false);
 
   useEffect(() => {
-    if (wallet.status === "connected") {
-      giveawayBalance(wallet.account).then((val) =>
+    if (wallet.status === "success" && wallet.data?.address) {
+      giveawayBalance(wallet.data?.address!).then((val) =>
         setHasGive(val.gte(BigNumber.from(parseUnits("1.0"))))
       );
-      fetch(`/api/merkle?address=${wallet.account}`).then(async (res) => {
+      fetch(`/api/merkle?address=${wallet.data?.address}`).then(async (res) => {
         let rj = await res.json();
         setHasDiscount(rj.hasClaim);
         setPrice(rj.hasClaim ? 0.04 : 0.07);

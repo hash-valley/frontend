@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { useWallet } from "use-wallet";
 import { useRouter } from "next/router";
 import {
   bottleAge,
@@ -36,10 +35,14 @@ import {
   ageOnRemove,
 } from "../../Utils/utils";
 import Select from "rc-select";
-import { BigNumber } from "@ethersproject/bignumber";
+import { BigNumber } from "ethers";
+import { useAccount, useSigner } from "wagmi";
+import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
 
 const BottlePage = () => {
-  const wallet = useWallet();
+  const wallet = useAccount();
+  const { data: signer } = useSigner();
+  const addRecentTransaction = useAddRecentTransaction();
   const router = useRouter();
   const { id } = router.query;
   const [uriVersion, setUriVersion] = useState(0);
@@ -113,6 +116,35 @@ const BottlePage = () => {
   useEffect(() => {
     refetch();
   }, [wallet, id]);
+
+  const sendStake = async () => {
+    const tx = await stake(signer, Number(id));
+    addRecentTransaction({
+      hash: tx.hash,
+      description: `Stake bottle ${Number(id)}`,
+    });
+  };
+
+  const sendWithdraw = async () => {
+    const tx = await withdraw(signer, Number(id));
+    addRecentTransaction({
+      hash: tx.hash,
+      description: `Withdraw bottle ${Number(id)}`,
+    });
+  };
+
+  const sendRejuve = async () => {
+    const tx = await rejuvenate(signer, Number(id));
+    addRecentTransaction({
+      hash: tx.hash,
+      description: `Rejuvenate bottle ${Number(id)}`,
+    });
+  };
+
+  const sendApproveCellar = async () => {
+    const tx = await approveCellar(signer);
+    addRecentTransaction({ hash: tx.hash, description: "Approve cellar" });
+  };
 
   return loading ? (
     <Page>
@@ -251,14 +283,14 @@ const BottlePage = () => {
       <br />
       <br />
 
-      {wallet.account?.toLowerCase() === data.bottle.owner.id ? (
+      {wallet.data?.address?.toLowerCase() === data.bottle.owner.id ? (
         isApproved ? (
           <div>
             <Spaced
               type="primary"
               shape="round"
               disabled={data.bottle.canEnterCellar ? false : true}
-              onClick={() => stake(wallet, Number(id))}
+              onClick={sendStake}
             >
               Add to Cellar
             </Spaced>
@@ -268,7 +300,7 @@ const BottlePage = () => {
               disabled={
                 data.bottle.inCellar && !data.bottle.spoiled ? false : true
               }
-              onClick={() => withdraw(wallet, Number(id))}
+              onClick={sendWithdraw}
             >
               Withdraw from Cellar
             </Spaced>
@@ -282,7 +314,7 @@ const BottlePage = () => {
                     ? false
                     : true
                 }
-                onClick={() => rejuvenate(wallet, Number(id))}
+                onClick={sendRejuve}
               >
                 Rejuvenate for {data.bottle.rejuvenateCost} Vinegar
               </Spaced>
@@ -293,7 +325,7 @@ const BottlePage = () => {
             type="default"
             shape="round"
             disabled={data.bottle.canEnterCellar ? false : true}
-            onClick={() => approveCellar(wallet)}
+            onClick={sendApproveCellar}
           >
             Approve Cellar
           </Spaced>

@@ -1,12 +1,13 @@
-import { BigNumber } from "@ethersproject/bignumber";
 import { FC, useEffect, useState } from "react";
-import { useWallet } from "use-wallet";
 import { Page, TokenFrame, Spaced, CenteredSelect } from "../Styles/Components";
 import { ipfs_gateway } from "../Utils/constants";
 import styled from "styled-components";
 import Select from "rc-select";
 import { support, retort, complete } from "../Utils/votableUri";
 import { hours, minutes, seconds } from "../Utils/utils";
+import { BigNumber } from "ethers";
+import { useSigner } from "wagmi";
+import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
 
 interface BarProps {
   color: string;
@@ -154,7 +155,8 @@ const Outcome: FC<any> = ({ uri }) => {
 };
 
 const InProgress: FC<any> = ({ uri, bottles, vineyards }) => {
-  const wallet = useWallet();
+  const { data: signer } = useSigner();
+  const addRecentTransaction = useAddRecentTransaction();
   const [bottleId, setBottleId] = useState("Token ID #");
   const [viewId, setViewId] = useState("Select a token to preview");
   const [timeStatus, setTimeStatus] = useState(0);
@@ -168,16 +170,25 @@ const InProgress: FC<any> = ({ uri, bottles, vineyards }) => {
     (bottle: any) => !uri.votes.includes(bottle.tokenId)
   );
 
-  const sendSupport = () => {
-    support(wallet, Number(bottleId), uri.type);
+  const sendSupport = async () => {
+    const tx = await support(signer, Number(bottleId), uri.type);
+    addRecentTransaction({
+      hash: tx.hash,
+      description: `Support proposal with bottle ${Number(bottleId)}`,
+    });
   };
 
-  const sendRetort = () => {
-    retort(wallet, Number(bottleId), uri.type);
+  const sendRetort = async () => {
+    const tx = await retort(signer, Number(bottleId), uri.type);
+    addRecentTransaction({
+      hash: tx.hash,
+      description: `Retort proposal with bottle ${Number(bottleId)}`,
+    });
   };
 
-  const sendComplete = () => {
-    complete(wallet, uri.type);
+  const sendComplete = async () => {
+    const tx = await complete(signer, uri.type);
+    addRecentTransaction({ hash: tx.hash, description: "Complete proposal" });
   };
 
   const previewFrame = (event: any) => {
