@@ -119,22 +119,34 @@ const VineyardPage = () => {
 
   const sendWater = async () => {
     const tx = await water(signer, Number(id));
-    addRecentTransaction({ hash: tx.hash, description: `Water vineyard ${Number(id)}` });
+    addRecentTransaction({
+      hash: tx.hash,
+      description: `Water vineyard ${Number(id)}`,
+    });
   };
 
   const sendPlant = async () => {
     const tx = await plant(signer, Number(id));
-    addRecentTransaction({ hash: tx.hash, description: `Plant vineyard ${Number(id)}` });
+    addRecentTransaction({
+      hash: tx.hash,
+      description: `Plant vineyard ${Number(id)}`,
+    });
   };
 
   const sendHarvest = async () => {
     const tx = await harvest(signer, Number(id));
-    addRecentTransaction({ hash: tx.hash, description: `Harvest vineyard ${Number(id)}` });
+    addRecentTransaction({
+      hash: tx.hash,
+      description: `Harvest vineyard ${Number(id)}`,
+    });
   };
 
   const sendBuySprinkler = async () => {
     const tx = await buySprinkler(signer, Number(id));
-    addRecentTransaction({ hash: tx.hash, description: `Buy sprinkler for Vineyard ${Number(id)}` });
+    addRecentTransaction({
+      hash: tx.hash,
+      description: `Buy sprinkler for Vineyard ${Number(id)}`,
+    });
   };
 
   return loading ? (

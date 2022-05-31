@@ -10,6 +10,7 @@ import "@rainbow-me/rainbowkit/styles.css";
 import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
 import { alchemyProvider } from "wagmi/providers/alchemy";
+import { publicProvider } from "wagmi/providers/public";
 
 import Account from "../Components/Account";
 import Footer from "../Components/Footer";
@@ -29,7 +30,7 @@ const apolloClient = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-const { chains, provider } = configureChains(
+const { chains, provider, webSocketProvider } = configureChains(
   [
     chainId === 10
       ? chain.optimism
@@ -37,7 +38,7 @@ const { chains, provider } = configureChains(
       ? chain.optimismKovan
       : chain.hardhat,
   ],
-  [alchemyProvider({ alchemyId: alchemyKey })]
+  [alchemyProvider({ alchemyId: alchemyKey }), publicProvider()]
 );
 
 const { connectors } = getDefaultWallets({
@@ -45,13 +46,14 @@ const { connectors } = getDefaultWallets({
   chains,
 });
 
-function MyApp({ Component, pageProps }) {
-  const wagmiClient = createClient({
-    autoConnect: true,
-    connectors,
-    provider,
-  });
+const wagmiClient = createClient({
+  autoConnect: true,
+  connectors,
+  provider,
+  webSocketProvider,
+});
 
+function MyApp({ Component, pageProps }) {
   if (process.env.NEXT_PUBLIC_PREVIEW_MODE === "true") {
     return (
       <>

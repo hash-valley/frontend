@@ -114,7 +114,7 @@ const MintContainer = () => {
     );
     addRecentTransaction({ hash: tx.hash, description: "Mint new vineyard" });
     //@ts-ignore
-    setMintHash(tx.hash);
+    setMintHash(tx?.hash);
   };
 
   const mintGiveaway = async () => {
@@ -124,7 +124,7 @@ const MintContainer = () => {
       description: "Mint new vineyard with token",
     });
     //@ts-ignore
-    setMintHash(tx.hash);
+    setMintHash(tx?.hash);
   };
 
   return (
