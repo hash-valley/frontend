@@ -221,14 +221,14 @@ const MintContainer = () => {
             </div>
           </Sign>
           {mintHash ? (
-            <Button
+            <Spaced
               size="large"
               type="default"
               shape="round"
               onClick={startOver}
             >
               Mint Another
-            </Button>
+            </Spaced>
           ) : wallet.status === "success" && wallet.data?.address ? (
             <>
               <Spaced
