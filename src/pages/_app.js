@@ -1,3 +1,8 @@
+import "../../public/index.css";
+import "@rainbow-me/rainbowkit/styles.css";
+import "react-toastify/dist/ReactToastify.css";
+import "antd/dist/antd.css";
+
 import { ApolloProvider } from "@apollo/client";
 import Head from "next/head";
 import styled from "styled-components";
@@ -11,11 +16,6 @@ import ComingSoon from "../Components/ComingSoon";
 
 import { chains, wagmiClient } from "../Utils/rainbowWallet";
 import { apolloClient } from "../Utils/apollo";
-
-import "../../public/index.css";
-import "@rainbow-me/rainbowkit/styles.css";
-import "react-toastify/dist/ReactToastify.css";
-import "antd/dist/antd.css";
 
 const AppContainer = styled.div`
   text-align: center;

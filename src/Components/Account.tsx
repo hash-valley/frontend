@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { MenuOutlined, UserOutlined } from "@ant-design/icons";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useAccount } from "wagmi";
+import { useEffect, useState } from "react";
 
 const TitleBar = styled.div`
   width: 100%;
@@ -82,9 +83,12 @@ const DropdownGap = styled(Dropdown)`
 `;
 
 const Account = () => {
-  const wallet = useAccount();
+  const { data } = useAccount();
   const router = useRouter();
   const protocol = useCurrSeason();
+  const [connected, setConnected] = useState(false);
+
+  useEffect(() => setConnected(!!data), [data]);
 
   return (
     <>
@@ -157,26 +161,18 @@ const Account = () => {
                   <b>Council</b>
                 </Button>
               </DropdownGap>
-              {wallet.status === "success" && wallet.data?.address ? (
-                <>
-                  <Button
-                    shape="round"
-                    size="large"
-                    onClick={() =>
-                      router.push(`/account/${wallet.data?.address}`)
-                    }
-                  >
-                    <b>Portfolio</b>
-                  </Button>
-                  <InlineRainbow>
-                    <ConnectButton />
-                  </InlineRainbow>
-                </>
-              ) : (
-                <InlineRainbow>
-                  <ConnectButton />
-                </InlineRainbow>
+              {connected && (
+                <Button
+                  shape="round"
+                  size="large"
+                  onClick={() => router.push(`/account/${data?.address}`)}
+                >
+                  <b>Portfolio</b>
+                </Button>
               )}
+              <InlineRainbow>
+                <ConnectButton />
+              </InlineRainbow>
             </AccountName>
           </Inline>
         </AccountButtonList>
@@ -193,14 +189,14 @@ const Account = () => {
               <Menu
                 items={[
                   {
-                    label: (
+                    label: connected ? (
                       <div
-                        onClick={() =>
-                          router.push(`/account/${wallet.data?.address}`)
-                        }
+                        onClick={() => router.push(`/account/${data?.address}`)}
                       >
                         Portfolio
                       </div>
+                    ) : (
+                      <>Not Connected</>
                     ),
                     icon: <UserOutlined />,
                     key: "4",
