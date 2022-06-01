@@ -253,6 +253,7 @@ export const plantMultiple = async (
 ) => {
   const vineyardWithSigner = withSigner(wallet);
 
+  toast.info(`Planting vineyards: ${tokenIds.join(", ")}`);
   try {
     const tx = await vineyardWithSigner.plantMultiple(tokenIds);
     toast.success("Success!");
@@ -269,6 +270,7 @@ export const waterMultiple = async (
 ) => {
   const vineyardWithSigner = withSigner(wallet);
 
+  toast.info(`Watering vineyards: ${tokenIds.join(", ")}`);
   try {
     const tx = await vineyardWithSigner.waterMultiple(tokenIds);
     toast.success("Success!");
@@ -285,6 +287,7 @@ export const harvestMultiple = async (
 ) => {
   const vineyardWithSigner = withSigner(wallet);
 
+  toast.info(`Harvesting vineyards: ${tokenIds.join(", ")}`);
   try {
     const tx = await vineyardWithSigner.harvestMultiple(tokenIds);
     toast.success("Success!");
