@@ -47,14 +47,11 @@ const AccountPage = () => {
 
   const { loading, error, data, refetch } = useQuery(ACCOUNT_QUERY, {
     variables: { userAddress: userAddress?.toString().toLowerCase() },
-  });
-
-  useEffect(() => {
-    const fetchBalance = async () => {
-      if (data.account) {
+    onCompleted: async (_data) => {
+      if (_data.account) {
         setNullData(false);
         const farmables: Farmable[] = await Promise.all(
-          data.account.vineyards.map(
+          _data.account.vineyards.map(
             async (v: any) => await fetchTokenFarmingStats(v.tokenId)
           )
         );
@@ -76,13 +73,13 @@ const AccountPage = () => {
         setLoadingContract(false);
         setNullData(true);
       }
-    };
-    if (!loading && !error) fetchBalance();
-  }, [loading]);
+    },
+  });
 
   useEffect(() => {
+    setLoadingContract(true);
     refetch();
-  }, [wallet, userAddress]);
+  }, [userAddress]);
 
   const sendPlantMultiple = async () => {
     let tokens = data.account.vineyards.filter(
