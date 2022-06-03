@@ -208,7 +208,7 @@ const Splash = () => {
       </Page>
 
       <Link href="/about" passHref>
-        <GreyBigLink>What am I looking at...?</GreyBigLink>
+        <GreyBigLink>Can I get a quick rundown?</GreyBigLink>
       </Link>
     </>
   );
