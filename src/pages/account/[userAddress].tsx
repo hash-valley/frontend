@@ -22,6 +22,7 @@ import { locations, soilTypes } from "../../Utils/attributes";
 import { formatEther } from "ethers/lib/utils";
 import { useAccount, useSigner } from "wagmi";
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
+import { getFarmingStatsMulti } from "../../Utils/multicall";
 
 interface Mults {
   canWater: number;
@@ -50,10 +51,9 @@ const AccountPage = () => {
     onCompleted: async (_data) => {
       if (_data.account) {
         setNullData(false);
-        const farmables: Farmable[] = await Promise.all(
-          _data.account.vineyards.map(
-            async (v: any) => await fetchTokenFarmingStats(v.tokenId)
-          )
+
+        const farmables = await getFarmingStatsMulti(
+          _data.account.vineyards.map((v: any) => v.tokenId)
         );
         setFarmables(farmables);
 

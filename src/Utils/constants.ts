@@ -8,6 +8,8 @@ export const GiveawayAddress = process.env.NEXT_PUBLIC_GIVEAWAY_ADDRESS ?? "";
 export const WineUriAddress = process.env.NEXT_PUBLIC_WINE_URI ?? "";
 export const VineUriAddress = process.env.NEXT_PUBLIC_VINE_URI ?? "";
 
+export const MulticallAddress = process.env.NEXT_PUBLIC_MULTI ?? "";
+
 export const subgraphUrl = process.env.NEXT_PUBLIC_SUBGRAPH_URL ?? "";
 export const chainId = Number(process.env.NEXT_PUBLIC_CHAIN_ID) ?? 31337;
 export const providerUrl = process.env.NEXT_PUBLIC_PROVIDER_URL ?? "";
