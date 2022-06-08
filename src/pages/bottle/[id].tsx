@@ -103,7 +103,7 @@ const BottlePage = () => {
           cellarStuff.current = {
             stakeTime,
             spoilChance: chanceOfSpoil(Math.floor(stakeTime / day)),
-            vinegar: ageOnRemove(stakeTime).toString(),
+            vinegar: ageR.div(86400).toString(),
             age: ageR.div(year).toString(),
             era: getBottleEra(ageR.toString()),
           };
