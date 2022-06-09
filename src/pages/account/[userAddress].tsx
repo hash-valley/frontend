@@ -178,7 +178,7 @@ const AccountPage = () => {
                     Plant All
                   </Spaced>
                 ) : null}
-                {mults.canWater > 0 ? (
+                {mults.canWater > 0 || mults.canHarvest > 0 ? (
                   <Spaced
                     type="primary"
                     shape="round"

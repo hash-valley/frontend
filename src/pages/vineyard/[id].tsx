@@ -228,10 +228,14 @@ const VineyardPage = () => {
             {seconds(waterStatus)}
           </SuccessText>
         ) : waterStatus >= 0 ? (
-          <SuccessText>
-            Can water in {hours(waterStatus)}:{minutes(waterStatus)}:
-            {seconds(waterStatus)}
-          </SuccessText>
+          data.vineyard.sprinklerExpires ? (
+            <SuccessText>Sprinkling</SuccessText>
+          ) : (
+            <SuccessText>
+              Can water in {hours(waterStatus)}:{minutes(waterStatus)}:
+              {seconds(waterStatus)}
+            </SuccessText>
+          )
         ) : farmable.canPlant ? (
           <SuccessText>Plantable</SuccessText>
         ) : (
@@ -244,7 +248,7 @@ const VineyardPage = () => {
           <Spaced
             type="primary"
             shape="round"
-            disabled={farmable.canWater ? false : true}
+            disabled={!farmable.canWater}
             onClick={sendWater}
           >
             Water
@@ -252,7 +256,7 @@ const VineyardPage = () => {
           <Spaced
             type="primary"
             shape="round"
-            disabled={farmable.canPlant ? false : true}
+            disabled={!farmable.canPlant}
             onClick={sendPlant}
           >
             Plant
@@ -260,7 +264,7 @@ const VineyardPage = () => {
           <Spaced
             type="primary"
             shape="round"
-            disabled={farmable.canHarvest ? false : true}
+            disabled={!farmable.canHarvest}
             onClick={sendHarvest}
           >
             Harvest
