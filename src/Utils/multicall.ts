@@ -12,9 +12,9 @@ export const getFarmingStatsMulti = async (tokenIds: (number | string)[]) => {
   return res.map((x: any) => {
     x = Number(x);
     return {
-      canWater: x === 1,
-      canPlant: x === 2,
-      canHarvest: x === 3,
+      canPlant: x === 1,
+      canWater: x === 2 || x === 4,
+      canHarvest: x === 3 || x === 4,
     };
   });
 };

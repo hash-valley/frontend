@@ -5,7 +5,6 @@ import {
   plant,
   water,
   harvest,
-  fetchTokenFarmingStats,
   untilCanWater,
   canWaterUntil,
   getStreak,
@@ -32,6 +31,7 @@ import { chainId, ipfs_gateway, VineyardAddress } from "../../Utils/constants";
 import { locations, soilTypes } from "../../Utils/attributes";
 import { useAccount, useSigner } from "wagmi";
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
+import { getFarmingStatsMulti } from "../../Utils/multicall";
 
 const VineyardPage = () => {
   const wallet = useAccount();
@@ -45,11 +45,12 @@ const VineyardPage = () => {
   const [imageUri, setImageUri] = useState("");
   const [uriVersion, setUriVersion] = useState(0);
   const [streak, setStreak] = useState(0);
+  const [refetching, setRefetching] = useState(false);
 
   const [farmable, setFarmable] = useState<Farmable>({
+    canPlant: false,
     canWater: false,
     canHarvest: false,
-    canPlant: false,
   });
 
   const { loading, error, data, refetch } = useQuery(VINEYARD_QUERY, {
@@ -83,9 +84,9 @@ const VineyardPage = () => {
       if (data.vineyard) {
         setNullData(false);
         setStreak(await getStreak(Number(id)));
-        const farmableParams = await fetchTokenFarmingStats(
-          parseInt(id.toString())
-        );
+        const farmableParams = (
+          await getFarmingStatsMulti([parseInt(id.toString())])
+        )[0];
         setFarmable(farmableParams);
 
         let waterCountdown: number = -1;
@@ -109,9 +110,9 @@ const VineyardPage = () => {
         }, 1000);
       }
     };
-    if (!loading && !error) fetchBalance();
+    if (!loading && !error && !refetching) fetchBalance();
     return () => clearInterval(myInterval);
-  }, [loading]);
+  }, [loading, refetching]);
 
   useEffect(() => {
     refetch();
@@ -123,6 +124,8 @@ const VineyardPage = () => {
       hash: tx.hash,
       description: `Water vineyard ${Number(id)}`,
     });
+    setRefetching(true);
+    setTimeout(() => refetch().then(() => setRefetching(false)), 2000);
   };
 
   const sendPlant = async () => {
@@ -131,6 +134,8 @@ const VineyardPage = () => {
       hash: tx.hash,
       description: `Plant vineyard ${Number(id)}`,
     });
+    setRefetching(true);
+    setTimeout(() => refetch().then(() => setRefetching(false)), 2000);
   };
 
   const sendHarvest = async () => {
@@ -139,6 +144,8 @@ const VineyardPage = () => {
       hash: tx.hash,
       description: `Harvest vineyard ${Number(id)}`,
     });
+    setRefetching(true);
+    setTimeout(() => refetch().then(() => setRefetching(false)), 2000);
   };
 
   const sendBuySprinkler = async () => {
@@ -147,6 +154,8 @@ const VineyardPage = () => {
       hash: tx.hash,
       description: `Buy sprinkler for Vineyard ${Number(id)}`,
     });
+    setRefetching(true);
+    setTimeout(() => refetch().then(() => setRefetching(false)), 2000);
   };
 
   return loading ? (
@@ -220,7 +229,7 @@ const VineyardPage = () => {
 
         {farmable.canHarvest ? (
           <SuccessText>Harvestable</SuccessText>
-        ) : data.vineyard.seasonsHarvested.includes(season) ? (
+        ) : data.vineyard.seasonsHarvested.includes(season.season) ? (
           <SuccessText>Already harvested this season</SuccessText>
         ) : farmable.canWater ? (
           <SuccessText>

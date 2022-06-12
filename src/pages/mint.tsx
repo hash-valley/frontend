@@ -48,7 +48,7 @@ const MintContainer = () => {
     },
   });
 
-  useEffect(() => checkGiveaway(), [wallet]);
+  useEffect(() => checkGiveaway(), [wallet.data?.address]);
 
   const minElev = (num: number) => locations[num].elevation[0];
   const maxElev = (num: number) => locations[num].elevation[1];

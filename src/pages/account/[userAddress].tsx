@@ -5,7 +5,6 @@ import {
   plantMultiple,
   waterMultiple,
   harvestMultiple,
-  fetchTokenFarmingStats,
 } from "../../Utils/vineyardContract";
 import { formatNum, getBottleClass, getBottleName } from "../../Utils/utils";
 import { useQuery } from "@apollo/client";
@@ -91,6 +90,7 @@ const AccountPage = () => {
       hash: tx.hash,
       description: "Plant multiple vineyards",
     });
+    setTimeout(refetch, 2000);
   };
 
   const sendWaterMultiple = async () => {
@@ -103,6 +103,7 @@ const AccountPage = () => {
       hash: tx.hash,
       description: "Water multiple vineyards",
     });
+    setTimeout(refetch, 2000);
   };
 
   const sendHarvestMultiple = async () => {
@@ -115,6 +116,7 @@ const AccountPage = () => {
       hash: tx.hash,
       description: "Harvest multiple vineyards",
     });
+    setTimeout(refetch, 2000);
   };
 
   return (
@@ -178,7 +180,7 @@ const AccountPage = () => {
                     Plant All
                   </Spaced>
                 ) : null}
-                {mults.canWater > 0 || mults.canHarvest > 0 ? (
+                {mults.canWater > 0 ? (
                   <Spaced
                     type="primary"
                     shape="round"
@@ -238,7 +240,13 @@ const AccountPage = () => {
                   onClick={() => router.push(`/bottle/${token.tokenId}`)}
                 >
                   <RoundedImg
-                    src={`/thumbnails/bottles/${token.attributes[0]}.png`}
+                    src={
+                      token.attributes[0] === 3
+                        ? `/thumbnails/bottles/${
+                            token.attributes[0] + token.attributes[1]
+                          }.png`
+                        : `/thumbnails/bottles/${token.attributes[0]}.png`
+                    }
                     height={120}
                     width={120}
                   />

@@ -93,6 +93,7 @@ export const newVineyards = async (
   if (supply < 100) {
     try {
       tx = await vineyardWithSigner.newVineyards(processedParams);
+      await tx.wait();
       toast.success("Success!");
       return tx;
     } catch (err: any) {
@@ -106,6 +107,7 @@ export const newVineyards = async (
       tx = await vineyardWithSigner.newVineyards(processedParams, {
         value: parseEther("0.07"),
       });
+      await tx.wait();
       toast.success("Success!");
       return tx;
     } catch (err: any) {
@@ -128,6 +130,7 @@ export const newVineyardsGiveaway = async (params: number[], wallet: any) => {
 
   try {
     const tx = await vineyardWithSigner.newVineyardGiveaway(processedParams);
+    await tx.wait();
     toast.success("Success!");
     return tx;
   } catch (err: any) {
@@ -150,6 +153,7 @@ const newVineyardsDiscount = async (
       claim.proof,
       { value: parseEther("0.04") }
     );
+    await tx.wait();
     toast.success("Success!");
     return tx;
   } catch (err: any) {
@@ -181,13 +185,13 @@ export const fetchTokenParams = async (
   };
 };
 
-export const fetchTokenFarmingStats = async (tokenId: number) => {
-  return {
-    canWater: await viewVineyardContract.canWater(tokenId),
-    canPlant: await viewVineyardContract.canPlant(tokenId),
-    canHarvest: await viewVineyardContract.canHarvest(tokenId),
-  };
-};
+// export const fetchTokenFarmingStats = async (tokenId: number) => {
+//   return {
+//     canWater: await viewVineyardContract.canWater(tokenId),
+//     canPlant: await viewVineyardContract.canPlant(tokenId),
+//     canHarvest: await viewVineyardContract.canHarvest(tokenId),
+//   };
+// };
 
 export const untilCanWater = async (tokenId: number): Promise<number> => {
   const [minTime, watered] = await Promise.all([
@@ -213,6 +217,7 @@ export const water = async (wallet: any, tokenId: number) => {
 
   try {
     const tx = await vineyardWithSigner.water(tokenId);
+    await tx.wait();
     toast.success("Success!");
     return tx;
   } catch (err: any) {
@@ -226,6 +231,7 @@ export const plant = async (wallet: any, tokenId: number) => {
 
   try {
     const tx = await vineyardWithSigner.plant(tokenId);
+    await tx.wait();
     toast.success("Success!");
     return tx;
   } catch (err: any) {
@@ -239,6 +245,7 @@ export const harvest = async (wallet: any, tokenId: number) => {
 
   try {
     const tx = await vineyardWithSigner.harvest(tokenId);
+    await tx.wait();
     toast.success("Success!");
     return tx;
   } catch (err: any) {
@@ -256,6 +263,7 @@ export const plantMultiple = async (
   toast.info(`Planting vineyards: ${tokenIds.join(", ")}`);
   try {
     const tx = await vineyardWithSigner.plantMultiple(tokenIds);
+    await tx.wait();
     toast.success("Success!");
     return tx;
   } catch (err: any) {
@@ -273,6 +281,7 @@ export const waterMultiple = async (
   toast.info(`Watering vineyards: ${tokenIds.join(", ")}`);
   try {
     const tx = await vineyardWithSigner.waterMultiple(tokenIds);
+    await tx.wait();
     toast.success("Success!");
     return tx;
   } catch (err: any) {
@@ -290,6 +299,7 @@ export const harvestMultiple = async (
   toast.info(`Harvesting vineyards: ${tokenIds.join(", ")}`);
   try {
     const tx = await vineyardWithSigner.harvestMultiple(tokenIds);
+    await tx.wait();
     toast.success("Success!");
     return tx;
   } catch (err: any) {
@@ -305,6 +315,7 @@ export const buySprinkler = async (wallet: any, tokenId: number) => {
     const tx = await vineyardWithSigner.buySprinkler(tokenId, {
       value: parseEther("0.01"),
     });
+    await tx.wait();
     toast.success("Success!");
     return tx;
   } catch (err: any) {

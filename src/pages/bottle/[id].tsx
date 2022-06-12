@@ -60,6 +60,32 @@ const BottlePage = () => {
 
   const { loading, error, data, refetch } = useQuery(BOTTLE_QUERY, {
     variables: { id: id?.toString() },
+    onCompleted: async (_data: any) => {
+      if (_data.bottle) {
+        setNullData(false);
+        setIsApproved(await isCellarApproved(_data.bottle.owner.id));
+
+        let fetchedAge = await bottleAge(parseInt(id.toString()));
+        setAge(fetchedAge);
+        setBottleType(getBottleType(_data.bottle.attributes));
+
+        changeImage(_data.newUris.length - 1);
+
+        if (_data.bottle.inCellar) {
+          const stakeTime = Math.floor(
+            Date.now() / 1000 - _data?.bottle?.stakedAt
+          );
+          const ageR = BigNumber.from(ageOnRemove(stakeTime).toString());
+          cellarStuff.current = {
+            stakeTime,
+            spoilChance: chanceOfSpoil(Math.floor(stakeTime / day)),
+            vinegar: ageR.div(86400).toString(),
+            age: ageR.div(year).toString(),
+            era: getBottleEra(ageR.toString()),
+          };
+        }
+      }
+    },
   });
 
   const changeImage = async (n: number) => {
@@ -84,36 +110,6 @@ const BottlePage = () => {
   };
 
   useEffect(() => {
-    const fetchBalance = async () => {
-      if (data.bottle) {
-        setNullData(false);
-        setIsApproved(await isCellarApproved(data.bottle.owner.id));
-
-        let fetchedAge = await bottleAge(parseInt(id.toString()));
-        setAge(fetchedAge);
-        setBottleType(getBottleType(data.bottle.attributes));
-
-        changeImage(data.newUris.length - 1);
-
-        if (data.bottle.inCellar) {
-          const stakeTime = Math.floor(
-            Date.now() / 1000 - data?.bottle?.stakedAt
-          );
-          const ageR = BigNumber.from(ageOnRemove(stakeTime).toString());
-          cellarStuff.current = {
-            stakeTime,
-            spoilChance: chanceOfSpoil(Math.floor(stakeTime / day)),
-            vinegar: ageR.div(86400).toString(),
-            age: ageR.div(year).toString(),
-            era: getBottleEra(ageR.toString()),
-          };
-        }
-      }
-    };
-    if (!loading && !error) fetchBalance();
-  }, [loading]);
-
-  useEffect(() => {
     refetch();
   }, [wallet, id]);
 
@@ -123,6 +119,7 @@ const BottlePage = () => {
       hash: tx.hash,
       description: `Stake bottle ${Number(id)}`,
     });
+    setTimeout(refetch, 2000);
   };
 
   const sendWithdraw = async () => {
@@ -131,6 +128,7 @@ const BottlePage = () => {
       hash: tx.hash,
       description: `Withdraw bottle ${Number(id)}`,
     });
+    setTimeout(refetch, 2000);
   };
 
   const sendRejuve = async () => {
@@ -139,11 +137,13 @@ const BottlePage = () => {
       hash: tx.hash,
       description: `Rejuvenate bottle ${Number(id)}`,
     });
+    setTimeout(refetch, 2000);
   };
 
   const sendApproveCellar = async () => {
     const tx = await approveCellar(signer);
     addRecentTransaction({ hash: tx.hash, description: "Approve cellar" });
+    setTimeout(refetch, 2000);
   };
 
   return loading ? (
