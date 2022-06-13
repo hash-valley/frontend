@@ -264,7 +264,7 @@ const InProgress: FC<any> = ({ uri, bottles, vineyards }) => {
             </CenteredSelect>
 
             <Spaced
-              type="default"
+              type="primary"
               shape="round"
               onClick={sendSupport}
               disabled={bottleId == "Token ID #"}
