@@ -52,6 +52,10 @@ export const Spaced = styled(Button)`
   }
 `;
 
+export const BreakWords = styled.div`
+  overflow-wrap: break-word;
+`;
+
 export const Page = styled.div`
   margin-top: 96px;
   margin-left: auto;

@@ -1,5 +1,11 @@
 import { FC, useEffect, useState } from "react";
-import { Page, TokenFrame, Spaced, CenteredSelect } from "../Styles/Components";
+import {
+  Page,
+  TokenFrame,
+  Spaced,
+  CenteredSelect,
+  BreakWords,
+} from "../Styles/Components";
 import { ipfs_gateway } from "../Utils/constants";
 import styled from "styled-components";
 import Select from "rc-select";
@@ -243,12 +249,12 @@ const InProgress: FC<any> = ({ uri, bottles, vineyards }) => {
         Ending in {hours(timeStatus)}:{minutes(timeStatus)}:
         {seconds(timeStatus)}
       </Countdown>
-      <div>
+      <BreakWords>
         <b>New URI:</b> {uri.newUri}
-      </div>
-      <div>
+      </BreakWords>
+      <BreakWords>
         <b>New Artist:</b> {uri.artist}
-      </div>
+      </BreakWords>
       <div>
         {voteEnds > now ? (
           <>
