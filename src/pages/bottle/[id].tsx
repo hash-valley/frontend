@@ -33,11 +33,13 @@ import {
   BottleType,
   chanceOfSpoil,
   ageOnRemove,
+  formatNum,
 } from "../../Utils/utils";
 import Select from "rc-select";
 import { BigNumber } from "ethers";
 import { useAccount, useSigner } from "wagmi";
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
+import { formatEther } from "ethers/lib/utils";
 
 const BottlePage = () => {
   const wallet = useAccount();
@@ -69,7 +71,7 @@ const BottlePage = () => {
         setAge(fetchedAge);
         setBottleType(getBottleType(_data.bottle.attributes));
 
-        changeImage(_data.newUris.length - 1);
+        changeImage(_data.newUris.length - 1, _data, fetchedAge);
 
         if (_data.bottle.inCellar) {
           const stakeTime = Math.floor(
@@ -88,25 +90,23 @@ const BottlePage = () => {
     },
   });
 
-  const changeImage = async (n: number) => {
-    if (!loading && data.bottle) {
-      let uri = data.newUris.find((e: any) => e.version === n).newUri;
-      uri =
-        ipfs_gateway +
-        uri.substring(7) +
-        "/?seed=" +
-        data.bottle.attributes[0] +
-        "-" +
-        data.bottle.attributes[1] +
-        "-" +
-        data.bottle.attributes[2] +
-        "-" +
-        data.bottle.attributes[3] +
-        "-" +
-        age;
-      setUriVersion(n);
-      setImageUri(uri);
-    }
+  const changeImage = async (n: number, _data = data, _age = age) => {
+    let uri = _data.newUris.find((e: any) => e.version === n).newUri;
+    uri =
+      ipfs_gateway +
+      uri.substring(7) +
+      "/?seed=" +
+      _data.bottle.attributes[0] +
+      "-" +
+      _data.bottle.attributes[1] +
+      "-" +
+      _data.bottle.attributes[2] +
+      "-" +
+      _data.bottle.attributes[3] +
+      "-" +
+      _age;
+    setUriVersion(n);
+    setImageUri(uri);
   };
 
   useEffect(() => {
@@ -143,7 +143,10 @@ const BottlePage = () => {
   const sendApproveCellar = async () => {
     const tx = await approveCellar(signer);
     addRecentTransaction({ hash: tx.hash, description: "Approve cellar" });
-    setTimeout(refetch, 2000);
+    setTimeout(
+      async () => setIsApproved(await isCellarApproved(data.bottle.owner.id)),
+      2000
+    );
   };
 
   return loading ? (
@@ -289,7 +292,7 @@ const BottlePage = () => {
             <Spaced
               type="primary"
               shape="round"
-              disabled={data.bottle.canEnterCellar ? false : true}
+              disabled={!data.bottle.canEnterCellar}
               onClick={sendStake}
             >
               Add to Cellar
@@ -308,15 +311,13 @@ const BottlePage = () => {
               <Spaced
                 type="default"
                 shape="round"
-                disabled={
-                  BigInt(data.bottle.rejuvenateCost) <=
-                  BigInt(data.bottle.owner.vinegarBalance)
-                    ? false
-                    : true
-                }
+                disabled={BigNumber.from(data.bottle.rejuvenateCost).gt(
+                  BigNumber.from(data.bottle.owner.vinegarBalance)
+                )}
                 onClick={sendRejuve}
               >
-                Rejuvenate for {data.bottle.rejuvenateCost} Vinegar
+                Rejuvenate for{" "}
+                {formatNum(formatEther(data.bottle.rejuvenateCost))} Vinegar
               </Spaced>
             )}
           </div>
@@ -324,7 +325,7 @@ const BottlePage = () => {
           <Spaced
             type="default"
             shape="round"
-            disabled={data.bottle.canEnterCellar ? false : true}
+            disabled={!data.bottle.canEnterCellar}
             onClick={sendApproveCellar}
           >
             Approve Cellar
