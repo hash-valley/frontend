@@ -32,6 +32,7 @@ import { locations, soilTypes } from "../../Utils/attributes";
 import { useAccount, useSigner } from "wagmi";
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
 import { getFarmingStatsMulti } from "../../Utils/multicall";
+import { toast } from "react-toastify";
 
 const VineyardPage = () => {
   const wallet = useAccount();
@@ -124,6 +125,8 @@ const VineyardPage = () => {
       hash: tx.hash,
       description: `Water vineyard ${Number(id)}`,
     });
+    await tx.wait();
+    toast.success("Success!");
     setRefetching(true);
     setTimeout(() => refetch().then(() => setRefetching(false)), 2000);
   };
@@ -134,6 +137,8 @@ const VineyardPage = () => {
       hash: tx.hash,
       description: `Plant vineyard ${Number(id)}`,
     });
+    await tx.wait();
+    toast.success("Success!");
     setRefetching(true);
     setTimeout(() => refetch().then(() => setRefetching(false)), 2000);
   };
@@ -144,6 +149,8 @@ const VineyardPage = () => {
       hash: tx.hash,
       description: `Harvest vineyard ${Number(id)}`,
     });
+    await tx.wait();
+    toast.success("Success!");
     setRefetching(true);
     setTimeout(() => refetch().then(() => setRefetching(false)), 2000);
   };
@@ -154,6 +161,8 @@ const VineyardPage = () => {
       hash: tx.hash,
       description: `Buy sprinkler for Vineyard ${Number(id)}`,
     });
+    await tx.wait();
+    toast.success("Success!");
     setRefetching(true);
     setTimeout(() => refetch().then(() => setRefetching(false)), 2000);
   };

@@ -40,8 +40,6 @@ export const approveCellar = async (wallet: any) => {
   try {
     const tx = await bottleWithSigner.setApprovalForAll(CellarAddress, true);
     toast.info("Transaction sent");
-    await tx.wait();
-    toast.success("Success!");
     return tx;
   } catch (err: any) {
     console.error(err);
@@ -54,8 +52,6 @@ export const rejuvenate = async (wallet: any, tokenId: number) => {
   try {
     const tx = await bottleWithSigner.rejuvenate(tokenId);
     toast.info("Transaction sent");
-    await tx.wait();
-    toast.success("Success!");
     return tx;
   } catch (err: any) {
     console.error(err);

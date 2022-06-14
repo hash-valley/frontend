@@ -31,8 +31,6 @@ export const stake = async (wallet: any, tokenId: number) => {
   try {
     const tx = await cellarWithSigner.stake(tokenId);
     toast.info("Transaction sent");
-    await tx.wait();
-    toast.success("Success!");
     return tx;
   } catch (err: any) {
     console.error(err);
@@ -45,8 +43,6 @@ export const withdraw = async (wallet: any, tokenId: number) => {
   try {
     const tx = await cellarWithSigner.withdraw(tokenId);
     toast.info("Transaction sent");
-    await tx.wait();
-    toast.success("Success!");
     return tx;
   } catch (err: any) {
     console.error(err);

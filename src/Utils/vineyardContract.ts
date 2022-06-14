@@ -94,8 +94,6 @@ export const newVineyards = async (
     try {
       tx = await vineyardWithSigner.newVineyards(processedParams);
       toast.info("Transaction sent");
-      await tx.wait();
-      toast.success("Success!");
       return tx;
     } catch (err: any) {
       console.error(err);
@@ -109,8 +107,6 @@ export const newVineyards = async (
         value: parseEther("0.07"),
       });
       toast.info("Transaction sent");
-      await tx.wait();
-      toast.success("Success!");
       return tx;
     } catch (err: any) {
       console.error(err);
@@ -133,8 +129,6 @@ export const newVineyardsGiveaway = async (params: number[], wallet: any) => {
   try {
     const tx = await vineyardWithSigner.newVineyardGiveaway(processedParams);
     toast.info("Transaction sent");
-    await tx.wait();
-    toast.success("Success!");
     return tx;
   } catch (err: any) {
     console.error(err);
@@ -157,8 +151,6 @@ const newVineyardsDiscount = async (
       { value: parseEther("0.04") }
     );
     toast.info("Transaction sent");
-    await tx.wait();
-    toast.success("Success!");
     return tx;
   } catch (err: any) {
     console.error(err);
@@ -222,8 +214,6 @@ export const water = async (wallet: any, tokenId: number) => {
   try {
     const tx = await vineyardWithSigner.water(tokenId);
     toast.info("Transaction sent");
-    await tx.wait();
-    toast.success("Success!");
     return tx;
   } catch (err: any) {
     console.error(err);
@@ -237,8 +227,6 @@ export const plant = async (wallet: any, tokenId: number) => {
   try {
     const tx = await vineyardWithSigner.plant(tokenId);
     toast.info("Transaction sent");
-    await tx.wait();
-    toast.success("Success!");
     return tx;
   } catch (err: any) {
     console.error(err);
@@ -252,8 +240,6 @@ export const harvest = async (wallet: any, tokenId: number) => {
   try {
     const tx = await vineyardWithSigner.harvest(tokenId);
     toast.info("Transaction sent");
-    await tx.wait();
-    toast.success("Success!");
     return tx;
   } catch (err: any) {
     console.error(err);
@@ -271,8 +257,6 @@ export const plantMultiple = async (
   try {
     const tx = await vineyardWithSigner.plantMultiple(tokenIds);
     toast.info("Transaction sent");
-    await tx.wait();
-    toast.success("Success!");
     return tx;
   } catch (err: any) {
     console.error(err);
@@ -290,8 +274,6 @@ export const waterMultiple = async (
   try {
     const tx = await vineyardWithSigner.waterMultiple(tokenIds);
     toast.info("Transaction sent");
-    await tx.wait();
-    toast.success("Success!");
     return tx;
   } catch (err: any) {
     console.error(err);
@@ -309,8 +291,6 @@ export const harvestMultiple = async (
   try {
     const tx = await vineyardWithSigner.harvestMultiple(tokenIds);
     toast.info("Transaction sent");
-    await tx.wait();
-    toast.success("Success!");
     return tx;
   } catch (err: any) {
     console.error(err);
@@ -326,8 +306,6 @@ export const buySprinkler = async (wallet: any, tokenId: number) => {
       value: parseEther("0.01"),
     });
     toast.info("Transaction sent");
-    await tx.wait();
-    toast.success("Success!");
     return tx;
   } catch (err: any) {
     console.error(err);

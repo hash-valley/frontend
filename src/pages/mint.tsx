@@ -18,6 +18,7 @@ import { MINT_QUERY } from "../Utils/queries";
 import { ipfs_gateway } from "../Utils/constants";
 import { useAccount, useSigner } from "wagmi";
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
+import { toast } from "react-toastify";
 
 const Step = styled.div`
   margin-top: 32px;
@@ -113,6 +114,8 @@ const MintContainer = () => {
       wallet.data?.address!
     );
     addRecentTransaction({ hash: tx.hash, description: "Mint new vineyard" });
+    await tx.wait();
+    toast.success("Success!");
     //@ts-ignore
     setMintHash(tx?.hash);
   };
@@ -123,6 +126,8 @@ const MintContainer = () => {
       hash: tx.hash,
       description: "Mint new vineyard with token",
     });
+    await tx.wait();
+    toast.success("Success!");
     //@ts-ignore
     setMintHash(tx?.hash);
   };

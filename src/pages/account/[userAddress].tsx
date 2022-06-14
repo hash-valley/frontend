@@ -22,6 +22,7 @@ import { formatEther } from "ethers/lib/utils";
 import { useAccount, useSigner } from "wagmi";
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
 import { getFarmingStatsMulti } from "../../Utils/multicall";
+import { toast } from "react-toastify";
 
 interface Mults {
   canWater: number;
@@ -90,6 +91,8 @@ const AccountPage = () => {
       hash: tx.hash,
       description: "Plant multiple vineyards",
     });
+    await tx.wait();
+    toast.success("Success!");
     setTimeout(refetch, 2000);
   };
 
@@ -103,6 +106,8 @@ const AccountPage = () => {
       hash: tx.hash,
       description: "Water multiple vineyards",
     });
+    await tx.wait();
+    toast.success("Success!");
     setTimeout(refetch, 2000);
   };
 
@@ -116,6 +121,8 @@ const AccountPage = () => {
       hash: tx.hash,
       description: "Harvest multiple vineyards",
     });
+    await tx.wait();
+    toast.success("Success!");
     setTimeout(refetch, 2000);
   };
 

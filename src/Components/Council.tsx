@@ -14,6 +14,7 @@ import { hours, minutes, seconds } from "../Utils/utils";
 import { BigNumber } from "ethers";
 import { useSigner } from "wagmi";
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
+import { toast } from "react-toastify";
 
 interface BarProps {
   color: string;
@@ -182,6 +183,8 @@ const InProgress: FC<any> = ({ uri, bottles, vineyards }) => {
       hash: tx.hash,
       description: `Support proposal with bottle ${Number(bottleId)}`,
     });
+    await tx.wait();
+    toast.success("Success!");
   };
 
   const sendRetort = async () => {
@@ -190,11 +193,15 @@ const InProgress: FC<any> = ({ uri, bottles, vineyards }) => {
       hash: tx.hash,
       description: `Retort proposal with bottle ${Number(bottleId)}`,
     });
+    await tx.wait();
+    toast.success("Success!");
   };
 
   const sendComplete = async () => {
     const tx = await complete(signer, uri.type);
     addRecentTransaction({ hash: tx.hash, description: "Complete proposal" });
+    await tx.wait();
+    toast.success("Success!");
   };
 
   const previewFrame = (event: any) => {

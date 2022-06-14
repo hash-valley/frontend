@@ -40,6 +40,7 @@ import { BigNumber } from "ethers";
 import { useAccount, useSigner } from "wagmi";
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
 import { formatEther } from "ethers/lib/utils";
+import { toast } from "react-toastify";
 
 const BottlePage = () => {
   const wallet = useAccount();
@@ -119,6 +120,8 @@ const BottlePage = () => {
       hash: tx.hash,
       description: `Stake bottle ${Number(id)}`,
     });
+    await tx.wait();
+    toast.success("Success!");
     setTimeout(refetch, 2000);
   };
 
@@ -128,6 +131,8 @@ const BottlePage = () => {
       hash: tx.hash,
       description: `Withdraw bottle ${Number(id)}`,
     });
+    await tx.wait();
+    toast.success("Success!");
     setTimeout(refetch, 2000);
   };
 
@@ -137,12 +142,16 @@ const BottlePage = () => {
       hash: tx.hash,
       description: `Rejuvenate bottle ${Number(id)}`,
     });
+    await tx.wait();
+    toast.success("Success!");
     setTimeout(refetch, 2000);
   };
 
   const sendApproveCellar = async () => {
     const tx = await approveCellar(signer);
     addRecentTransaction({ hash: tx.hash, description: "Approve cellar" });
+    await tx.wait();
+    toast.success("Success!");
     setTimeout(
       async () => setIsApproved(await isCellarApproved(data.bottle.owner.id)),
       2000

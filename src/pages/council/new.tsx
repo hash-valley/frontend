@@ -10,6 +10,7 @@ import { BigNumber } from "ethers";
 import { isAddress } from "ethers/lib/utils";
 import { useAccount, useSigner } from "wagmi";
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
+import { toast } from "react-toastify";
 
 const ProposalInput = styled(Input)`
   max-width: 32rem;
@@ -129,6 +130,8 @@ const NewProposal = () => {
           bottleId
         )}`,
       });
+      await tx.wait();
+      toast.success("Success!");
     }
   };
 

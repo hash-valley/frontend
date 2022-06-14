@@ -2,6 +2,7 @@ import { Flourish, GridContainer, Page } from "../Styles/Components";
 import styled from "styled-components";
 import { VineyardAddress } from "../Utils/constants";
 import Image from "next/image";
+import Link from "next/link";
 
 const Info1 = styled(Page)`
   padding-top: 3rem;
@@ -83,7 +84,7 @@ const About = () => {
       <Info2>
         <Subtitle side="right">How Do I Play?</Subtitle>
         <SubSubtitle>
-          You'll need to have some ETH on{" "}
+          You&apos;ll need to have some ETH on{" "}
           <a href="https://www.optimism.io" target="_blank" rel="noreferrer">
             Optimism
           </a>{" "}
@@ -98,7 +99,8 @@ const About = () => {
           to move your assets over.
         </SubSubtitle>
         <SubSubtitle>
-          After obtaining a Vineyard from the <a href="/mint">Mint</a> or on the{" "}
+          After obtaining a Vineyard from the <Link href="/mint">Mint</Link> or
+          on the{" "}
           <a
             href={
               process.env.NEXT_PUBLIC_CHAIN_ID === "69"
@@ -119,8 +121,8 @@ const About = () => {
           only three weeks!
         </SubSubtitle>
         <SubSubtitle>
-          Once you have a Wine Bottle you'll be able to take your chances with
-          the cellar or propose a new artwork in the Council.
+          Once you have a Wine Bottle you&apos;ll be able to take your chances
+          with the cellar or propose a new artwork in the Council.
         </SubSubtitle>
       </Info2>
 

@@ -35,8 +35,6 @@ export const approveGiveaway = async (signer: any) => {
       parseEther("1")
     );
     toast.info("Transaction sent");
-    await tx.wait();
-    toast.success("Success!");
     return tx;
   } catch (err: any) {
     console.error(err);
@@ -55,8 +53,6 @@ export const transferGiveaway = async (
   try {
     const tx = await giveawayWithSigner.transfer(recipient, amount);
     toast.info("Transaction sent");
-    await tx.wait();
-    toast.success("Success!");
     return tx;
   } catch (err: any) {
     console.error(err);
