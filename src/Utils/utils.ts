@@ -1,5 +1,5 @@
 import { bottleEras, bottleTypes } from "./attributes";
-import { day } from "./constants";
+import { DAY } from "./constants";
 
 export const formatNum = (num: string, decimals: number = 3) => {
   const decimal = num.indexOf(".");
@@ -54,11 +54,11 @@ export const chanceOfSpoil = (stakedDays: number) => {
 
 // age in seconds
 export const ageOnRemove = (cellarTime: number): BigInt => {
-  if (cellarTime <= 360 * day) {
-    const months = Math.floor(cellarTime / day / 30);
-    const monthTime = cellarTime - months * 30 * day;
+  if (cellarTime <= 360 * DAY) {
+    const months = Math.floor(cellarTime / DAY / 30);
+    const monthTime = cellarTime - months * 30 * DAY;
     const eraTime = bottleEras[months].range[1] - bottleEras[months].range[0];
-    const monthFraction = (BigInt(monthTime) * eraTime) / BigInt(30 * day);
+    const monthFraction = (BigInt(monthTime) * eraTime) / BigInt(30 * DAY);
     return bottleEras[months].range[0] + BigInt(monthFraction);
   }
   return bottleEras[12].range[1];

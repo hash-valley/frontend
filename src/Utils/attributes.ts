@@ -1,4 +1,4 @@
-import { year } from "./constants";
+import { YEAR } from "./constants";
 
 export const locations = [
   {
@@ -500,54 +500,54 @@ export const bottleTypes = [
 export const bottleEras = [
   {
     name: "Contemporary",
-    range: [BigInt(0), BigInt(100) * year],
+    range: [BigInt(0), BigInt(100) * YEAR],
   },
   {
     name: "Modern",
-    range: [BigInt(100) * year, BigInt(250) * year],
+    range: [BigInt(100) * YEAR, BigInt(250) * YEAR],
   },
   {
     name: "Romantic",
-    range: [BigInt(250) * year, BigInt(500) * year],
+    range: [BigInt(250) * YEAR, BigInt(500) * YEAR],
   },
   {
     name: "Renaissance",
-    range: [BigInt(500) * year, BigInt(800) * year],
+    range: [BigInt(500) * YEAR, BigInt(800) * YEAR],
   },
   {
     name: "Medeival",
-    range: [BigInt(800) * year, BigInt(1600) * year],
+    range: [BigInt(800) * YEAR, BigInt(1600) * YEAR],
   },
   {
     name: "Classical",
-    range: [BigInt(1600) * year, BigInt(2700) * year],
+    range: [BigInt(1600) * YEAR, BigInt(2700) * YEAR],
   },
   {
     name: "Ancient",
-    range: [BigInt(2700) * year, BigInt(4000) * year],
+    range: [BigInt(2700) * YEAR, BigInt(4000) * YEAR],
   },
   {
     name: "Neolithic",
-    range: [BigInt(4000) * year, BigInt(10000) * year],
+    range: [BigInt(4000) * YEAR, BigInt(10000) * YEAR],
   },
   {
     name: "Prehistoric",
-    range: [BigInt(10000) * year, BigInt(100000) * year],
+    range: [BigInt(10000) * YEAR, BigInt(100000) * YEAR],
   },
   {
     name: "Primordial",
-    range: [BigInt(100000) * year, BigInt(1000000000) * year],
+    range: [BigInt(100000) * YEAR, BigInt(1000000000) * YEAR],
   },
   {
     name: "Archean",
-    range: [BigInt(1000000000) * year, BigInt(4000000000) * year],
+    range: [BigInt(1000000000) * YEAR, BigInt(4000000000) * YEAR],
   },
   {
     name: "Astral",
-    range: [BigInt(4000000000) * year, BigInt(13000000000) * year],
+    range: [BigInt(4000000000) * YEAR, BigInt(13000000000) * YEAR],
   },
   {
     name: "Akashic",
-    range: [BigInt(13000000000) * year, BigInt(13000000001) * year],
+    range: [BigInt(13000000000) * YEAR, BigInt(13000000001) * YEAR],
   },
 ];

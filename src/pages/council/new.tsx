@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Page, CenteredSelect } from "../../Styles/Components";
 import { Input, Button } from "antd";
 import { useQuery } from "@apollo/client";
@@ -11,6 +11,7 @@ import { isAddress } from "ethers/lib/utils";
 import { useAccount, useSigner } from "wagmi";
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
 import { toast } from "react-toastify";
+import { DAY } from "../../Utils/constants";
 
 const ProposalInput = styled(Input)`
   max-width: 32rem;
@@ -34,6 +35,7 @@ const NewProposal = () => {
   const [bottleError, setBottleError] = useState(false);
   const [vineCooldown, setVineCooldown] = useState(false);
   const [bottleCooldown, setBottleCooldown] = useState(false);
+  const [showButton, setShowButton] = useState(false);
 
   const bottleData = useQuery(GET_BOTTLES, {
     variables: {
@@ -44,29 +46,33 @@ const NewProposal = () => {
   const vineUriData = useQuery(VINE_URIS);
   const bottleUriData = useQuery(BOTTLE_URIS);
 
-  const nineDays = 777600;
-  const thirtySixHours = 36 * 60 * 60;
-  const fortyEightHours = 48 * 60 * 60;
+  const nineDays = 9 * DAY;
+  const thirtySixHours = 1.5 * DAY;
+  const fortyEightHours = 2 * DAY;
+
+  useEffect(() => setShowButton(true), []);
 
   const verifyCooldown = (uri: any): boolean => {
     if (uri.votesFor === "0" && uri.votesAgainst === "0") {
       return true;
     }
+
     const rn = Date.now() / 1000;
-    if (uri.completed && uri.startTimestamp + nineDays < rn) {
+    const startTimestamp = Number(uri.startTimestamp);
+    if (uri.completed && startTimestamp + nineDays < rn) {
       return true;
     }
     if (
       !uri.completed &&
       BigNumber.from(uri.votesAgainst).gt(uri.votesFor) &&
-      uri.startTimestamp + thirtySixHours < rn
+      startTimestamp + thirtySixHours < rn
     ) {
       return true;
     }
     if (
       !uri.completed &&
       BigNumber.from(uri.votesFor).gt(uri.votesAgainst) &&
-      uri.startTimestamp + fortyEightHours < rn
+      startTimestamp + fortyEightHours < rn
     ) {
       return true;
     }
@@ -95,7 +101,7 @@ const NewProposal = () => {
       setBottleError(false);
     }
     if (
-      pType == "Vineyards" &&
+      pType === "Vineyards" &&
       vineUriData.data.newUris.length > 0 &&
       !verifyCooldown(vineUriData.data.newUris[0])
     ) {
@@ -103,10 +109,9 @@ const NewProposal = () => {
       setVineCooldown(true);
     } else {
       setVineCooldown(false);
-      setBottleCooldown(false);
     }
     if (
-      pType == "Bottles" &&
+      pType === "Bottles" &&
       bottleUriData.data.newUris.length > 0 &&
       !verifyCooldown(bottleUriData.data.newUris[0])
     ) {
@@ -114,7 +119,6 @@ const NewProposal = () => {
       setBottleCooldown(true);
     } else {
       setBottleCooldown(false);
-      setVineCooldown(false);
     }
 
     if (!errors) {
@@ -126,9 +130,7 @@ const NewProposal = () => {
       }
       addRecentTransaction({
         hash: tx.hash,
-        description: `Create proposal for ${pType} with bottle ${Number(
-          bottleId
-        )}`,
+        description: `Create ${pType} proposal with bottle ${Number(bottleId)}`,
       });
       await tx.wait();
       toast.success("Success!");
@@ -144,7 +146,7 @@ const NewProposal = () => {
         <i>(if its on IPFS please make sure this is functional and pinned!)</i>
       </p>
       <ProposalInput
-        placeholder="i.e. ipfs://QmVXLRguzqMfDN59BrGpHKdCXK3Fj7mYHcVEY8aKn3JehQ"
+        placeholder="i.e. ipfs://QmVobcYpvpNfS84yEwZtjuuAFabf3nL4Gso8MyDa4QGWzu"
         value={cid}
         onChange={(e) => setCid(e.target.value)}
       />
@@ -182,7 +184,14 @@ const NewProposal = () => {
       <br />
       <br />
       <p>Is this for Vineyards or Bottles?</p>
-      <CenteredSelect value={pType} onChange={(event: any) => setPType(event)}>
+      <CenteredSelect
+        value={pType}
+        onChange={(event: any) => {
+          setPType(event);
+          setVineCooldown(false);
+          setBottleCooldown(false);
+        }}
+      >
         <Select.Option key="vine" value="Vineyards">
           Vineyards
         </Select.Option>
@@ -198,7 +207,7 @@ const NewProposal = () => {
       </Error>
       <br />
       <br />
-      {wallet.status === "success" ? (
+      {showButton && wallet.data?.address ? (
         <Button type="primary" shape="round" onClick={sendProposal}>
           Submit
         </Button>

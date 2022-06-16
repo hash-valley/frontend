@@ -21,9 +21,9 @@ import {
 import {
   BottleAddress,
   chainId,
-  day,
+  DAY,
   ipfs_gateway,
-  year,
+  YEAR,
   ZERO_ADDRESS,
 } from "../../Utils/constants";
 import {
@@ -81,9 +81,9 @@ const BottlePage = () => {
           const ageR = BigNumber.from(ageOnRemove(stakeTime).toString());
           cellarStuff.current = {
             stakeTime,
-            spoilChance: chanceOfSpoil(Math.floor(stakeTime / day)),
+            spoilChance: chanceOfSpoil(Math.floor(stakeTime / DAY)),
             vinegar: ageR.div(86400).toString(),
-            age: ageR.div(year).toString(),
+            age: ageR.div(YEAR).toString(),
             era: getBottleEra(ageR.toString()),
           };
         }

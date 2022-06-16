@@ -5,8 +5,10 @@ import {
   Spaced,
   CenteredSelect,
   BreakWords,
+  FailText,
+  SuccessText,
 } from "../Styles/Components";
-import { ipfs_gateway } from "../Utils/constants";
+import { DAY, ipfs_gateway } from "../Utils/constants";
 import styled from "styled-components";
 import Select from "rc-select";
 import { support, retort, complete } from "../Utils/votableUri";
@@ -170,8 +172,12 @@ const InProgress: FC<any> = ({ uri, bottles, vineyards }) => {
   const [viewUri, setViewUri] = useState(defaultUri(uri.newUri));
 
   const now = Date.now() / 1000;
-  const voteEnds = parseInt(uri.startTimestamp) + 36 * 60 * 60;
-  const completedAt = parseInt(uri.startTimestamp) + 48 * 60 * 60;
+  const voteEnds = parseInt(uri.startTimestamp) + 1.5 * DAY;
+  const completedAt = parseInt(uri.startTimestamp) + 2 * DAY;
+
+  const passing = BigNumber.from(uri.votesFor).gt(
+    BigNumber.from(uri.votesAgainst)
+  );
 
   const filteredBottles = bottles.filter(
     (bottle: any) => !uri.votes.includes(bottle.tokenId)
@@ -252,10 +258,14 @@ const InProgress: FC<any> = ({ uri, bottles, vineyards }) => {
         votesAgainst={BigNumber.from(uri.votesAgainst)}
         completed={uri.completed}
       />
-      <Countdown>
-        Ending in {hours(timeStatus)}:{minutes(timeStatus)}:
-        {seconds(timeStatus)}
-      </Countdown>
+
+      {completedAt > now && (
+        <Countdown>
+          Ending in {hours(timeStatus)}:{minutes(timeStatus)}:
+          {seconds(timeStatus)}
+        </Countdown>
+      )}
+
       <BreakWords>
         <b>New URI:</b> {uri.newUri}
       </BreakWords>
@@ -295,16 +305,29 @@ const InProgress: FC<any> = ({ uri, bottles, vineyards }) => {
             </Spaced>
           </>
         ) : completedAt > now ? (
-          <Spaced type="default" shape="round" onClick={sendComplete}>
-            Finalize
-          </Spaced>
-        ) : null}
+          passing ? (
+            <Spaced type="default" shape="round" onClick={sendComplete}>
+              Finalize
+            </Spaced>
+          ) : (
+            <FailText>Proposal Failed</FailText>
+          )
+        ) : !uri.completed ? (
+          passing ? (
+            <FailText>Proposal passed but was never enacted</FailText>
+          ) : (
+            <FailText>Proposal Failed</FailText>
+          )
+        ) : (
+          <SuccessText>Proposal Enacted</SuccessText>
+        )}
       </div>
     </>
   );
 };
 
 const Council: FC<CouncilTypes> = ({ newUris, bottles, vineyards }) => {
+  const timeNow = Date.now() / 1000;
   return (
     <Page>
       {newUris
@@ -312,9 +335,9 @@ const Council: FC<CouncilTypes> = ({ newUris, bottles, vineyards }) => {
           (uri: any) => !(uri.votesFor === "0" && uri.votesAgainst === "0")
         )
         .map((uri: any) => (
-          <>
+          <div key={uri.startTimestamp}>
             {uri.completed ||
-            (Date.now() / 1000 > parseInt(uri.startTimestamp) + 172800 &&
+            (timeNow > parseInt(uri.startTimestamp) + 172800 &&
               BigNumber.from(uri.votesAgainst).gt(
                 BigNumber.from(uri.votesFor)
               )) ? (
@@ -323,7 +346,7 @@ const Council: FC<CouncilTypes> = ({ newUris, bottles, vineyards }) => {
               <InProgress uri={uri} bottles={bottles} vineyards={vineyards} />
             )}
             <hr />
-          </>
+          </div>
         ))}
     </Page>
   );

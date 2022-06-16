@@ -1,8 +1,11 @@
 import { useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
-import { day } from "../Utils/constants";
+import { DAY } from "../Utils/constants";
 import { VINEPROTOCOL_QUERY } from "../Utils/queries";
 import { currentSeason } from "../Utils/vineyardContract";
+
+const FIRST_SEASON_DAYS = 21;
+const SEASON_DAYS = 84;
 
 export const useCurrSeason = () => {
   const [season, setSeason] = useState(0);
@@ -14,8 +17,12 @@ export const useCurrSeason = () => {
   const sDays = (season: number, start: number) => {
     const now = Date.now() / 1000;
     if (season == 0) return 0;
-    if (season == 1) return 21 - (now - start) / day;
-    else return 84 - (now - start - 21 * day - (season - 1) * 84 * day) / day;
+    if (season == 1) return 21 - (now - start) / DAY;
+    else {
+      const totalGameDays = (now - start) / DAY;
+      const prevSeasonDays = FIRST_SEASON_DAYS + (season - 2) * SEASON_DAYS;
+      return SEASON_DAYS - (totalGameDays - prevSeasonDays);
+    }
   };
 
   useEffect(() => {

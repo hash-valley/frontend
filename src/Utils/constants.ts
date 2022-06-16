@@ -21,5 +21,5 @@ export const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
 export const viewProvider = new providers.JsonRpcProvider(providerUrl);
 
-export const day = 24 * 60 * 60;
-export const year = BigInt(365 * day);
+export const DAY = 24 * 60 * 60;
+export const YEAR = BigInt(365 * DAY);
