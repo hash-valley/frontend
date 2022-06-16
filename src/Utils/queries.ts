@@ -188,7 +188,7 @@ export const NEW_URI = gql`
       votes
       completed
     }
-    bottles(where: { owner: $address }) {
+    bottles(where: { owner: $address, inCellar: false }) {
       tokenId
       attributes
     }

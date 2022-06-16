@@ -12,6 +12,7 @@ import { useAccount, useSigner } from "wagmi";
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
 import { toast } from "react-toastify";
 import { DAY } from "../../Utils/constants";
+import { useRouter } from "next/router";
 
 const ProposalInput = styled(Input)`
   max-width: 32rem;
@@ -24,6 +25,7 @@ const Error = styled.p`
 const NewProposal = () => {
   const wallet = useAccount();
   const { data: signer } = useSigner();
+  const router = useRouter();
   const addRecentTransaction = useAddRecentTransaction();
   const [cid, setCid] = useState("");
   const [address, setAddress] = useState("");
@@ -134,6 +136,7 @@ const NewProposal = () => {
       });
       await tx.wait();
       toast.success("Success!");
+      router.push(`/council/${pType.toLowerCase()}`);
     }
   };
 

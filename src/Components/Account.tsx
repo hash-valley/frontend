@@ -127,7 +127,7 @@ const Account = () => {
                     items={[
                       {
                         label: (
-                          <div onClick={() => router.push(`/council/vineyard`)}>
+                          <div onClick={() => router.push(`/council/vineyards`)}>
                             Vineyards
                           </div>
                         ),
@@ -135,7 +135,7 @@ const Account = () => {
                       },
                       {
                         label: (
-                          <div onClick={() => router.push(`/council/bottle`)}>
+                          <div onClick={() => router.push(`/council/bottles`)}>
                             Bottles
                           </div>
                         ),
@@ -156,7 +156,7 @@ const Account = () => {
                 <Button
                   shape="round"
                   size="large"
-                  onClick={() => router.push(`/council/vineyard`)}
+                  onClick={() => router.push(`/council/vineyards`)}
                 >
                   <b>Council</b>
                 </Button>
@@ -231,7 +231,7 @@ const Account = () => {
                   },
                   {
                     label: (
-                      <div onClick={() => router.push(`/council/vineyard`)}>
+                      <div onClick={() => router.push(`/council/vineyards`)}>
                         Vineyards
                       </div>
                     ),
@@ -239,7 +239,7 @@ const Account = () => {
                   },
                   {
                     label: (
-                      <div onClick={() => router.push(`/council/bottle`)}>
+                      <div onClick={() => router.push(`/council/bottles`)}>
                         Bottles
                       </div>
                     ),

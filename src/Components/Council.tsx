@@ -18,6 +18,14 @@ import { useSigner } from "wagmi";
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
 import { toast } from "react-toastify";
 
+const PaddedSuccess = styled(SuccessText)`
+  margin: 0.8rem 0 1.6rem 0;
+`;
+
+const PaddedFail = styled(FailText)`
+  margin: 0.8rem 0 1.6rem 0;
+`;
+
 interface BarProps {
   color: string;
   votesFor: BigNumber;
@@ -310,16 +318,16 @@ const InProgress: FC<any> = ({ uri, bottles, vineyards }) => {
               Finalize
             </Spaced>
           ) : (
-            <FailText>Proposal Failed</FailText>
+            <PaddedFail>Proposal Failed</PaddedFail>
           )
         ) : !uri.completed ? (
           passing ? (
-            <FailText>Proposal passed but was never enacted</FailText>
+            <PaddedFail>Proposal passed but was never enacted</PaddedFail>
           ) : (
-            <FailText>Proposal Failed</FailText>
+            <PaddedFail>Proposal Failed</PaddedFail>
           )
         ) : (
-          <SuccessText>Proposal Enacted</SuccessText>
+          <PaddedSuccess>Proposal Enacted</PaddedSuccess>
         )}
       </div>
     </>
