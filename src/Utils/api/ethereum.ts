@@ -1,4 +1,3 @@
-
 import { Contract, providers } from "ethers";
 import {
   VineyardAddress,
@@ -10,6 +9,7 @@ import {
 const abi = [
   "function artists(uint version) public view returns(address)",
   "function sellerFee() public view returns(uint16)",
+  "function tokenURI(uint256 _tokenId) public view returns (string memory)",
 ];
 
 const vineAbi = [
@@ -34,35 +34,38 @@ const viewVineyardContract = new Contract(
 );
 const viewBottleContract = new Contract(BottleAddress, bottleAbi, viewProvider);
 
-export const vineData = async (version: number, token: number) => {
-  const { newUri, artist } = await gqlQuery("VINEYARD", version);
-  const data = await Promise.all([
-    viewVineyardContract.getTokenAttributes(token),
-    viewVineyardContract.xp(token),
-    viewVineyardContract.currentStreak(token),
-    newUri,
-    artist,
-    viewVineyardContract.sellerFee(),
-  ]);
+export const vineData = async (version_: number, token: number) => {
+  const data = await viewVineyardContract.tokenURI(token);
+  const json = JSON.parse(
+    Buffer.from(data.slice(29), "base64").toString("ascii")
+  );
 
-  return data;
+  const { newUri, artist, version } = await gqlQuery("VINEYARD", version_);
+  json["version"] = version;
+
+  if (version_ !== -1) {
+    json["animation_url"] = newUri + json["animation_url"].slice(53);
+    json["fee_recipient"] = artist;
+  }
+
+  return json;
 };
 
-export const bottleData = async (version: number, token: number) => {
-  const { newUri, artist } = await gqlQuery("BOTTLE", version);
-  const data = await Promise.all([
-    viewBottleContract.attributes(token, 0),
-    viewBottleContract.attributes(token, 1),
-    viewBottleContract.attributes(token, 2),
-    viewBottleContract.attributes(token, 3),
-    viewBottleContract.bottleAge(token),
-    viewBottleContract.bottleEra(token),
-    newUri,
-    artist,
-    viewBottleContract.sellerFee(),
-  ]);
+export const bottleData = async (version_: number, token: number) => {
+  const data = await viewBottleContract.tokenURI(token);
+  const json = JSON.parse(
+    Buffer.from(data.slice(29), "base64").toString("ascii")
+  );
 
-  return data;
+  const { newUri, artist, version } = await gqlQuery("BOTTLE", version_);
+  json["version"] = version;
+
+  if (version_ !== -1) {
+    json["animation_url"] = newUri + json["animation_url"].slice(53);
+    json["fee_recipient"] = artist;
+  }
+
+  return json;
 };
 
 const gqlQuery = async (type: string, version: number) => {
