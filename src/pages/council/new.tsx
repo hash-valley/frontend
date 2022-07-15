@@ -126,10 +126,10 @@ const NewProposal = () => {
 
     if (!errors) {
       let tx;
+      toast.info(
+        "Pinning to IPFS (artwork may take a few minutes to appear on the council page)"
+      );
       if (pType == "Vineyards") {
-        toast.info(
-          "Pinning to IPFS (artwork may take a few minutes to appear on the council page)"
-        );
         await pinHashToIPFS(
           cid,
           "VINEYARD-" + address,
@@ -138,6 +138,12 @@ const NewProposal = () => {
         );
         tx = await suggest(signer, Number(bottleId), cid, address, "VINEYARD");
       } else if (pType == "Bottles") {
+        await pinHashToIPFS(
+          cid,
+          "BOTTLE-" + address,
+          "BOTTLE",
+          wallet.data?.address!
+        );
         tx = await suggest(signer, Number(bottleId), cid, address, "BOTTLE");
       }
       addRecentTransaction({
