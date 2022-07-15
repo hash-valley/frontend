@@ -13,6 +13,7 @@ import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
 import { toast } from "react-toastify";
 import { DAY } from "../../Utils/constants";
 import { useRouter } from "next/router";
+import { pinHashToIPFS } from "../../Utils/pinata";
 
 const ProposalInput = styled(Input)`
   max-width: 32rem;
@@ -126,6 +127,15 @@ const NewProposal = () => {
     if (!errors) {
       let tx;
       if (pType == "Vineyards") {
+        toast.info(
+          "Pinning to IPFS (artwork may take a few minutes to appear on the council page)"
+        );
+        await pinHashToIPFS(
+          cid,
+          "VINEYARD-" + address,
+          "VINEYARD",
+          wallet.data?.address!
+        );
         tx = await suggest(signer, Number(bottleId), cid, address, "VINEYARD");
       } else if (pType == "Bottles") {
         tx = await suggest(signer, Number(bottleId), cid, address, "BOTTLE");
