@@ -219,6 +219,9 @@ const MintContainer = () => {
               <b>Location:</b> {locations[city].name}
             </div>
             <div>
+              <b>Climate:</b> {locations[city].climate.name}
+            </div>
+            <div>
               <b>Elevation:</b> {elev} feet
             </div>
             <div>
