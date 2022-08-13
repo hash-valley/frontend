@@ -168,8 +168,9 @@ const MintContainer = () => {
         <Step>
           <h3>Select Elevation</h3>
           <p>
-            At low elevations you're more likely to harvest red and white wines.
-            At higher elevations you're more likely to get sparkling and rosés
+            At low elevations you&apos;re more likely to harvest red and white
+            wines. At higher elevations you&apos;re more likely to get sparkling
+            and rosés
           </p>
           <br />
           {minElev(city) != maxElev(city) && (
