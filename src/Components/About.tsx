@@ -145,7 +145,7 @@ const About = () => {
 
         <Roadmap
           items={[
-            { text: "mint opens", complete: true },
+            { text: "Vineyard mint opens", complete: true },
             { text: "Mint out - start first season", complete: false },
             {
               text: "New artwork creation opens up to everyone",
