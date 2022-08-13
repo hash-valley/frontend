@@ -341,7 +341,13 @@ const BottlePage = () => {
           </Spaced>
         )
       ) : data.bottle.owner.id != ZERO_ADDRESS ? (
-        <p>Owned by {data.bottle.owner.id}</p>
+        <p>
+          <GreyLink href={"/account/" + data.bottle.owner.id}>
+            <>
+              Owned by <a>{data.bottle.owner.id}</a>
+            </>
+          </GreyLink>
+        </p>
       ) : null}
     </TokenPage>
   );

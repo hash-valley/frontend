@@ -289,7 +289,13 @@ const VineyardPage = () => {
           </Spaced>
         </div>
       ) : (
-        <p>Owned by {data.vineyard.owner.id}</p>
+        <p>
+          <GreyLink href={"/account/" + data.vineyard.owner.id}>
+            <>
+              Owned by <a>{data.vineyard.owner.id}</a>
+            </>
+          </GreyLink>
+        </p>
       )}
 
       <a
