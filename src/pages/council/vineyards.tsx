@@ -18,7 +18,7 @@ const VineBoard = () => {
   return loading ? (
     <Page>
       <h4>
-        <i>Loading...</i>
+      <i >Loading</i>
       </h4>
     </Page>
   ) : data?.newUris.length > 1 ? (

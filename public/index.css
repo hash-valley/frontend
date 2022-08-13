@@ -6,10 +6,19 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
+  background-color: transparent !important;
   background: url('/vine_svgs/flower_med_trans.svg');
   background-repeat: no-repeat;
   background-position: center;
   background-attachment: fixed;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+html {
+  /* background: linear-gradient(164deg, rgba(255,228,255,0.32) 0%, rgba(236,181,188,0.32) 100%) !important; */
 }
 
 html,
@@ -32,7 +41,7 @@ body {
   overflow: hidden;
   display: inline-block;
   vertical-align: bottom;
-  -webkit-animation: ellipsis steps(4,end) 900ms infinite;      
+  -webkit-animation: ellipsis steps(4,end) 1200ms infinite;      
   animation: ellipsis steps(4,end) 900ms infinite;
   content: "\2026"; /* ascii code for the ellipsis character */
   width: 0px;

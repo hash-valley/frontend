@@ -212,7 +212,12 @@ const MintContainer = () => {
         <Step>
           <TokenFrame src={imageUri} frameBorder="0" />
           <p>
-            <i>Your vineyard will develop as you care for it over time</i>
+            <i>
+              Your vineyard is dynamic and will develop as you care for it over
+              time.
+              <br />
+              Remember to vote in the council to unlock new art updates!
+            </i>
           </p>
           <Sign>
             <div>

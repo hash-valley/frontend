@@ -4,6 +4,10 @@ import { VineyardAddress } from "../Utils/constants";
 import Image from "next/image";
 import Link from "next/link";
 
+const Gap = styled.div`
+  margin-top: 6.5rem;
+`;
+
 const Info1 = styled(Page)`
   padding-top: 3rem;
   margin-top: 36px;
@@ -27,7 +31,8 @@ const Subtitle = styled.h2<{ side: string }>`
   margin: 1rem 3rem;
   text-align: ${(props) => (props.side == "left" ? "left" : "right")};
   font-size: 2rem;
-  font-family: FancyFont;
+  font-style: italic;
+  // font-family: FancyFont;
 `;
 
 const SubSubtitle = styled.h2`
@@ -42,11 +47,17 @@ const Explain = styled.p`
 const About = () => {
   return (
     <>
+      <Gap />
       <Info1>
-        <Subtitle side="left">What is Hash Valley?</Subtitle>
+        <Subtitle side="left">
+          Hash Valley's destiny belongs to its owners
+        </Subtitle>
         <SubSubtitle>
-          An idle game where vineyard owners grow their wine collection and own
-          the future of the ecosystem.
+          Cultivate a vineyard of your choosing.
+          <br />
+          Discover rare vintages.
+          <br />
+          Earn ETH sharing your art with the world.
         </SubSubtitle>
         <GridContainer>
           <InfoPanel>
@@ -122,7 +133,9 @@ const About = () => {
         </SubSubtitle>
         <SubSubtitle>
           Once you have a Wine Bottle you&apos;ll be able to take your chances
-          with the cellar or propose a new artwork in the Council.
+          with the cellar or propose a new artwork in the Council. Winners will
+          have their art featured for a minimum of 7 days and receive all
+          secondary market royalties.
         </SubSubtitle>
       </Info2>
 

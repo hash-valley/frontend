@@ -172,7 +172,7 @@ const VineyardPage = () => {
       <h3>Vineyard: {id}</h3>
       <br />
       <h4>
-        <i>Loading...</i>
+      <i >Loading</i>
       </h4>
     </Page>
   ) : nullData ? (

@@ -130,7 +130,7 @@ const AccountPage = () => {
     <Page>
       {loading || loadingContract ? (
         <h3>
-          <i>Loading...</i>
+<i >Loading</i>
         </h3>
       ) : nullData ? (
         <h3>No assets found for this account</h3>
