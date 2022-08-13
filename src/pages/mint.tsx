@@ -146,6 +146,10 @@ const MintContainer = () => {
       {step == 0 ? (
         <Step>
           <h3>Select a Location</h3>
+          <p>
+            Location will affect the elevations you can plant at. Climate will
+            affect the notes on the bottles you harvest
+          </p>
           <GridContainer>
             {locations.map((loc, index) => (
               <GridItem key={loc.name} onClick={() => selectCity(index)}>
@@ -163,6 +167,10 @@ const MintContainer = () => {
       ) : step == 1 ? (
         <Step>
           <h3>Select Elevation</h3>
+          <p>
+            At low elevations you're more likely to harvest red and white wines.
+            At higher elevations you're more likely to get sparkling and rosés
+          </p>
           <br />
           {minElev(city) != maxElev(city) && (
             <input
@@ -196,6 +204,7 @@ const MintContainer = () => {
         <Step>
           <div className="soil">
             <h3>Select Soil Type</h3>
+            <p>Soil affects the likelihood of harvesting specific vintages</p>
             <br />
             <GridContainer>
               {soilTypes.map((_soil, index) => (
