@@ -27,9 +27,17 @@ const MintSketch: React.FC<any> = ({
     p5.createCanvas(width, height).parent(canvasParentRef);
 
     const canvasElement = document.getElementById("defaultCanvas0");
-    canvasElement!.style.width = "450px";
-    canvasElement!.style.height = "450px";
 
+    if (document.body.clientWidth > 500) {
+      canvasElement!.style.width = "450px";
+      canvasElement!.style.height = "450px";
+    } else if (document.body.clientWidth > 345) {
+      canvasElement!.style.width = "316px";
+      canvasElement!.style.height = "316px";
+    } else {
+      canvasElement!.style.width = "285px";
+      canvasElement!.style.height = "285px";
+    }
     p5.noStroke();
   };
 
