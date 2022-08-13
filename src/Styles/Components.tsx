@@ -87,11 +87,11 @@ export const GridContainer = styled.div`
   grid-column-gap: 64px;
   grid-row-gap: 24px;
 
-  @media screen and (max-width: 964px) {
+  @media screen and (max-width: 1115px) {
     grid-template-columns: auto auto;
   }
 
-  @media screen and (max-width: 652px) {
+  @media screen and (max-width: 766px) {
     grid-template-columns: auto;
   }
 `;
