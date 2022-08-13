@@ -169,21 +169,21 @@ const VineyardPage = () => {
 
   return loading ? (
     <Page>
-      <h3>Vineyard: {id}</h3>
+      <h2>Vineyard: {id}</h2>
       <br />
-      <h4>
-      <i >Loading</i>
-      </h4>
+      <h3>
+        <i>Loading</i>
+      </h3>
     </Page>
   ) : nullData ? (
     <Page>
-      <h3>Vineyard {id}</h3>
+      <h2>Vineyard {id}</h2>
       <br />
-      <h4>Vineyard not found</h4>
+      <h3>Vineyard not found</h3>
     </Page>
   ) : (
     <TokenPage>
-      <h3>Vineyard {id}</h3>
+      <h2>Vineyard {id}</h2>
       <TokenFrame src={imageUri} frameBorder="0" />
       <br />
       <CenteredSelect
