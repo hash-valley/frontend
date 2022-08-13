@@ -28,9 +28,9 @@ export const TokenFrame = styled.iframe`
     height: 316px;
   }
 
-  @media screen and (min-width: 500px) {
-    width: 400px;
-    height: 400px;
+  @media screen and (min-width: 550px) {
+    width: 500px;
+    height: 500px;
   }
 `;
 
@@ -63,17 +63,21 @@ export const Page = styled.div`
   font-family: Nunito;
 `;
 
-export const GridItem = styled.div`
+export const GridItem = styled.div<{ selected?: boolean }>`
   cursor: pointer;
   width: 20rem;
   padding: 1.6rem 0;
   border-radius: 19px;
-  background: #eee;
+  background: ${(props) =>
+    props.selected ? "rgba(255,150,207,0.48)" : "#eee"};
   box-shadow: 5px 5px 10px #bebebe, -5px -5px 10px #ffffff;
   transition: all 200ms ease-out;
 
   &:hover {
     background: #f5f5f5;
+
+    background: ${(props) =>
+      props.selected ? "rgba(255,150,207,0.48)" : "#f5f5f5"};
     transform: translate(0, -4px);
     transition: all 200ms ease-out;
   }

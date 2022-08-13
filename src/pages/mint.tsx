@@ -10,6 +10,7 @@ import {
   TokenFrame,
   Spaced,
   RoundedImg,
+  SketchFrame,
 } from "../Styles/Components";
 import styled from "styled-components";
 import { useCurrSeason } from "../Hooks/useCurrSeason";
@@ -19,6 +20,7 @@ import { ipfs_gateway } from "../Utils/constants";
 import { useAccount, useSigner } from "wagmi";
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
 import { toast } from "react-toastify";
+import MintSketch from "../Components/MintSketch";
 
 const Step = styled.div`
   margin-top: 32px;
@@ -78,10 +80,9 @@ const MintContainer = () => {
     setStep(2);
   };
 
-  const selectSoil = (num: number) => {
-    setSoil(num);
+  const selectSoil = () => {
     setStep(3);
-    setImageUri(renderImg(num));
+    setImageUri(renderImg(soil));
     checkGiveaway();
   };
 
@@ -135,6 +136,15 @@ const MintContainer = () => {
   return (
     <Page>
       <h2>Mint a Vineyard</h2>
+
+      {step > 0 && (
+        <MintSketch
+          vine_elevation={elev}
+          vine_location={city}
+          vine_soil={soil}
+        />
+      )}
+
       {step == 0 ? (
         <Step>
           <h3>Select a Location</h3>
@@ -190,27 +200,38 @@ const MintContainer = () => {
             <h3>Select Soil Type</h3>
             <br />
             <GridContainer>
-              {soilTypes.map((soil, index) => (
-                <GridItem key={soil.name} onClick={() => selectSoil(index)}>
+              {soilTypes.map((_soil, index) => (
+                <GridItem
+                  selected={soil === index}
+                  key={_soil.name}
+                  onClick={() => setSoil(index)}
+                >
                   <RoundedImg
                     src={`/thumbnails/dirt/${index}.png`}
                     height={130}
                     width={120}
                   />
-                  <div>{soil.name}</div>
+                  <div>{_soil.name}</div>
                 </GridItem>
               ))}
             </GridContainer>
             <br />
             <br />
-            <Button size="large" type="default" shape="round" onClick={back}>
+            <Spaced size="large" type="default" shape="round" onClick={back}>
               Back
-            </Button>
+            </Spaced>
+            <Spaced
+              size="large"
+              type="primary"
+              shape="round"
+              onClick={() => selectSoil()}
+            >
+              Confirm
+            </Spaced>
           </div>
         </Step>
       ) : (
         <Step>
-          <TokenFrame src={imageUri} frameBorder="0" />
           <p>
             <i>
               Your vineyard is dynamic and will develop as you care for it over
