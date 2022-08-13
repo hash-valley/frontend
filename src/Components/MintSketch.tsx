@@ -478,6 +478,7 @@ const MintSketch: React.FC<any> = ({
     }
   };
 
+  // @ts-ignore
   return <Sketch setup={setup} draw={draw} />;
 };
 

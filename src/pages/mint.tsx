@@ -7,10 +7,8 @@ import {
   GridContainer,
   GridItem,
   Page,
-  TokenFrame,
   Spaced,
   RoundedImg,
-  SketchFrame,
 } from "../Styles/Components";
 import styled from "styled-components";
 import { useCurrSeason } from "../Hooks/useCurrSeason";

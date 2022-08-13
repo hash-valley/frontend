@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { GreyBigLink, Page } from "../Styles/Components";
+import { Page } from "../Styles/Components";
 import { useRouter } from "next/router";
 import { Button } from "antd";
 import { useCurrSeason } from "../Hooks/useCurrSeason";
@@ -242,13 +242,13 @@ const Splash = () => {
           fill="none"
           viewBox="0 0 24 24"
           stroke="#ccc"
-          stroke-width="2"
+          strokeWidth="2"
           width="48px"
           height="48px"
         >
           <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeLinecap="round"
+            strokeLinejoin="round"
             d="M19 13l-7 7-7-7m14-8l-7 7-7-7"
           />
         </svg>

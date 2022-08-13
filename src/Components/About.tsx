@@ -51,7 +51,7 @@ const About = () => {
       <Gap />
       <Info1>
         <Subtitle side="left">
-          Hash Valley's destiny belongs to its owners
+          Hash Valley&apos;s destiny belongs to its owners
         </Subtitle>
         <SubSubtitle>
           Cultivate a vineyard of your choosing
