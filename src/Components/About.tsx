@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { VineyardAddress } from "../Utils/constants";
 import Image from "next/image";
 import Link from "next/link";
+import Roadmap from "./Roadmap";
 
 const Gap = styled.div`
   margin-top: 6.5rem;
@@ -27,12 +28,12 @@ const InfoPanel = styled.div`
   background: linear-gradient(145deg, #ffd5ff, #e6b3e1);
   box-shadow: 21px 21px 61px #d6a7d2, -21px -21px 61px #ffe7ff;
 `;
+
 const Subtitle = styled.h2<{ side: string }>`
   margin: 1rem 3rem;
   text-align: ${(props) => (props.side == "left" ? "left" : "right")};
   font-size: 2rem;
   font-style: italic;
-  // font-family: FancyFont;
 `;
 
 const SubSubtitle = styled.h2`
@@ -53,11 +54,11 @@ const About = () => {
           Hash Valley's destiny belongs to its owners
         </Subtitle>
         <SubSubtitle>
-          Cultivate a vineyard of your choosing.
+          Cultivate a vineyard of your choosing
           <br />
-          Discover rare vintages.
+          Discover rare vintages
           <br />
-          Earn ETH sharing your art with the world.
+          Earn ETH sharing your art with the world
         </SubSubtitle>
         <GridContainer>
           <InfoPanel>
@@ -138,6 +139,37 @@ const About = () => {
           secondary market royalties.
         </SubSubtitle>
       </Info2>
+
+      <Info1>
+        <Subtitle side="left">Roadmap</Subtitle>
+
+        <Roadmap
+          items={[
+            { text: "mint opens", complete: true },
+            { text: "Mint out - start first season", complete: false },
+            {
+              text: "New artwork creation opens up to everyone",
+              complete: false,
+            },
+            {
+              text: "Engage generative artists to be featured",
+              complete: false,
+            },
+            {
+              text: "Create Snapshot page for community signaling",
+              complete: false,
+            },
+            {
+              text: "Themed derivative projects and expansion packs - launched on Optimism or wherever the community decides",
+              complete: false,
+            },
+            {
+              text: "Physical delivery - turn your NFT wines into real bottles under the Hash Valley label",
+              complete: false,
+            },
+          ]}
+        />
+      </Info1>
 
       <Info1>
         <Subtitle side="left">Wanna go Deeper?</Subtitle>
