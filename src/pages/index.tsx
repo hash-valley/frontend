@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { GreyBigLink, Page } from "../Styles/Components";
+import { Page } from "../Styles/Components";
 import { useRouter } from "next/router";
 import { Button } from "antd";
 import { useCurrSeason } from "../Hooks/useCurrSeason";
-import Link from "next/link";
 import { giveawayBalance } from "../Utils/giveawayToken";
 import Image from "next/image";
 import { BigNumber } from "ethers";
 import { parseUnits } from "ethers/lib/utils";
 import { useAccount } from "wagmi";
+import About from "../Components/About";
 
 const LeftCorner = styled.div`
   float: left;
@@ -35,8 +35,14 @@ const ProgressContainer = styled.div`
   margin-bottom: 12px;
 
   border-radius: 50px;
-  background: #ffffff;
   box-shadow: 5px 5px 10px #dbdbdb, -5px -5px 10px #ffffff;
+
+  background: rgb(255, 150, 207);
+  background: linear-gradient(
+    120deg,
+    rgba(255, 150, 207, 0.5) 0%,
+    rgba(218, 122, 215, 0.5018382352941176) 100%
+  );
 `;
 
 const Progress = styled.div`
@@ -91,6 +97,29 @@ const Header = styled.h1`
 
 const PromoText = styled.i`
   color: green;
+`;
+
+const Chevron = styled.div`
+  position: absolute;
+  top: 90%;
+  left: calc(50% - 24px);
+  visibility: visible;
+
+  @media screen and (min-height: 880px) {
+    visibility: hidden;
+  }
+
+  transform: translate3d(0, 0, 0);
+  animation-name: bounce;
+  animation-duration: 5s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+
+  @keyframes bounce {
+    0%, 4%, 10%, 16%, 20% {transform: translateY(0);} 
+    8% {transform: translateY(-12px);} 
+    12% {transform: translateY(-6px);} 
+ } 
 `;
 
 const Splash = () => {
@@ -207,9 +236,25 @@ const Splash = () => {
         )}
       </Page>
 
-      <Link href="/about" passHref>
-        <GreyBigLink>Can I get a quick rundown?</GreyBigLink>
-      </Link>
+      <Chevron>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="#ccc"
+          strokeWidth="2"
+          width="48px"
+          height="48px"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M19 13l-7 7-7-7m14-8l-7 7-7-7"
+          />
+        </svg>
+      </Chevron>
+
+      <About />
     </>
   );
 };

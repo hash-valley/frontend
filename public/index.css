@@ -6,10 +6,15 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  background: url('/vine_svgs/flower_med_trans.svg');
+  background-color: transparent !important;
+  background: url("/vine_svgs/flower_med_trans.svg");
   background-repeat: no-repeat;
   background-position: center;
   background-attachment: fixed;
+}
+
+body::-webkit-scrollbar {
+  display: none;
 }
 
 html,
@@ -32,20 +37,40 @@ body {
   overflow: hidden;
   display: inline-block;
   vertical-align: bottom;
-  -webkit-animation: ellipsis steps(4,end) 900ms infinite;      
-  animation: ellipsis steps(4,end) 900ms infinite;
+  -webkit-animation: ellipsis steps(4, end) 1200ms infinite;
+  animation: ellipsis steps(4, end) 900ms infinite;
   content: "\2026"; /* ascii code for the ellipsis character */
   width: 0px;
 }
 
 @keyframes ellipsis {
   to {
-    width: 15px;    
+    width: 15px;
   }
 }
 
 @-webkit-keyframes ellipsis {
   to {
-    width: 15px;    
+    width: 15px;
+  }
+}
+
+#defaultCanvas0 {
+  margin-top: 12px;
+  margin-bottom: 12px;
+  margin-right: 12px;
+  background: #fff;
+
+  border-radius: 12px;
+  box-shadow: 19px 19px 38px #c4c4c4, -19px -19px 38px #ffffff;
+
+  @media screen and (min-width: 350px) {
+    width: 316px;
+    height: 316px;
+  }
+
+  @media screen and (min-width: 500px) {
+    width: 400px;
+    height: 400px;
   }
 }

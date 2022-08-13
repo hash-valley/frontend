@@ -3,6 +3,8 @@ import "@rainbow-me/rainbowkit/styles.css";
 import "react-toastify/dist/ReactToastify.css";
 import "antd/dist/antd.css";
 
+import "../css/variables.less";
+
 import { ApolloProvider } from "@apollo/client";
 import Head from "next/head";
 import styled from "styled-components";

@@ -130,20 +130,20 @@ const AccountPage = () => {
     <Page>
       {loading || loadingContract ? (
         <h3>
-          <i>Loading...</i>
+          <i>Loading</i>
         </h3>
       ) : nullData ? (
-        <h3>No assets found for this account</h3>
+        <h2>No assets found for this account</h2>
       ) : (
         <div>
-          <h3>
+          <h2>
             {userAddress === wallet.data?.address && "You own"}{" "}
             {data.account.vineyards.length} Vineyard
             {data.account.vineyards.length === 1 ? "" : "s"},{" "}
             {data.account.bottles.length} Bottle
             {data.account.bottles.length === 1 ? "" : "s"} and{" "}
             {formatNum(formatEther(data.account.vinegarBalance))} Vinegar
-          </h3>
+          </h2>
           <div>
             {view == "bottles" && (
               <div>

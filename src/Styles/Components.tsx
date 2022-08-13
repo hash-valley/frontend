@@ -16,22 +16,21 @@ export const CenteredSelect = styled(Select)`
 export const TokenFrame = styled.iframe`
   width: 300px;
   height: 300px;
-  padding: 8px;
   margin-top: 12px;
-  margin-bottom: 12px;
-  background-color: #fff;
+  margin-bottom: 22px;
+  background: #fff;
 
   border-radius: 12px;
-  box-shadow: 15px 15px 30px #d9d9d9, -15px -15px 30px #ffffff;
+  box-shadow: 19px 19px 38px #c4c4c4, -19px -19px 38px #ffffff;
 
   @media screen and (min-width: 350px) {
     width: 316px;
     height: 316px;
   }
 
-  @media screen and (min-width: 500px) {
-    width: 400px;
-    height: 400px;
+  @media screen and (min-width: 550px) {
+    width: 500px;
+    height: 500px;
   }
 `;
 
@@ -64,17 +63,21 @@ export const Page = styled.div`
   font-family: Nunito;
 `;
 
-export const GridItem = styled.div`
+export const GridItem = styled.div<{ selected?: boolean }>`
   cursor: pointer;
-  padding: 12px;
-  margin: 16px;
+  width: 20rem;
+  padding: 1.6rem 0;
   border-radius: 19px;
-  background: #eeeeee;
+  background: ${(props) =>
+    props.selected ? "rgba(255,150,207,0.48)" : "#eee"};
   box-shadow: 5px 5px 10px #bebebe, -5px -5px 10px #ffffff;
   transition: all 200ms ease-out;
 
   &:hover {
-    background: #f7f7f7;
+    background: #f5f5f5;
+
+    background: ${(props) =>
+      props.selected ? "rgba(255,150,207,0.48)" : "#f5f5f5"};
     transform: translate(0, -4px);
     transition: all 200ms ease-out;
   }
@@ -84,12 +87,15 @@ export const GridContainer = styled.div`
   display: grid;
   grid-template-columns: auto auto auto;
   padding: 10px;
+  justify-content: center;
+  grid-column-gap: 64px;
+  grid-row-gap: 24px;
 
-  @media screen and (max-width: 964px) {
+  @media screen and (max-width: 1115px) {
     grid-template-columns: auto auto;
   }
 
-  @media screen and (max-width: 652px) {
+  @media screen and (max-width: 766px) {
     grid-template-columns: auto;
   }
 `;

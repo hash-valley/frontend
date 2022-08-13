@@ -7,7 +7,6 @@ import {
   GridContainer,
   GridItem,
   Page,
-  TokenFrame,
   Spaced,
   RoundedImg,
 } from "../Styles/Components";
@@ -19,6 +18,7 @@ import { ipfs_gateway } from "../Utils/constants";
 import { useAccount, useSigner } from "wagmi";
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
 import { toast } from "react-toastify";
+import MintSketch from "../Components/MintSketch";
 
 const Step = styled.div`
   margin-top: 32px;
@@ -78,10 +78,9 @@ const MintContainer = () => {
     setStep(2);
   };
 
-  const selectSoil = (num: number) => {
-    setSoil(num);
+  const selectSoil = () => {
     setStep(3);
-    setImageUri(renderImg(num));
+    setImageUri(renderImg(soil));
     checkGiveaway();
   };
 
@@ -135,9 +134,22 @@ const MintContainer = () => {
   return (
     <Page>
       <h2>Mint a Vineyard</h2>
+
+      {step > 0 && (
+        <MintSketch
+          vine_elevation={elev}
+          vine_location={city}
+          vine_soil={soil}
+        />
+      )}
+
       {step == 0 ? (
         <Step>
           <h3>Select a Location</h3>
+          <p>
+            Location will affect the elevations you can plant at. Climate will
+            affect the notes on the bottles you harvest
+          </p>
           <GridContainer>
             {locations.map((loc, index) => (
               <GridItem key={loc.name} onClick={() => selectCity(index)}>
@@ -155,6 +167,10 @@ const MintContainer = () => {
       ) : step == 1 ? (
         <Step>
           <h3>Select Elevation</h3>
+          <p>
+            At low elevations you're more likely to harvest red and white wines.
+            At higher elevations you're more likely to get sparkling and rosés
+          </p>
           <br />
           {minElev(city) != maxElev(city) && (
             <input
@@ -188,31 +204,48 @@ const MintContainer = () => {
         <Step>
           <div className="soil">
             <h3>Select Soil Type</h3>
+            <p>Soil affects the likelihood of harvesting specific vintages</p>
             <br />
             <GridContainer>
-              {soilTypes.map((soil, index) => (
-                <GridItem key={soil.name} onClick={() => selectSoil(index)}>
+              {soilTypes.map((_soil, index) => (
+                <GridItem
+                  selected={soil === index}
+                  key={_soil.name}
+                  onClick={() => setSoil(index)}
+                >
                   <RoundedImg
                     src={`/thumbnails/dirt/${index}.png`}
                     height={130}
                     width={120}
                   />
-                  <div>{soil.name}</div>
+                  <div>{_soil.name}</div>
                 </GridItem>
               ))}
             </GridContainer>
             <br />
             <br />
-            <Button size="large" type="default" shape="round" onClick={back}>
+            <Spaced size="large" type="default" shape="round" onClick={back}>
               Back
-            </Button>
+            </Spaced>
+            <Spaced
+              size="large"
+              type="primary"
+              shape="round"
+              onClick={() => selectSoil()}
+            >
+              Confirm
+            </Spaced>
           </div>
         </Step>
       ) : (
         <Step>
-          <TokenFrame src={imageUri} frameBorder="0" />
           <p>
-            <i>Your vineyard will develop as you care for it over time</i>
+            <i>
+              Your vineyard is dynamic and will develop as you care for it over
+              time.
+              <br />
+              Voting in the council will unlock new art updates
+            </i>
           </p>
           <Sign>
             <div>

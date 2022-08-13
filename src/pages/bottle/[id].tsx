@@ -160,21 +160,21 @@ const BottlePage = () => {
 
   return loading ? (
     <Page>
-      <h3>Bottle: {id}</h3>
+      <h2>Bottle: {id}</h2>
       <br />
-      <h4>
-        <i>Loading...</i>
-      </h4>
+      <h3>
+        <i>Loading</i>
+      </h3>
     </Page>
   ) : nullData ? (
     <Page>
-      <h3>Bottle {id}</h3>
+      <h2>Bottle {id}</h2>
       <br />
-      <h4>Bottle not found</h4>
+      <h3>Bottle not found</h3>
     </Page>
   ) : (
     <TokenPage>
-      <h3>Bottle {id}</h3>
+      <h2>Bottle {id}</h2>
       <br />
       <TokenFrame src={imageUri} frameBorder="0" />
       <br />
