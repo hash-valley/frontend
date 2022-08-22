@@ -99,6 +99,11 @@ const PromoText = styled.i`
   color: green;
 `;
 
+const OldPrice = styled.i`
+  color: red;
+  text-decoration: line-through;
+`;
+
 const Chevron = styled.div`
   position: absolute;
   top: 90%;
@@ -116,10 +121,20 @@ const Chevron = styled.div`
   animation-timing-function: linear;
 
   @keyframes bounce {
-    0%, 4%, 10%, 16%, 20% {transform: translateY(0);} 
-    8% {transform: translateY(-12px);} 
-    12% {transform: translateY(-6px);} 
- } 
+    0%,
+    4%,
+    10%,
+    16%,
+    20% {
+      transform: translateY(0);
+    }
+    8% {
+      transform: translateY(-12px);
+    }
+    12% {
+      transform: translateY(-6px);
+    }
+  }
 `;
 
 const Splash = () => {
@@ -200,12 +215,13 @@ const Splash = () => {
         ) : (
           minted < max && (
             <h3>
-              <i>{price} Ξ</i>
-              {hasDiscount && (
+              {hasDiscount ? (
                 <>
-                  {" "}
-                  - <PromoText>Milady Pricing!</PromoText>
+                  <OldPrice>0.07 Ξ</OldPrice>
+                  <PromoText> {price} Ξ - Milady Pricing!</PromoText>
                 </>
+              ) : (
+                <i>{price} Ξ</i>
               )}
             </h3>
           )
