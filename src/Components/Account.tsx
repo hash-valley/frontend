@@ -127,7 +127,9 @@ const Account = () => {
                     items={[
                       {
                         label: (
-                          <div onClick={() => router.push(`/council/vineyards`)}>
+                          <div
+                            onClick={() => router.push(`/council/vineyards`)}
+                          >
                             Vineyards
                           </div>
                         ),
@@ -215,7 +217,7 @@ const Account = () => {
                     label:
                       protocol.season > 0
                         ? `${protocol.daysLeft} days left`
-                        : `Game not started`,
+                        : `Game not started ⌛`,
                     key: "2",
                   },
                   {

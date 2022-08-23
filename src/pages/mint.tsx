@@ -12,13 +12,11 @@ import {
 } from "../Styles/Components";
 import styled from "styled-components";
 import { useCurrSeason } from "../Hooks/useCurrSeason";
-import { useQuery } from "@apollo/client";
-import { MINT_QUERY } from "../Utils/queries";
-import { ipfs_gateway } from "../Utils/constants";
-import { useAccount, useSigner } from "wagmi";
+import { useAccount, useNetwork, useSigner } from "wagmi";
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
 import { toast } from "react-toastify";
 import MintSketch from "../Components/MintSketch";
+import { chainId } from "../Utils/constants";
 
 const Step = styled.div`
   margin-top: 32px;
@@ -31,6 +29,7 @@ const Sign = styled.div`
 const MintContainer = () => {
   const wallet = useAccount();
   const { data: signer } = useSigner();
+  const { activeChain } = useNetwork();
   const addRecentTransaction = useAddRecentTransaction();
   const protocol = useCurrSeason();
   const [step, setStep] = useState(0);
@@ -38,16 +37,8 @@ const MintContainer = () => {
   const [elev, setElev] = useState(0);
   const [soil, setSoil] = useState(0);
   const [mintHash, setMintHash] = useState("");
-  const [imageUri, setImageUri] = useState("");
-  const [baseUri, setBaseUri] = useState("");
 
   const [giveBal, setGiveBal] = useState("0");
-
-  const { loading, error, data } = useQuery(MINT_QUERY, {
-    onCompleted: (_data) => {
-      setBaseUri(ipfs_gateway + _data.newUris[0].newUri.substring(7));
-    },
-  });
 
   useEffect(() => checkGiveaway(), [wallet.data?.address]);
 
@@ -80,7 +71,6 @@ const MintContainer = () => {
 
   const selectSoil = () => {
     setStep(3);
-    setImageUri(renderImg(soil));
     checkGiveaway();
   };
 
@@ -93,18 +83,6 @@ const MintContainer = () => {
   const handleElev = (event: any) => {
     setElev(event.target.value);
   };
-
-  const renderImg = (soilNow: number) =>
-    baseUri +
-    "/?seed=" +
-    city +
-    "-" +
-    Math.abs(elev) +
-    "-" +
-    (elev < 0 ? "1" : "0") +
-    "-" +
-    soilNow +
-    "-0";
 
   const mint = async () => {
     const tx = await newVineyards(
@@ -281,26 +259,32 @@ const MintContainer = () => {
               >
                 Start over
               </Spaced>
-              {protocol.mintedVineyards < protocol.maxVineyards && (
-                <Spaced
-                  size="large"
-                  type="primary"
-                  shape="round"
-                  onClick={mint}
-                >
-                  Mint
-                </Spaced>
+              {activeChain?.id === chainId ? (
+                <>
+                  {protocol.mintedVineyards < protocol.maxVineyards && (
+                    <Spaced
+                      size="large"
+                      type="primary"
+                      shape="round"
+                      onClick={mint}
+                    >
+                      Mint
+                    </Spaced>
+                  )}
+                  {BigInt(giveBal) >= 1e18 ? (
+                    <Spaced
+                      size="large"
+                      type="primary"
+                      shape="round"
+                      onClick={mintGiveaway}
+                    >
+                      Use Giveaway Token
+                    </Spaced>
+                  ) : null}
+                </>
+              ) : (
+                <p>Please switch networks in your wallet to continue</p>
               )}
-              {BigInt(giveBal) >= 1e18 ? (
-                <Spaced
-                  size="large"
-                  type="primary"
-                  shape="round"
-                  onClick={mintGiveaway}
-                >
-                  Use Giveaway Token
-                </Spaced>
-              ) : null}
             </>
           ) : (
             <p>Connect Wallet to continue</p>
