@@ -54,11 +54,11 @@ const About = () => {
           Hash Valley&apos;s destiny belongs to its owners
         </Subtitle>
         <SubSubtitle>
-          Cultivate a vineyard of your choosing
-          <br />
-          Discover rare vintages
-          <br />
-          Earn ETH sharing your art with the world
+          <ol>
+            <li>Cultivate a vineyard of your choosing</li>
+            <li>Discover rare vintages</li>
+            <li>Earn ETH sharing your art with the world</li>
+          </ol>
         </SubSubtitle>
         <GridContainer>
           <InfoPanel>
@@ -76,18 +76,18 @@ const About = () => {
             </h2>
             <Explain>
               Grown from a well cared for Vineyard, these can be aged in the
-              Cellar and offer voting rights over project artwork and secondary
+              Cellar and offer voting rights over NFT artwork and secondary
               market royalties.
             </Explain>
           </InfoPanel>
           <InfoPanel>
             <h2>
-              <i>Cellar</i>
+              <i>Council</i>
             </h2>
             <Explain>
-              Wine Bottles can be staked here to let them age at an accelerated
-              rate. Take care however - a bottle left in here too long might
-              spoil into Vinegar.
+              Vote for the artwork you love or submit your own and claim all
+              secondary market royalties plus a special bonus for winning the
+              vote.
             </Explain>
           </InfoPanel>
         </GridContainer>
@@ -133,10 +133,20 @@ const About = () => {
           only three weeks!
         </SubSubtitle>
         <SubSubtitle>
-          Once you have a Wine Bottle you&apos;ll be able to take your chances
-          with the cellar or propose a new artwork in the Council. Winners will
-          have their art featured for a minimum of 7 days and receive all
-          secondary market royalties.
+          Once you have a Wine Bottle take your chances aging it in the cellar
+          or propose a new artwork in the Council. Winners will have their art
+          featured for a minimum of 7 days and receive all secondary market
+          royalties.
+        </SubSubtitle>
+        <SubSubtitle>
+          <a
+            href="https://mirror.xyz/0x00000023F6B4ED7185E7B8928072a8bfEC660ff3/9jt6sNUOZ9vjkQRcxgMSClDJCdaJHZwWzX6639hHg6Y"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Check out the announcement post on Mirror for a full protocol
+            description
+          </a>
         </SubSubtitle>
       </Info2>
 
@@ -164,7 +174,7 @@ const About = () => {
               complete: false,
             },
             {
-              text: "Physical delivery - turn your NFT wines into real bottles under the Hash Valley label",
+              text: "Physical delivery - turn your NFT bottles into real wines under the Hash Valley label",
               complete: false,
             },
           ]}
@@ -174,13 +184,12 @@ const About = () => {
       <Info1>
         <Subtitle side="left">Wanna go Deeper?</Subtitle>
         <SubSubtitle>
-          Check out the{" "}
           <a
             href="https://inathan-m.gitbook.io/hash-valley-winery/"
             target="_blank"
             rel="noreferrer"
           >
-            full docs
+            Read the docs
           </a>{" "}
           or take a look at the{" "}
           <a
@@ -190,7 +199,7 @@ const About = () => {
           >
             codebase
           </a>{" "}
-          to see more.
+          to see more. Happy vinting!
         </SubSubtitle>
       </Info1>
 
