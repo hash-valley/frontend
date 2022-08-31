@@ -116,8 +116,8 @@ const About = () => {
           <a
             href={
               process.env.NEXT_PUBLIC_CHAIN_ID === "69"
-                ? `https://testnet.quixotic.io/collection/${VineyardAddress}`
-                : `https://quixotic.io/collection/${VineyardAddress}`
+                ? `https://testnet.qx.app/collection/${VineyardAddress}`
+                : `https://qx.app/collection/${VineyardAddress}`
             }
             target="_blank"
             rel="noreferrer"

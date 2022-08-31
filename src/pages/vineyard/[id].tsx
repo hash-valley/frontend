@@ -300,8 +300,8 @@ const VineyardPage = () => {
       <a
         href={`${
           chainId === 10
-            ? "https://quixotic.io/asset"
-            : "https://testnet.quixotic.io/asset"
+            ? "https://qx.app/asset"
+            : "https://testnet.qx.app/asset"
         }/${VineyardAddress}/${id}`}
         target="_blank"
         rel="noreferrer"
