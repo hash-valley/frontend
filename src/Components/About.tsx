@@ -162,15 +162,23 @@ const About = () => {
               complete: false,
             },
             {
+              text: "Create Snapshot page for community signaling on future expansions",
+              complete: false,
+            },
+            {
               text: "Engage generative artists to be featured",
               complete: false,
             },
             {
-              text: "Create Snapshot page for community signaling",
+              text: "Expansion packs to upgrade your Vineyard - customizable cosmetics, deeper control over wine making and more",
               complete: false,
             },
             {
-              text: "Themed derivative projects and expansion packs - launched on Optimism or wherever the community decides",
+              text: "Expansions for multiplayer interactions bringing more ways to compete or cooperate in the business world",
+              complete: false,
+            },
+            {
+              text: "Themed derivative projects - expand your operations into other industries",
               complete: false,
             },
             {
