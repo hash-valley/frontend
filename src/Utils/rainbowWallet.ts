@@ -12,7 +12,7 @@ export const { chains, provider, webSocketProvider } = configureChains(
       ? chain.optimismKovan
       : chain.hardhat,
   ],
-  [alchemyProvider({ alchemyId: alchemyKey }), publicProvider()]
+  [alchemyProvider({ apiKey: alchemyKey }), publicProvider()]
 );
 
 const { connectors } = getDefaultWallets({

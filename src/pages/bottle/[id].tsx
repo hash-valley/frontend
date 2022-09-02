@@ -43,7 +43,7 @@ import { formatEther } from "ethers/lib/utils";
 import { toast } from "react-toastify";
 
 const BottlePage = () => {
-  const wallet = useAccount();
+  const { status, address } = useAccount();
   const { data: signer } = useSigner();
   const addRecentTransaction = useAddRecentTransaction();
   const router = useRouter();
@@ -112,7 +112,7 @@ const BottlePage = () => {
 
   useEffect(() => {
     refetch();
-  }, [wallet, id]);
+  }, [status, id]);
 
   const sendStake = async () => {
     const tx = await stake(signer, Number(id));
@@ -295,7 +295,7 @@ const BottlePage = () => {
       <br />
       <br />
 
-      {wallet.data?.address?.toLowerCase() === data.bottle.owner.id ? (
+      {address?.toLowerCase() === data.bottle.owner.id ? (
         isApproved ? (
           <div>
             <Spaced

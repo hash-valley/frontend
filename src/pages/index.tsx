@@ -138,7 +138,7 @@ const Chevron = styled.div`
 `;
 
 const Splash = () => {
-  const wallet = useAccount();
+  const { status, address } = useAccount();
   const router = useRouter();
   const protocol = useCurrSeason();
   const [minted, setMinted] = useState(0);
@@ -148,11 +148,11 @@ const Splash = () => {
   const [hasDiscount, setHasDiscount] = useState(false);
 
   useEffect(() => {
-    if (wallet.status === "success" && wallet.data?.address) {
-      giveawayBalance(wallet.data?.address!).then((val) =>
+    if (status === "connected" && address) {
+      giveawayBalance(address!).then((val) =>
         setHasGive(val.gte(BigNumber.from(parseUnits("1.0"))))
       );
-      fetch(`/api/merkle?address=${wallet.data?.address}`).then(async (res) => {
+      fetch(`/api/merkle?address=${address}`).then(async (res) => {
         let rj = await res.json();
         setHasDiscount(rj.hasClaim);
         setPrice(rj.hasClaim ? 0.04 : 0.07);
@@ -160,7 +160,7 @@ const Splash = () => {
     } else {
       setHasGive(false);
     }
-  }, [wallet.status]);
+  }, [status]);
 
   useEffect(() => {
     const fetchData = async () => {
