@@ -6,11 +6,11 @@ import Link from "next/link";
 import { useAccount } from "wagmi";
 
 const BottleBoard = () => {
-  const wallet = useAccount();
+  const { address } = useAccount();
   const { loading, error, data } = useQuery(NEW_URI, {
     variables: {
       type: "BOTTLE",
-      address: wallet.data?.address?.toString().toLowerCase(),
+      address: address?.toString().toLowerCase(),
     },
     pollInterval: 10000,
   });
@@ -18,7 +18,7 @@ const BottleBoard = () => {
   return loading ? (
     <Page>
       <h4>
-      <i >Loading</i>
+        <i>Loading</i>
       </h4>
     </Page>
   ) : data?.newUris.length > 1 ? (

@@ -110,6 +110,11 @@ export const FailText = styled.div`
   font-weight: 600;
 `;
 
+export const InfoText = styled.div`
+  color: blue;
+  font-weight: 600;
+`;
+
 export const BigLink = styled.h2`
   cursor: pointer;
   text-decoration: underline;

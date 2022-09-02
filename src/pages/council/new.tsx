@@ -42,7 +42,7 @@ const NewProposal = () => {
 
   const bottleData = useQuery(GET_BOTTLES, {
     variables: {
-      address: wallet.data?.address?.toString().toLowerCase(),
+      address: wallet?.address?.toString().toLowerCase(),
     },
   });
 
@@ -134,7 +134,7 @@ const NewProposal = () => {
           cid,
           "VINEYARD-" + address,
           "VINEYARD",
-          wallet.data?.address!
+          wallet?.address!
         );
         tx = await suggest(signer, Number(bottleId), cid, address, "VINEYARD");
       } else if (pType == "Bottles") {
@@ -142,7 +142,7 @@ const NewProposal = () => {
           cid,
           "BOTTLE-" + address,
           "BOTTLE",
-          wallet.data?.address!
+          wallet?.address!
         );
         tx = await suggest(signer, Number(bottleId), cid, address, "BOTTLE");
       }
@@ -226,7 +226,7 @@ const NewProposal = () => {
       </Error>
       <br />
       <br />
-      {showButton && wallet.data?.address ? (
+      {showButton && wallet?.address ? (
         <Button type="primary" shape="round" onClick={sendProposal}>
           Submit
         </Button>

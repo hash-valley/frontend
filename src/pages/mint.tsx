@@ -27,9 +27,9 @@ const Sign = styled.div`
 `;
 
 const MintContainer = () => {
-  const wallet = useAccount();
+  const { address, status } = useAccount();
   const { data: signer } = useSigner();
-  const { activeChain } = useNetwork();
+  const { chain } = useNetwork();
   const addRecentTransaction = useAddRecentTransaction();
   const protocol = useCurrSeason();
   const [step, setStep] = useState(0);
@@ -40,7 +40,7 @@ const MintContainer = () => {
 
   const [giveBal, setGiveBal] = useState("0");
 
-  useEffect(() => checkGiveaway(), [wallet.data?.address]);
+  useEffect(() => checkGiveaway(), [address]);
 
   const minElev = (num: number) => locations[num].elevation[0];
   const maxElev = (num: number) => locations[num].elevation[1];
@@ -75,8 +75,8 @@ const MintContainer = () => {
   };
 
   const checkGiveaway = () => {
-    if (wallet.status === "success" && wallet.data?.address) {
-      giveawayBalance(wallet.data?.address!).then((val) => setGiveBal(val));
+    if (status === "connected" && address) {
+      giveawayBalance(address!).then((val) => setGiveBal(val));
     }
   };
 
@@ -85,11 +85,7 @@ const MintContainer = () => {
   };
 
   const mint = async () => {
-    const tx = await newVineyards(
-      [city, elev, soil],
-      signer,
-      wallet.data?.address!
-    );
+    const tx = await newVineyards([city, elev, soil], signer, address!);
     addRecentTransaction({ hash: tx.hash, description: "Mint new vineyard" });
     await tx.wait();
     toast.success("Success!");
@@ -249,7 +245,7 @@ const MintContainer = () => {
             >
               Mint Another
             </Spaced>
-          ) : wallet.status === "success" && wallet.data?.address ? (
+          ) : status === "connected" && address ? (
             <>
               <Spaced
                 size="large"
@@ -259,7 +255,7 @@ const MintContainer = () => {
               >
                 Start over
               </Spaced>
-              {activeChain?.id === chainId ? (
+              {chain?.id === chainId ? (
                 <>
                   {protocol.mintedVineyards < protocol.maxVineyards && (
                     <Spaced

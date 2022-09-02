@@ -6,11 +6,11 @@ import Link from "next/link";
 import { useAccount } from "wagmi";
 
 const VineBoard = () => {
-  const wallet = useAccount();
+  const { address } = useAccount();
   const { loading, error, data } = useQuery(NEW_URI, {
     variables: {
       type: "VINEYARD",
-      address: wallet.data?.address?.toString().toLowerCase(),
+      address: address?.toString().toLowerCase(),
     },
     pollInterval: 10000,
   });
@@ -18,7 +18,7 @@ const VineBoard = () => {
   return loading ? (
     <Page>
       <h4>
-      <i >Loading</i>
+        <i>Loading</i>
       </h4>
     </Page>
   ) : data?.newUris.length > 1 ? (

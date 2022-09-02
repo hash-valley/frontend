@@ -24,6 +24,7 @@ import {
   CenteredSelect,
   TokenPage,
   TokenSign,
+  InfoText,
 } from "../../Styles/Components";
 import Select from "rc-select";
 import { Button } from "antd";
@@ -35,7 +36,7 @@ import { getFarmingStatsMulti } from "../../Utils/multicall";
 import { toast } from "react-toastify";
 
 const VineyardPage = () => {
-  const wallet = useAccount();
+  const { address } = useAccount();
   const { data: signer } = useSigner();
   const addRecentTransaction = useAddRecentTransaction();
   const router = useRouter();
@@ -117,7 +118,7 @@ const VineyardPage = () => {
 
   useEffect(() => {
     refetch();
-  }, [wallet, id]);
+  }, [address, id]);
 
   const sendWater = async () => {
     const tx = await water(signer, Number(id));
@@ -236,32 +237,38 @@ const VineyardPage = () => {
         </div>
         <br />
 
-        {farmable.canHarvest ? (
-          <SuccessText>Harvestable</SuccessText>
-        ) : data.vineyard.seasonsHarvested.includes(season.season) ? (
-          <SuccessText>Already harvested this season</SuccessText>
-        ) : farmable.canWater ? (
-          <SuccessText>
-            Can water until {hours(waterStatus)}:{minutes(waterStatus)}:
-            {seconds(waterStatus)}
-          </SuccessText>
-        ) : waterStatus >= 0 ? (
-          data.vineyard.sprinklerExpires ? (
-            <SuccessText>Sprinkling</SuccessText>
-          ) : (
-            <SuccessText>
-              Can water in {hours(waterStatus)}:{minutes(waterStatus)}:
-              {seconds(waterStatus)}
-            </SuccessText>
-          )
-        ) : farmable.canPlant ? (
-          <SuccessText>Plantable</SuccessText>
+        {season > 0 ? (
+          <>
+            {farmable.canHarvest ? (
+              <SuccessText>Harvestable</SuccessText>
+            ) : data.vineyard.seasonsHarvested.includes(season.season) ? (
+              <SuccessText>Already harvested this season</SuccessText>
+            ) : farmable.canWater ? (
+              <SuccessText>
+                Can water until {hours(waterStatus)}:{minutes(waterStatus)}:
+                {seconds(waterStatus)}
+              </SuccessText>
+            ) : waterStatus >= 0 ? (
+              data.vineyard.sprinklerExpires ? (
+                <SuccessText>Sprinkling</SuccessText>
+              ) : (
+                <SuccessText>
+                  Can water in {hours(waterStatus)}:{minutes(waterStatus)}:
+                  {seconds(waterStatus)}
+                </SuccessText>
+              )
+            ) : farmable.canPlant ? (
+              <SuccessText>Plantable</SuccessText>
+            ) : (
+              <FailText>Vineyard is dead for this season</FailText>
+            )}
+          </>
         ) : (
-          <FailText>Vineyard is dead for this season</FailText>
+          <InfoText>First season starting soon</InfoText>
         )}
       </TokenSign>
 
-      {wallet.data?.address?.toLowerCase() === data.vineyard.owner.id ? (
+      {address?.toLowerCase() === data.vineyard.owner.id ? (
         <div>
           <Spaced
             type="primary"
@@ -300,8 +307,8 @@ const VineyardPage = () => {
       <a
         href={`${
           chainId === 10
-            ? "https://quixotic.io/asset"
-            : "https://testnet.quixotic.io/asset"
+            ? "https://qx.app/asset"
+            : "https://testnet.qx.app/asset"
         }/${VineyardAddress}/${id}`}
         target="_blank"
         rel="noreferrer"

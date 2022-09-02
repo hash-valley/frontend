@@ -31,7 +31,7 @@ interface Mults {
 }
 
 const AccountPage = () => {
-  const wallet = useAccount();
+  const { status, address } = useAccount();
   const { data: signer } = useSigner();
   const addRecentTransaction = useAddRecentTransaction();
   const router = useRouter();
@@ -137,7 +137,7 @@ const AccountPage = () => {
       ) : (
         <div>
           <h2>
-            {userAddress === wallet.data?.address && "You own"}{" "}
+            {userAddress === address && "You own"}{" "}
             {data.account.vineyards.length} Vineyard
             {data.account.vineyards.length === 1 ? "" : "s"},{" "}
             {data.account.bottles.length} Bottle
@@ -175,8 +175,7 @@ const AccountPage = () => {
             )}
           </div>
           <div>
-            {wallet.status === "success" &&
-            userAddress === wallet.data?.address ? (
+            {status === "connected" && userAddress === address ? (
               <div>
                 {mults.canPlant > 0 ? (
                   <Spaced

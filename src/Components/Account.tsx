@@ -83,12 +83,12 @@ const DropdownGap = styled(Dropdown)`
 `;
 
 const Account = () => {
-  const { data } = useAccount();
+  const { address } = useAccount();
   const router = useRouter();
   const protocol = useCurrSeason();
   const [connected, setConnected] = useState(false);
 
-  useEffect(() => setConnected(!!data), [data]);
+  useEffect(() => setConnected(!!address), [address]);
 
   return (
     <>
@@ -167,7 +167,7 @@ const Account = () => {
                 <Button
                   shape="round"
                   size="large"
-                  onClick={() => router.push(`/account/${data?.address}`)}
+                  onClick={() => router.push(`/account/${address}`)}
                 >
                   <b>Portfolio</b>
                 </Button>
@@ -192,9 +192,7 @@ const Account = () => {
                 items={[
                   {
                     label: connected ? (
-                      <div
-                        onClick={() => router.push(`/account/${data?.address}`)}
-                      >
+                      <div onClick={() => router.push(`/account/${address}`)}>
                         Portfolio
                       </div>
                     ) : (
