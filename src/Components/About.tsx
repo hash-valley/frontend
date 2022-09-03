@@ -1,4 +1,4 @@
-import { Flourish, GridContainer, Page } from "../Styles/Components";
+import { Flourish, GridContainer, Page, Header } from "../Styles/Components";
 import styled from "styled-components";
 import { VineyardAddress } from "../Utils/constants";
 import Image from "next/image";
@@ -11,7 +11,6 @@ const Gap = styled.div`
 
 const Info1 = styled(Page)`
   padding-top: 3rem;
-  margin-top: 36px;
   margin-bottom: 36px;
 `;
 
@@ -30,7 +29,7 @@ const InfoPanel = styled.div`
 `;
 
 const Subtitle = styled.h2<{ side: string }>`
-  margin: 1rem 3rem;
+  margin: 0 3rem 1rem 3rem;
   text-align: ${(props) => (props.side == "left" ? "left" : "right")};
   font-size: 2rem;
   font-style: italic;
@@ -48,10 +47,10 @@ const Explain = styled.p`
 const About = () => {
   return (
     <>
-      <Gap />
+      <Header>The Blueprint</Header>
       <Info1>
         <Subtitle side="left">
-          Hash Valley&apos;s destiny belongs to its owners
+          Hash Valley&apos;s destiny is shaped by its owners
         </Subtitle>
         <SubSubtitle>
           <ol>
@@ -137,6 +136,11 @@ const About = () => {
           or propose a new artwork in the Council. Winners will have their art
           featured for a minimum of 7 days and receive all secondary market
           royalties.
+        </SubSubtitle>
+        <SubSubtitle>
+          Voting power comes from wine bottle age. Maximize this with the Wine
+          Cellar&apos;s Hyperbolic Time Acceleration Technology&trade; but keep
+          an eye out - if you leave a bottle too long it may spoil.
         </SubSubtitle>
         <SubSubtitle>
           <a

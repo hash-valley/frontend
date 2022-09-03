@@ -149,3 +149,14 @@ export const Flourish = styled.div`
   margin-top: -8rem;
   margin-bottom: 3rem;
 `;
+
+export const Header = styled.h1`
+  margin: 10rem 4.2rem 7rem 4.2rem;
+  font-size: 3rem;
+  font-family: FancyFont;
+`;
+
+export const SubHeader = styled.h1`
+  font-size: 2rem;
+  font-style: italic;
+`;

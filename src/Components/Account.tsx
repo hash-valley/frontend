@@ -40,9 +40,10 @@ const AccountEth = styled.div`
   order: 1;
   float: right;
   margin-right: 12px;
-  border: 1px dashed lightgray;
+  border: 1px solid lightgray;
   border-radius: 24px;
-  padding: 0.49rem;
+  padding: 0.56rem 0.74rem;
+  background-color: white;
 `;
 
 const AccountName = styled.div`
@@ -83,12 +84,9 @@ const DropdownGap = styled(Dropdown)`
 `;
 
 const Account = () => {
-  const { address } = useAccount();
+  const { address, status } = useAccount();
   const router = useRouter();
   const protocol = useCurrSeason();
-  const [connected, setConnected] = useState(false);
-
-  useEffect(() => setConnected(!!address), [address]);
 
   return (
     <>
@@ -163,7 +161,7 @@ const Account = () => {
                   <b>Council</b>
                 </Button>
               </DropdownGap>
-              {connected && (
+              {status === "connected" && (
                 <Button
                   shape="round"
                   size="large"
@@ -191,13 +189,14 @@ const Account = () => {
               <Menu
                 items={[
                   {
-                    label: connected ? (
-                      <div onClick={() => router.push(`/account/${address}`)}>
-                        Portfolio
-                      </div>
-                    ) : (
-                      <>Not Connected</>
-                    ),
+                    label:
+                      status === "connected" ? (
+                        <div onClick={() => router.push(`/account/${address}`)}>
+                          Portfolio
+                        </div>
+                      ) : (
+                        <>Not Connected</>
+                      ),
                     icon: <UserOutlined />,
                     key: "4",
                   },
