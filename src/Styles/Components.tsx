@@ -152,11 +152,15 @@ export const Flourish = styled.div`
 
 export const Header = styled.h1`
   margin: 10rem 4.2rem 7rem 4.2rem;
-  font-size: 3rem;
+  font-size: 3.69rem;
   font-family: FancyFont;
 `;
 
 export const SubHeader = styled.h1`
   font-size: 2rem;
   font-style: italic;
+
+  @media screen and (min-width: 940px) {
+    font-size: 2.3rem;
+  }
 `;
