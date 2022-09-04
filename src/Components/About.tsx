@@ -89,7 +89,7 @@ const About = () => {
       </Info1>
 
       <Info2>
-        <Subtitle side="right">How Do I Play?</Subtitle>
+        <Subtitle side="right">How Do I Join?</Subtitle>
         <SubSubtitle>
           You&apos;ll need to have some ETH on{" "}
           <a href="https://www.optimism.io" target="_blank" rel="noreferrer">
@@ -151,7 +151,7 @@ const About = () => {
       </Info2>
 
       <Info1>
-        <Subtitle side="left">Roadmap</Subtitle>
+        <Subtitle side="left">Milestones</Subtitle>
 
         <Roadmap
           items={[

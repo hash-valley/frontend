@@ -124,7 +124,7 @@ const Mint = () => {
 
   return (
     <Page>
-      <Header>The Mint</Header>
+      <Header>The Vint</Header>
       <ProgressContainer>
         <Progress>
           <ProgressBar
