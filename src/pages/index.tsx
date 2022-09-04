@@ -21,7 +21,7 @@ const RightCorner = styled.div`
 const HeadDiv = styled.div`
   max-width: 36rem;
   margin: auto;
-  margin-top: -3rem;
+  margin-top: -6rem;
 
   text-shadow: 2px 2px #fff;
 `;
@@ -58,7 +58,7 @@ const Chevron = styled.div`
 const Hero = styled(Page)`
   margin-top: -16px;
   padding-top: 200px;
-  background-image: url("V1.png");
+  background-image: url("landscape.png");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
