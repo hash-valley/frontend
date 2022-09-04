@@ -154,13 +154,21 @@ export const Header = styled.h1`
   margin: 10rem 4.2rem 7rem 4.2rem;
   font-size: 3.69rem;
   font-family: FancyFont;
+
+  @media screen and (max-width: 600px) {
+    font-size: 2.5rem;
+  }
 `;
 
 export const SubHeader = styled.h1`
-  font-size: 2rem;
+  font-size: 1.6rem;
   font-style: italic;
 
+  @media screen and (min-width: 600px) {
+    font-size: 2rem;
+  }
+
   @media screen and (min-width: 940px) {
-    font-size: 2.3rem;
+    font-size: 2.2rem;
   }
 `;
