@@ -21,7 +21,11 @@ const RightCorner = styled.div`
 const HeadDiv = styled.div`
   max-width: 36rem;
   margin: auto;
-  margin-top: -6rem;
+  margin-top: -9rem;
+
+  @media screen and (min-width: 600px) {
+    margin-top: -6rem;
+  }
 
   text-shadow: 2px 2px #fff;
 `;

@@ -168,7 +168,7 @@ export const SubHeader = styled.h1`
     font-size: 2rem;
   }
 
-  @media screen and (min-width: 940px) {
+  @media screen and (min-width: 876px) {
     font-size: 2.2rem;
   }
 `;
