@@ -21,6 +21,7 @@ const RightCorner = styled.div`
 const HeadDiv = styled.div`
   max-width: 36rem;
   margin: auto;
+  margin-top: -3rem;
 
   text-shadow: 2px 2px #fff;
 `;
@@ -65,7 +66,6 @@ const Hero = styled(Page)`
 `;
 
 const Splash = () => {
-
   const handleClick = () => {
     window.scrollTo({
       top: window.visualViewport.height,
