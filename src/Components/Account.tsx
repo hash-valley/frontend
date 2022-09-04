@@ -7,7 +7,6 @@ import { useRouter } from "next/router";
 import { MenuOutlined, UserOutlined } from "@ant-design/icons";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useAccount } from "wagmi";
-import { useEffect, useState } from "react";
 
 const TitleBar = styled.div`
   width: 100%;
@@ -42,7 +41,7 @@ const AccountEth = styled.div`
   margin-right: 12px;
   border: 1px solid lightgray;
   border-radius: 24px;
-  padding: 0.56rem 0.74rem;
+  padding: 0.54rem 0.74rem;
   background-color: white;
 `;
 
@@ -102,73 +101,85 @@ const Account = () => {
         {/* desktop */}
         <AccountButtonList>
           <Inline>
-            <AccountEth>
-              <b>
-                {protocol.season === 0
-                  ? "Pre-season"
-                  : `Season ${protocol.season}`}
-              </b>
-              <b>{protocol.season > 0 ? ` | ${protocol.daysLeft} days` : ``}</b>
-              {protocol.season > 0 && protocol.plant ? (
-                <b> | Planting 🌱</b>
-              ) : protocol.season > 0 && protocol.harvest ? (
-                <b> | Harvesting 🍁</b>
-              ) : (
-                ""
-              )}
-            </AccountEth>
+            {status === "connected" && (
+              <AccountEth>
+                <b>
+                  {protocol.season === 0
+                    ? "⌛ Pre-season"
+                    : `Season ${protocol.season}`}
+                </b>
+                <b>
+                  {protocol.season > 0 ? ` | ${protocol.daysLeft} days` : ``}
+                </b>
+                {protocol.season > 0 && protocol.plant ? (
+                  <b> | Planting 🌱</b>
+                ) : protocol.season > 0 && protocol.harvest ? (
+                  <b> | Harvesting 🍁</b>
+                ) : (
+                  ""
+                )}
+              </AccountEth>
+            )}
             <AccountName>
-              <DropdownGap
-                overlay={
-                  //@ts-ignore
-                  <Menu
-                    items={[
-                      {
-                        label: (
-                          <div
-                            onClick={() => router.push(`/council/vineyards`)}
-                          >
-                            Vineyards
-                          </div>
-                        ),
-                        key: "1",
-                      },
-                      {
-                        label: (
-                          <div onClick={() => router.push(`/council/bottles`)}>
-                            Bottles
-                          </div>
-                        ),
-                        key: "2",
-                      },
-                      {
-                        label: (
-                          <div onClick={() => router.push(`/council/new`)}>
-                            New Proposal
-                          </div>
-                        ),
-                        key: "3",
-                      },
-                    ]}
-                  />
-                }
-              >
-                <Button
-                  shape="round"
-                  size="large"
-                  onClick={() => router.push(`/council/vineyards`)}
-                >
-                  <b>Council</b>
-                </Button>
-              </DropdownGap>
               {status === "connected" && (
-                <Button
-                  shape="round"
-                  size="large"
-                  onClick={() => router.push(`/account/${address}`)}
-                >
-                  <b>Portfolio</b>
-                </Button>
+                <>
+                  <DropdownGap
+                    overlay={
+                      //@ts-ignore
+                      <Menu
+                        items={[
+                          {
+                            label: (
+                              <div
+                                onClick={() =>
+                                  router.push(`/council/vineyards`)
+                                }
+                              >
+                                Vineyards
+                              </div>
+                            ),
+                            key: "1",
+                          },
+                          {
+                            label: (
+                              <div
+                                onClick={() => router.push(`/council/bottles`)}
+                              >
+                                Bottles
+                              </div>
+                            ),
+                            key: "2",
+                          },
+                          {
+                            label: (
+                              <div onClick={() => router.push(`/council/new`)}>
+                                New Proposal
+                              </div>
+                            ),
+                            key: "3",
+                          },
+                        ]}
+                      />
+                    }
+                  >
+                    <Button
+                      shape="round"
+                      size="large"
+                      onClick={() => router.push(`/council/vineyards`)}
+                    >
+                      <b>Council</b>
+                    </Button>
+                  </DropdownGap>
+                  {status === "connected" && (
+                    <Button
+                      shape="round"
+                      size="large"
+                      onClick={() => router.push(`/account/${address}`)}
+                    >
+                      <b>Portfolio</b>
+                    </Button>
+                  )}
+                </>
               )}
               <InlineRainbow>
                 <ConnectButton />
@@ -182,84 +193,88 @@ const Account = () => {
           <InlineRainbowMobile>
             <ConnectButton />
           </InlineRainbowMobile>
-          <Dropdown
-            trigger={["click"]}
-            overlay={
-              //@ts-ignore
-              <Menu
-                items={[
-                  {
-                    label:
-                      status === "connected" ? (
-                        <div onClick={() => router.push(`/account/${address}`)}>
-                          Portfolio
+          {status === "connected" && (
+            <Dropdown
+              trigger={["click"]}
+              overlay={
+                //@ts-ignore
+                <Menu
+                  items={[
+                    {
+                      label:
+                        status === "connected" ? (
+                          <div
+                            onClick={() => router.push(`/account/${address}`)}
+                          >
+                            Portfolio
+                          </div>
+                        ) : (
+                          <>Not Connected</>
+                        ),
+                      icon: <UserOutlined />,
+                      key: "4",
+                    },
+                    {
+                      type: "divider",
+                    },
+                    {
+                      label:
+                        protocol.season === 0
+                          ? "Pre-season"
+                          : `Season ${protocol.season}`,
+                      key: "1",
+                    },
+                    {
+                      label:
+                        protocol.season > 0
+                          ? `${protocol.daysLeft} days left`
+                          : `Game not started ⌛`,
+                      key: "2",
+                    },
+                    {
+                      label: protocol.plant
+                        ? "Planting 🌱"
+                        : protocol.harvest
+                        ? "Harvesting 🍁"
+                        : "",
+                      key: "3",
+                    },
+                    {
+                      type: "divider",
+                    },
+                    {
+                      label: (
+                        <div onClick={() => router.push(`/council/vineyards`)}>
+                          Vineyards
                         </div>
-                      ) : (
-                        <>Not Connected</>
                       ),
-                    icon: <UserOutlined />,
-                    key: "4",
-                  },
-                  {
-                    type: "divider",
-                  },
-                  {
-                    label:
-                      protocol.season === 0
-                        ? "Pre-season"
-                        : `Season ${protocol.season}`,
-                    key: "1",
-                  },
-                  {
-                    label:
-                      protocol.season > 0
-                        ? `${protocol.daysLeft} days left`
-                        : `Game not started ⌛`,
-                    key: "2",
-                  },
-                  {
-                    label: protocol.plant
-                      ? "Planting 🌱"
-                      : protocol.harvest
-                      ? "Harvesting 🍁"
-                      : "",
-                    key: "3",
-                  },
-                  {
-                    type: "divider",
-                  },
-                  {
-                    label: (
-                      <div onClick={() => router.push(`/council/vineyards`)}>
-                        Vineyards
-                      </div>
-                    ),
-                    key: "5",
-                  },
-                  {
-                    label: (
-                      <div onClick={() => router.push(`/council/bottles`)}>
-                        Bottles
-                      </div>
-                    ),
-                    key: "6",
-                  },
-                  {
-                    label: (
-                      <div onClick={() => router.push(`/council/new`)}>
-                        New Proposal
-                      </div>
-                    ),
-                    key: "7",
-                  },
-                ]}
-              />
-            }
-          >
-            <Button shape="round" size="large">
-              <MenuOutlined />
-            </Button>
-          </Dropdown>
+                      key: "5",
+                    },
+                    {
+                      label: (
+                        <div onClick={() => router.push(`/council/bottles`)}>
+                          Bottles
+                        </div>
+                      ),
+                      key: "6",
+                    },
+                    {
+                      label: (
+                        <div onClick={() => router.push(`/council/new`)}>
+                          New Proposal
+                        </div>
+                      ),
+                      key: "7",
+                    },
+                  ]}
+                />
+              }
+            >
+              <Button shape="round" size="large">
+                <MenuOutlined />
+              </Button>
+            </Dropdown>
+          )}
         </AccountButtonCondensed>
       </TitleBar>
     </>

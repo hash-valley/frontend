@@ -93,7 +93,7 @@ const Splash = () => {
               width={160}
             />
           </RightCorner>
-          <SubHeader>The winery franchise simulator</SubHeader>
+          <SubHeader>The on-chain winery franchise</SubHeader>
         </HeadDiv>
       </Hero>
 
