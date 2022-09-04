@@ -5,10 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import Roadmap from "./Roadmap";
 
-const Gap = styled.div`
-  margin-top: 6.5rem;
-`;
-
 const Info1 = styled(Page)`
   padding-top: 3rem;
   margin-bottom: 36px;
@@ -65,8 +61,8 @@ const About = () => {
               <i>Vineyards</i>
             </h2>
             <Explain>
-              Mintable NFTs that yield Wine Bottles if they are planted, watered
-              and harvested every season.
+              Mintable tokens that yield Wine Bottles if they are planted,
+              watered and harvested every season.
             </Explain>
           </InfoPanel>
           <InfoPanel>
@@ -75,8 +71,8 @@ const About = () => {
             </h2>
             <Explain>
               Grown from a well cared for Vineyard, these can be aged in the
-              Cellar and offer voting rights over NFT artwork and secondary
-              market royalties.
+              Cellar and offer voting rights over artwork and secondary market
+              royalties.
             </Explain>
           </InfoPanel>
           <InfoPanel>
@@ -178,15 +174,11 @@ const About = () => {
               complete: false,
             },
             {
-              text: "Expansions for multiplayer interactions bringing more ways to compete or cooperate in the business world",
-              complete: false,
-            },
-            {
               text: "Themed derivative projects - expand your operations into other industries",
               complete: false,
             },
             {
-              text: "Physical delivery - turn your NFT bottles into real wines under the Hash Valley label",
+              text: "Turn your bottles into real wines with the Hash Valley label",
               complete: false,
             },
           ]}
