@@ -80,6 +80,8 @@ export const GridItem = styled.div<{ selected?: boolean }>`
       props.selected ? "rgba(255,150,207,0.48)" : "#f5f5f5"};
     transform: translate(0, -4px);
     transition: all 200ms ease-out;
+
+    box-shadow: 5px 9px 10px #bebebe, -5px -5px 10px #ffffff;
   }
 `;
 
@@ -171,4 +173,12 @@ export const SubHeader = styled.h1`
   @media screen and (min-width: 876px) {
     font-size: 2.2rem;
   }
+`;
+
+export const Tag = styled.span<{ color: string; text?: string }>`
+  background-color: ${(props) => props.color};
+  color: ${(props) => (props.text ? props.text : "white")};
+  border-radius: 12px;
+  padding: 2px 10px;
+  font-weight: bold;
 `;
