@@ -93,7 +93,14 @@ const Account = () => {
         <LogoBox>
           <Link href="/">
             <a>
-              <Image src="/logo.png" alt="logo" height={50} width={50} />
+              <Image
+                src="/logo192.png"
+                alt="logo"
+                height={50}
+                width={50}
+                unoptimized={true}
+                loading="eager"
+              />
             </a>
           </Link>
         </LogoBox>
