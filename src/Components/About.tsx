@@ -218,7 +218,7 @@ const About = () => {
       </Info2>
 
       <Info1>
-        <Subtitle side="left">Milestones</Subtitle>
+        <Subtitle side="left">Roadmap</Subtitle>
 
         <Roadmap
           items={[
