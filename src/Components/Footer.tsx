@@ -38,7 +38,7 @@ const Footer = () => {
       </FooterLink>
       <FooterLink
         href={
-          process.env.NEXT_PUBLIC_CHAIN_ID === "69"
+          process.env.NEXT_PUBLIC_CHAIN_ID === "420"
             ? `https://testnet.qx.app/collection/${VineyardAddress}`
             : `https://qx.app/collection/${VineyardAddress}`
         }
@@ -50,7 +50,7 @@ const Footer = () => {
         href={
           chainId === 10
             ? `https://optimistic.etherscan.io/token/${VineyardAddress}`
-            : `https://kovan-optimistic.etherscan.io/token/${VineyardAddress}`
+            : `https://goerli-optimistic.etherscan.io/token/${VineyardAddress}`
         }
         target="_blank"
       >

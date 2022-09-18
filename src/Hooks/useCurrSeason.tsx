@@ -44,7 +44,7 @@ export const useCurrSeason = () => {
       season,
       daysLeft: Math.ceil(daysLeft),
       plant: (season === 1 && daysLeft > 14) || daysLeft > 77,
-      harvest: data.vineProtocol.gameStarted && daysLeft < 7,
+      harvest: data?.vineProtocol.gameStarted && daysLeft < 7,
       ...data?.vineProtocol,
     };
   return { season, update };

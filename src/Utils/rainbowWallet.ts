@@ -8,8 +8,8 @@ export const { chains, provider, webSocketProvider } = configureChains(
   [
     chainId === 10
       ? chain.optimism
-      : chainId === 69
-      ? chain.optimismKovan
+      : chainId === 420
+      ? chain.optimismGoerli
       : chain.hardhat,
   ],
   [alchemyProvider({ apiKey: alchemyKey }), publicProvider()]

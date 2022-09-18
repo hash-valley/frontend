@@ -24,7 +24,6 @@ const VineyardABI = [
   "function waterWindow(uint256 _tokenId) public view returns (uint256)",
   "function currentStreak(uint256 _tokenId) public view returns (uint16)",
   "function buySprinkler(uint256 _tokenId) public payable",
-  "function newVineyardsDiscount(uint16[] calldata _tokenAttributes, uint256 index, bytes32[] calldata merkleProof) public payable",
 ];
 
 const withSigner = (signer: any) => {
@@ -70,7 +69,7 @@ export const currentSeason = async (): Promise<number> => {
 export const newVineyards = async (
   params: number[],
   wallet: any,
-  address: string
+  value: string
 ) => {
   const vineyardWithSigner = withSigner(wallet);
 
@@ -83,35 +82,17 @@ export const newVineyards = async (
     negative,
     params[2],
   ];
-  const supply = await totalSupply();
-  let tx;
 
-  //discount check
-  const res = await fetch(`/api/merkle?address=${address}`);
-  const resjson = await res.json();
-
-  if (supply < 100) {
-    try {
-      tx = await vineyardWithSigner.newVineyards(processedParams);
-      toast.info("Transaction sent");
-      return tx;
-    } catch (err: any) {
-      console.error(err);
-      toast.error(`Error! ${err?.message}`);
-    }
-  } else if (resjson.hasClaim) {
-    return await newVineyardsDiscount(processedParams, wallet, resjson);
-  } else {
-    try {
-      tx = await vineyardWithSigner.newVineyards(processedParams, {
-        value: parseEther("0.07"),
-      });
-      toast.info("Transaction sent");
-      return tx;
-    } catch (err: any) {
-      console.error(err);
-      toast.error(`Error! ${err?.message}`);
-    }
+  // send tx
+  try {
+    const tx = await vineyardWithSigner.newVineyards(processedParams, {
+      value,
+    });
+    toast.info("Transaction sent");
+    return tx;
+  } catch (err: any) {
+    console.error(err);
+    toast.error(`Error! ${err?.message}`);
   }
 };
 
@@ -128,28 +109,6 @@ export const newVineyardsGiveaway = async (params: number[], wallet: any) => {
 
   try {
     const tx = await vineyardWithSigner.newVineyardGiveaway(processedParams);
-    toast.info("Transaction sent");
-    return tx;
-  } catch (err: any) {
-    console.error(err);
-    toast.error(`Error! ${err?.message}`);
-  }
-};
-
-const newVineyardsDiscount = async (
-  processedParams: number[],
-  wallet: any,
-  claim: any
-) => {
-  const vineyardWithSigner = withSigner(wallet);
-
-  try {
-    const tx = await vineyardWithSigner.newVineyardsDiscount(
-      processedParams,
-      claim.index,
-      claim.proof,
-      { value: parseEther("0.04") }
-    );
     toast.info("Transaction sent");
     return tx;
   } catch (err: any) {

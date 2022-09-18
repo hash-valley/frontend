@@ -163,7 +163,7 @@ const About = () => {
               or on the{" "}
               <a
                 href={
-                  process.env.NEXT_PUBLIC_CHAIN_ID === "69"
+                  process.env.NEXT_PUBLIC_CHAIN_ID === "420"
                     ? `https://testnet.qx.app/collection/${VineyardAddress}`
                     : `https://qx.app/collection/${VineyardAddress}`
                 }

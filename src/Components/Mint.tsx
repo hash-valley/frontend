@@ -5,10 +5,12 @@ import { useRouter } from "next/router";
 import { Button } from "antd";
 import { useCurrSeason } from "../Hooks/useCurrSeason";
 import { giveawayBalance } from "../Utils/giveawayToken";
-import { BigNumber } from "ethers";
+import { BigNumber, utils } from "ethers";
 import { parseUnits } from "ethers/lib/utils";
 import { useAccount } from "wagmi";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { useQuery } from "@apollo/client";
+import { FREE_MINT_QUERY } from "../Utils/queries";
 
 const ProgressContainer = styled.div`
   padding: 7px;
@@ -71,15 +73,6 @@ const ProgressBar = styled.span`
   animation: progress-animation 2s linear infinite;
 `;
 
-const PromoText = styled.i`
-  color: green;
-`;
-
-const OldPrice = styled.i`
-  color: red;
-  text-decoration: line-through;
-`;
-
 const Centered = styled.div`
   margin: auto;
   margin-left: calc(50% - 67px);
@@ -91,36 +84,48 @@ const Mint = () => {
   const protocol = useCurrSeason();
   const [minted, setMinted] = useState(0);
   const [max, setMax] = useState(Infinity);
-  const [price, setPrice] = useState(0.07);
+  const [price, setPrice] = useState("0.0");
   const [hasGive, setHasGive] = useState(false);
-  const [hasDiscount, setHasDiscount] = useState(false);
+  const [canMint, setCanMint] = useState(false);
+
+  const { loading, data, refetch } = useQuery(FREE_MINT_QUERY, {
+    variables: {
+      userAddress: address?.toLowerCase() ?? "",
+    },
+  });
+
+  useEffect(() => {
+    async function reload() {
+      await protocol.update();
+      await refetch();
+    }
+    reload();
+  }, [router.query.slug]);
 
   useEffect(() => {
     if (status === "connected" && address) {
       giveawayBalance(address!).then((val) =>
         setHasGive(val.gte(BigNumber.from(parseUnits("1.0"))))
       );
-      fetch(`/api/merkle?address=${address}`).then(async (res) => {
-        let rj = await res.json();
-        setHasDiscount(rj.hasClaim);
-        setPrice(rj.hasClaim ? 0.04 : 0.07);
-      });
     } else {
       setHasGive(false);
     }
   }, [status]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const supply = protocol.mintedVineyards;
-      setMinted(supply);
-      if (supply < 100) {
-        setPrice(0);
-      }
+    if (protocol.bottle && max === Infinity) {
+      setMinted(protocol.mintedVineyards);
+      setPrice(utils.formatEther(protocol.currentPrice));
       setMax(protocol.maxVineyards);
-    };
-    if (protocol) fetchData();
-  }, [protocol]);
+    }
+    if (!loading) {
+      setCanMint(
+        protocol.mintedVineyards >= 1000 ||
+          data.account === null ||
+          data?.account?.vineyards.length < 5
+      );
+    }
+  }, [protocol, data]);
 
   return (
     <Page>
@@ -136,21 +141,20 @@ const Mint = () => {
       <h3>
         {minted} / {max} vineyards minted
       </h3>
-      {price == 0 ? (
+      {minted < 1000 ? (
         <h3>
-          <i>{100 - minted} free vineyards remaining (then 0.07 Ξ/mint)</i>
+          <p>{1000 - minted} free vineyards remaining then 0.01 Ξ</p>
+          <p>-</p>
+          <i>
+            You&apos;ve claimed {data?.account?.vineyards.length ?? 0} / 5 free
+            vineyards
+          </i>
         </h3>
       ) : (
         minted < max && (
           <h3>
-            {hasDiscount ? (
-              <>
-                <OldPrice>0.07 Ξ</OldPrice>
-                <PromoText> {price} Ξ - Milady Pricing!</PromoText>
-              </>
-            ) : (
-              <i>{price} Ξ</i>
-            )}
+            <p>{price} Ξ</p>
+            <i>Price increases 0.01 Ξ every 500 mints</i>
           </h3>
         )
       )}
@@ -164,6 +168,7 @@ const Mint = () => {
               shape="round"
               size="large"
               onClick={() => router.push(`/mint`)}
+              disabled={!canMint}
             >
               Mint
             </Button>

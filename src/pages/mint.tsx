@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-import { Button } from "antd";
 import { locations, soilTypes } from "../Utils/attributes";
-import { newVineyards, newVineyardsGiveaway } from "../Utils/vineyardContract";
+import { newVineyards } from "../Utils/vineyardContract";
 import { giveawayBalance } from "../Utils/giveawayToken";
 import {
   GridContainer,
@@ -17,6 +16,7 @@ import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
 import { toast } from "react-toastify";
 import MintSketch from "../Components/MintSketch";
 import { chainId } from "../Utils/constants";
+import { useRouter } from "next/router";
 
 const Step = styled.div`
   margin-top: 32px;
@@ -30,6 +30,7 @@ const MintContainer = () => {
   const { address, status } = useAccount();
   const { data: signer } = useSigner();
   const { chain } = useNetwork();
+  const router = useRouter();
   const addRecentTransaction = useAddRecentTransaction();
   const protocol = useCurrSeason();
   const [step, setStep] = useState(0);
@@ -45,12 +46,8 @@ const MintContainer = () => {
   const minElev = (num: number) => locations[num].elevation[0];
   const maxElev = (num: number) => locations[num].elevation[1];
 
-  const startOver = () => {
-    setMintHash("");
-    setStep(0);
-    setCity(0);
-    setElev(0);
-    setSoil(0);
+  const startOver = async () => {
+    router.push("/");
   };
 
   const back = () => {
@@ -94,7 +91,11 @@ const MintContainer = () => {
   };
 
   const mintGiveaway = async () => {
-    const tx = await newVineyardsGiveaway([city, elev, soil], signer);
+    const tx = await newVineyards(
+      [city, elev, soil],
+      signer,
+      protocol.currentPrice
+    );
     addRecentTransaction({
       hash: tx.hash,
       description: "Mint new vineyard with token",

@@ -7,11 +7,22 @@ export const VINEPROTOCOL_QUERY = gql`
       startTime
       maxVineyards
       mintedVineyards
+      currentPrice
       cellar
       vinegar
       vineyard
       giveaway
       bottle
+    }
+  }
+`;
+
+export const FREE_MINT_QUERY = gql`
+  query GetAccount($userAddress: Bytes!) {
+    account(id: $userAddress) {
+      vineyards {
+        tokenId
+      }
     }
   }
 `;
