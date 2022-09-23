@@ -16,6 +16,12 @@ const Info2 = styled(Page)`
   padding-top: 3rem;
 `;
 
+const Info3 = styled(Page)`
+  background: #000;
+  margin-top: 0;
+  padding-top: 3.1rem;
+`;
+
 const InfoPanel = styled.div`
   padding: 12px;
   margin: 16px;
@@ -32,16 +38,18 @@ const InfoPanel = styled.div`
   }
 `;
 
-const Subtitle = styled.h2<{ side: string }>`
+const Subtitle = styled.h2<{ side: string; color?: string }>`
   margin: 0 3rem 1rem 3rem;
   text-align: ${(props) => (props.side == "left" ? "left" : "right")};
   font-size: 2rem;
   font-style: italic;
+  ${(props) => (props.color ? `color: ${props.color};` : "")}
 `;
 
-const SubSubtitle = styled.h2`
+const SubSubtitle = styled.h2<{ color?: string }>`
   margin: 2.2rem 2.2rem 2.4rem 3rem;
   text-align: left;
+  ${(props) => (props.color ? `color: ${props.color};` : "")}
 `;
 
 const Explain = styled.p`
@@ -50,6 +58,18 @@ const Explain = styled.p`
 
 const CustomGridContainer = styled(GridContainer)`
   grid-template-columns: fit-content(70%) fit-content(30%);
+
+  @media screen and (max-width: 1280px) {
+    grid-template-columns: auto auto;
+  }
+
+  @media screen and (max-width: 960px) {
+    grid-template-columns: auto;
+  }
+`;
+
+const CustomGridContainer2 = styled(GridContainer)`
+  grid-template-columns: fit-content(30%) fit-content(70%);
 
   @media screen and (max-width: 1280px) {
     grid-template-columns: auto auto;
@@ -79,6 +99,24 @@ const ImageBox = styled.div`
     transform: translate(-4px, -4px);
     transition: all 200ms ease-out;
     box-shadow: 14px 14px #d6a7d2, 28px 28px #ffe7ff;
+  }
+`;
+
+const ImageBox2 = styled.div`
+  display: flex;
+  justify-content: center;
+  border: 0.5rem solid white;
+  box-shadow: -10px 10px grey;
+  margin: auto 24px;
+  background-color: white;
+  border-radius: 16px;
+  padding: 6px;
+  transition: all 200ms ease-out;
+
+  &:hover {
+    transform: translate(4px, -4px);
+    transition: all 200ms ease-out;
+    box-shadow: -14px 14px red, -28px 28px purple;
   }
 `;
 
@@ -217,6 +255,39 @@ const About = () => {
         </CustomGridContainer>
       </Info2>
 
+      <Info3>
+        <Subtitle side="left" color="white">
+          Use Spells to Get Ahead
+        </Subtitle>
+        <CustomGridContainer2>
+          <CenteredDiv>
+            <ImageBox2>
+              <FunImage
+                src="/alchemy.png"
+                alt="logo"
+                height={600}
+                width={600}
+                unoptimized={true}
+                loading="eager"
+              />
+            </ImageBox2>
+          </CenteredDiv>
+          <div>
+            <SubSubtitle color="white">
+              Earn $VINEGAR and $GRAPE from early harvests or spoiled bottles
+            </SubSubtitle>
+            <SubSubtitle color="white">
+              Use $VINEGAR to recover lost bottles or put a curse on your
+              nemesis' vineyard
+            </SubSubtitle>
+            <SubSubtitle color="white">
+              Defend your vineyards and power up their stats with $GRAPE to get
+              ahead of the competition.
+            </SubSubtitle>
+          </div>
+        </CustomGridContainer2>
+      </Info3>
+
       <Info1>
         <Subtitle side="left">Roadmap</Subtitle>
 
@@ -236,6 +307,17 @@ const About = () => {
               text: "Engage generative artists to be featured",
               complete: false,
             },
+            {
+              text: "Launch DAO for protocol management",
+              complete: false,
+            },
+          ]}
+        />
+        <h2>
+          <i>Expansion Concepts</i>
+        </h2>
+        <Roadmap
+          items={[
             {
               text: "Expansion packs to upgrade your Vineyard - customizable cosmetics, deeper control over wine making and more",
               complete: false,

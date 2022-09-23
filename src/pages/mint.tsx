@@ -18,7 +18,7 @@ import MintSketch from "../Components/MintSketch";
 import { chainId } from "../Utils/constants";
 import { useRouter } from "next/router";
 
-const LIMIT = 15;
+const LIMIT = 17;
 
 const Step = styled.div`
   margin-top: 32px;
@@ -181,9 +181,11 @@ const MintContainer = () => {
         <Step>
           <h3>Select Elevation</h3>
           <p>
-            At low elevations you&apos;re more likely to harvest red and white
-            wines. At higher elevations you&apos;re more likely to get sparkling
-            and rosés
+            {city < 15
+              ? `At low elevations you're more likely to harvest red and white
+            wines. At higher elevations you're more likely to get sparkling
+            and rosés`
+              : `Special locations have their own set of wines they and only they can grow`}
           </p>
           <br />
           {minElev(city) != maxElev(city) && (
