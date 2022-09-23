@@ -248,9 +248,7 @@ const AccountPage = () => {
                   <RoundedImg
                     src={
                       token.attributes[0] === 3
-                        ? `/thumbnails/bottles/${
-                            token.attributes[0] + token.attributes[1]
-                          }.png`
+                        ? `/thumbnails/bottles/${token.attributes[0]}-${token.attributes[1]}.png`
                         : `/thumbnails/bottles/${token.attributes[0]}.png`
                     }
                     height={120}
