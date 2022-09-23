@@ -60,6 +60,7 @@ export const ACCOUNT_QUERY = gql`
         location
       }
       vinegarBalance
+      grapeBalance
     }
   }
 `;
@@ -94,6 +95,11 @@ export const VINEYARD_QUERY = gql`
         id
       }
       seasonsHarvested
+      grapeStatus(orderBy: season, orderDirection: desc) {
+        season
+        harvested
+        remaining
+      }
     }
     newUris(
       orderBy: version

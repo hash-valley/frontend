@@ -141,8 +141,9 @@ const AccountPage = () => {
             {data.account.vineyards.length} Vineyard
             {data.account.vineyards.length === 1 ? "" : "s"},{" "}
             {data.account.bottles.length} Bottle
-            {data.account.bottles.length === 1 ? "" : "s"} and{" "}
-            {formatNum(formatEther(data.account.vinegarBalance))} Vinegar
+            {data.account.bottles.length === 1 ? "" : "s"},{" "}
+            {formatNum(formatEther(data.account.vinegarBalance))} Vinegar and{" "}
+            {formatNum(formatEther(data.account.grapeBalance))} Grapes
           </h2>
           <div>
             {view == "bottles" && (

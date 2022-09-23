@@ -24,6 +24,7 @@ const VineyardABI = [
   "function waterWindow(uint256 _tokenId) public view returns (uint256)",
   "function currentStreak(uint256 _tokenId) public view returns (uint16)",
   "function buySprinkler(uint256 _tokenId) public payable",
+  "function harvestGrapes(uint256 _tokenId) public",
 ];
 
 const withSigner = (signer: any) => {
@@ -180,6 +181,19 @@ export const harvest = async (wallet: any, tokenId: number) => {
 
   try {
     const tx = await vineyardWithSigner.harvest(tokenId);
+    toast.info("Transaction sent");
+    return tx;
+  } catch (err: any) {
+    console.error(err);
+    toast.error(`Error! ${err?.message}`);
+  }
+};
+
+export const harvestGrapes = async (wallet: any, tokenId: number) => {
+  const vineyardWithSigner = withSigner(wallet);
+
+  try {
+    const tx = await vineyardWithSigner.harvestGrapes(tokenId);
     toast.info("Transaction sent");
     return tx;
   } catch (err: any) {

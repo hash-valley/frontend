@@ -9,6 +9,7 @@ import {
   canWaterUntil,
   getStreak,
   buySprinkler,
+  harvestGrapes,
 } from "../../Utils/vineyardContract";
 import { hours, minutes, seconds, toDate } from "../../Utils/utils";
 import { useCurrSeason } from "../../Hooks/useCurrSeason";
@@ -34,6 +35,7 @@ import { useAccount, useSigner } from "wagmi";
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
 import { getFarmingStatsMulti } from "../../Utils/multicall";
 import { toast } from "react-toastify";
+import { utils } from "ethers";
 
 const VineyardPage = () => {
   const { address } = useAccount();
@@ -156,6 +158,18 @@ const VineyardPage = () => {
     setTimeout(() => refetch().then(() => setRefetching(false)), 2000);
   };
 
+  const sendHarvestGrapes = async () => {
+    const tx = await harvestGrapes(signer, Number(id));
+    addRecentTransaction({
+      hash: tx.hash,
+      description: `Harvest vineyard ${Number(id)}`,
+    });
+    await tx.wait();
+    toast.success("Success!");
+    setRefetching(true);
+    setTimeout(() => refetch().then(() => setRefetching(false)), 2000);
+  };
+
   const sendBuySprinkler = async () => {
     const tx = await buySprinkler(signer, Number(id));
     addRecentTransaction({
@@ -166,6 +180,16 @@ const VineyardPage = () => {
     toast.success("Success!");
     setRefetching(true);
     setTimeout(() => refetch().then(() => setRefetching(false)), 2000);
+  };
+
+  const harvestFailureChance = (remaining: number, harvested: number) => {
+    const maxGrapes = remaining + harvested;
+    const thresh = (9000 * maxGrapes) / 10000;
+    if (harvested >= thresh) {
+      return 0; // 100% chance of failure
+    } else {
+      return 100 - (100 * harvested) / maxGrapes;
+    }
   };
 
   return loading ? (
@@ -237,7 +261,7 @@ const VineyardPage = () => {
         </div>
         <br />
 
-        {season > 0 ? (
+        {season.season > 0 ? (
           <>
             {farmable.canHarvest ? (
               <SuccessText>Harvestable</SuccessText>
@@ -266,6 +290,63 @@ const VineyardPage = () => {
         ) : (
           <InfoText>First season starting soon</InfoText>
         )}
+      </TokenSign>
+
+      <TokenSign>
+        {Number(data?.vineyard?.grapeStatus[0]?.season) === season.season ? (
+          <>
+            <div>
+              <b>Bottle Harvest:</b>{" "}
+              {harvestFailureChance(
+                Number(data.vineyard.grapeStatus[0].remaining),
+                Number(data.vineyard.grapeStatus[0].harvested)
+              )}
+              % chance
+            </div>
+            <div>
+              <b>Harvestable Grapes:</b>{" "}
+              {data.vineyard.grapeStatus[0].remaining}
+            </div>
+            <div>
+              <>
+                <b>Grapes Harvested this Season:</b>{" "}
+                {data.vineyard.grapeStatus[0].harvested}
+              </>
+            </div>
+          </>
+        ) : (
+          <>
+            <div>
+              <b>Bottle Harvest:</b> 100% chance
+            </div>
+            <div>
+              <b>Harvestable Grapes:</b> {100000 + data.vineyard.xp}
+            </div>
+            <div>
+              <b>Grapes Harvested this Season:</b> 0
+            </div>
+          </>
+        )}
+
+        <Spaced
+          type="primary"
+          shape="round"
+          onClick={sendHarvestGrapes}
+          disabled={farmable.canPlant}
+        >
+          Harvest Grapes
+        </Spaced>
+
+        <br />
+        <i>
+          <a
+            href="https://inathan-m.gitbook.io/hash-valley-winery/usdgrape"
+            target="_blank"
+            rel="noreferrer"
+          >
+            How does this work?
+          </a>
+        </i>
       </TokenSign>
 
       {address?.toLowerCase() === data.vineyard.owner.id ? (
