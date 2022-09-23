@@ -188,7 +188,7 @@ const Mint = () => {
           size="large"
           onClick={() => router.push(`/mint`)}
         >
-          <i>Use Giveaway Token</i>
+          <i>Use Merchant Token</i>
         </Button>
       )}
     </Page>

@@ -14,7 +14,6 @@ import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
 
 import Account from "../Components/Account";
 import Footer from "../Components/Footer";
-import ComingSoon from "../Components/ComingSoon";
 
 import { chains, wagmiClient } from "../Utils/rainbowWallet";
 import { apolloClient } from "../Utils/apollo";
@@ -26,17 +25,6 @@ const AppContainer = styled.div`
 `;
 
 function MyApp({ Component, pageProps }) {
-  if (process.env.NEXT_PUBLIC_PREVIEW_MODE === "true") {
-    return (
-      <>
-        <Head>
-          <title>Hash Valley Winery</title>
-        </Head>
-        <ComingSoon />
-      </>
-    );
-  }
-
   return (
     <ApolloProvider client={apolloClient}>
       <WagmiConfig client={wagmiClient}>

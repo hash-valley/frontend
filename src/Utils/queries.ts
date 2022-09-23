@@ -212,3 +212,55 @@ export const NEW_URI = gql`
     }
   }
 `;
+
+export const ALCHEMY_DEFENSE_QUERY = gql`
+  query Alchemy($address: Bytes!, $timestamp: BigInt!) {
+    vineyards(where: { witherDeadline_gt: $timestamp, owner: $address }) {
+      tokenId
+      witherDeadline
+      location
+      elevation
+      soil
+      xp
+    }
+    account(id: $address) {
+      id
+      vinegarBalance
+      grapeBalance
+    }
+  }
+`;
+
+export const ALCHEMY_VITALIZE_QUERY = gql`
+  query Alchemy($address: Bytes!) {
+    vineyards(where: { vitalized: false, owner: $address }) {
+      tokenId
+      location
+      elevation
+      soil
+      xp
+    }
+    account(id: $address) {
+      id
+      vinegarBalance
+      grapeBalance
+    }
+  }
+`;
+
+export const ALCHEMY_WITHER_QUERY = gql`
+  query Alchemy($address: Bytes!) {
+    vineyards(where: { witherDeadline: 0, owner_not: $address }) {
+      tokenId
+      location
+      elevation
+      soil
+      xp
+    }
+    account(id: $address) {
+      id
+      vinegarBalance
+      grapeBalance
+    }
+  }
+`;

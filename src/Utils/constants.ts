@@ -10,6 +10,9 @@ export const VineUriAddress = process.env.NEXT_PUBLIC_VINE_URI ?? "";
 
 export const MulticallAddress = process.env.NEXT_PUBLIC_MULTI ?? "";
 
+export const AlchemyAddress = process.env.NEXT_PUBLIC_ALCHEMY_ADDRESS ?? "";
+export const GrapeAddress = process.env.NEXT_PUBLIC_GRAPE_ADDRESS ?? "";
+
 export const subgraphUrl = process.env.NEXT_PUBLIC_SUBGRAPH_URL ?? "";
 export const chainId = Number(process.env.NEXT_PUBLIC_CHAIN_ID) ?? 31337;
 export const providerUrl = process.env.NEXT_PUBLIC_PROVIDER_URL ?? "";
@@ -23,3 +26,9 @@ export const viewProvider = new providers.JsonRpcProvider(providerUrl);
 
 export const DAY = 24 * 60 * 60;
 export const YEAR = BigInt(365 * DAY);
+
+export enum SPELL {
+  WITHER,
+  DEFEND,
+  VITALIZE,
+}

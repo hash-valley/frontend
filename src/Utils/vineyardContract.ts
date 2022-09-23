@@ -4,10 +4,10 @@ import { Contract } from "ethers";
 import { parseEther } from "ethers/lib/utils";
 
 const VineyardABI = [
-  "function newVineyards(uint16[] calldata) public payable",
-  "function newVineyardGiveaway(uint16[] calldata) public",
+  "function newVineyards(int256[] calldata) public payable",
+  "function newVineyardGiveaway(int256[] calldata) public",
   "function totalSupply() view returns (uint256)",
-  "function getTokenAttributes(uint _tokenId) public view returns(uint16[] memory attributes)",
+  "function getTokenAttributes(uint _tokenId) public view returns(int256[] memory attributes)",
   "function xp(uint _tokenID) public view returns(uint)",
   "function plant(uint _tokenID) public",
   "function harvest(uint _tokenID) public",
@@ -73,19 +73,9 @@ export const newVineyards = async (
 ) => {
   const vineyardWithSigner = withSigner(wallet);
 
-  //process params
-  let negative: number = 0;
-  if (params[1] < 0) negative = 1;
-  const processedParams: number[] = [
-    params[0],
-    Math.abs(params[1]),
-    negative,
-    params[2],
-  ];
-
   // send tx
   try {
-    const tx = await vineyardWithSigner.newVineyards(processedParams, {
+    const tx = await vineyardWithSigner.newVineyards(params, {
       value,
     });
     toast.info("Transaction sent");
@@ -98,17 +88,9 @@ export const newVineyards = async (
 
 export const newVineyardsGiveaway = async (params: number[], wallet: any) => {
   const vineyardWithSigner = withSigner(wallet);
-  let negative: number = 0;
-  if (params[1] < 0) negative = 1;
-  const processedParams: number[] = [
-    params[0],
-    Math.abs(params[1]),
-    negative,
-    params[2],
-  ];
 
   try {
-    const tx = await vineyardWithSigner.newVineyardGiveaway(processedParams);
+    const tx = await vineyardWithSigner.newVineyardGiveaway(params);
     toast.info("Transaction sent");
     return tx;
   } catch (err: any) {

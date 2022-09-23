@@ -18,7 +18,7 @@ const TitleBar = styled.div`
 const AccountButtonList = styled.span`
   float: right;
   margin: 15px 64px 0px 0px;
-  @media screen and (max-width: 875px) {
+  @media screen and (max-width: 954px) {
     display: none;
   }
 `;
@@ -26,7 +26,7 @@ const AccountButtonList = styled.span`
 const AccountButtonCondensed = styled.span`
   float: right;
   margin: 15px 64px 0px 0px;
-  @media screen and (min-width: 876px) {
+  @media screen and (min-width: 955px) {
     display: none;
   }
   @media screen and (max-width: 425px) {
@@ -80,6 +80,10 @@ const LogoBox = styled.span`
 
 const DropdownGap = styled(Dropdown)`
   margin-right: 8px;
+`;
+
+const AlchemyButton = styled(Button)`
+  margin-right: 12px;
 `;
 
 const Account = () => {
@@ -174,17 +178,26 @@ const Account = () => {
                       size="large"
                       onClick={() => router.push(`/council/vineyards`)}
                     >
-                      <b>Council</b>
+                      <b>📜 Council</b>
                     </Button>
                   </DropdownGap>
                   {status === "connected" && (
-                    <Button
-                      shape="round"
-                      size="large"
-                      onClick={() => router.push(`/account/${address}`)}
-                    >
-                      <b>Portfolio</b>
-                    </Button>
+                    <>
+                      <AlchemyButton
+                        shape="round"
+                        size="large"
+                        onClick={() => router.push(`/alchemy`)}
+                      >
+                        <b>🔮 Alchemy</b>
+                      </AlchemyButton>
+                      <Button
+                        shape="round"
+                        size="large"
+                        onClick={() => router.push(`/account/${address}`)}
+                      >
+                        <b>🖋️ Portfolio</b>
+                      </Button>
+                    </>
                   )}
                 </>
               )}
@@ -225,18 +238,29 @@ const Account = () => {
                       type: "divider",
                     },
                     {
+                      label: (
+                        <div onClick={() => router.push(`/alchemy`)}>
+                          Alchemy🔮
+                        </div>
+                      ),
+                      key: "6",
+                    },
+                    {
+                      type: "divider",
+                    },
+                    {
                       label:
                         protocol.season === 0
                           ? "Pre-season"
                           : `Season ${protocol.season}`,
-                      key: "1",
+                      key: "8",
                     },
                     {
                       label:
                         protocol.season > 0
                           ? `${protocol.daysLeft} days left`
                           : `Game not started ⌛`,
-                      key: "2",
+                      key: "9",
                     },
                     {
                       label: protocol.plant
@@ -244,7 +268,7 @@ const Account = () => {
                         : protocol.harvest
                         ? "Harvesting 🍁"
                         : "",
-                      key: "3",
+                      key: "10",
                     },
                     {
                       type: "divider",
@@ -252,18 +276,18 @@ const Account = () => {
                     {
                       label: (
                         <div onClick={() => router.push(`/council/vineyards`)}>
-                          Vineyards
+                          Vineyards 📜
                         </div>
                       ),
-                      key: "5",
+                      key: "12",
                     },
                     {
                       label: (
                         <div onClick={() => router.push(`/council/bottles`)}>
-                          Bottles
+                          Bottles 📜
                         </div>
                       ),
-                      key: "6",
+                      key: "13",
                     },
                     {
                       label: (
@@ -271,7 +295,7 @@ const Account = () => {
                           New Proposal
                         </div>
                       ),
-                      key: "7",
+                      key: "14",
                     },
                   ]}
                 />

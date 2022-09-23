@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { locations, soilTypes } from "../Utils/attributes";
-import { newVineyards } from "../Utils/vineyardContract";
+import { newVineyards, newVineyardsGiveaway } from "../Utils/vineyardContract";
 import { giveawayBalance } from "../Utils/giveawayToken";
 import {
   GridContainer,
@@ -17,6 +17,8 @@ import { toast } from "react-toastify";
 import MintSketch from "../Components/MintSketch";
 import { chainId } from "../Utils/constants";
 import { useRouter } from "next/router";
+
+const LIMIT = 15;
 
 const Step = styled.div`
   margin-top: 32px;
@@ -55,7 +57,9 @@ const MintContainer = () => {
     if (step == 0) setElev(Math.floor((minElev(city) + maxElev(city)) / 2));
   };
 
-  const selectCity = (num: number) => {
+  const selectCity = (num: number, bonus: boolean) => {
+    if (bonus && BigInt(giveBal) < 1e18) return;
+    if (num > LIMIT) return;
     setCity(num);
     setStep(1);
     setElev(Math.floor((minElev(num) + maxElev(num)) / 2));
@@ -82,7 +86,11 @@ const MintContainer = () => {
   };
 
   const mint = async () => {
-    const tx = await newVineyards([city, elev, soil], signer, address!);
+    const tx = await newVineyards(
+      [city, elev, soil],
+      signer,
+      protocol.currentPrice
+    );
     addRecentTransaction({ hash: tx.hash, description: "Mint new vineyard" });
     await tx.wait();
     toast.success("Success!");
@@ -91,14 +99,10 @@ const MintContainer = () => {
   };
 
   const mintGiveaway = async () => {
-    const tx = await newVineyards(
-      [city, elev, soil],
-      signer,
-      protocol.currentPrice
-    );
+    const tx = await newVineyardsGiveaway([city, elev, soil], signer);
     addRecentTransaction({
       hash: tx.hash,
-      description: "Mint new vineyard with token",
+      description: "Mint new vineyard with Merchant token",
     });
     await tx.wait();
     toast.success("Success!");
@@ -126,17 +130,51 @@ const MintContainer = () => {
             affect the notes on the bottles you harvest
           </p>
           <GridContainer>
-            {locations.map((loc, index) => (
-              <GridItem key={loc.name} onClick={() => selectCity(index)}>
-                <RoundedImg
-                  src={`/thumbnails/vineyards/${index}.png`}
-                  height={120}
-                  width={120}
-                />
-                <div>{loc.name}</div>
-                <div>{loc.climate.name}</div>
-              </GridItem>
-            ))}
+            {locations.map((loc, index) =>
+              loc.bonus ? (
+                <GridItem
+                  key={loc.name}
+                  onClick={() => selectCity(index, true)}
+                >
+                  <RoundedImg
+                    src={
+                      BigInt(giveBal) >= 1e18 && index <= LIMIT
+                        ? `/thumbnails/vineyards/${index}.png`
+                        : `/thumbnails/vineyards/question.png`
+                    }
+                    height={120}
+                    width={120}
+                  />
+                  <div>
+                    {BigInt(giveBal) >= 1e18 && index <= LIMIT ? (
+                      loc.name
+                    ) : (
+                      <i>Unrevealed</i>
+                    )}
+                  </div>
+                  <div>
+                    {BigInt(giveBal) >= 1e18 && index <= LIMIT ? (
+                      loc.climate.name
+                    ) : (
+                      <i>Unrevealed</i>
+                    )}
+                  </div>
+                </GridItem>
+              ) : (
+                <GridItem
+                  key={loc.name}
+                  onClick={() => selectCity(index, false)}
+                >
+                  <RoundedImg
+                    src={`/thumbnails/vineyards/${index}.png`}
+                    height={120}
+                    width={120}
+                  />
+                  <div>{loc.name}</div>
+                  <div>{loc.climate.name}</div>
+                </GridItem>
+              )
+            )}
           </GridContainer>
         </Step>
       ) : step == 1 ? (
@@ -264,6 +302,7 @@ const MintContainer = () => {
                       type="primary"
                       shape="round"
                       onClick={mint}
+                      disabled={city >= 15}
                     >
                       Mint
                     </Spaced>
@@ -275,7 +314,7 @@ const MintContainer = () => {
                       shape="round"
                       onClick={mintGiveaway}
                     >
-                      Use Giveaway Token
+                      Use Merchant Token
                     </Spaced>
                   ) : null}
                 </>
