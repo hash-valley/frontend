@@ -18,8 +18,6 @@ import MintSketch from "../Components/MintSketch";
 import { chainId } from "../Utils/constants";
 import { useRouter } from "next/router";
 
-const LIMIT = 17;
-
 const Step = styled.div`
   margin-top: 32px;
 `;
@@ -41,6 +39,15 @@ const MintContainer = () => {
   const [soil, setSoil] = useState(0);
   const [mintHash, setMintHash] = useState("");
 
+  const limit = () =>
+    protocol.mintedVineyards >= 5000
+      ? 17
+      : protocol.mintedVineyards >= 2500
+      ? 16
+      : protocol.mintedVineyards >= 500
+      ? 15
+      : 14;
+
   const [giveBal, setGiveBal] = useState("0");
 
   useEffect(() => checkGiveaway(), [address]);
@@ -59,7 +66,7 @@ const MintContainer = () => {
 
   const selectCity = (num: number, bonus: boolean) => {
     if (bonus && BigInt(giveBal) < 1e18) return;
-    if (num > LIMIT) return;
+    if (num > limit()) return;
     setCity(num);
     setStep(1);
     setElev(Math.floor((minElev(num) + maxElev(num)) / 2));
@@ -138,7 +145,7 @@ const MintContainer = () => {
                 >
                   <RoundedImg
                     src={
-                      BigInt(giveBal) >= 1e18 && index <= LIMIT
+                      BigInt(giveBal) >= 1e18 && index <= limit()
                         ? `/thumbnails/vineyards/${index}.png`
                         : `/thumbnails/vineyards/question.png`
                     }
@@ -146,14 +153,14 @@ const MintContainer = () => {
                     width={120}
                   />
                   <div>
-                    {BigInt(giveBal) >= 1e18 && index <= LIMIT ? (
+                    {BigInt(giveBal) >= 1e18 && index <= limit() ? (
                       loc.name
                     ) : (
                       <i>Unrevealed</i>
                     )}
                   </div>
                   <div>
-                    {BigInt(giveBal) >= 1e18 && index <= LIMIT ? (
+                    {BigInt(giveBal) >= 1e18 && index <= limit() ? (
                       loc.climate.name
                     ) : (
                       <i>Unrevealed</i>
