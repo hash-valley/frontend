@@ -282,7 +282,7 @@ const About = () => {
             </SubSubtitle>
             <SubSubtitle color="white">
               Defend your vineyards and power up their stats with $GRAPE to get
-              ahead of the competition.
+              ahead of the competition
             </SubSubtitle>
           </div>
         </CustomGridContainer2>
