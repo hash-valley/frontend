@@ -294,7 +294,19 @@ const About = () => {
         <Roadmap
           items={[
             { text: "Vineyard mint opens", complete: true },
-            { text: "Mint out - start first season", complete: false },
+            {
+              text: "500 mints -> first bonus location unlocks",
+              complete: false,
+            },
+            {
+              text: "2500 mints -> second bonus location unlocks",
+              complete: false,
+            },
+            {
+              text: "5000 mints -> third bonus location unlocks, all remaining mints receive $GRAPE and $VINEGAR airdrop",
+              complete: false,
+            },
+            { text: "Mint out -> start first season", complete: false },
             {
               text: "New artwork creation opens up to everyone",
               complete: false,
@@ -314,7 +326,7 @@ const About = () => {
           ]}
         />
         <h2>
-          <i>Expansion Concepts</i>
+          <i>FUTURE CONCEPTION</i>
         </h2>
         <Roadmap
           items={[

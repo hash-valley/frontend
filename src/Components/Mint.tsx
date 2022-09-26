@@ -78,6 +78,22 @@ const Centered = styled.div`
   margin-left: calc(50% - 67px);
 `;
 
+const BonusText = styled.div`
+  margin: auto;
+  max-width: 275px;
+  background: linear-gradient(
+    to right,
+    #ef5350,
+    #f48fb1,
+    #7e57c2,
+    #2196f3,
+    #26c6da,
+    #43a047
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+`;
+
 const Mint = () => {
   const { status, address } = useAccount();
   const router = useRouter();
@@ -157,6 +173,9 @@ const Mint = () => {
             <i>Price increases 0.01 Ξ every 500 mints</i>
           </h3>
         )
+      )}
+      {minted >= 5000 && (
+        <BonusText>Bonus: 5000 $GRAPE, 5000 $VINEGAR</BonusText>
       )}
       <br />
       <br />

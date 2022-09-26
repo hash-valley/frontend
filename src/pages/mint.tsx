@@ -26,6 +26,9 @@ const Sign = styled.div`
   margin: 32px 0 12px 0;
 `;
 
+const revealedAt = (i: number) =>
+  i === 15 ? 500 : i === 16 ? 2500 : i === 17 ? 5000 : 5500;
+
 const MintContainer = () => {
   const { address, status } = useAccount();
   const { data: signer } = useSigner();
@@ -156,14 +159,14 @@ const MintContainer = () => {
                     {BigInt(giveBal) >= 1e18 && index <= limit() ? (
                       loc.name
                     ) : (
-                      <i>Unrevealed</i>
+                      <i>Revealed at {revealedAt(index)}</i>
                     )}
                   </div>
                   <div>
                     {BigInt(giveBal) >= 1e18 && index <= limit() ? (
                       loc.climate.name
                     ) : (
-                      <i>Unrevealed</i>
+                      <i>Revealed at {revealedAt(index)}</i>
                     )}
                   </div>
                 </GridItem>
