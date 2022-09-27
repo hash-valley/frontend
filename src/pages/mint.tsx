@@ -148,7 +148,7 @@ const MintContainer = () => {
                 >
                   <RoundedImg
                     src={
-                      BigInt(giveBal) >= 1e18 && index <= limit()
+                      index <= limit()
                         ? `/thumbnails/vineyards/${index}.png`
                         : `/thumbnails/vineyards/question.png`
                     }
@@ -156,19 +156,20 @@ const MintContainer = () => {
                     width={120}
                   />
                   <div>
-                    {BigInt(giveBal) >= 1e18 && index <= limit() ? (
+                    {index <= limit() ? (
                       loc.name
                     ) : (
                       <i>Revealed at {revealedAt(index)}</i>
                     )}
                   </div>
                   <div>
-                    {BigInt(giveBal) >= 1e18 && index <= limit() ? (
+                    {index <= limit() ? (
                       loc.climate.name
                     ) : (
                       <i>Revealed at {revealedAt(index)}</i>
                     )}
                   </div>
+                  <i>Merchant Token required</i>
                 </GridItem>
               ) : (
                 <GridItem
