@@ -273,6 +273,10 @@ const MintSketch: React.FC<any> = ({
 
         p5.fill("#CCD8D9");
         p5.triangle(200, 325, 450, 250, 800, 325);
+
+        // hot air balloon
+        balloon(120, 130, "rgb(238,81,81)");
+        balloon(470, 155, "rgb(237,241,161)");
       } else if (vine_location == 3) {
         //denali
         doGround(275);
@@ -288,6 +292,11 @@ const MintSketch: React.FC<any> = ({
         p5.triangle(100, 425, 320, mHeight(425), 600, 425);
         p5.fill("#416C6C");
         p5.triangle(-200, 425, 0, mHeight(425), 400, 425);
+
+        // glaciers
+        p5.fill("rgb(209,248,241)");
+        p5.quad(60, 600, 30, 470, -10, 450, -10, 600);
+        p5.quad(540, 600, 570, 470, 610, 450, 610, 600);
       } else if (vine_location == 4) {
         //madeira
         doGround(375);
@@ -357,6 +366,36 @@ const MintSketch: React.FC<any> = ({
         p5.triangle(200, 325, 450, mHeight(250), 800, 325);
         p5.fill("#2a9720");
         p5.triangle(-200, 325, 40, mHeight(305), 400, 325);
+
+        // trees
+        tree(74, 315, 22, 16);
+        tree(104, 319, 22, 16);
+        tree(118, 326, 22, 16);
+        tree(132, 316, 22, 16);
+        tree(162, 324, 22, 14);
+        tree(188, 316, 18, 24);
+        tree(238, 316, 29, 16);
+        tree(258, 322, 22, 26);
+        tree(288, 316, 26, 16);
+        tree(318, 316, 24, 18);
+        tree(358, 316, 19, 16);
+        tree(374, 336, 24, 24);
+
+        tree(104, 319, 22, 16);
+        tree(455, 335, 22, 14);
+        tree(335, 325, 32, 16);
+        tree(215, 315, 16, 18);
+        tree(535, 325, 42, 15);
+        tree(525, 315, 32, 21);
+        tree(515, 345, 31, 22);
+        tree(535, 325, 32, 16);
+        tree(475, 342, 32, 12);
+        tree(425, 335, 32, 16);
+        tree(410, 315, 32, 19);
+        tree(465, 315, 22, 16);
+        tree(575, 315, 38, 16);
+        tree(565, 345, 55, 23);
+        tree(585, 365, 26, 25);
       } else if (vine_location == 10) {
         //ohio
         doGround(325);
@@ -371,6 +410,26 @@ const MintSketch: React.FC<any> = ({
         p5.triangle(200, 325, 450, mHeight(250), 800, 325);
         p5.fill("#7cc67c");
         p5.triangle(-100, 345, 80, mHeight(250), 345, 345);
+
+        // trees
+        tree(14, 335, 22, 21);
+        tree(34, 345, 22, 18);
+        tree(54, 340, 22, 17);
+        tree(84, 340, 22, 25);
+        tree(112, 333, 22, 16);
+
+        tree(455, 335, 22, 14);
+        tree(335, 325, 32, 16);
+        tree(535, 325, 42, 15);
+        tree(525, 315, 32, 21);
+        tree(515, 345, 31, 22);
+        tree(535, 325, 32, 16);
+        tree(475, 342, 26, 12);
+        tree(425, 335, 23, 16);
+        tree(410, 315, 32, 19);
+        tree(465, 315, 22, 16);
+        tree(575, 315, 38, 16);
+
         p5.fill("#53c454");
         p5.triangle(-200, 420, 210, mHeight(420), 1000, 420);
       } else if (vine_location == 12) {
@@ -381,6 +440,11 @@ const MintSketch: React.FC<any> = ({
         p5.triangle(-200, 325, 40, mHeight(310), 400, 325);
         p5.fill("#657165");
         p5.triangle(200, 325, 450, mHeight(250), 800, 325);
+
+        // pagoda lol
+        pagoda(490, 305);
+        pagoda(50, 290);
+        pagoda(270, 345);
       } else if (vine_location == 13) {
         //long island
         doGround(325);
@@ -450,6 +514,10 @@ const MintSketch: React.FC<any> = ({
         p5.triangle(-80, 325, 150, mHeight(320), 500, 325);
         p5.fill("#998e9f");
         p5.triangle(200, 325, 450, mHeight(320), 800, 325);
+
+        //windmill
+        windmill(500, 360);
+        windmill(200, 300);
       } else if (vine_location == 15) {
         //atlantis
         doGround(425);
@@ -663,6 +731,50 @@ const MintSketch: React.FC<any> = ({
       }
     }
 
+    function windmill(x: any, y: any) {
+      p5.fill("rgb(117,42,42)");
+      p5.ellipse(x, y, 30, 30);
+      p5.quad(x - 15, y, x + 15, y, x + 20, y + 55, x - 20, y + 55);
+      p5.fill("brown");
+      p5.triangle(x, y, x - 48, y - 8, x - 48, y + 8);
+      p5.triangle(x, y, x + 48, y + 8, x + 48, y - 8);
+      p5.triangle(x, y, x - 8, y - 48, x + 8, y - 48);
+      p5.triangle(x, y, x - 8, y + 40, x + 8, y + 40);
+    }
+
+    function pagoda(x: any, y: any) {
+      p5.fill("#F6FAD6"); // white
+      p5.rect(x, y, 40, 80);
+
+      p5.fill("black");
+      p5.rect(x + 10, y + 70, 10, 10);
+
+      p5.fill("#e96161"); //red
+      p5.quad(x, y, x + 40, y, x + 75, y + 10, x - 35, y + 10);
+      p5.quad(x, y + 20, x + 40, y + 20, x + 75, y + 30, x - 35, y + 30);
+      p5.quad(x, y + 40, x + 40, y + 40, x + 75, y + 50, x - 35, y + 50);
+    }
+
+    function balloon(x: any, y: any, color: any) {
+      let size = 60;
+      p5.stroke("white");
+      p5.line(x - 11, y + 50, x - 18, y + 15);
+      p5.line(x + 11, y + 50, x + 18, y + 15);
+      p5.noStroke();
+      p5.fill(color);
+      p5.ellipse(x, y, size, size);
+      p5.fill("brown");
+      p5.quad(x - 12, y + 50, x + 12, y + 50, x + 10, y + 60, x - 10, y + 60);
+    }
+
+    function tree(x: any, y: any, height: any, width: any) {
+      p5.fill("brown");
+      p5.quad(x - 2, y, x + 2, y, x + 2, y + height, x - 2, y + height);
+
+      p5.fill("#68B35A");
+      p5.ellipse(x, y, width, width);
+    }
+
     if (vine_location <= 14) {
       p5.background(backgroundFromTime(), 73, 100);
     } else if (vine_location == 15) {
@@ -697,12 +809,6 @@ const MintSketch: React.FC<any> = ({
       doComet();
     }
 
-    if (vine_location <= 14) {
-      cloudX += 0.2;
-      if (cloudX == 700) cloudX = -200;
-      doClouds();
-    }
-
     locationAction();
 
     manor();
@@ -711,6 +817,12 @@ const MintSketch: React.FC<any> = ({
 
     for (let i = 0; i < numVines; i++) {
       vines[i].display();
+    }
+
+    if (vine_location <= 14) {
+      cloudX += 0.2;
+      if (cloudX == 700) cloudX = -200;
+      doClouds();
     }
 
     if (vine_location == 13) {

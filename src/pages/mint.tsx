@@ -154,6 +154,7 @@ const MintContainer = () => {
                     }
                     height={120}
                     width={120}
+                    unoptimized={true}
                   />
                   {index <= limit() ? (
                     <>
@@ -178,6 +179,7 @@ const MintContainer = () => {
                     src={`/thumbnails/vineyards/${index}.png`}
                     height={120}
                     width={120}
+                    unoptimized={true}
                   />
                   <div>{loc.name}</div>
                   <div>{loc.climate.name}</div>
