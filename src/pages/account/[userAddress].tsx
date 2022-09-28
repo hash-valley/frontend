@@ -16,6 +16,7 @@ import {
   SuccessText,
   Spaced,
   RoundedImg,
+  Tag,
 } from "../../Styles/Components";
 import { locations, soilTypes } from "../../Utils/attributes";
 import { formatEther } from "ethers/lib/utils";
@@ -145,6 +146,9 @@ const AccountPage = () => {
             {formatNum(formatEther(data.account.vinegarBalance))} Vinegar and{" "}
             {formatNum(formatEther(data.account.grapeBalance))} Grapes
           </h2>
+          {data.account.earlySupporter && (
+            <Tag color="purple">Early Supporter</Tag>
+          )}
           <div>
             {view == "bottles" && (
               <div>

@@ -197,7 +197,7 @@ export const AlchemyBack = styled.div`
   height: 100%;
   width: 100%;
 
-  margin-top: -16px;
+  top: 0; 
   z-index: -1;
 
   background-opacity: 10%;

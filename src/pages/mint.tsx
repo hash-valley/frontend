@@ -42,15 +42,6 @@ const MintContainer = () => {
   const [soil, setSoil] = useState(0);
   const [mintHash, setMintHash] = useState("");
 
-  const limit = () =>
-    protocol.mintedVineyards >= 5000
-      ? 17
-      : protocol.mintedVineyards >= 2500
-      ? 16
-      : protocol.mintedVineyards >= 500
-      ? 15
-      : 14;
-
   const [giveBal, setGiveBal] = useState("0");
 
   useEffect(() => checkGiveaway(), [address]);
@@ -69,7 +60,7 @@ const MintContainer = () => {
 
   const selectCity = (num: number, bonus: boolean) => {
     if (bonus && BigInt(giveBal) < 1e18) return;
-    if (num > limit()) return;
+    if (num > protocol.locales) return;
     setCity(num);
     setStep(1);
     setElev(Math.floor((minElev(num) + maxElev(num)) / 2));
@@ -148,7 +139,7 @@ const MintContainer = () => {
                 >
                   <RoundedImg
                     src={
-                      index <= limit()
+                      index <= protocol.locales
                         ? `/thumbnails/vineyards/${index}.png`
                         : `/thumbnails/vineyards/question.png`
                     }
@@ -156,7 +147,7 @@ const MintContainer = () => {
                     width={120}
                     unoptimized={true}
                   />
-                  {index <= limit() ? (
+                  {index <= protocol.locales ? (
                     <>
                       <div>{loc.name}</div>
                       <div>{loc.climate.name}</div>

@@ -13,6 +13,7 @@ export const VINEPROTOCOL_QUERY = gql`
       vineyard
       giveaway
       bottle
+      locales
     }
   }
 `;
@@ -61,6 +62,7 @@ export const ACCOUNT_QUERY = gql`
       }
       vinegarBalance
       grapeBalance
+      earlySupporter
     }
   }
 `;
