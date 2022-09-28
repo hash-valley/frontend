@@ -95,6 +95,8 @@ export const VINEYARD_QUERY = gql`
         id
       }
       seasonsHarvested
+      vitalized
+      witherDeadline
       grapeStatus(orderBy: season, orderDirection: desc) {
         season
         harvested

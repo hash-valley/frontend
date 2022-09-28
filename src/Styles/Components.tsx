@@ -55,12 +55,15 @@ export const BreakWords = styled.div`
   overflow-wrap: break-word;
 `;
 
-export const Page = styled.div`
+export const Page = styled.div<{ color?: string; shadow?: string }>`
   margin-top: 96px;
   margin-left: auto;
   margin-right: auto;
   padding: 0 12px 60px 12px;
   font-family: Nunito;
+  color: ${(props) => (props.color ? props.color : "black")};
+  ${(props) =>
+    props.shadow ? `filter: drop-shadow(2px 2px 3px ${props.shadow});` : ""}
 `;
 
 export const GridItem = styled.div<{ selected?: boolean }>`
@@ -181,4 +184,26 @@ export const Tag = styled.span<{ color: string; text?: string }>`
   border-radius: 12px;
   padding: 2px 10px;
   font-weight: bold;
+`;
+
+export const AlchemyBack = styled.div`
+  background-color: black !important;
+  background: url("/symbol_trace.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+
+  position: absolute;
+  height: 100%;
+  width: 100%;
+
+  margin-top: -16px;
+  z-index: -1;
+
+  background-opacity: 10%;
+`;
+
+export const ListItem = styled.div`
+  max-width: 500px;
+  margin: auto;
 `;

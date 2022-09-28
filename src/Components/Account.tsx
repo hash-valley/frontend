@@ -13,6 +13,7 @@ const TitleBar = styled.div`
   margin-top: 0.6rem;
   height: 1rem;
   font-family: Nunito;
+  z-index: 10;
 `;
 
 const AccountButtonList = styled.span`

@@ -27,6 +27,9 @@ export const viewProvider = new providers.JsonRpcProvider(providerUrl);
 export const DAY = 24 * 60 * 60;
 export const YEAR = BigInt(365 * DAY);
 
+export const FIRST_SEASON_DAYS = 21;
+export const SEASON_DAYS = 84;
+
 export enum SPELL {
   WITHER,
   DEFEND,

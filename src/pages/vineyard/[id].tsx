@@ -26,6 +26,7 @@ import {
   TokenPage,
   TokenSign,
   InfoText,
+  Tag,
 } from "../../Styles/Components";
 import Select from "rc-select";
 import { Button } from "antd";
@@ -35,7 +36,6 @@ import { useAccount, useSigner } from "wagmi";
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
 import { getFarmingStatsMulti } from "../../Utils/multicall";
 import { toast } from "react-toastify";
-import { utils } from "ethers";
 
 const VineyardPage = () => {
   const { address } = useAccount();
@@ -208,7 +208,7 @@ const VineyardPage = () => {
     </Page>
   ) : (
     <TokenPage>
-      <h2>Vineyard {id}</h2>
+      <h2>Vineyard {id} </h2>
       <TokenFrame src={imageUri} frameBorder="0" />
       <br />
       <CenteredSelect
@@ -244,6 +244,21 @@ const VineyardPage = () => {
         <div>
           <b>Streak:</b> {streak}
         </div>
+        {data.vineyard.vitalized && (
+          <>
+            <Tag color="green">Vitalized</Tag>
+            <br />
+            <br />
+          </>
+        )}
+        {data.vineyard.witherdeadline && (
+          <>
+            <div>
+              <b>Withers at:</b> {toDate(data.vineyard.witherDeadline)}
+            </div>
+            <br />
+          </>
+        )}
         <div>
           {data.vineyard.sprinklerExpires &&
           Number(data.vineyard.sprinklerExpires) > Date.now() / 1000 ? (
@@ -320,7 +335,7 @@ const VineyardPage = () => {
               <b>Bottle Harvest:</b> 100% chance
             </div>
             <div>
-              <b>Harvestable Grapes:</b> {100000 + data.vineyard.xp}
+              <b>Harvestable Grapes:</b> {10000 + Number(data.vineyard.xp)}
             </div>
             <div>
               <b>Grapes Harvested this Season:</b> 0

@@ -155,20 +155,18 @@ const MintContainer = () => {
                     height={120}
                     width={120}
                   />
-                  <div>
-                    {index <= limit() ? (
-                      loc.name
-                    ) : (
-                      <i>Revealed at {revealedAt(index)}</i>
-                    )}
-                  </div>
-                  <div>
-                    {index <= limit() ? (
-                      loc.climate.name
-                    ) : (
-                      <i>Revealed at {revealedAt(index)}</i>
-                    )}
-                  </div>
+                  {index <= limit() ? (
+                    <>
+                      <div>{loc.name}</div>
+                      <div>{loc.climate.name}</div>
+                    </>
+                  ) : (
+                    <>
+                      <br />
+                      <i>Revealed at {revealedAt(index)} mints</i>
+                      <br />
+                    </>
+                  )}
                   <i>Merchant Token required</i>
                 </GridItem>
               ) : (
