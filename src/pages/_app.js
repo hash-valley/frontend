@@ -17,6 +17,8 @@ import Footer from "../Components/Footer";
 
 import { chains, wagmiClient } from "../Utils/rainbowWallet";
 import { apolloClient } from "../Utils/apollo";
+import { chainId } from "../Utils/constants";
+import Feedback from "../Components/Feedback";
 
 const AppContainer = styled.div`
   text-align: center;
@@ -43,6 +45,7 @@ function MyApp({ Component, pageProps }) {
             <Account />
             <Component {...pageProps} />
             <ToastContainer position="bottom-right" />
+            {chainId !== 10 && <Feedback />}
           </AppContainer>
           <Footer />
         </RainbowKitProvider>
