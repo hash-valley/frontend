@@ -1,4 +1,4 @@
-import { providers } from "ethers";
+import { BigNumber, providers } from "ethers";
 
 export const VineyardAddress = process.env.NEXT_PUBLIC_VINE_ADDRESS ?? "";
 export const CellarAddress = process.env.NEXT_PUBLIC_CELLAR_ADDRESS ?? "";
@@ -29,6 +29,8 @@ export const YEAR = BigInt(365 * DAY);
 
 export const FIRST_SEASON_DAYS = 21;
 export const SEASON_DAYS = 84;
+
+export const DECIMALS = BigNumber.from("1000000000000000000");
 
 export enum SPELL {
   WITHER,

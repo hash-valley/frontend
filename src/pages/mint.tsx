@@ -15,8 +15,12 @@ import { useAccount, useNetwork, useSigner } from "wagmi";
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
 import { toast } from "react-toastify";
 import MintSketch from "../Components/MintSketch";
-import { chainId } from "../Utils/constants";
+import { chainId, DECIMALS } from "../Utils/constants";
 import { useRouter } from "next/router";
+import { formatUnits } from "ethers/lib/utils";
+import { useQuery } from "@apollo/client";
+import { FREE_MINT_QUERY } from "../Utils/queries";
+import { BigNumber } from "ethers";
 
 const Step = styled.div`
   margin-top: 32px;
@@ -42,9 +46,11 @@ const MintContainer = () => {
   const [soil, setSoil] = useState(0);
   const [mintHash, setMintHash] = useState("");
 
-  const [giveBal, setGiveBal] = useState("0");
-
-  useEffect(() => checkGiveaway(), [address]);
+  const { data } = useQuery(FREE_MINT_QUERY, {
+    variables: {
+      userAddress: address?.toLowerCase() ?? "",
+    },
+  });
 
   const minElev = (num: number) => locations[num].elevation[0];
   const maxElev = (num: number) => locations[num].elevation[1];
@@ -59,7 +65,11 @@ const MintContainer = () => {
   };
 
   const selectCity = (num: number, bonus: boolean) => {
-    if (bonus && BigInt(giveBal) < 1e18) return;
+    if (
+      bonus &&
+      BigNumber.from(data?.account?.giveawayBalance ?? 0).lt(DECIMALS)
+    )
+      return;
     if (num > protocol.locales) return;
     setCity(num);
     setStep(1);
@@ -73,13 +83,6 @@ const MintContainer = () => {
 
   const selectSoil = () => {
     setStep(3);
-    checkGiveaway();
-  };
-
-  const checkGiveaway = () => {
-    if (status === "connected" && address) {
-      giveawayBalance(address!).then((val) => setGiveBal(val));
-    }
   };
 
   const handleElev = (event: any) => {
@@ -110,6 +113,10 @@ const MintContainer = () => {
     //@ts-ignore
     setMintHash(tx?.hash);
   };
+
+  const useMerchantToken = () =>
+    BigNumber.from(data?.account?.giveawayBalance ?? 0).gte(DECIMALS) &&
+    (protocol.mintedVineyards >= 1000 || city > 14);
 
   return (
     <Page>
@@ -311,16 +318,20 @@ const MintContainer = () => {
                       Mint
                     </Spaced>
                   )}
-                  {BigInt(giveBal) >= 1e18 ? (
-                    <Spaced
-                      size="large"
-                      type="primary"
-                      shape="round"
-                      onClick={mintGiveaway}
-                    >
-                      Use Merchant Token
-                    </Spaced>
-                  ) : null}
+                  <>
+                    <br />
+                    {useMerchantToken() && (
+                      <Spaced
+                        size="large"
+                        type="primary"
+                        shape="round"
+                        onClick={mintGiveaway}
+                      >
+                        Use Merchant Token (
+                        {formatUnits(data.account.giveawayBalance)})
+                      </Spaced>
+                    )}
+                  </>
                 </>
               ) : (
                 <p>Please switch networks in your wallet to continue</p>

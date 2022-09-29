@@ -4,13 +4,13 @@ import { Page, Header } from "../Styles/Components";
 import { useRouter } from "next/router";
 import { Button } from "antd";
 import { useCurrSeason } from "../Hooks/useCurrSeason";
-import { giveawayBalance } from "../Utils/giveawayToken";
 import { BigNumber, utils } from "ethers";
-import { parseUnits } from "ethers/lib/utils";
 import { useAccount } from "wagmi";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useQuery } from "@apollo/client";
 import { FREE_MINT_QUERY } from "../Utils/queries";
+import { DECIMALS } from "../Utils/constants";
+import { formatUnits } from "ethers/lib/utils";
 
 const ProgressContainer = styled.div`
   padding: 7px;
@@ -101,7 +101,6 @@ const Mint = () => {
   const [minted, setMinted] = useState(0);
   const [max, setMax] = useState(Infinity);
   const [price, setPrice] = useState("0.0");
-  const [hasGive, setHasGive] = useState(false);
   const [canMint, setCanMint] = useState(false);
 
   const { loading, data, refetch } = useQuery(FREE_MINT_QUERY, {
@@ -117,16 +116,6 @@ const Mint = () => {
     }
     reload();
   }, [router.query.slug]);
-
-  useEffect(() => {
-    if (status === "connected" && address) {
-      giveawayBalance(address!).then((val) =>
-        setHasGive(val.gte(BigNumber.from(parseUnits("1.0"))))
-      );
-    } else {
-      setHasGive(false);
-    }
-  }, [status]);
 
   useEffect(() => {
     if (protocol.bottle && max === Infinity) {
@@ -200,16 +189,17 @@ const Mint = () => {
       ) : (
         <h2>All Vineyards have been minted!</h2>
       )}
-      {minted >= max && hasGive && (
-        <Button
-          type="primary"
-          shape="round"
-          size="large"
-          onClick={() => router.push(`/mint`)}
-        >
-          <i>Use Merchant Token</i>
-        </Button>
-      )}
+      {minted >= max &&
+        BigNumber.from(data?.account?.giveawayBalance ?? 0).gte(DECIMALS) && (
+          <Button
+            type="primary"
+            shape="round"
+            size="large"
+            onClick={() => router.push(`/mint`)}
+          >
+            Use Merchant Token ({formatUnits(data.account.giveawayBalance)})
+          </Button>
+        )}
     </Page>
   );
 };

@@ -21,6 +21,8 @@ export const VINEPROTOCOL_QUERY = gql`
 export const FREE_MINT_QUERY = gql`
   query GetAccount($userAddress: Bytes!) {
     account(id: $userAddress) {
+      giveawayBalance
+      giveawayAllowance
       vineyards {
         tokenId
       }
