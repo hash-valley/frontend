@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const Circle = styled.div`
   position: fixed;
-  bottom: 22px;
+  bottom: 68px;
   right: 22px;
   width: 52px;
   height: 52px;
