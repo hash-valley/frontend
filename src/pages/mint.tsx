@@ -114,7 +114,7 @@ const MintContainer = () => {
     setMintHash(tx?.hash);
   };
 
-  const useMerchantToken = () =>
+  const checkMerchantToken = () =>
     BigNumber.from(data?.account?.giveawayBalance ?? 0).gte(DECIMALS) &&
     (protocol.mintedVineyards >= 1000 || city > 14);
 
@@ -320,7 +320,7 @@ const MintContainer = () => {
                   )}
                   <>
                     <br />
-                    {useMerchantToken() && (
+                    {checkMerchantToken() && (
                       <Spaced
                         size="large"
                         type="primary"

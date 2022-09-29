@@ -278,7 +278,7 @@ const About = () => {
             </SubSubtitle>
             <SubSubtitle color="white">
               Use $VINEGAR to recover lost bottles or put a curse on your
-              nemesis' vineyard
+              nemesis&apos; vineyard
             </SubSubtitle>
             <SubSubtitle color="white">
               Defend your vineyards and power up their stats with $GRAPE to get
