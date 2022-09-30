@@ -274,15 +274,16 @@ const About = () => {
           </CenteredDiv>
           <div>
             <SubSubtitle color="white">
-              Earn $VINEGAR and $GRAPE from early harvests or spoiled bottles
+              Earn $GRAPE and $VINEGAR from early harvests and spoiled bottles
             </SubSubtitle>
             <SubSubtitle color="white">
               Use $VINEGAR to recover lost bottles or put a curse on your
               nemesis&apos; vineyard
             </SubSubtitle>
             <SubSubtitle color="white">
-              Defend your vineyards and power up their stats with $GRAPE to get
-              ahead of the competition
+              Defend your vineyards from attacks with $GRAPE or power up their
+              stats during planting season for increased yield and get ahead of
+              the competition
             </SubSubtitle>
           </div>
         </CustomGridContainer2>
