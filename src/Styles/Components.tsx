@@ -56,10 +56,10 @@ export const BreakWords = styled.div`
 `;
 
 export const Page = styled.div<{ color?: string; shadow?: string }>`
-  margin-top: 96px;
+  margin-top: 64px;
   margin-left: auto;
   margin-right: auto;
-  padding: 0 12px 60px 12px;
+  padding: 0px 12px 60px 12px;
   font-family: Nunito;
   color: ${(props) => (props.color ? props.color : "black")};
   ${(props) =>
@@ -156,13 +156,17 @@ export const Flourish = styled.div`
 `;
 
 export const Header = styled.h1`
-  margin: 10rem 4.2rem 7rem 4.2rem;
   font-size: 3.69rem;
   font-family: FancyFont;
 
   @media screen and (max-width: 600px) {
     font-size: 2.5rem;
   }
+`;
+
+export const HeaderBack = styled.div`
+  max-width: 600px;
+  margin: 8rem auto 4rem auto;
 `;
 
 export const SubHeader = styled.h1`
@@ -197,7 +201,7 @@ export const AlchemyBack = styled.div`
   height: 100%;
   width: 100%;
 
-  top: 0; 
+  top: 0;
   z-index: -1;
 
   background-opacity: 10%;

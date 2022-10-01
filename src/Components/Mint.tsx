@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Page, Header } from "../Styles/Components";
+import { Page, Header, HeaderBack } from "../Styles/Components";
 import { useRouter } from "next/router";
 import { Button } from "antd";
 import { useCurrSeason } from "../Hooks/useCurrSeason";
@@ -11,6 +11,25 @@ import { useQuery } from "@apollo/client";
 import { FREE_MINT_QUERY } from "../Utils/queries";
 import { DECIMALS } from "../Utils/constants";
 import { formatUnits } from "ethers/lib/utils";
+
+const MintPage = styled(Page)`
+  margin: 10rem auto 7rem auto;
+
+  margin-top: 0px;
+  margin-bottom: 1px;
+  padding-top: 0.01px;
+  min-height: 100vh;
+`;
+
+const VintHeader = styled(Header)`
+  padding: 18px;
+  max-width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  background: linear-gradient(to right, purple, red);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+`;
 
 const ProgressContainer = styled.div`
   padding: 7px;
@@ -133,8 +152,10 @@ const Mint = () => {
   }, [protocol, data]);
 
   return (
-    <Page>
-      <Header>The Vint</Header>
+    <MintPage>
+      <HeaderBack>
+        <VintHeader>The Vint</VintHeader>
+      </HeaderBack>
       <ProgressContainer>
         <Progress>
           <ProgressBar
@@ -200,7 +221,7 @@ const Mint = () => {
             Use Merchant Token ({formatUnits(data.account.giveawayBalance)})
           </Button>
         )}
-    </Page>
+    </MintPage>
   );
 };
 

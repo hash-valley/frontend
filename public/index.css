@@ -63,3 +63,14 @@ body {
   border-radius: 12px;
   box-shadow: 19px 19px 38px #c4c4c4, -19px -19px 38px #ffffff;
 }
+
+.fade-in {
+  opacity: 0;
+  transform: translate(0, 2px);
+  transition: all 1s;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translate(0, 0);
+}

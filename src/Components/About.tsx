@@ -1,9 +1,26 @@
-import { Flourish, GridContainer, Page, Header } from "../Styles/Components";
+import {
+  Flourish,
+  GridContainer,
+  Page,
+  Header,
+  HeaderBack,
+} from "../Styles/Components";
 import styled from "styled-components";
 import { VineyardAddress } from "../Utils/constants";
 import Image from "next/image";
 import Link from "next/link";
 import Roadmap from "./Roadmap";
+
+const VintHeader = styled(Header)`
+  padding: 25px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+
+  background: linear-gradient(to right, #4bace9, #7e57c2);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+`;
 
 const Info1 = styled(Page)`
   padding-top: 3rem;
@@ -128,7 +145,9 @@ const CenteredDiv = styled.div`
 const About = () => {
   return (
     <>
-      <Header>The Blueprint</Header>
+      <HeaderBack>
+        <VintHeader>The Blueprint</VintHeader>
+      </HeaderBack>
       <Info1>
         <Subtitle side="left">
           Hash Valley&apos;s destiny is shaped by its owners
