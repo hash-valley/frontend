@@ -29,6 +29,9 @@ const VintHeader = styled(Header)`
   background: linear-gradient(to right, purple, red);
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
+
+  text-shadow: -136px -68px #b2ef9b90, -102px -38px #a6d9f770,
+    -48px -24px #dec0f150;
 `;
 
 const ProgressContainer = styled.div`

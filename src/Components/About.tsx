@@ -20,6 +20,8 @@ const VintHeader = styled(Header)`
   background: linear-gradient(to right, #4bace9, #7e57c2);
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
+
+  text-shadow: 64px 36px #957FEF50, -72px -16px #B79CED50, 48px -48px #DEC0F150;
 `;
 
 const Info1 = styled(Page)`
