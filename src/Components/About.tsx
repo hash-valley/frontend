@@ -21,7 +21,7 @@ const VintHeader = styled(Header)`
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
 
-  text-shadow: 64px 36px #957FEF50, -72px -16px #B79CED50, 48px -48px #DEC0F150;
+  text-shadow: 64px 36px #957fef50, -72px -16px #b79ced50, 48px -48px #dec0f150;
 `;
 
 const Info1 = styled(Page)`
@@ -57,12 +57,18 @@ const InfoPanel = styled.div`
   }
 `;
 
-const Subtitle = styled.h2<{ side: string; color?: string }>`
+const Subtitle = styled.h2<{
+  side: string;
+  color?: string;
+  textShadow?: string;
+}>`
   margin: 0 3rem 1rem 3rem;
   text-align: ${(props) => (props.side == "left" ? "left" : "right")};
   font-size: 2rem;
   font-style: italic;
   ${(props) => (props.color ? `color: ${props.color};` : "")}
+
+  ${(props) => (props.textShadow ? `text-shadow: ${props.textShadow};` : "")}
 `;
 
 const SubSubtitle = styled.h2<{ color?: string }>`
