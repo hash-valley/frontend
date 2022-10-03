@@ -22,6 +22,8 @@ const VintHeader = styled(Header)`
   -webkit-background-clip: text;
 
   text-shadow: 64px 36px #957fef50, -72px -16px #b79ced50, 48px -48px #dec0f150;
+
+  animation: blueprint 3s infinite;
 `;
 
 const Info1 = styled(Page)`

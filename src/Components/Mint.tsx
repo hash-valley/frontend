@@ -32,6 +32,8 @@ const VintHeader = styled(Header)`
 
   text-shadow: -138px -68px #b2ef9b90, -102px -38px #a6d9f770,
     -48px -19px #dec0f150;
+
+  animation: vint 3s infinite;
 `;
 
 const ProgressContainer = styled.div`

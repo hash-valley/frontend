@@ -74,3 +74,45 @@ body {
   opacity: 1;
   transform: translate(0, 0);
 }
+
+@keyframes blueprint {
+  0% {
+    text-shadow: 64px 36px #957fef50, -72px -16px #b79ced50,
+      48px -48px #dec0f150;
+  }
+  18% {
+    text-shadow: 64px 36px #957fef50, 48px -48px #dec0f150;
+  }
+  30% {
+    text-shadow: -72px -16px #b79ced50, 48px -48px #dec0f150;
+  }
+  56% {
+    text-shadow: 64px 36px #957fef50, -72px -16px #b79ced50;
+  }
+  88% {
+    text-shadow: 64px 36px #957fef50, -72px -16px #b79ced50,
+      48px -48px #dec0f150;
+  }
+}
+
+@keyframes vint {
+  0% {
+    text-shadow: -102px -38px #a6d9f770, -48px -19px #dec0f150;
+  }
+  18% {
+    text-shadow: -138px -68px #b2ef9b90, -48px -19px #dec0f150;
+  }
+  30% {
+    text-shadow: -138px -68px #b2ef9b90, -102px -38px #a6d9f770;
+  }
+  56% {
+    text-shadow: -102px -38px #a6d9f770, -48px -19px #dec0f150;
+  }
+  88% {
+    text-shadow: -138px -68px #b2ef9b90, -48px -19px #dec0f150;
+  }
+  98% {
+    text-shadow: -138px -68px #b2ef9b90, -102px -38px #a6d9f770,
+      -48px -19px #dec0f150;
+  }
+}
