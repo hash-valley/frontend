@@ -43,10 +43,38 @@ class MyDocument extends Document {
           />
           <meta name="theme-color" content="#000000" />
           <meta name="description" content="Cultivate fine wines on Ethereum" />
-          <meta property="og:title" content="Hash Valley" />
+
+          <title>Hash Valley WInery</title>
+          <meta name="description" content="Cultivate fine wines on Ethereum" />
+
+          <meta property="og:url" content="https://testnet.hashvalley.xyz/" />
           <meta property="og:type" content="website" />
-          <meta property="og:image" content="/landscape.png" />
-          <meta property="og:url" content="https://www.hashvalley.xyz" />
+          <meta property="og:title" content="Hash Valley Winery" />
+          <meta
+            property="og:description"
+            content="Cultivate fine wines on Ethereum"
+          />
+          <meta
+            property="og:image"
+            content="https://testnet.hashvalley.xyz/landscape.png"
+          />
+
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta property="twitter:domain" content="testnet.hashvalley.xyz" />
+          <meta
+            property="twitter:url"
+            content="https://testnet.hashvalley.xyz/"
+          />
+          <meta name="twitter:title" content="Hash Valley Winery" />
+          <meta
+            name="twitter:description"
+            content="Cultivate fine wines on Ethereum"
+          />
+          <meta
+            name="twitter:image"
+            content="https://testnet.hashvalley.xyz/landscape.png"
+          />
+
           <link rel="apple-touch-icon" href="/logo192.png" />
           <link rel="manifest" href="/manifest.json" />
         </Head>
