@@ -35,12 +35,18 @@ class MyDocument extends Document {
         <Head>
           <link rel="icon" href="/favicon.ico" />
           <link rel="preload" href="/fancy-font.ttf" as="font" crossOrigin="" />
-          <link rel="preload" href="/NunitoSans-Regular.ttf" as="font" crossOrigin="" />
-          <meta name="theme-color" content="#000000" />
-          <meta
-            name="description"
-            content="Fine wines on the Ethereum blockchain"
+          <link
+            rel="preload"
+            href="/NunitoSans-Regular.ttf"
+            as="font"
+            crossOrigin=""
           />
+          <meta name="theme-color" content="#000000" />
+          <meta name="description" content="Cultivate fine wines on Ethereum" />
+          <meta property="og:title" content="Hash Valley" />
+          <meta property="og:type" content="website" />
+          <meta property="og:image" content="/landscape.png" />
+          <meta property="og:url" content="https://www.hashvalley.xyz" />
           <link rel="apple-touch-icon" href="/logo192.png" />
           <link rel="manifest" href="/manifest.json" />
         </Head>
