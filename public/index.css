@@ -87,7 +87,7 @@ body {
     text-shadow: -72px -16px #b79ced50, 48px -48px #dec0f150;
   }
   56% {
-    text-shadow: 64px 36px #957fef50, -72px -16px #b79ced50;
+    text-shadow: -72px -16px #957fef50, 64px 36px #b79ced50;
   }
   88% {
     text-shadow: 64px 36px #957fef50, -72px -16px #b79ced50,
@@ -97,22 +97,26 @@ body {
 
 @keyframes vint {
   0% {
-    text-shadow: -102px -38px #a6d9f770, -48px -19px #dec0f150;
-  }
-  18% {
-    text-shadow: -138px -68px #b2ef9b90, -48px -19px #dec0f150;
-  }
-  30% {
-    text-shadow: -138px -68px #b2ef9b90, -102px -38px #a6d9f770;
-  }
-  56% {
-    text-shadow: -102px -38px #a6d9f770, -48px -19px #dec0f150;
-  }
-  88% {
-    text-shadow: -138px -68px #b2ef9b90, -48px -19px #dec0f150;
-  }
-  98% {
     text-shadow: -138px -68px #b2ef9b90, -102px -38px #a6d9f770,
       -48px -19px #dec0f150;
+  }
+  16% {
+    text-shadow: -102px -38px #a6d9f770, -48px -19px #dec0f150;
+  }
+  32% {
+    text-shadow: -102px -38px #dec0f150, -48px -19px #a6d9f770;
+  }
+  48% {
+    text-shadow: -138px -68px #b2ef9b90, -48px -19px #a6d9f770;
+  }
+  64% {
+    text-shadow: -138px -68px #a6d9f770, -102px -38px #dec0f150;
+  }
+  80% {
+    text-shadow: -138px -68px #dec0f150, -102px -38px #b2ef9b90;
+  }
+  100% {
+    text-shadow: -138px -68px #a6d9f770, -102px -38px #dec0f150,
+      -48px -19px #b2ef9b90;
   }
 }
