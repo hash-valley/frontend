@@ -56,7 +56,7 @@ class MyDocument extends Document {
           />
           <meta
             property="og:image"
-            content="https://testnet.hashvalley.xyz/landscape.png"
+            content="https://hashvalley.xyz/landscape.png"
           />
 
           <meta name="twitter:card" content="summary_large_image" />
@@ -72,7 +72,7 @@ class MyDocument extends Document {
           />
           <meta
             name="twitter:image"
-            content="https://testnet.hashvalley.xyz/landscape.png"
+            content="https://hashvalley.xyz/landscape.png"
           />
 
           <link rel="apple-touch-icon" href="/logo192.png" />
