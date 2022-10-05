@@ -120,3 +120,15 @@ body {
       -48px -19px #b2ef9b90;
   }
 }
+
+@keyframes fallingsparkles {
+  from {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+
+  to {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+}

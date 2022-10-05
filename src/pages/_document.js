@@ -44,7 +44,6 @@ class MyDocument extends Document {
           <meta name="theme-color" content="#000000" />
           <meta name="description" content="Cultivate fine wines on Ethereum" />
 
-          <title>Hash Valley WInery</title>
           <meta name="description" content="Cultivate fine wines on Ethereum" />
 
           <meta property="og:url" content="https://testnet.hashvalley.xyz/" />
