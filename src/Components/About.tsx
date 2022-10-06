@@ -199,7 +199,7 @@ const About = () => {
           <ol>
             <li>Cultivate a vineyard of your choosing</li>
             <li>Discover rare vintages</li>
-            <li>Earn ETH sharing your art with the world</li>
+            <li>Remix the artwork - earn ETH</li>
           </ol>
         </SubSubtitle>
         <GridContainer>
@@ -218,8 +218,8 @@ const About = () => {
             </h2>
             <Explain>
               Grown from a well cared for Vineyard, these can be aged in the
-              Cellar and offer voting rights over artwork and secondary market
-              royalties.
+              Cellar and give you a say in who's remix you want to see featured
+              next
             </Explain>
           </InfoPanel>
           <InfoPanel>
@@ -227,9 +227,9 @@ const About = () => {
               <i>Council</i>
             </h2>
             <Explain>
-              Vote for the artwork you love or submit your own and claim all
-              secondary market royalties plus a special bonus for winning the
-              vote.
+              Remix the artwork to flex your gen art skills and claim all
+              secondary sale royalties + a special bonus or vote for your
+              favorite creator
             </Explain>
           </InfoPanel>
         </GridContainer>
@@ -282,9 +282,9 @@ const About = () => {
             </SubSubtitle>
             <SubSubtitle>
               Once you have a Wine Bottle take your chances aging it in the
-              cellar or propose a new artwork in the Council. Winners will have
-              their art featured for a minimum of 7 days and receive all
-              secondary market royalties.
+              cellar or post a remix in the Council. Winners will have their art
+              featured for a minimum of 7 days and receive all secondary market
+              royalties.
             </SubSubtitle>
             <SubSubtitle>
               Voting power comes from wine bottle age. Maximize this with the
@@ -371,15 +371,15 @@ const About = () => {
             },
             { text: "Mint out -> start first season", complete: false },
             {
-              text: "New artwork creation opens up to everyone",
+              text: "Alchemy becomes available for all users",
               complete: false,
             },
             {
-              text: "Create Snapshot page for community signaling on future expansions",
+              text: "Council opens up for creator remixes",
               complete: false,
             },
             {
-              text: "Engage generative artists to be featured",
+              text: "Snapshot page for community input on future expansions",
               complete: false,
             },
             {
