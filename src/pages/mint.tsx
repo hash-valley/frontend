@@ -56,7 +56,7 @@ const MintContainer = () => {
   const maxElev = (num: number) => locations[num].elevation[1];
 
   const startOver = async () => {
-    router.push("/");
+    router.push("/mintprogress");
   };
 
   const back = () => {

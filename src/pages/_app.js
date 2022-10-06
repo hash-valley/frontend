@@ -28,6 +28,9 @@ const AppContainer = styled.div`
 `;
 
 function MyApp({ Component, pageProps }) {
+  var red = 215;
+  var reverse = false;
+
   useEffect(() => {
     window.addEventListener(
       "mousemove",
@@ -47,13 +50,26 @@ function MyApp({ Component, pageProps }) {
           elem.style.left =
             e.pageX + Math.round(Math.random() * j - j / 2) + "px";
           elem.style.width = size;
-          elem.style.opacity = "0.5";
           elem.style.height = size;
           elem.style.animation = "fallingsparkles 1s";
-          elem.style.background = "purple";
+          elem.style.background = `rgb(${red}, 46, 129)`;
           elem.style.borderRadius = size;
           elem.style.pointerEvents = "none";
           document.body.appendChild(elem);
+
+          if (reverse) {
+            if (red > 216) {
+              reverse = false;
+            } else {
+              red += 0.2;
+            }
+          } else {
+            if (red < 100) {
+              reverse = true;
+            } else {
+              red -= 0.2;
+            }
+          }
 
           window.setTimeout(function () {
             document.body.removeChild(elem);

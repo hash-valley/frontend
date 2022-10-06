@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import styled from "styled-components";
 import { Page, Header, HeaderBack } from "../Styles/Components";
 import { useRouter } from "next/router";
@@ -18,7 +18,8 @@ const MintPage = styled(Page)`
   margin-top: 0px;
   margin-bottom: 1px;
   padding-top: 0.01px;
-  min-height: 100vh;
+
+  ${(props: MintProps) => (props.ownPage ? "" : "min-height: 100vh;")}
 `;
 
 const VintHeader = styled(Header)`
@@ -33,7 +34,7 @@ const VintHeader = styled(Header)`
   text-shadow: -138px -68px #b2ef9b90, -102px -38px #a6d9f770,
     -48px -19px #dec0f150;
 
-  animation: vint .6s infinite;
+  animation: vint 0.6s infinite;
 `;
 
 const ProgressContainer = styled.div`
@@ -118,7 +119,11 @@ const BonusText = styled.div`
   -webkit-text-fill-color: transparent;
 `;
 
-const Mint = () => {
+interface MintProps {
+  ownPage?: boolean;
+}
+
+const Mint: FC<MintProps> = ({ ownPage }) => {
   const { status, address } = useAccount();
   const router = useRouter();
   const protocol = useCurrSeason();
@@ -157,7 +162,7 @@ const Mint = () => {
   }, [protocol, data]);
 
   return (
-    <MintPage>
+    <MintPage ownPage={ownPage}>
       <HeaderBack>
         <VintHeader>The Vint</VintHeader>
       </HeaderBack>
