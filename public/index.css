@@ -97,23 +97,20 @@ body {
 
 @keyframes vint {
   0% {
-    text-shadow: -138px -68px #b2ef9b90, -102px -38px #a6d9f770,
+    text-shadow: -138px -68px #a6d9f770, -102px -38px #dec0f150,
+      -48px -19px #b2ef9b90;
+  }
+  25% {
+    text-shadow: -138px -68px #dec0f100, -102px -38px #b2ef9b90,
+      -48px -19px #a6d9f770;
+  }
+  50% {
+    text-shadow: -138px -68px #b2ef9b90, -102px -38px #a6d9f700,
       -48px -19px #dec0f150;
   }
-  16% {
-    text-shadow: -102px -38px #a6d9f770, -48px -19px #dec0f150;
-  }
-  32% {
-    text-shadow: -102px -38px #dec0f150, -48px -19px #a6d9f770;
-  }
-  48% {
-    text-shadow: -138px -68px #b2ef9b90, -48px -19px #a6d9f770;
-  }
-  64% {
-    text-shadow: -138px -68px #a6d9f770, -102px -38px #dec0f150;
-  }
-  80% {
-    text-shadow: -138px -68px #dec0f150, -102px -38px #b2ef9b90;
+  75% {
+    text-shadow: -138px -68px #a6d9f770, -102px -38px #dec0f150,
+      -48px -19px #b2ef9b00;
   }
   100% {
     text-shadow: -138px -68px #a6d9f770, -102px -38px #dec0f150,
