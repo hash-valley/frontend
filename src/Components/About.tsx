@@ -208,7 +208,7 @@ const About = () => {
             </h2>
             <Explain>
               Mintable tokens that yield Wine Bottles if they are planted,
-              watered and harvested every season.
+              watered and harvested every season
             </Explain>
           </InfoPanel>
           <InfoPanel>
@@ -217,7 +217,7 @@ const About = () => {
             </h2>
             <Explain>
               Grown from a carefully tended Vineyard, age it in the Cellar to
-              get a say in who&apos;s remix you want to see featured next
+              increase rarity and vote for the remix you want featured next
             </Explain>
           </InfoPanel>
           <InfoPanel>
@@ -225,9 +225,8 @@ const About = () => {
               <i>Council</i>
             </h2>
             <Explain>
-              Remix the artwork to flex your gen art skills and claim all
-              secondary sale royalties + a special bonus or vote for your
-              favorite creator
+              Remix the art to flex your skills and claim all secondary sale
+              royalties + a bonus or vote for your favorite creator
             </Explain>
           </InfoPanel>
         </GridContainer>
@@ -278,7 +277,7 @@ const About = () => {
             <SubSubtitle>
               With a Wine Bottle in hand take your chances aging in the cellar
               or submit a remix to the Council. Winners will be featured for 7+
-              days and receive all sale royalties.
+              days and receive all secondary royalties.
             </SubSubtitle>
             <SubSubtitle>
               Wine bottle age = Council clout. Maximize this with the Wine
