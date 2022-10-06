@@ -125,7 +125,6 @@ const ImageBox = styled.div`
   &:hover {
     transform: translate(-4px, -4px);
     transition: all 200ms ease-out;
-    box-shadow: 14px 14px #d6a7d2, 28px 28px #ffe7ff;
   }
 
   animation: shadow1 12s infinite;
@@ -217,9 +216,8 @@ const About = () => {
               <i>Wine Bottles</i>
             </h2>
             <Explain>
-              Grown from a well cared for Vineyard, these can be aged in the
-              Cellar and give you a say in who's remix you want to see featured
-              next
+              Grown from a carefully tended Vineyard, age it in the Cellar to
+              get a say in who&apos;s remix you want to see featured next
             </Explain>
           </InfoPanel>
           <InfoPanel>
@@ -240,7 +238,7 @@ const About = () => {
         <CustomGridContainer>
           <div>
             <SubSubtitle>
-              You&apos;ll need to have some ETH on{" "}
+              You&apos;ll need some ETH on{" "}
               <a
                 href="https://www.optimism.io"
                 target="_blank"
@@ -259,8 +257,7 @@ const About = () => {
               to move your assets over.
             </SubSubtitle>
             <SubSubtitle>
-              After obtaining a Vineyard from the <Link href="/mint">Mint</Link>{" "}
-              or on the{" "}
+              Get a Vineyard from the <Link href="/mint">Mint</Link> or{" "}
               <a
                 href={
                   process.env.NEXT_PUBLIC_CHAIN_ID === "420"
@@ -272,24 +269,21 @@ const About = () => {
               >
                 Secondary Market
               </a>
-              , wait for the next season to start, plant during the first week
-              of the season, water everyday (or buy a sprinkler) and then
-              harvest in the final week of the season.
+              . Plant during the first week of the season, water everyday (or
+              buy a sprinkler) then harvest in the final week.
             </SubSubtitle>
             <SubSubtitle>
-              Every season is 12 weeks long except for the first season which is
-              only three weeks!
+              Each season is 12 weeks except the first which is only three!
             </SubSubtitle>
             <SubSubtitle>
-              Once you have a Wine Bottle take your chances aging it in the
-              cellar or post a remix in the Council. Winners will have their art
-              featured for a minimum of 7 days and receive all secondary market
-              royalties.
+              With a Wine Bottle in hand take your chances aging in the cellar
+              or submit a remix to the Council. Winners will be featured for 7+
+              days and receive all sale royalties.
             </SubSubtitle>
             <SubSubtitle>
-              Voting power comes from wine bottle age. Maximize this with the
-              Wine Cellar&apos;s Hyperbolic Time Acceleration Technology&trade;
-              but keep an eye out - if you leave a bottle too long it may spoil.
+              Wine bottle age = Council clout. Maximize this with the Wine
+              Cellar&apos;s Hyperbolic Time Acceleration Technology&trade; but
+              stay sharp - leave a bottle too long and it may spoil.
             </SubSubtitle>
             <SubSubtitle>
               <a
@@ -344,7 +338,7 @@ const About = () => {
             </SubSubtitle>
             <SubSubtitle color="white">
               Defend your vineyards from attacks with $GRAPE or power up their
-              stats during planting season for increased yield and get ahead of
+              stats during planting season for increased yield to stay ahead of
               the competition
             </SubSubtitle>
           </div>
