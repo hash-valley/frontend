@@ -127,6 +127,23 @@ const ImageBox = styled.div`
     transition: all 200ms ease-out;
     box-shadow: 14px 14px #d6a7d2, 28px 28px #ffe7ff;
   }
+
+  animation: shadow1 12s infinite;
+
+  @keyframes shadow1 {
+    0% {
+      box-shadow: 10px 10px;
+    }
+    4% {
+      box-shadow: 14px 14px #d6a7d2, 28px 28px #ffe7ff;
+    }
+    50% {
+      box-shadow: 14px 14px #d6a7d2, 28px 28px #ffe7ff;
+    }
+    54% {
+      box-shadow: 10px 10px;
+    }
+  }
 `;
 
 const ImageBox2 = styled.div`
@@ -140,10 +157,26 @@ const ImageBox2 = styled.div`
   padding: 6px;
   transition: all 200ms ease-out;
 
+  animation: shadow 8s infinite;
+
   &:hover {
     transform: translate(4px, -4px);
     transition: all 200ms ease-out;
-    box-shadow: -14px 14px red, -28px 28px purple;
+  }
+
+  @keyframes shadow {
+    0% {
+      box-shadow: -10px 10px grey;
+    }
+    6% {
+      box-shadow: -14px 14px red, -28px 28px purple;
+    }
+    50% {
+      box-shadow: -14px 14px red, -28px 28px purple;
+    }
+    56% {
+      box-shadow: -10px 10px grey;
+    }
   }
 `;
 
