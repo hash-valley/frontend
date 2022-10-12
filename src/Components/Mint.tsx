@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import styled from "styled-components";
-import { Page, Header, HeaderBack } from "../Styles/Components";
+import { Page, Header, HeaderBack, GreyLink } from "../Styles/Components";
 import { useRouter } from "next/router";
 import { Button } from "antd";
 import { useCurrSeason } from "../Hooks/useCurrSeason";
@@ -119,9 +119,22 @@ const BonusText = styled.div`
   -webkit-text-fill-color: transparent;
 `;
 
+const PGF = styled.div`
+  margin: auto;
+  margin-top: 16px;
+  font-size: 1rem;
+  background: linear-gradient(to right, red, orange);
+  max-width: 300px;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+`;
+
 interface MintProps {
   ownPage?: boolean;
 }
+
+const pgfPercent = (minted: number, max: number) =>
+  (10 + 40 * (minted / max)).toFixed(5).replace(/0+$/, "").replace(/[.]+$/, "");
 
 const Mint: FC<MintProps> = ({ ownPage }) => {
   const { status, address } = useAccount();
@@ -231,6 +244,17 @@ const Mint: FC<MintProps> = ({ ownPage }) => {
             Use Merchant Token ({formatUnits(data.account.giveawayBalance)})
           </Button>
         )}
+
+      <div>
+        <PGF>
+          <GreyLink href="https://help.optimism.io/hc/en-us/sections/5608158618907-Public-Goods">
+            <a>
+              🔥{pgfPercent(minted, max)}% ➡ {pgfPercent(minted + 1, max)}%
+              donated to PGF 🔥
+            </a>
+          </GreyLink>
+        </PGF>
+      </div>
     </MintPage>
   );
 };
