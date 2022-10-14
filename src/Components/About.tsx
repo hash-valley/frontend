@@ -45,6 +45,9 @@ const Info3 = styled(Page)`
 
 const Info4 = styled(Page)`
   background-image: url("pgf_back.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
   margin-top: 0;
   padding-top: 5rem;
 `;
@@ -199,6 +202,23 @@ const ImageBox3 = styled.div`
   &:hover {
     transform: translate(-4px, -4px);
     transition: all 200ms ease-out;
+  }
+
+  animation: shadow3 12s infinite;
+
+  @keyframes shadow3 {
+    0% {
+      box-shadow: 10px 10px;
+    }
+    4% {
+      box-shadow: 14px 14px #60d0bf, 28px 28px #367bc8;
+    }
+    80% {
+      box-shadow: 14px 14px #60d0bf, 28px 28px #367bc8;
+    }
+    84% {
+      box-shadow: 10px 10px;
+    }
   }
 `;
 
