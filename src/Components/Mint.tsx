@@ -124,7 +124,7 @@ const PGF = styled.div`
   margin-top: 16px;
   font-size: 1rem;
   background: linear-gradient(to right, red, orange);
-  max-width: 300px;
+  max-width: 350px;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 `;
