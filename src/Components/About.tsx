@@ -43,6 +43,12 @@ const Info3 = styled(Page)`
   padding-top: 3.1rem;
 `;
 
+const Info4 = styled(Page)`
+  background-image: url("pgf_back.png");
+  margin-top: 0;
+  padding-top: 5rem;
+`;
+
 const InfoPanel = styled.div`
   padding: 12px;
   margin: 16px;
@@ -176,6 +182,23 @@ const ImageBox2 = styled.div`
     56% {
       box-shadow: -10px 10px grey;
     }
+  }
+`;
+
+const ImageBox3 = styled.div`
+  display: flex;
+  justify-content: center;
+  border: 0.5rem solid white;
+  box-shadow: 10px 10px;
+  margin: auto 24px;
+  background-color: white;
+  border-radius: 16px;
+  padding: 6px;
+  transition: all 200ms ease-out;
+
+  &:hover {
+    transform: translate(-4px, -4px);
+    transition: all 200ms ease-out;
   }
 `;
 
@@ -343,6 +366,41 @@ const About = () => {
           </div>
         </CustomGridContainer2>
       </Info3>
+
+      <Info4>
+        <Subtitle side="right">Retroactive Public Goods Funding</Subtitle>
+        <CustomGridContainer2>
+          <div>
+            <SubSubtitle>
+              <a
+                href="https://medium.com/ethereum-optimism/retroactive-public-goods-funding-33c9b7d00f0c"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Retroactive public goods funding
+              </a>{" "}
+              is a way to fund public goods without needing to bake in a profit
+              model
+            </SubSubtitle>
+            <SubSubtitle>
+              Every Hash Valley vineyard mint increases the portion of total
+              sales donated
+            </SubSubtitle>
+          </div>
+          <CenteredDiv>
+            <ImageBox3>
+              <FunImage
+                src="/pgf.jpeg"
+                alt="PGF"
+                height={351}
+                width={500}
+                unoptimized={true}
+                loading="eager"
+              />
+            </ImageBox3>
+          </CenteredDiv>
+        </CustomGridContainer2>
+      </Info4>
 
       <Info1>
         <Subtitle side="left">Roadmap</Subtitle>
