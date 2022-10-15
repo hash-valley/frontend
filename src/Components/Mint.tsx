@@ -134,7 +134,7 @@ interface MintProps {
 }
 
 const pgfPercent = (minted: number, max: number) =>
-  (10 + 40 * (minted / max)).toFixed(5).replace(/0+$/, "").replace(/[.]+$/, "");
+  (10 + 40 * (minted / max)).toFixed(4).replace(/0+$/, "").replace(/[.]+$/, "");
 
 const Mint: FC<MintProps> = ({ ownPage }) => {
   const { status, address } = useAccount();
