@@ -399,12 +399,27 @@ const About = () => {
               >
                 Retroactive public goods funding
               </a>{" "}
-              is a way to fund public goods without needing to bake in a profit
-              model
+              is a way to fund{" "}
+              <a
+                href="https://community.optimism.io/docs/governance/#impact-profit"
+                target="_blank"
+                rel="noreferrer"
+              >
+                public goods
+              </a>{" "}
+              without needing to bake in a profit model and its a critical part
+              of{" "}
+              <a
+                href="https://community.optimism.io/docs/governance/economics/#revenue-is-distributed-to-public-goods"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Optimism's economic model
+              </a>
             </SubSubtitle>
             <SubSubtitle>
               Every Hash Valley vineyard mint increases the portion of total
-              sales donated
+              sales donated directly to RPGF.eth
             </SubSubtitle>
           </div>
           <CenteredDiv>
