@@ -407,7 +407,7 @@ const About = () => {
               >
                 public goods
               </a>{" "}
-              without needing to bake in a profit model and its a critical part
+              without needing to bake in a profit model and is a critical part
               of{" "}
               <a
                 href="https://community.optimism.io/docs/governance/economics/#revenue-is-distributed-to-public-goods"
@@ -419,7 +419,14 @@ const About = () => {
             </SubSubtitle>
             <SubSubtitle>
               Every Hash Valley vineyard mint increases the portion of total
-              sales donated directly to retropgf.eth
+              sales donated directly to{" "}
+              <a
+                href="https://optimistic.etherscan.io/address/0x15DdA60616Ffca20371ED1659dBB78E888f65556"
+                target="_blank"
+                rel="noreferrer"
+              >
+                retropgf.eth
+              </a>
             </SubSubtitle>
           </div>
           <CenteredDiv>
