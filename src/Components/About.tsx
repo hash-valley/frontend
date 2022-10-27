@@ -419,7 +419,7 @@ const About = () => {
             </SubSubtitle>
             <SubSubtitle>
               Every Hash Valley vineyard mint increases the portion of total
-              sales donated directly to RPGF.eth
+              sales donated directly to retropgf.eth
             </SubSubtitle>
           </div>
           <CenteredDiv>
