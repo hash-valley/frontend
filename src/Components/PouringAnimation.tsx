@@ -53,8 +53,8 @@ export const PouringAnimation = () => {
     }
 
     gsap.to(`#glasslevel${step}`, {
-      y: -120,
-      duration: 3.5,
+      y: -100,
+      duration: 2.8,
       onComplete: () => {
         const stream = document.getElementById("stream");
         if (stream) {

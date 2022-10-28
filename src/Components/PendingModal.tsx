@@ -13,8 +13,9 @@ const customStyles = {
     bottom: "auto",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
-    padding: "60px 100px 0px 100px",
+    padding: "60px 80px 0px 80px",
     overflowY: "hidden",
+    maxWidth: "650px",
   },
 };
 
@@ -39,7 +40,7 @@ const PendingModal = () => {
           textAlign: "center",
           position: "relative",
           top: "-20px",
-          animation: "opacityPulse .8s infinite both alternate ease-in-out",
+          animation: "opacityPulse .7s infinite both alternate ease-in-out",
         }}
       >
         <i>&quot;{getMessage()}&quot;</i>

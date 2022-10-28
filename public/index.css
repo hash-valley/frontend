@@ -135,7 +135,7 @@ body {
     opacity: 1;
   }
   to {
-    opacity: 0.5;
+    opacity: 0.6;
   }
 }
 
@@ -151,7 +151,9 @@ body {
   position: relative;
   padding-block: 40px;
   transform: scale(0.8);
-  left: 20px;
+  left: calc(50% - 115px);
+
+  /* width: 215px; */
 }
 
 #glasspath1 {
