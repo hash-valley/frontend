@@ -35,10 +35,20 @@ const Footer = () => {
   return (
     <FooterContainer>
       <FooterLink href="https://twitter.com/hash_valley" target="_blank">
-        <Image src={`/twitter${darkMode ? '_dark' : ''}.svg`} alt="twitter" height={24} width={24} />
+        <Image
+          src={`/twitter${darkMode ? "_dark" : ""}.svg`}
+          alt="twitter"
+          height={24}
+          width={24}
+        />
       </FooterLink>
-      <FooterLink href="https://discord.gg/8E4ZVguE" target="_blank">
-        <Image src={`/discord${darkMode ? '_dark' : ''}.svg`} alt="discord" height={24} width={24} />
+      <FooterLink href="https://discord.gg/7MRymWsVhr" target="_blank">
+        <Image
+          src={`/discord${darkMode ? "_dark" : ""}.svg`}
+          alt="discord"
+          height={24}
+          width={24}
+        />
       </FooterLink>
       <FooterLink
         href={
@@ -48,7 +58,12 @@ const Footer = () => {
         }
         target="_blank"
       >
-        <Image src={`/qx${darkMode ? '_dark' : ''}.svg`} alt="quixotic" height={24} width={24} />
+        <Image
+          src={`/qx${darkMode ? "_dark" : ""}.svg`}
+          alt="quixotic"
+          height={24}
+          width={24}
+        />
       </FooterLink>
       <FooterLink
         href={
@@ -58,16 +73,31 @@ const Footer = () => {
         }
         target="_blank"
       >
-        <Image src={`/etherscan${darkMode ? '_dark' : ''}.svg`} alt="etherscan" height={24} width={24} />
+        <Image
+          src={`/etherscan${darkMode ? "_dark" : ""}.svg`}
+          alt="etherscan"
+          height={24}
+          width={24}
+        />
       </FooterLink>
       <FooterLink href="https://github.com/hash-valley" target="_blank">
-        <Image src={`/github${darkMode ? '_dark' : ''}.svg`} alt="github" height={24} width={24} />
+        <Image
+          src={`/github${darkMode ? "_dark" : ""}.svg`}
+          alt="github"
+          height={24}
+          width={24}
+        />
       </FooterLink>
       <FooterLink
         href="https://inathan-m.gitbook.io/hash-valley-winery/"
         target="_blank"
       >
-        <Image src={`/docs${darkMode ? '_dark' : ''}.svg`} alt="docs" height={24} width={24} />
+        <Image
+          src={`/docs${darkMode ? "_dark" : ""}.svg`}
+          alt="docs"
+          height={24}
+          width={24}
+        />
       </FooterLink>
     </FooterContainer>
   );

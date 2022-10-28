@@ -1,10 +1,6 @@
 import React, { useContext } from "react";
 import Modal from "react-modal";
-import {
-  PouringAnimation,
-  removeSteps,
-  resetGlassLevel,
-} from "./PouringAnimation";
+import { PouringAnimation } from "./PouringAnimation";
 import Image from "next/image";
 import { ModalContext } from "../Hooks/ModalProvider";
 import { getMessage } from "../Utils/constants";
@@ -29,8 +25,6 @@ const PendingModal = () => {
 
   function onRequestClose() {
     closeModal();
-    removeSteps();
-    resetGlassLevel();
   }
 
   return (

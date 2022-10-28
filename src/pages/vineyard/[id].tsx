@@ -186,11 +186,11 @@ const VineyardPage = () => {
       hash: tx.hash,
       description: `Buy sprinkler for Vineyard ${Number(id)}`,
     });
+    setRefetching(true);
     openModal();
     await tx.wait();
     closeModal();
 
-    setRefetching(true);
     setTimeout(() => refetch().then(() => setRefetching(false)), 2000);
   };
 
@@ -280,9 +280,13 @@ const VineyardPage = () => {
           ) : (
             <>
               <b>No Sprinkler</b>
-              <Button type="text" size="middle" onClick={sendBuySprinkler}>
-                Buy Sprinkler (0.01 Ξ)
-              </Button>
+              {refetching ? (
+                "..."
+              ) : (
+                <Button type="text" size="middle" onClick={sendBuySprinkler}>
+                  Buy Sprinkler (0.01 Ξ)
+                </Button>
+              )}
             </>
           )}
         </div>

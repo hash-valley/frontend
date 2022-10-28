@@ -1,14 +1,13 @@
 import gsap from "gsap";
-import { useContext, useEffect } from "react";
-import { ModalContext } from "../Hooks/ModalProvider";
+import { useEffect } from "react";
 
-export function removeSteps() {
+function removeSteps() {
   for (let i = 1; i <= 3; i++) {
     document.body.classList.remove(`step${i}`);
   }
 }
 
-export function resetGlassLevel() {
+function resetGlassLevel() {
   for (let i = 1; i <= 3; i++) {
     gsap.to(`#glasslevel${i}`, {
       y: 308,
@@ -16,19 +15,29 @@ export function resetGlassLevel() {
   }
 }
 
-export const PouringAnimation = () => {
-  const { modalIsOpen }: any = useContext(ModalContext);
+function delay(time: number) {
+  return new Promise((resolve) => setTimeout(resolve, time));
+}
 
-  function delay(time: number) {
-    return new Promise((resolve) => setTimeout(resolve, time));
-  }
+export const PouringAnimation = () => {
+  let isClosed = false;
+
+  useEffect(() => {
+    isClosed = false;
+    load(1);
+    return () => {
+      isClosed = true;
+      removeSteps();
+      resetGlassLevel();
+    };
+  }, []);
 
   async function hideStreamAndRestart(step: number) {
     document.body.classList.remove(`step${step}`);
 
     await delay(1000);
 
-    if (step < 3 && modalIsOpen) {
+    if (step < 3 && !isClosed) {
       load(step + 1);
     }
   }
@@ -55,10 +64,6 @@ export const PouringAnimation = () => {
       },
     });
   }
-
-  useEffect(() => {
-    load(1);
-  }, []);
 
   return (
     <div id="wine-container">
