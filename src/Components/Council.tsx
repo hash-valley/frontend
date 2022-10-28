@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useContext, useEffect, useState } from "react";
 import {
   Page,
   TokenFrame,
@@ -16,7 +16,7 @@ import { hours, minutes, seconds } from "../Utils/utils";
 import { BigNumber } from "ethers";
 import { useSigner } from "wagmi";
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
-import { toast } from "react-toastify";
+import { ModalContext } from "../Hooks/ModalProvider";
 
 const PaddedSuccess = styled(SuccessText)`
   margin: 0.8rem 0 1.6rem 0;
@@ -191,14 +191,18 @@ const InProgress: FC<any> = ({ uri, bottles, vineyards }) => {
     (bottle: any) => !uri.votes.includes(bottle.tokenId)
   );
 
+  const { openModal, closeModal }: any = useContext(ModalContext);
+
   const sendSupport = async () => {
     const tx = await support(signer, Number(bottleId), uri.type);
     addRecentTransaction({
       hash: tx.hash,
       description: `Support proposal with bottle ${Number(bottleId)}`,
     });
-    await tx.wait();
-    toast.success("Success!");
+
+    openModal()
+    await tx.wait()
+    closeModal()
   };
 
   const sendRetort = async () => {
@@ -207,15 +211,17 @@ const InProgress: FC<any> = ({ uri, bottles, vineyards }) => {
       hash: tx.hash,
       description: `Retort proposal with bottle ${Number(bottleId)}`,
     });
-    await tx.wait();
-    toast.success("Success!");
+    openModal()
+    await tx.wait()
+    closeModal()
   };
 
   const sendComplete = async () => {
     const tx = await complete(signer, uri.type);
     addRecentTransaction({ hash: tx.hash, description: "Complete proposal" });
-    await tx.wait();
-    toast.success("Success!");
+    openModal()
+    await tx.wait()
+    closeModal()
   };
 
   const previewFrame = (event: any) => {

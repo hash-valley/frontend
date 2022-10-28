@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import {
   Farmable,
@@ -35,7 +35,7 @@ import { locations, soilTypes } from "../../Utils/attributes";
 import { useAccount, useSigner } from "wagmi";
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
 import { getFarmingStatsMulti } from "../../Utils/multicall";
-import { toast } from "react-toastify";
+import { ModalContext } from "../../Hooks/ModalProvider";
 
 const VineyardPage = () => {
   const { address } = useAccount();
@@ -122,14 +122,18 @@ const VineyardPage = () => {
     refetch();
   }, [address, id]);
 
+  const { openModal, closeModal }: any = useContext(ModalContext);
+
   const sendWater = async () => {
     const tx = await water(signer, Number(id));
     addRecentTransaction({
       hash: tx.hash,
       description: `Water vineyard ${Number(id)}`,
     });
+    openModal();
     await tx.wait();
-    toast.success("Success!");
+    closeModal();
+
     setRefetching(true);
     setTimeout(() => refetch().then(() => setRefetching(false)), 2000);
   };
@@ -140,8 +144,10 @@ const VineyardPage = () => {
       hash: tx.hash,
       description: `Plant vineyard ${Number(id)}`,
     });
+    openModal();
     await tx.wait();
-    toast.success("Success!");
+    closeModal();
+
     setRefetching(true);
     setTimeout(() => refetch().then(() => setRefetching(false)), 2000);
   };
@@ -152,8 +158,10 @@ const VineyardPage = () => {
       hash: tx.hash,
       description: `Harvest vineyard ${Number(id)}`,
     });
+    openModal();
     await tx.wait();
-    toast.success("Success!");
+    closeModal();
+
     setRefetching(true);
     setTimeout(() => refetch().then(() => setRefetching(false)), 2000);
   };
@@ -164,8 +172,10 @@ const VineyardPage = () => {
       hash: tx.hash,
       description: `Harvest vineyard ${Number(id)}`,
     });
+    openModal();
     await tx.wait();
-    toast.success("Success!");
+    closeModal();
+
     setRefetching(true);
     setTimeout(() => refetch().then(() => setRefetching(false)), 2000);
   };
@@ -176,8 +186,10 @@ const VineyardPage = () => {
       hash: tx.hash,
       description: `Buy sprinkler for Vineyard ${Number(id)}`,
     });
+    openModal();
     await tx.wait();
-    toast.success("Success!");
+    closeModal();
+
     setRefetching(true);
     setTimeout(() => refetch().then(() => setRefetching(false)), 2000);
   };

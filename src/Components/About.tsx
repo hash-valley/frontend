@@ -414,7 +414,7 @@ const About = () => {
                 target="_blank"
                 rel="noreferrer"
               >
-                Optimism's economic model
+                Optimism&apos;s economic model
               </a>
             </SubSubtitle>
             <SubSubtitle>

@@ -3,9 +3,9 @@ import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
 import { Button, Select } from "antd";
 import { BigNumber } from "ethers";
 import { formatEther, parseEther } from "ethers/lib/utils";
-import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import { useContext, useEffect, useState } from "react";
 import { useAccount, useSigner } from "wagmi";
+import { ModalContext } from "../Hooks/ModalProvider";
 import { useCurrSeason } from "../Hooks/useCurrSeason";
 import {
   AlchemyBack,
@@ -86,6 +86,7 @@ const Alchemy = () => {
   });
 
   useEffect(() => setTime(Math.floor(Date.now() / 1000)), [spell]);
+  const { openModal, closeModal }: any = useContext(ModalContext);
 
   const cast = async (target: number) => {
     const tx = await castSpell(signer, target, spell);
@@ -93,8 +94,9 @@ const Alchemy = () => {
       hash: tx.hash,
       description: `Cast ${spellName(spell)} on ${target}`,
     });
-    await tx.wait();
-    toast.success("Success!");
+    openModal()
+    await tx.wait()
+    closeModal()
   };
 
   const spellCost = (target: number) => {

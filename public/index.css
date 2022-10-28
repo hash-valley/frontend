@@ -129,3 +129,100 @@ body {
     opacity: 0;
   }
 }
+
+@keyframes opacityPulse {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.5;
+  }
+}
+
+:root {
+  --glass-width: 263px;
+  --bottle-start-posx: -330px;
+  --bottle-positionx: -78px;
+  --bottle-gapx: 66px;
+  --bottle-rotation: 60deg;
+}
+
+#wine-container {
+  position: relative;
+  padding-block: 40px;
+  transform: scale(0.8);
+  left: 20px;
+}
+
+#glasspath1 {
+  transform: translate(var(--bottle-start-posx), -130px);
+}
+
+#glasspath2 {
+  --bottle-posx: calc(var(--bottle-start-posx) + var(--glass-width));
+  transform: translate(var(--bottle-posx), -130px);
+}
+
+#glasspath3 {
+  --bottle-posx: calc(
+    var(--bottle-start-posx) + var(--glass-width) + var(--glass-width)
+  );
+  transform: translate(var(--bottle-posx), -130px);
+}
+
+#glass2 {
+  transform: translateX(33%);
+}
+
+#glass3 {
+  transform: translateX(66%);
+}
+
+#wine-bottle {
+  position: absolute;
+  bottom: 65px;
+  transform: translateX(var(--bottle-positionx)) rotate(0);
+  transform-origin: center left;
+  transition: 0.3s transform ease-in-out;
+}
+
+.step1 #wine-bottle {
+  --new-bottle-positionx: var(--bottle-positionx);
+  transform: translateX(var(--new-bottle-positionx))
+    rotate(var(--bottle-rotation));
+}
+
+.step2 #wine-bottle {
+  --new-bottle-positionx: calc(var(--bottle-positionx) + var(--bottle-gapx));
+  transform: translateX(var(--new-bottle-positionx))
+    rotate(var(--bottle-rotation));
+}
+
+.step3 #wine-bottle {
+  --new-bottle-gapx: calc(var(--bottle-gapx) + var(--bottle-gapx));
+  --new-bottle-positionx: calc(
+    var(--bottle-positionx) + var(--new-bottle-gapx)
+  );
+
+  transform: translateX(var(--new-bottle-positionx))
+    rotate(var(--bottle-rotation));
+}
+
+#stream-container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: auto;
+}
+
+#stream {
+  visibility: hidden;
+}
+
+.step2 #stream rect {
+  x: 80;
+}
+
+.step3 #stream rect {
+  x: 145;
+}

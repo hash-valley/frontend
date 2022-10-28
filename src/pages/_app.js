@@ -19,7 +19,10 @@ import { chains, wagmiClient } from "../Utils/rainbowWallet";
 import { apolloClient } from "../Utils/apollo";
 import { chainId } from "../Utils/constants";
 import Feedback from "../Components/Feedback";
-import { useEffect } from "react";
+
+import React, { useEffect } from "react";
+import { ModalProvider } from "../Hooks/ModalProvider";
+import PendingModal from "../Components/PendingModal";
 
 const AppContainer = styled.div`
   text-align: center;
@@ -91,15 +94,19 @@ function MyApp({ Component, pageProps }) {
             learnMoreUrl: "https://www.hashvalley.xyz/about",
           }}
         >
-          <AppContainer>
-            <Head>
-              <title>Hash Valley Winery</title>
-            </Head>
-            <Account />
-            <Component {...pageProps} />
-            <ToastContainer position="bottom-right" />
-            {chainId !== 10 && <Feedback />}
-          </AppContainer>
+          <ModalProvider>
+            <AppContainer>
+              <Head>
+                <title>Hash Valley Winery</title>
+              </Head>
+              <Account />
+              <Component {...pageProps} />
+              <ToastContainer position="bottom-right" />
+              {chainId !== 10 && <Feedback />}
+              <PendingModal />
+            </AppContainer>
+          </ModalProvider>
+
           <Footer />
         </RainbowKitProvider>
       </WagmiConfig>

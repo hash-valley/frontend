@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Page, CenteredSelect } from "../../Styles/Components";
 import { Input, Button } from "antd";
 import { useQuery } from "@apollo/client";
@@ -14,6 +14,7 @@ import { toast } from "react-toastify";
 import { DAY } from "../../Utils/constants";
 import { useRouter } from "next/router";
 import { pinHashToIPFS } from "../../Utils/pinata";
+import { ModalContext } from "../../Hooks/ModalProvider";
 
 const ProposalInput = styled(Input)`
   max-width: 32rem;
@@ -81,6 +82,8 @@ const NewProposal = () => {
     }
     return false;
   };
+
+  const { openModal, closeModal }: any = useContext(ModalContext);
 
   const sendProposal = async () => {
     setOpen(false);
@@ -150,8 +153,9 @@ const NewProposal = () => {
         hash: tx.hash,
         description: `Create ${pType} proposal with bottle ${Number(bottleId)}`,
       });
+      openModal();
       await tx.wait();
-      toast.success("Success!");
+      closeModal();
       router.push(`/council/${pType.toLowerCase()}`);
     }
   };

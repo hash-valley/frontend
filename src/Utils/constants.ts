@@ -37,3 +37,14 @@ export enum SPELL {
   DEFEND,
   VITALIZE,
 }
+
+const messages = [
+  "That'll be right along",
+  "Very good sir",
+  "Just a moment",
+  "Pip pip",
+  "Yes, quite",
+];
+
+export const getMessage = () =>
+  messages[Math.floor(Math.random() * messages.length)];

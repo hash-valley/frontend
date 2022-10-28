@@ -1,3 +1,4 @@
 import Mint from "../Components/Mint";
 
-export default () => Mint({ ownPage: true });
+const MintProgress = () => Mint({ ownPage: true });
+export default MintProgress;

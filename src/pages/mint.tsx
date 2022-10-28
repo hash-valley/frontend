@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { locations, soilTypes } from "../Utils/attributes";
 import { newVineyards, newVineyardsGiveaway } from "../Utils/vineyardContract";
 import { giveawayBalance } from "../Utils/giveawayToken";
@@ -13,7 +13,6 @@ import styled from "styled-components";
 import { useCurrSeason } from "../Hooks/useCurrSeason";
 import { useAccount, useNetwork, useSigner } from "wagmi";
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
-import { toast } from "react-toastify";
 import MintSketch from "../Components/MintSketch";
 import { chainId, DECIMALS } from "../Utils/constants";
 import { useRouter } from "next/router";
@@ -21,6 +20,7 @@ import { formatUnits } from "ethers/lib/utils";
 import { useQuery } from "@apollo/client";
 import { FREE_MINT_QUERY } from "../Utils/queries";
 import { BigNumber } from "ethers";
+import { ModalContext } from "../Hooks/ModalProvider";
 
 const Step = styled.div`
   margin-top: 32px;
@@ -89,6 +89,8 @@ const MintContainer = () => {
     setElev(event.target.value);
   };
 
+  const { openModal, closeModal }: any = useContext(ModalContext);
+
   const mint = async () => {
     const tx = await newVineyards(
       [city, elev, soil],
@@ -96,8 +98,11 @@ const MintContainer = () => {
       protocol.currentPrice
     );
     addRecentTransaction({ hash: tx.hash, description: "Mint new vineyard" });
+
+    openModal();
     await tx.wait();
-    toast.success("Success!");
+    closeModal();
+
     //@ts-ignore
     setMintHash(tx?.hash);
   };
@@ -108,8 +113,11 @@ const MintContainer = () => {
       hash: tx.hash,
       description: "Mint new vineyard with Merchant token",
     });
+
+    openModal();
     await tx.wait();
-    toast.success("Success!");
+    closeModal();
+
     //@ts-ignore
     setMintHash(tx?.hash);
   };

@@ -28,7 +28,6 @@ export const castSpell = async (wallet: any, target: number, spell: SPELL) => {
         tx = await contractWithSigner.vitality(target);
         break;
     }
-    toast.info("Transaction sent");
     return tx;
   } catch (err: any) {
     console.error(err);
