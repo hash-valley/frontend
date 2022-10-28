@@ -89,14 +89,19 @@ const Alchemy = () => {
   const { openModal, closeModal }: any = useContext(ModalContext);
 
   const cast = async (target: number) => {
+    openModal();
     const tx = await castSpell(signer, target, spell);
+    if (!tx) {
+      closeModal();
+      return;
+    }
     addRecentTransaction({
       hash: tx.hash,
       description: `Cast ${spellName(spell)} on ${target}`,
     });
-    openModal()
-    await tx.wait()
-    closeModal()
+
+    await tx.wait();
+    closeModal();
   };
 
   const spellCost = (target: number) => {

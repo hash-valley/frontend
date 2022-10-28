@@ -128,6 +128,7 @@ const NewProposal = () => {
     }
 
     if (!errors) {
+      openModal();
       let tx;
       toast.info(
         "Pinning to IPFS (artwork may take a few minutes to appear on the council page)"
@@ -149,11 +150,15 @@ const NewProposal = () => {
         );
         tx = await suggest(signer, Number(bottleId), cid, address, "BOTTLE");
       }
+      if (!tx) {
+      closeModal();
+      return;
+    }
       addRecentTransaction({
         hash: tx.hash,
         description: `Create ${pType} proposal with bottle ${Number(bottleId)}`,
       });
-      openModal();
+
       await tx.wait();
       closeModal();
       router.push(`/council/${pType.toLowerCase()}`);

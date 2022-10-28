@@ -117,51 +117,71 @@ const BottlePage = () => {
   const { openModal, closeModal }: any = useContext(ModalContext);
 
   const sendStake = async () => {
+    openModal();
     const tx = await stake(signer, Number(id));
+    if (!tx) {
+      closeModal();
+      return;
+    }
     addRecentTransaction({
       hash: tx.hash,
       description: `Stake bottle ${Number(id)}`,
     });
-    openModal()
-    await tx.wait()
-    closeModal()
-    
+
+    await tx.wait();
+    closeModal();
+
     setTimeout(refetch, 2000);
   };
 
   const sendWithdraw = async () => {
+    openModal();
     const tx = await withdraw(signer, Number(id));
+    if (!tx) {
+      closeModal();
+      return;
+    }
     addRecentTransaction({
       hash: tx.hash,
       description: `Withdraw bottle ${Number(id)}`,
     });
-    openModal()
-    await tx.wait()
-    closeModal()
+
+    await tx.wait();
+    closeModal();
 
     setTimeout(refetch, 2000);
   };
 
   const sendRejuve = async () => {
+    openModal();
     const tx = await rejuvenate(signer, Number(id));
+    if (!tx) {
+      closeModal();
+      return;
+    }
     addRecentTransaction({
       hash: tx.hash,
       description: `Rejuvenate bottle ${Number(id)}`,
     });
-    openModal()
-    await tx.wait()
-    closeModal()
-    
+
+    await tx.wait();
+    closeModal();
+
     setTimeout(refetch, 2000);
   };
 
   const sendApproveCellar = async () => {
+    openModal();
     const tx = await approveCellar(signer);
+    if (!tx) {
+      closeModal();
+      return;
+    }
     addRecentTransaction({ hash: tx.hash, description: "Approve cellar" });
-    openModal()
-    await tx.wait()
-    closeModal()
-    
+
+    await tx.wait();
+    closeModal();
+
     setTimeout(
       async () => setIsApproved(await isCellarApproved(data.bottle.owner.id)),
       2000

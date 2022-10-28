@@ -85,36 +85,46 @@ const AccountPage = () => {
   const { openModal, closeModal }: any = useContext(ModalContext);
 
   const sendPlantMultiple = async () => {
+    openModal();
     let tokens = data.account.vineyards.filter(
       (e: any, i: number) => farmables[i].canPlant
     );
     let ids: string[] = tokens.map((t: any) => t.tokenId);
     const tx = await plantMultiple(signer, ids);
+    if (!tx) {
+      closeModal();
+      return;
+    }
     addRecentTransaction({
       hash: tx.hash,
       description: "Plant multiple vineyards",
     });
-    openModal()
-    await tx.wait()
-    closeModal()
-    
+
+    await tx.wait();
+    closeModal();
+
     setTimeout(refetch, 2000);
   };
 
   const sendWaterMultiple = async () => {
+    openModal();
     let tokens = data.account.vineyards.filter(
       (e: any, i: number) => farmables[i].canWater
     );
     let ids: string[] = tokens.map((t: any) => t.tokenId);
     const tx = await waterMultiple(signer, ids);
+    if (!tx) {
+      closeModal();
+      return;
+    }
     addRecentTransaction({
       hash: tx.hash,
       description: "Water multiple vineyards",
     });
-    openModal()
-    await tx.wait()
-    closeModal()
-    
+
+    await tx.wait();
+    closeModal();
+
     setTimeout(refetch, 2000);
   };
 
@@ -128,7 +138,7 @@ const AccountPage = () => {
       hash: tx.hash,
       description: "Harvest multiple vineyards",
     });
-    
+
     setTimeout(refetch, 2000);
   };
 

@@ -125,12 +125,17 @@ const VineyardPage = () => {
   const { openModal, closeModal }: any = useContext(ModalContext);
 
   const sendWater = async () => {
+    openModal();
     const tx = await water(signer, Number(id));
+    if (!tx) {
+      closeModal();
+      return;
+    }
     addRecentTransaction({
       hash: tx.hash,
       description: `Water vineyard ${Number(id)}`,
     });
-    openModal();
+
     await tx.wait();
     closeModal();
 
@@ -139,12 +144,17 @@ const VineyardPage = () => {
   };
 
   const sendPlant = async () => {
+    openModal();
     const tx = await plant(signer, Number(id));
+    if (!tx) {
+      closeModal();
+      return;
+    }
     addRecentTransaction({
       hash: tx.hash,
       description: `Plant vineyard ${Number(id)}`,
     });
-    openModal();
+
     await tx.wait();
     closeModal();
 
@@ -153,12 +163,17 @@ const VineyardPage = () => {
   };
 
   const sendHarvest = async () => {
+    openModal();
     const tx = await harvest(signer, Number(id));
+    if (!tx) {
+      closeModal();
+      return;
+    }
     addRecentTransaction({
       hash: tx.hash,
       description: `Harvest vineyard ${Number(id)}`,
     });
-    openModal();
+
     await tx.wait();
     closeModal();
 
@@ -167,12 +182,17 @@ const VineyardPage = () => {
   };
 
   const sendHarvestGrapes = async () => {
+    openModal();
     const tx = await harvestGrapes(signer, Number(id));
+    if (!tx) {
+      closeModal();
+      return;
+    }
     addRecentTransaction({
       hash: tx.hash,
       description: `Harvest vineyard ${Number(id)}`,
     });
-    openModal();
+
     await tx.wait();
     closeModal();
 
@@ -181,17 +201,22 @@ const VineyardPage = () => {
   };
 
   const sendBuySprinkler = async () => {
+    openModal();
     const tx = await buySprinkler(signer, Number(id));
+    if (!tx) {
+      closeModal();
+      return;
+    }
     addRecentTransaction({
       hash: tx.hash,
       description: `Buy sprinkler for Vineyard ${Number(id)}`,
     });
     setRefetching(true);
-    openModal();
+
     await tx.wait();
     closeModal();
 
-    setTimeout(() => refetch().then(() => setRefetching(false)), 2000);
+    setTimeout(() => refetch().then(() => setRefetching(false)), 10000);
   };
 
   const harvestFailureChance = (remaining: number, harvested: number) => {

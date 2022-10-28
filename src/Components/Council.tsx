@@ -194,34 +194,48 @@ const InProgress: FC<any> = ({ uri, bottles, vineyards }) => {
   const { openModal, closeModal }: any = useContext(ModalContext);
 
   const sendSupport = async () => {
+    openModal();
     const tx = await support(signer, Number(bottleId), uri.type);
+    if (!tx) {
+      closeModal();
+      return;
+    }
     addRecentTransaction({
       hash: tx.hash,
       description: `Support proposal with bottle ${Number(bottleId)}`,
     });
 
-    openModal()
-    await tx.wait()
-    closeModal()
+    await tx.wait();
+    closeModal();
   };
 
   const sendRetort = async () => {
+    openModal();
     const tx = await retort(signer, Number(bottleId), uri.type);
+    if (!tx) {
+      closeModal();
+      return;
+    }
     addRecentTransaction({
       hash: tx.hash,
       description: `Retort proposal with bottle ${Number(bottleId)}`,
     });
-    openModal()
-    await tx.wait()
-    closeModal()
+
+    await tx.wait();
+    closeModal();
   };
 
   const sendComplete = async () => {
+    openModal();
     const tx = await complete(signer, uri.type);
+    if (!tx) {
+      closeModal();
+      return;
+    }
     addRecentTransaction({ hash: tx.hash, description: "Complete proposal" });
-    openModal()
-    await tx.wait()
-    closeModal()
+
+    await tx.wait();
+    closeModal();
   };
 
   const previewFrame = (event: any) => {

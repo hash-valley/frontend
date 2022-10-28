@@ -92,14 +92,18 @@ const MintContainer = () => {
   const { openModal, closeModal }: any = useContext(ModalContext);
 
   const mint = async () => {
+    openModal();
     const tx = await newVineyards(
       [city, elev, soil],
       signer,
       protocol.currentPrice
     );
+    if (!tx) {
+      closeModal();
+      return;
+    }
     addRecentTransaction({ hash: tx.hash, description: "Mint new vineyard" });
 
-    openModal();
     await tx.wait();
     closeModal();
 
@@ -108,13 +112,17 @@ const MintContainer = () => {
   };
 
   const mintGiveaway = async () => {
+    openModal();
     const tx = await newVineyardsGiveaway([city, elev, soil], signer);
+    if (!tx) {
+      closeModal();
+      return;
+    }
     addRecentTransaction({
       hash: tx.hash,
       description: "Mint new vineyard with Merchant token",
     });
 
-    openModal();
     await tx.wait();
     closeModal();
 
