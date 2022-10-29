@@ -16,6 +16,7 @@ const customStyles = {
     padding: "60px 80px 0px 80px",
     overflowY: "hidden",
     maxWidth: "650px",
+    minWidth: "420px",
   },
 };
 
