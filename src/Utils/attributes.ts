@@ -184,6 +184,15 @@ export const soilTypes = [
   {
     name: "Mulch",
   },
+  {
+    name: "Mycelium",
+  },
+  {
+    name: "Loamy",
+  },
+  {
+    name: "Chalky",
+  },
 ];
 
 export const bottleTypes = [
