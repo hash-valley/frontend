@@ -23,7 +23,7 @@ const Container = styled.div`
 
   padding: 32px;
   width: 518px;
-  margin: auto;
+  margin: -64px auto auto auto;
   user-select: none;
 
   border-radius: 13px;
@@ -42,13 +42,19 @@ const HText1 = styled.span`
 `;
 
 const HText2 = styled.span`
-  background: linear-gradient(to right, #1da93a, #349c78);
+  background: linear-gradient(to right, #1da93a, #a4d43a);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 `;
 
 const HText3 = styled.span`
   background: linear-gradient(to right, #e01948, #c04edd);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+`;
+
+const HText4 = styled.span`
+  background: linear-gradient(to right, #53c8b6, #367bc8);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 `;
@@ -69,10 +75,14 @@ const ComingSoon = () => {
           dynamic <HText3>interactive</HText3> digital art
         </h2>
         <h2>
+          retroactive <HText4>public goods funding</HText4>
+        </h2>
+        <h2>
           <TwitterLink href="https://twitter.com/hash_valley">
             &#10140; twitter
           </TwitterLink>
         </h2>
+
         <h2 className="loading">mint event loading</h2>
       </Container>
     </Page>
