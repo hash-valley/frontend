@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import { Button } from "antd";
+import { useState, useEffect, useContext } from "react";
 import { locations, soilTypes } from "../Utils/attributes";
 import { newVineyards, newVineyardsGiveaway } from "../Utils/vineyardContract";
 import { giveawayBalance } from "../Utils/giveawayToken";
@@ -14,9 +13,14 @@ import styled from "styled-components";
 import { useCurrSeason } from "../Hooks/useCurrSeason";
 import { useAccount, useNetwork, useSigner } from "wagmi";
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
-import { toast } from "react-toastify";
 import MintSketch from "../Components/MintSketch";
-import { chainId } from "../Utils/constants";
+import { chainId, DECIMALS } from "../Utils/constants";
+import { useRouter } from "next/router";
+import { formatUnits } from "ethers/lib/utils";
+import { useQuery } from "@apollo/client";
+import { FREE_MINT_QUERY } from "../Utils/queries";
+import { BigNumber } from "ethers";
+import { ModalContext } from "../Hooks/ModalProvider";
 
 const Step = styled.div`
   margin-top: 32px;
@@ -26,10 +30,14 @@ const Sign = styled.div`
   margin: 32px 0 12px 0;
 `;
 
+const revealedAt = (i: number) =>
+  i === 15 ? 500 : i === 16 ? 2500 : i === 17 ? 5000 : 5500;
+
 const MintContainer = () => {
   const { address, status } = useAccount();
   const { data: signer } = useSigner();
   const { chain } = useNetwork();
+  const router = useRouter();
   const addRecentTransaction = useAddRecentTransaction();
   const protocol = useCurrSeason();
   const [step, setStep] = useState(0);
@@ -38,19 +46,17 @@ const MintContainer = () => {
   const [soil, setSoil] = useState(0);
   const [mintHash, setMintHash] = useState("");
 
-  const [giveBal, setGiveBal] = useState("0");
-
-  useEffect(() => checkGiveaway(), [address]);
+  const { data } = useQuery(FREE_MINT_QUERY, {
+    variables: {
+      userAddress: address?.toLowerCase() ?? "",
+    },
+  });
 
   const minElev = (num: number) => locations[num].elevation[0];
   const maxElev = (num: number) => locations[num].elevation[1];
 
-  const startOver = () => {
-    setMintHash("");
-    setStep(0);
-    setCity(0);
-    setElev(0);
-    setSoil(0);
+  const startOver = async () => {
+    router.push("/mintprogress");
   };
 
   const back = () => {
@@ -58,7 +64,13 @@ const MintContainer = () => {
     if (step == 0) setElev(Math.floor((minElev(city) + maxElev(city)) / 2));
   };
 
-  const selectCity = (num: number) => {
+  const selectCity = (num: number, bonus: boolean) => {
+    if (
+      bonus &&
+      BigNumber.from(data?.account?.giveawayBalance ?? 0).lt(DECIMALS)
+    )
+      return;
+    if (num > protocol.locales) return;
     setCity(num);
     setStep(1);
     setElev(Math.floor((minElev(num) + maxElev(num)) / 2));
@@ -71,39 +83,56 @@ const MintContainer = () => {
 
   const selectSoil = () => {
     setStep(3);
-    checkGiveaway();
-  };
-
-  const checkGiveaway = () => {
-    if (status === "connected" && address) {
-      giveawayBalance(address!).then((val) => setGiveBal(val));
-    }
   };
 
   const handleElev = (event: any) => {
     setElev(event.target.value);
   };
 
+  const { openModal, closeModal }: any = useContext(ModalContext);
+
   const mint = async () => {
-    const tx = await newVineyards([city, elev, soil], signer, address!);
+    openModal();
+    const tx = await newVineyards(
+      [city, elev, soil],
+      signer,
+      protocol.currentPrice
+    );
+    if (!tx) {
+      closeModal();
+      return;
+    }
     addRecentTransaction({ hash: tx.hash, description: "Mint new vineyard" });
+
     await tx.wait();
-    toast.success("Success!");
+    closeModal();
+
     //@ts-ignore
     setMintHash(tx?.hash);
   };
 
   const mintGiveaway = async () => {
+    openModal();
     const tx = await newVineyardsGiveaway([city, elev, soil], signer);
+    if (!tx) {
+      closeModal();
+      return;
+    }
     addRecentTransaction({
       hash: tx.hash,
-      description: "Mint new vineyard with token",
+      description: "Mint new vineyard with Merchant token",
     });
+
     await tx.wait();
-    toast.success("Success!");
+    closeModal();
+
     //@ts-ignore
     setMintHash(tx?.hash);
   };
+
+  const checkMerchantToken = () =>
+    BigNumber.from(data?.account?.giveawayBalance ?? 0).gte(DECIMALS) &&
+    (protocol.mintedVineyards >= 1000 || city > 14);
 
   return (
     <Page>
@@ -125,26 +154,63 @@ const MintContainer = () => {
             affect the notes on the bottles you harvest
           </p>
           <GridContainer>
-            {locations.map((loc, index) => (
-              <GridItem key={loc.name} onClick={() => selectCity(index)}>
-                <RoundedImg
-                  src={`/thumbnails/vineyards/${index}.png`}
-                  height={120}
-                  width={120}
-                />
-                <div>{loc.name}</div>
-                <div>{loc.climate.name}</div>
-              </GridItem>
-            ))}
+            {locations.map((loc, index) =>
+              loc.bonus ? (
+                <GridItem
+                  key={loc.name}
+                  onClick={() => selectCity(index, true)}
+                >
+                  <RoundedImg
+                    src={
+                      index <= protocol.locales
+                        ? `/thumbnails/vineyards/${index}.png`
+                        : `/thumbnails/vineyards/question.png`
+                    }
+                    height={120}
+                    width={120}
+                    unoptimized={true}
+                  />
+                  {index <= protocol.locales ? (
+                    <>
+                      <div>{loc.name}</div>
+                      <div>{loc.climate.name}</div>
+                    </>
+                  ) : (
+                    <>
+                      <br />
+                      <i>Revealed at {revealedAt(index)} mints</i>
+                      <br />
+                    </>
+                  )}
+                  <i>Merchant Token required</i>
+                </GridItem>
+              ) : (
+                <GridItem
+                  key={loc.name}
+                  onClick={() => selectCity(index, false)}
+                >
+                  <RoundedImg
+                    src={`/thumbnails/vineyards/${index}.png`}
+                    height={120}
+                    width={120}
+                    unoptimized={true}
+                  />
+                  <div>{loc.name}</div>
+                  <div>{loc.climate.name}</div>
+                </GridItem>
+              )
+            )}
           </GridContainer>
         </Step>
       ) : step == 1 ? (
         <Step>
           <h3>Select Elevation</h3>
           <p>
-            At low elevations you&apos;re more likely to harvest red and white
-            wines. At higher elevations you&apos;re more likely to get sparkling
-            and rosés
+            {city < 15
+              ? `At low elevations you're more likely to harvest red and white
+            wines. At higher elevations you're more likely to get sparkling
+            and rosés`
+              : `Special locations have their own set of wines they and only they can grow`}
           </p>
           <br />
           {minElev(city) != maxElev(city) && (
@@ -263,20 +329,25 @@ const MintContainer = () => {
                       type="primary"
                       shape="round"
                       onClick={mint}
+                      disabled={city >= 15}
                     >
                       Mint
                     </Spaced>
                   )}
-                  {BigInt(giveBal) >= 1e18 ? (
-                    <Spaced
-                      size="large"
-                      type="primary"
-                      shape="round"
-                      onClick={mintGiveaway}
-                    >
-                      Use Giveaway Token
-                    </Spaced>
-                  ) : null}
+                  <>
+                    <br />
+                    {checkMerchantToken() && (
+                      <Spaced
+                        size="large"
+                        type="primary"
+                        shape="round"
+                        onClick={mintGiveaway}
+                      >
+                        Use Merchant Token (
+                        {formatUnits(data.account.giveawayBalance)})
+                      </Spaced>
+                    )}
+                  </>
                 </>
               ) : (
                 <p>Please switch networks in your wallet to continue</p>

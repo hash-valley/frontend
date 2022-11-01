@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import {
   bottleAge,
@@ -40,7 +40,7 @@ import { BigNumber } from "ethers";
 import { useAccount, useSigner } from "wagmi";
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
 import { formatEther } from "ethers/lib/utils";
-import { toast } from "react-toastify";
+import { ModalContext } from "../../Hooks/ModalProvider";
 
 const BottlePage = () => {
   const { status, address } = useAccount();
@@ -114,44 +114,74 @@ const BottlePage = () => {
     refetch();
   }, [status, id]);
 
+  const { openModal, closeModal }: any = useContext(ModalContext);
+
   const sendStake = async () => {
+    openModal();
     const tx = await stake(signer, Number(id));
+    if (!tx) {
+      closeModal();
+      return;
+    }
     addRecentTransaction({
       hash: tx.hash,
       description: `Stake bottle ${Number(id)}`,
     });
+
     await tx.wait();
-    toast.success("Success!");
+    closeModal();
+
     setTimeout(refetch, 2000);
   };
 
   const sendWithdraw = async () => {
+    openModal();
     const tx = await withdraw(signer, Number(id));
+    if (!tx) {
+      closeModal();
+      return;
+    }
     addRecentTransaction({
       hash: tx.hash,
       description: `Withdraw bottle ${Number(id)}`,
     });
+
     await tx.wait();
-    toast.success("Success!");
+    closeModal();
+
     setTimeout(refetch, 2000);
   };
 
   const sendRejuve = async () => {
+    openModal();
     const tx = await rejuvenate(signer, Number(id));
+    if (!tx) {
+      closeModal();
+      return;
+    }
     addRecentTransaction({
       hash: tx.hash,
       description: `Rejuvenate bottle ${Number(id)}`,
     });
+
     await tx.wait();
-    toast.success("Success!");
+    closeModal();
+
     setTimeout(refetch, 2000);
   };
 
   const sendApproveCellar = async () => {
+    openModal();
     const tx = await approveCellar(signer);
+    if (!tx) {
+      closeModal();
+      return;
+    }
     addRecentTransaction({ hash: tx.hash, description: "Approve cellar" });
+
     await tx.wait();
-    toast.success("Success!");
+    closeModal();
+
     setTimeout(
       async () => setIsApproved(await isCellarApproved(data.bottle.owner.id)),
       2000

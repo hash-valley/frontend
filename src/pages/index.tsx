@@ -69,10 +69,14 @@ const Hero = styled(Page)`
   height: 100vh;
 `;
 
+const VintHeader = styled(Header)`
+  margin: 10rem auto 7rem auto;
+`;
+
 const Splash = () => {
   const handleClick = () => {
     window.scrollTo({
-      top: window.visualViewport.height,
+      top: window.visualViewport?.height,
       behavior: "smooth",
     });
   };
@@ -88,7 +92,7 @@ const Splash = () => {
               width={220}
             />
           </LeftCorner>
-          <Header>Hash Valley</Header>
+          <VintHeader>Hash Valley</VintHeader>
           <RightCorner>
             <Image
               src="/vine_svgs/right_corner.svg"

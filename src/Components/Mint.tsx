@@ -1,14 +1,41 @@
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import styled from "styled-components";
-import { Page, Header } from "../Styles/Components";
+import { Page, Header, HeaderBack, GreyLink } from "../Styles/Components";
 import { useRouter } from "next/router";
 import { Button } from "antd";
 import { useCurrSeason } from "../Hooks/useCurrSeason";
-import { giveawayBalance } from "../Utils/giveawayToken";
-import { BigNumber } from "ethers";
-import { parseUnits } from "ethers/lib/utils";
+import { BigNumber, utils } from "ethers";
 import { useAccount } from "wagmi";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { useQuery } from "@apollo/client";
+import { FREE_MINT_QUERY } from "../Utils/queries";
+import { DECIMALS } from "../Utils/constants";
+import { formatUnits } from "ethers/lib/utils";
+
+const MintPage = styled(Page)`
+  margin: 10rem auto 7rem auto;
+
+  margin-top: 0px;
+  margin-bottom: 1px;
+  padding-top: 0.01px;
+
+  ${(props: MintProps) => (props.ownPage ? "" : "min-height: 100vh;")}
+`;
+
+const VintHeader = styled(Header)`
+  padding: 18px;
+  max-width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  background: linear-gradient(to right, purple, red);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+
+  text-shadow: -138px -68px #b2ef9b90, -102px -38px #a6d9f770,
+    -48px -19px #dec0f150;
+
+  animation: vint 0.6s infinite;
+`;
 
 const ProgressContainer = styled.div`
   padding: 7px;
@@ -71,60 +98,87 @@ const ProgressBar = styled.span`
   animation: progress-animation 2s linear infinite;
 `;
 
-const PromoText = styled.i`
-  color: green;
-`;
-
-const OldPrice = styled.i`
-  color: red;
-  text-decoration: line-through;
-`;
-
 const Centered = styled.div`
   margin: auto;
   margin-left: calc(50% - 67px);
 `;
 
-const Mint = () => {
+const BonusText = styled.div`
+  margin: auto;
+  max-width: 275px;
+  background: linear-gradient(
+    to right,
+    #ef5350,
+    #f48fb1,
+    #7e57c2,
+    #2196f3,
+    #26c6da,
+    #43a047
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+`;
+
+const PGF = styled.div`
+  margin: auto;
+  margin-top: 16px;
+  font-size: 1rem;
+  background: linear-gradient(to right, red, orange);
+  max-width: 350px;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+`;
+
+interface MintProps {
+  ownPage?: boolean;
+}
+
+const pgfPercent = (minted: number, max: number) =>
+  (10 + 40 * (minted / max)).toFixed(4).replace(/0+$/, "").replace(/[.]+$/, "");
+
+const Mint: FC<MintProps> = ({ ownPage }) => {
   const { status, address } = useAccount();
   const router = useRouter();
   const protocol = useCurrSeason();
   const [minted, setMinted] = useState(0);
   const [max, setMax] = useState(Infinity);
-  const [price, setPrice] = useState(0.07);
-  const [hasGive, setHasGive] = useState(false);
-  const [hasDiscount, setHasDiscount] = useState(false);
+  const [price, setPrice] = useState("0.0");
+  const [canMint, setCanMint] = useState(false);
+
+  const { loading, data, refetch } = useQuery(FREE_MINT_QUERY, {
+    variables: {
+      userAddress: address?.toLowerCase() ?? "",
+    },
+  });
 
   useEffect(() => {
-    if (status === "connected" && address) {
-      giveawayBalance(address!).then((val) =>
-        setHasGive(val.gte(BigNumber.from(parseUnits("1.0"))))
-      );
-      fetch(`/api/merkle?address=${address}`).then(async (res) => {
-        let rj = await res.json();
-        setHasDiscount(rj.hasClaim);
-        setPrice(rj.hasClaim ? 0.04 : 0.07);
-      });
-    } else {
-      setHasGive(false);
+    async function reload() {
+      await protocol.update();
+      await refetch();
     }
-  }, [status]);
+    reload();
+  }, [router.query.slug]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const supply = protocol.mintedVineyards;
-      setMinted(supply);
-      if (supply < 100) {
-        setPrice(0);
-      }
+    if (protocol.bottle && max === Infinity) {
+      setMinted(protocol.mintedVineyards);
+      setPrice(utils.formatEther(protocol.currentPrice));
       setMax(protocol.maxVineyards);
-    };
-    if (protocol) fetchData();
-  }, [protocol]);
+    }
+    if (!loading) {
+      setCanMint(
+        protocol.mintedVineyards >= 1000 ||
+          data.account === null ||
+          data?.account?.vineyards.length < 5
+      );
+    }
+  }, [protocol, data]);
 
   return (
-    <Page>
-      <Header>The Vint</Header>
+    <MintPage ownPage={ownPage}>
+      <HeaderBack>
+        <VintHeader>The Vint</VintHeader>
+      </HeaderBack>
       <ProgressContainer>
         <Progress>
           <ProgressBar
@@ -136,23 +190,25 @@ const Mint = () => {
       <h3>
         {minted} / {max} vineyards minted
       </h3>
-      {price == 0 ? (
+      {minted < 1000 ? (
         <h3>
-          <i>{100 - minted} free vineyards remaining (then 0.07 Ξ/mint)</i>
+          <p>{1000 - minted} free vineyards remaining then 0.01 Ξ</p>
+          <p>-</p>
+          <i>
+            You&apos;ve claimed {data?.account?.vineyards.length ?? 0} / 5 free
+            vineyards
+          </i>
         </h3>
       ) : (
         minted < max && (
           <h3>
-            {hasDiscount ? (
-              <>
-                <OldPrice>0.07 Ξ</OldPrice>
-                <PromoText> {price} Ξ - Milady Pricing!</PromoText>
-              </>
-            ) : (
-              <i>{price} Ξ</i>
-            )}
+            <p>{price} Ξ</p>
+            <i>Price increases 0.01 Ξ every 500 mints</i>
           </h3>
         )
+      )}
+      {minted >= 5000 && (
+        <BonusText>Bonus: 5000 $GRAPE, 5000 $VINEGAR</BonusText>
       )}
       <br />
       <br />
@@ -164,6 +220,7 @@ const Mint = () => {
               shape="round"
               size="large"
               onClick={() => router.push(`/mint`)}
+              disabled={!canMint}
             >
               Mint
             </Button>
@@ -176,17 +233,29 @@ const Mint = () => {
       ) : (
         <h2>All Vineyards have been minted!</h2>
       )}
-      {minted >= max && hasGive && (
-        <Button
-          type="primary"
-          shape="round"
-          size="large"
-          onClick={() => router.push(`/mint`)}
-        >
-          <i>Use Giveaway Token</i>
-        </Button>
-      )}
-    </Page>
+      {minted >= max &&
+        BigNumber.from(data?.account?.giveawayBalance ?? 0).gte(DECIMALS) && (
+          <Button
+            type="primary"
+            shape="round"
+            size="large"
+            onClick={() => router.push(`/mint`)}
+          >
+            Use Merchant Token ({formatUnits(data.account.giveawayBalance)})
+          </Button>
+        )}
+
+      <div>
+        <PGF>
+          <GreyLink href="https://medium.com/ethereum-optimism/retroactive-public-goods-funding-33c9b7d00f0c">
+            <a target="_blank" rel="noreferrer">
+              🔥{pgfPercent(minted, max)}% &#10140;{" "}
+              {pgfPercent(minted + 1, max)}% donated to PGF 🔥
+            </a>
+          </GreyLink>
+        </PGF>
+      </div>
+    </MintPage>
   );
 };
 

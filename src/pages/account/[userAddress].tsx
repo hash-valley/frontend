@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import {
   Farmable,
@@ -16,13 +16,14 @@ import {
   SuccessText,
   Spaced,
   RoundedImg,
+  Tag,
 } from "../../Styles/Components";
 import { locations, soilTypes } from "../../Utils/attributes";
 import { formatEther } from "ethers/lib/utils";
 import { useAccount, useSigner } from "wagmi";
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
 import { getFarmingStatsMulti } from "../../Utils/multicall";
-import { toast } from "react-toastify";
+import { ModalContext } from "../../Hooks/ModalProvider";
 
 interface Mults {
   canWater: number;
@@ -81,33 +82,49 @@ const AccountPage = () => {
     refetch();
   }, [userAddress]);
 
+  const { openModal, closeModal }: any = useContext(ModalContext);
+
   const sendPlantMultiple = async () => {
+    openModal();
     let tokens = data.account.vineyards.filter(
       (e: any, i: number) => farmables[i].canPlant
     );
     let ids: string[] = tokens.map((t: any) => t.tokenId);
     const tx = await plantMultiple(signer, ids);
+    if (!tx) {
+      closeModal();
+      return;
+    }
     addRecentTransaction({
       hash: tx.hash,
       description: "Plant multiple vineyards",
     });
+
     await tx.wait();
-    toast.success("Success!");
+    closeModal();
+
     setTimeout(refetch, 2000);
   };
 
   const sendWaterMultiple = async () => {
+    openModal();
     let tokens = data.account.vineyards.filter(
       (e: any, i: number) => farmables[i].canWater
     );
     let ids: string[] = tokens.map((t: any) => t.tokenId);
     const tx = await waterMultiple(signer, ids);
+    if (!tx) {
+      closeModal();
+      return;
+    }
     addRecentTransaction({
       hash: tx.hash,
       description: "Water multiple vineyards",
     });
+
     await tx.wait();
-    toast.success("Success!");
+    closeModal();
+
     setTimeout(refetch, 2000);
   };
 
@@ -121,8 +138,7 @@ const AccountPage = () => {
       hash: tx.hash,
       description: "Harvest multiple vineyards",
     });
-    await tx.wait();
-    toast.success("Success!");
+
     setTimeout(refetch, 2000);
   };
 
@@ -141,9 +157,13 @@ const AccountPage = () => {
             {data.account.vineyards.length} Vineyard
             {data.account.vineyards.length === 1 ? "" : "s"},{" "}
             {data.account.bottles.length} Bottle
-            {data.account.bottles.length === 1 ? "" : "s"} and{" "}
-            {formatNum(formatEther(data.account.vinegarBalance))} Vinegar
+            {data.account.bottles.length === 1 ? "" : "s"},{" "}
+            {formatNum(formatEther(data.account.vinegarBalance))} Vinegar and{" "}
+            {formatNum(formatEther(data.account.grapeBalance))} Grapes
           </h2>
+          {data.account.earlySupporter && (
+            <Tag color="purple">Early Supporter</Tag>
+          )}
           <div>
             {view == "bottles" && (
               <div>
@@ -248,9 +268,7 @@ const AccountPage = () => {
                   <RoundedImg
                     src={
                       token.attributes[0] === 3
-                        ? `/thumbnails/bottles/${
-                            token.attributes[0] + token.attributes[1]
-                          }.png`
+                        ? `/thumbnails/bottles/${token.attributes[0]}-${token.attributes[1]}.png`
                         : `/thumbnails/bottles/${token.attributes[0]}.png`
                     }
                     height={120}

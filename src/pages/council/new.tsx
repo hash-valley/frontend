@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Page, CenteredSelect } from "../../Styles/Components";
 import { Input, Button } from "antd";
 import { useQuery } from "@apollo/client";
@@ -14,6 +14,7 @@ import { toast } from "react-toastify";
 import { DAY } from "../../Utils/constants";
 import { useRouter } from "next/router";
 import { pinHashToIPFS } from "../../Utils/pinata";
+import { ModalContext } from "../../Hooks/ModalProvider";
 
 const ProposalInput = styled(Input)`
   max-width: 32rem;
@@ -82,6 +83,8 @@ const NewProposal = () => {
     return false;
   };
 
+  const { openModal, closeModal }: any = useContext(ModalContext);
+
   const sendProposal = async () => {
     setOpen(false);
     let errors = false;
@@ -125,6 +128,7 @@ const NewProposal = () => {
     }
 
     if (!errors) {
+      openModal();
       let tx;
       toast.info(
         "Pinning to IPFS (artwork may take a few minutes to appear on the council page)"
@@ -146,12 +150,17 @@ const NewProposal = () => {
         );
         tx = await suggest(signer, Number(bottleId), cid, address, "BOTTLE");
       }
+      if (!tx) {
+      closeModal();
+      return;
+    }
       addRecentTransaction({
         hash: tx.hash,
         description: `Create ${pType} proposal with bottle ${Number(bottleId)}`,
       });
+
       await tx.wait();
-      toast.success("Success!");
+      closeModal();
       router.push(`/council/${pType.toLowerCase()}`);
     }
   };

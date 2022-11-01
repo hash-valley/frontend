@@ -1,18 +1,24 @@
 import { getDefaultWallets } from "@rainbow-me/rainbowkit";
 import { chain, configureChains, createClient } from "wagmi";
-import { alchemyProvider } from "wagmi/providers/alchemy";
-import { publicProvider } from "wagmi/providers/public";
-import { chainId, alchemyKey } from "../Utils/constants";
+import { chainId, providerUrl } from "../Utils/constants";
+import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
 
 export const { chains, provider, webSocketProvider } = configureChains(
   [
     chainId === 10
       ? chain.optimism
-      : chainId === 69
-      ? chain.optimismKovan
+      : chainId === 420
+      ? chain.optimismGoerli
       : chain.hardhat,
   ],
-  [alchemyProvider({ apiKey: alchemyKey }), publicProvider()]
+  [
+    jsonRpcProvider({
+      rpc: (_) => ({
+        http: providerUrl,
+        webSocket: `wss${providerUrl.slice(5)}`,
+      }),
+    }),
+  ]
 );
 
 const { connectors } = getDefaultWallets({

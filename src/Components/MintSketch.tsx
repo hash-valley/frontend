@@ -17,6 +17,13 @@ const MintSketch: React.FC<any> = ({
   let numVines = 20;
   let vines: any = [];
   let cloudX = -200;
+  let cloudY = 550;
+  if (vine_location == 16 || vine_location == 17) {
+    cloudY = -200;
+  }
+  if (vine_location == 17) {
+    numVines = 40;
+  }
   let trainX = -200;
   let width = 600;
   let height = 600;
@@ -46,23 +53,46 @@ const MintSketch: React.FC<any> = ({
       x;
       y;
       constructor(i: number) {
-        if (i < numVines / 2) {
-          this.x = 100 + i * 40;
-          this.y = 500;
+        if (vine_location < 17) {
+          if (i < numVines / 2) {
+            this.x = 100 + i * 40;
+            this.y = 500;
+          } else {
+            this.x = -300 + i * 40;
+            this.y = 550;
+          }
         } else {
-          this.x = -300 + i * 40;
-          this.y = 550;
+          if (i < 20) {
+            this.x = -4 + i * 40;
+            this.y = 500;
+          } else {
+            this.x = -4 + (i - 20) * 40;
+            this.y = 550;
+          }
         }
       }
 
+      fillNextColor() {
+        p5.fill(
+          `rgb(${parseInt(p5.random(0, 255))},${parseInt(
+            p5.random(0, 255)
+          )},${parseInt(p5.random(0, 255))})`
+        );
+      }
+
       display() {
-        p5.fill("#594300");
-        p5.rect(this.x, this.y, 8, 32);
+        if (vine_location < 17) {
+          p5.fill("#594300");
+          p5.rect(this.x, this.y, 8, 32);
+        }
 
         p5.fill("#268415");
         p5.ellipse(this.x + 4, this.y + 7, 24, 24);
 
-        p5.fill("#c013ed");
+        if (vine_location == 15) p5.fill("#B8ECFF");
+        else if (vine_location == 16) p5.fill("#FC61D0");
+        else if (vine_location == 17) this.fillNextColor();
+        else p5.fill("#c013ed");
         p5.ellipse(this.x + 4, this.y + 7, 16, 16);
 
         p5.fill("#268415");
@@ -70,8 +100,15 @@ const MintSketch: React.FC<any> = ({
       }
     }
 
-    for (let i = 0; i < numVines; i++) {
-      vines[i] = new Vineyard(i);
+    if (vine_location < 17) {
+      for (let i = 0; i < numVines; i++) {
+        vines[i] = new Vineyard(i);
+      }
+    } else {
+      for (let i = 0; i < 40; i++) {
+        vines[i] = new Vineyard(i);
+      }
+      numVines = 40;
     }
 
     function timeOfDay() {
@@ -99,6 +136,9 @@ const MintSketch: React.FC<any> = ({
       else if (vine_soil == 3) p5.fill("#0b6707");
       else if (vine_soil == 4) p5.fill("#00952f");
       else if (vine_soil == 5) p5.fill("#c5b973");
+      else if (vine_soil == 6) p5.fill("#e8afa1");
+      else if (vine_soil == 7) p5.fill("#2d2921");
+      else if (vine_soil == 8) p5.fill("#f1eae3");
 
       p5.rect(0, h, width, height);
     }
@@ -158,9 +198,15 @@ const MintSketch: React.FC<any> = ({
       p5.noStroke();
     }
 
-    function mHeight(h: any) {
-      let elev_factor = p5.map(vine_elevation, -6000, 30000, 0, 1);
-      return elev_factor * (1 - h) + h;
+    function mHeight(h: any, big = false) {
+      let elev_factor;
+      if (big) {
+        elev_factor = p5.map(vine_elevation, 117406080, 8448000, 0, 1);
+        return elev_factor * h + 12;
+      } else {
+        elev_factor = p5.map(vine_elevation, -6000, 25000, 0, 1);
+        return (1 - elev_factor) * h;
+      }
     }
 
     function doTerrain() {
@@ -230,6 +276,10 @@ const MintSketch: React.FC<any> = ({
 
         p5.fill("#CCD8D9");
         p5.triangle(200, 325, 450, 250, 800, 325);
+
+        // hot air balloon
+        balloon(120, 130, "rgb(238,81,81)");
+        balloon(470, 155, "rgb(237,241,161)");
       } else if (vine_location == 3) {
         //denali
         doGround(275);
@@ -245,6 +295,11 @@ const MintSketch: React.FC<any> = ({
         p5.triangle(100, 425, 320, mHeight(425), 600, 425);
         p5.fill("#416C6C");
         p5.triangle(-200, 425, 0, mHeight(425), 400, 425);
+
+        // glaciers
+        p5.fill("rgb(209,248,241)");
+        p5.quad(60, 600, 30, 470, -10, 450, -10, 600);
+        p5.quad(540, 600, 570, 470, 610, 450, 610, 600);
       } else if (vine_location == 4) {
         //madeira
         doGround(375);
@@ -314,6 +369,36 @@ const MintSketch: React.FC<any> = ({
         p5.triangle(200, 325, 450, mHeight(250), 800, 325);
         p5.fill("#2a9720");
         p5.triangle(-200, 325, 40, mHeight(305), 400, 325);
+
+        // trees
+        tree(74, 315, 22, 16);
+        tree(104, 319, 22, 16);
+        tree(118, 326, 22, 16);
+        tree(132, 316, 22, 16);
+        tree(162, 324, 22, 14);
+        tree(188, 316, 18, 24);
+        tree(238, 316, 29, 16);
+        tree(258, 322, 22, 26);
+        tree(288, 316, 26, 16);
+        tree(318, 316, 24, 18);
+        tree(358, 316, 19, 16);
+        tree(374, 336, 24, 24);
+
+        tree(104, 319, 22, 16);
+        tree(455, 335, 22, 14);
+        tree(335, 325, 32, 16);
+        tree(215, 315, 16, 18);
+        tree(535, 325, 42, 15);
+        tree(525, 315, 32, 21);
+        tree(515, 345, 31, 22);
+        tree(535, 325, 32, 16);
+        tree(475, 342, 32, 12);
+        tree(425, 335, 32, 16);
+        tree(410, 315, 32, 19);
+        tree(465, 315, 22, 16);
+        tree(575, 315, 38, 16);
+        tree(565, 345, 55, 23);
+        tree(585, 365, 26, 25);
       } else if (vine_location == 10) {
         //ohio
         doGround(325);
@@ -328,6 +413,26 @@ const MintSketch: React.FC<any> = ({
         p5.triangle(200, 325, 450, mHeight(250), 800, 325);
         p5.fill("#7cc67c");
         p5.triangle(-100, 345, 80, mHeight(250), 345, 345);
+
+        // trees
+        tree(14, 335, 22, 21);
+        tree(34, 345, 22, 18);
+        tree(54, 340, 22, 17);
+        tree(84, 340, 22, 25);
+        tree(112, 333, 22, 16);
+
+        tree(455, 335, 22, 14);
+        tree(335, 325, 32, 16);
+        tree(535, 325, 42, 15);
+        tree(525, 315, 32, 21);
+        tree(515, 345, 31, 22);
+        tree(535, 325, 32, 16);
+        tree(475, 342, 26, 12);
+        tree(425, 335, 23, 16);
+        tree(410, 315, 32, 19);
+        tree(465, 315, 22, 16);
+        tree(575, 315, 38, 16);
+
         p5.fill("#53c454");
         p5.triangle(-200, 420, 210, mHeight(420), 1000, 420);
       } else if (vine_location == 12) {
@@ -338,6 +443,11 @@ const MintSketch: React.FC<any> = ({
         p5.triangle(-200, 325, 40, mHeight(310), 400, 325);
         p5.fill("#657165");
         p5.triangle(200, 325, 450, mHeight(250), 800, 325);
+
+        // pagoda lol
+        pagoda(490, 305);
+        pagoda(50, 290);
+        pagoda(270, 345);
       } else if (vine_location == 13) {
         //long island
         doGround(325);
@@ -407,6 +517,52 @@ const MintSketch: React.FC<any> = ({
         p5.triangle(-80, 325, 150, mHeight(320), 500, 325);
         p5.fill("#998e9f");
         p5.triangle(200, 325, 450, mHeight(320), 800, 325);
+
+        //windmill
+        windmill(500, 360);
+        windmill(200, 300);
+      } else if (vine_location == 15) {
+        //atlantis
+        doGround(425);
+
+        p5.fill("#875e91");
+        p5.triangle(-240, 425, 150, mHeight(280), 500, 425);
+        p5.fill("#70abd0");
+        p5.triangle(200, 425, 450, mHeight(380), 900, 425);
+
+        p5.fill("#875e91");
+        p5.ellipse(41, 464, 22, 22);
+        p5.fill("#4b4153");
+        p5.ellipse(34, 514, 32, 32);
+        p5.fill("#a8d9cf");
+        p5.ellipse(15, 515, 32, 32);
+        p5.fill("#4b4153");
+        p5.ellipse(415, 478, 28, 28);
+        p5.fill("#e9ef15");
+        p5.ellipse(199, 456, 20, 20);
+        p5.fill("#e6859b");
+        p5.ellipse(214, 452, 20, 20);
+        p5.fill("#e9ef15");
+        p5.ellipse(539, 488, 34, 34);
+        p5.fill("#9267b7");
+        p5.ellipse(518, 492, 34, 34);
+        p5.fill("#54e7cb");
+        p5.ellipse(560, 504, 28, 28);
+        p5.fill("#e6859b");
+        p5.ellipse(472, 438, 16, 16);
+        p5.fill("#39d175");
+        p5.ellipse(372, 442, 17, 17);
+        p5.fill("#a8d9cf");
+        p5.ellipse(378, 448, 17, 17);
+        p5.fill("#9f344a");
+        p5.ellipse(283, 466, 19, 19);
+      } else if (vine_location == 16) {
+        //secret
+        doGround(460);
+        p5.fill("#6AC8EF");
+        p5.ellipse(440, 150, mHeight(128, true), mHeight(128, true));
+      } else if (vine_location == 17) {
+        //secret
       }
     }
 
@@ -441,35 +597,221 @@ const MintSketch: React.FC<any> = ({
       p5.ellipse(x, y, 48, 48);
     }
 
+    function doBubbles() {
+      p5.fill(256, 125);
+      let x1s = [
+        cloudY + 74,
+        cloudY + 135,
+        cloudY + 40,
+        cloudY + 17,
+        cloudY,
+        cloudY + 55,
+        cloudY + 145,
+        cloudY + 95,
+      ];
+
+      bubble(x1s[0], 78);
+      bubble(x1s[1], 123);
+      bubble(x1s[2], 168);
+      bubble(x1s[3], 341);
+      bubble(x1s[4], 412);
+      bubble(x1s[5], 434);
+      bubble(x1s[6], 565);
+      bubble(x1s[7], 590);
+    }
+
+    function bubble(y: any, x: any) {
+      p5.fill(256, 125);
+      p5.ellipse(x, y, 64, 64);
+
+      p5.fill("rgba(193,254,255, 0.25)");
+      p5.ellipse(x - 15, y - 15, 12, 12);
+    }
+
+    function doComet() {
+      if (vine_location == 16) p5.fill("#white");
+      // else p5.fill("#black");
+      p5.ellipse(cloudX, cloudY, 12, 12);
+      p5.triangle(
+        cloudX - 4,
+        cloudY + 2,
+        cloudX + 4,
+        cloudY - 2,
+        cloudX - 64,
+        cloudY - 64
+      );
+    }
+
     function manor() {
-      p5.fill("#e9edc5"); // white
-      p5.rect(95, 415, 80, 70);
+      if (vine_location <= 14) {
+        p5.fill("#e9edc5"); // white
+        p5.rect(95, 415, 80, 70);
 
-      p5.fill(0); // black
-      p5.rect(105, 425, 8, 15);
-      p5.rect(131, 425, 8, 15);
-      p5.rect(157, 425, 8, 15);
-      p5.rect(128.5, 470, 15, 15);
+        p5.fill(0); // black
+        p5.rect(105, 425, 8, 15);
+        p5.rect(131, 425, 8, 15);
+        p5.rect(157, 425, 8, 15);
+        p5.rect(128.5, 470, 15, 15);
 
-      p5.fill("#e96161"); //red
-      p5.rect(95, 450, 80, 4);
-      p5.quad(85, 415, 100, 405, 170, 405, 185, 415);
+        p5.fill("#e96161"); //red
+        p5.rect(95, 450, 80, 4);
+        p5.quad(85, 415, 100, 405, 170, 405, 185, 415);
+      } else if (vine_location == 15) {
+        p5.fill("#DDED0E"); // white
+        p5.rect(95, 415, 80, 70);
+
+        p5.fill(0); // black
+        p5.rect(105, 425, 8, 15);
+        p5.rect(131, 425, 8, 15);
+        p5.rect(157, 425, 8, 15);
+        p5.rect(128.5, 470, 15, 15);
+
+        p5.fill("#f58f30"); //red
+        p5.rect(95, 450, 80, 4);
+        p5.quad(85, 415, 100, 405, 170, 405, 185, 415);
+      } else if (vine_location == 16) {
+        p5.fill("#e9edc5"); // white
+        p5.rect(95, 415, 80, 70);
+
+        p5.fill(0); // black
+        p5.rect(105, 425, 8, 15);
+        p5.rect(131, 425, 8, 15);
+        p5.rect(157, 425, 8, 15);
+        p5.rect(128.5, 470, 15, 15);
+
+        p5.fill("#e96161"); //red
+        p5.rect(95, 450, 80, 4);
+        p5.quad(85, 415, 100, 405, 170, 405, 185, 415);
+
+        p5.fill("rgba(88,198,241,0.41)");
+        p5.ellipse(300, 600, 700, 700);
+      } else if (vine_location == 17) {
+        p5.fill("#e96161"); //red
+        p5.ellipse(300, 300, 140, 140);
+
+        p5.fill("#e9edc5"); // white
+        p5.ellipse(300, 300, 120, 120);
+
+        p5.fill("#e96161"); //red
+        p5.ellipse(300, 300, 100, 100);
+
+        p5.fill("#e9edc5"); // white
+        p5.ellipse(300, 300, 80, 80);
+
+        p5.fill(0); // black
+        p5.ellipse(280, 300, 20, 20);
+        p5.ellipse(320, 300, 20, 20);
+        p5.ellipse(300, 280, 20, 20);
+        p5.ellipse(300, 320, 20, 20);
+      }
     }
 
     function trellis() {
-      p5.fill("#594300");
-      p5.rect(102, 500, 365, 15);
-      p5.rect(102, 550, 365, 15);
+      if (vine_location < 17) {
+        p5.fill("#594300");
+        p5.rect(102, 500, 365, 15);
+        p5.rect(102, 550, 365, 15);
 
-      p5.fill("#268415");
-      p5.rect(102, 503, 365, 9);
-      p5.rect(102, 553, 365, 9);
+        p5.fill("#268415");
+        p5.rect(102, 503, 365, 9);
+        p5.rect(102, 553, 365, 9);
 
-      p5.fill("#594300");
-      p5.rect(102, 506, 365, 3);
-      p5.rect(102, 556, 365, 3);
+        p5.fill("#594300");
+        p5.rect(102, 506, 365, 3);
+        p5.rect(102, 556, 365, 3);
+      } else {
+        p5.fill("#594300");
+        p5.rect(0, 500, width, 15);
+        p5.rect(0, 550, width, 15);
+
+        p5.fill("#268415");
+        p5.rect(0, 503, width, 9);
+        p5.rect(0, 553, width, 9);
+
+        p5.fill("#594300");
+        p5.rect(0, 506, width, 3);
+        p5.rect(0, 556, width, 3);
+      }
     }
-    p5.background(backgroundFromTime(), 73, 100);
+
+    function windmill(x: any, y: any) {
+      p5.fill("rgb(117,42,42)");
+      p5.ellipse(x, y, 30, 30);
+      p5.quad(x - 15, y, x + 15, y, x + 20, y + 55, x - 20, y + 55);
+      p5.fill("brown");
+      p5.triangle(x, y, x - 48, y - 8, x - 48, y + 8);
+      p5.triangle(x, y, x + 48, y + 8, x + 48, y - 8);
+      p5.triangle(x, y, x - 8, y - 48, x + 8, y - 48);
+      p5.triangle(x, y, x - 8, y + 40, x + 8, y + 40);
+    }
+
+    function pagoda(x: any, y: any) {
+      p5.fill("#F6FAD6"); // white
+      p5.rect(x, y, 40, 80);
+
+      p5.fill("black");
+      p5.rect(x + 10, y + 70, 10, 10);
+
+      p5.fill("#e96161"); //red
+      p5.quad(x, y, x + 40, y, x + 75, y + 10, x - 35, y + 10);
+      p5.quad(x, y + 20, x + 40, y + 20, x + 75, y + 30, x - 35, y + 30);
+      p5.quad(x, y + 40, x + 40, y + 40, x + 75, y + 50, x - 35, y + 50);
+    }
+
+    function balloon(x: any, y: any, color: any) {
+      let size = 60;
+      p5.stroke("white");
+      p5.line(x - 11, y + 50, x - 18, y + 15);
+      p5.line(x + 11, y + 50, x + 18, y + 15);
+      p5.noStroke();
+      p5.fill(color);
+      p5.ellipse(x, y, size, size);
+      p5.fill("brown");
+      p5.quad(x - 12, y + 50, x + 12, y + 50, x + 10, y + 60, x - 10, y + 60);
+    }
+
+    function tree(x: any, y: any, height: any, width: any) {
+      p5.fill("brown");
+      p5.quad(x - 2, y, x + 2, y, x + 2, y + height, x - 2, y + height);
+
+      p5.fill("#68B35A");
+      p5.ellipse(x, y, width, width);
+    }
+
+    if (vine_location <= 14) {
+      p5.background(backgroundFromTime(), 73, 100);
+    } else if (vine_location == 15) {
+      p5.background(0, 45, backgroundFromTime());
+    } else if (vine_location == 16) {
+      p5.background(0, 0, 0);
+    } else if (vine_location == 17) {
+      p5.background(255, 255, 255);
+    }
+
+    if (vine_location == 15) {
+      cloudY -= 1.2;
+      if (cloudY < -300) cloudY = 510;
+      doBubbles();
+    }
+    if (vine_location == 16) {
+      cloudY += 8;
+      cloudX += 8;
+      if (cloudY > 1500) {
+        cloudY = -200;
+        cloudX = -200;
+      }
+      doComet();
+    }
+    if (vine_location == 17) {
+      cloudY += 8;
+      cloudX += 8;
+      if (cloudY > 1500) {
+        cloudY = -200;
+        cloudX = -200;
+      }
+      doComet();
+    }
+
     locationAction();
 
     manor();
@@ -480,9 +822,11 @@ const MintSketch: React.FC<any> = ({
       vines[i].display();
     }
 
-    cloudX += 0.2;
-    if (cloudX == 700) cloudX = -200;
-    doClouds();
+    if (vine_location <= 14) {
+      cloudX += 0.2;
+      if (cloudX == 700) cloudX = -200;
+      doClouds();
+    }
 
     if (vine_location == 13) {
       trainX += 8;

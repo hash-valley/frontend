@@ -7,11 +7,25 @@ export const VINEPROTOCOL_QUERY = gql`
       startTime
       maxVineyards
       mintedVineyards
+      currentPrice
       cellar
       vinegar
       vineyard
       giveaway
       bottle
+      locales
+    }
+  }
+`;
+
+export const FREE_MINT_QUERY = gql`
+  query GetAccount($userAddress: Bytes!) {
+    account(id: $userAddress) {
+      giveawayBalance
+      giveawayAllowance
+      vineyards {
+        tokenId
+      }
     }
   }
 `;
@@ -49,6 +63,8 @@ export const ACCOUNT_QUERY = gql`
         location
       }
       vinegarBalance
+      grapeBalance
+      earlySupporter
     }
   }
 `;
@@ -83,6 +99,13 @@ export const VINEYARD_QUERY = gql`
         id
       }
       seasonsHarvested
+      vitalized
+      witherDeadline
+      grapeStatus(orderBy: season, orderDirection: desc) {
+        season
+        harvested
+        remaining
+      }
     }
     newUris(
       orderBy: version
@@ -198,6 +221,58 @@ export const NEW_URI = gql`
       elevation
       soil
       xp
+    }
+  }
+`;
+
+export const ALCHEMY_DEFENSE_QUERY = gql`
+  query Alchemy($address: Bytes!, $timestamp: BigInt!) {
+    vineyards(where: { witherDeadline_gt: $timestamp, owner: $address }) {
+      tokenId
+      witherDeadline
+      location
+      elevation
+      soil
+      xp
+    }
+    account(id: $address) {
+      id
+      vinegarBalance
+      grapeBalance
+    }
+  }
+`;
+
+export const ALCHEMY_VITALIZE_QUERY = gql`
+  query Alchemy($address: Bytes!) {
+    vineyards(where: { vitalized: false, owner: $address }) {
+      tokenId
+      location
+      elevation
+      soil
+      xp
+    }
+    account(id: $address) {
+      id
+      vinegarBalance
+      grapeBalance
+    }
+  }
+`;
+
+export const ALCHEMY_WITHER_QUERY = gql`
+  query Alchemy($address: Bytes!) {
+    vineyards(where: { witherDeadline: 0, owner_not: $address }) {
+      tokenId
+      location
+      elevation
+      soil
+      xp
+    }
+    account(id: $address) {
+      id
+      vinegarBalance
+      grapeBalance
     }
   }
 `;

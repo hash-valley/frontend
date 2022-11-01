@@ -1,11 +1,8 @@
 import { useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
-import { DAY } from "../Utils/constants";
+import { DAY, FIRST_SEASON_DAYS, SEASON_DAYS } from "../Utils/constants";
 import { VINEPROTOCOL_QUERY } from "../Utils/queries";
 import { currentSeason } from "../Utils/vineyardContract";
-
-const FIRST_SEASON_DAYS = 21;
-const SEASON_DAYS = 84;
 
 export const useCurrSeason = () => {
   const [season, setSeason] = useState(0);
@@ -44,7 +41,7 @@ export const useCurrSeason = () => {
       season,
       daysLeft: Math.ceil(daysLeft),
       plant: (season === 1 && daysLeft > 14) || daysLeft > 77,
-      harvest: data.vineProtocol.gameStarted && daysLeft < 7,
+      harvest: data?.vineProtocol.gameStarted && daysLeft < 7,
       ...data?.vineProtocol,
     };
   return { season, update };

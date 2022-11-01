@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useRouter } from "next/router";
 import styled from "styled-components";
 import { chainId, VineyardAddress } from "../Utils/constants";
 
@@ -28,42 +29,75 @@ const FooterLink = styled.a`
 `;
 
 const Footer = () => {
+  const router = useRouter();
+  const darkMode = router.route === "/alchemy";
+
   return (
     <FooterContainer>
       <FooterLink href="https://twitter.com/hash_valley" target="_blank">
-        <Image src="/twitter.svg" alt="twitter" height={24} width={24} />
+        <Image
+          src={`/twitter${darkMode ? "_dark" : ""}.svg`}
+          alt="twitter"
+          height={24}
+          width={24}
+        />
       </FooterLink>
-      <FooterLink href="https://discord.gg/8E4ZVguE" target="_blank">
-        <Image src="/discord.svg" alt="discord" height={24} width={24} />
+      <FooterLink href="https://discord.gg/7MRymWsVhr" target="_blank">
+        <Image
+          src={`/discord${darkMode ? "_dark" : ""}.svg`}
+          alt="discord"
+          height={24}
+          width={24}
+        />
       </FooterLink>
       <FooterLink
         href={
-          process.env.NEXT_PUBLIC_CHAIN_ID === "69"
+          process.env.NEXT_PUBLIC_CHAIN_ID === "420"
             ? `https://testnet.qx.app/collection/${VineyardAddress}`
             : `https://qx.app/collection/${VineyardAddress}`
         }
         target="_blank"
       >
-        <Image src="/quixotic.svg" alt="quixotic" height={24} width={24} />
+        <Image
+          src={`/qx${darkMode ? "_dark" : ""}.svg`}
+          alt="quixotic"
+          height={24}
+          width={24}
+        />
       </FooterLink>
       <FooterLink
         href={
           chainId === 10
             ? `https://optimistic.etherscan.io/token/${VineyardAddress}`
-            : `https://kovan-optimistic.etherscan.io/token/${VineyardAddress}`
+            : `https://goerli-optimistic.etherscan.io/token/${VineyardAddress}`
         }
         target="_blank"
       >
-        <Image src="/etherscan.svg" alt="etherscan" height={24} width={24} />
+        <Image
+          src={`/etherscan${darkMode ? "_dark" : ""}.svg`}
+          alt="etherscan"
+          height={24}
+          width={24}
+        />
       </FooterLink>
       <FooterLink href="https://github.com/hash-valley" target="_blank">
-        <Image src="/github.svg" alt="github" height={24} width={24} />
+        <Image
+          src={`/github${darkMode ? "_dark" : ""}.svg`}
+          alt="github"
+          height={24}
+          width={24}
+        />
       </FooterLink>
       <FooterLink
         href="https://inathan-m.gitbook.io/hash-valley-winery/"
         target="_blank"
       >
-        <Image src="/docs.svg" alt="docs" height={24} width={24} />
+        <Image
+          src={`/docs${darkMode ? "_dark" : ""}.svg`}
+          alt="docs"
+          height={24}
+          width={24}
+        />
       </FooterLink>
     </FooterContainer>
   );

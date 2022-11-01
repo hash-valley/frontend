@@ -63,3 +63,184 @@ body {
   border-radius: 12px;
   box-shadow: 19px 19px 38px #c4c4c4, -19px -19px 38px #ffffff;
 }
+
+.fade-in {
+  opacity: 0;
+  transform: translate(0, 2px);
+  transition: all 1s;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+@keyframes blueprint {
+  0% {
+    text-shadow: 64px 36px #957fef50, -72px -16px #b79ced50,
+      48px -48px #dec0f150;
+  }
+  18% {
+    text-shadow: 64px 36px #957fef50, 48px -48px #dec0f150;
+  }
+  30% {
+    text-shadow: -72px -16px #b79ced50, 48px -48px #dec0f150;
+  }
+  56% {
+    text-shadow: -72px -16px #957fef50, 64px 36px #b79ced50;
+  }
+  88% {
+    text-shadow: 64px 36px #957fef50, -72px -16px #b79ced50,
+      48px -48px #dec0f150;
+  }
+}
+
+@keyframes vint {
+  0% {
+    text-shadow: -138px -68px #a6d9f770, -102px -38px #dec0f150,
+      -48px -19px #b2ef9b90;
+  }
+  25% {
+    text-shadow: -138px -68px #dec0f100, -102px -38px #b2ef9b90,
+      -48px -19px #a6d9f770;
+  }
+  50% {
+    text-shadow: -138px -68px #b2ef9b90, -102px -38px #a6d9f700,
+      -48px -19px #dec0f150;
+  }
+  75% {
+    text-shadow: -138px -68px #a6d9f770, -102px -38px #dec0f150,
+      -48px -19px #b2ef9b00;
+  }
+  100% {
+    text-shadow: -138px -68px #a6d9f770, -102px -38px #dec0f150,
+      -48px -19px #b2ef9b90;
+  }
+}
+
+@keyframes vint2 {
+  0% {
+    text-shadow: -138px -68px #a6d9f770, -102px -38px #dec0f150;
+  }
+  25% {
+    text-shadow: -138px -68px #dec0f100, -102px -38px #b2ef9b90;
+  }
+  50% {
+    text-shadow: -138px -68px #b2ef9b90, -102px -38px #a6d9f700;
+  }
+  75% {
+    text-shadow: -138px -68px #a6d9f770, -102px -38px #dec0f150;
+  }
+  100% {
+    text-shadow: -138px -68px #a6d9f770, -102px -38px #dec0f150;
+  }
+}
+
+@keyframes fallingsparkles {
+  from {
+    transform: translateY(0);
+    opacity: 0.6;
+  }
+
+  to {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+}
+
+@keyframes opacityPulse {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.6;
+  }
+}
+
+:root {
+  --glass-width: 263px;
+  --bottle-start-posx: -330px;
+  --bottle-positionx: -78px;
+  --bottle-gapx: 66px;
+  --bottle-rotation: 60deg;
+}
+
+#wine-container {
+  position: relative;
+  padding-block: 40px;
+  transform: scale(0.8);
+  left: calc(50% - 115px);
+}
+
+#glasspath1 {
+  transform: translate(var(--bottle-start-posx), -130px);
+}
+
+#glasspath2 {
+  --bottle-posx: calc(var(--bottle-start-posx) + var(--glass-width));
+  transform: translate(var(--bottle-posx), -130px);
+}
+
+#glasspath3 {
+  --bottle-posx: calc(
+    var(--bottle-start-posx) + var(--glass-width) + var(--glass-width)
+  );
+  transform: translate(var(--bottle-posx), -130px);
+}
+
+#glass2 {
+  transform: translateX(33%);
+}
+
+#glass3 {
+  transform: translateX(66%);
+}
+
+#wine-bottle {
+  position: absolute;
+  bottom: 65px;
+  transform: translateX(var(--bottle-positionx)) rotate(0);
+  transform-origin: center left;
+  transition: 0.3s transform ease-in-out;
+}
+
+.step1 #wine-bottle {
+  --new-bottle-positionx: var(--bottle-positionx);
+  transform: translateX(var(--new-bottle-positionx))
+    rotate(var(--bottle-rotation));
+}
+
+.step2 #wine-bottle {
+  --new-bottle-positionx: calc(var(--bottle-positionx) + var(--bottle-gapx));
+  transform: translateX(var(--new-bottle-positionx))
+    rotate(var(--bottle-rotation));
+}
+
+.step3 #wine-bottle {
+  --new-bottle-gapx: calc(var(--bottle-gapx) + var(--bottle-gapx));
+  --new-bottle-positionx: calc(
+    var(--bottle-positionx) + var(--new-bottle-gapx)
+  );
+
+  transform: translateX(var(--new-bottle-positionx))
+    rotate(var(--bottle-rotation));
+}
+
+#stream-container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: auto;
+}
+
+#stream {
+  visibility: hidden;
+}
+
+.step2 #stream rect {
+  x: 80;
+}
+
+.step3 #stream rect {
+  x: 145;
+}

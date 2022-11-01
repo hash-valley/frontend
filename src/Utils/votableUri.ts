@@ -31,7 +31,6 @@ export const suggest = async (
 
   try {
     const tx = await contractWithSigner.suggest(tokenId, uri, address);
-    toast.info("Transaction sent");
     return tx;
   } catch (err: any) {
     console.error(err);
@@ -48,7 +47,6 @@ export const support = async (
 
   try {
     const tx = await contractWithSigner.support(tokenId);
-    toast.info("Transaction sent");
     return tx;
   } catch (err: any) {
     console.error(err);
@@ -65,7 +63,6 @@ export const retort = async (
 
   try {
     const tx = await contractWithSigner.retort(tokenId);
-    toast.info("Transaction sent");
     return tx;
   } catch (err: any) {
     console.error(err);
@@ -78,7 +75,6 @@ export const complete = async (wallet: any, uriType: UriType) => {
 
   try {
     const tx = await contractWithSigner.complete();
-    toast.info("Transaction sent");
     return tx;
   } catch (err: any) {
     console.error(err);

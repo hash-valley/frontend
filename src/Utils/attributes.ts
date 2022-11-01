@@ -8,6 +8,7 @@ export const locations = [
       name: "Temperate Maritime",
       value: 0,
     },
+    bonus: false,
   },
   {
     name: "Tokyo",
@@ -16,6 +17,7 @@ export const locations = [
       name: "Humid Subtropical",
       value: 1,
     },
+    bonus: false,
   },
   {
     name: "Napa Valley",
@@ -24,6 +26,7 @@ export const locations = [
       name: "Mediterranean",
       value: 2,
     },
+    bonus: false,
   },
   {
     name: "Denali",
@@ -32,6 +35,7 @@ export const locations = [
       name: "Continental Subarctic",
       value: 3,
     },
+    bonus: false,
   },
   {
     name: "Madeira",
@@ -40,6 +44,7 @@ export const locations = [
       name: "Temperate Subtropical",
       value: 4,
     },
+    bonus: false,
   },
   {
     name: "Kashmere",
@@ -48,6 +53,7 @@ export const locations = [
       name: "Moderate",
       value: 5,
     },
+    bonus: false,
   },
   {
     name: "Outback",
@@ -56,6 +62,7 @@ export const locations = [
       name: "Hot Desert",
       value: 6,
     },
+    bonus: false,
   },
   {
     name: "Siberia",
@@ -64,6 +71,7 @@ export const locations = [
       name: "Continental Subarctic",
       value: 3,
     },
+    bonus: false,
   },
   {
     name: "Mt. Everest",
@@ -72,6 +80,7 @@ export const locations = [
       name: "Arctic",
       value: 7,
     },
+    bonus: false,
   },
   {
     name: "Amazon Basin",
@@ -80,6 +89,7 @@ export const locations = [
       name: "Tropical Jungle",
       value: 8,
     },
+    bonus: false,
   },
   {
     name: "Ohio",
@@ -88,6 +98,7 @@ export const locations = [
       name: "Humid Subtropical",
       value: 1,
     },
+    bonus: false,
   },
   {
     name: "Borneo",
@@ -96,6 +107,7 @@ export const locations = [
       name: "Tropical Maritime",
       value: 9,
     },
+    bonus: false,
   },
   {
     name: "Fujian Province",
@@ -104,6 +116,7 @@ export const locations = [
       name: "Temperate Subtropical",
       value: 4,
     },
+    bonus: false,
   },
   {
     name: "Long Island",
@@ -112,6 +125,7 @@ export const locations = [
       name: "Humid Subtropical",
       value: 1,
     },
+    bonus: false,
   },
   {
     name: "Champagne",
@@ -120,6 +134,34 @@ export const locations = [
       name: "Mediterranean",
       value: 2,
     },
+    bonus: false,
+  },
+  {
+    name: "Atlantis",
+    elevation: [-1600, -150],
+    climate: {
+      name: "Ocean Floor",
+      value: 10,
+    },
+    bonus: true,
+  },
+  {
+    name: "Orbital Ring",
+    elevation: [8448000, 117406080],
+    climate: {
+      name: "Zero Gravity",
+      value: 11,
+    },
+    bonus: true,
+  },
+  {
+    name: "Hypercubic Tesselation Plane",
+    elevation: [0, 0],
+    climate: {
+      name: "Harmonic Vibrance Manifold",
+      value: 12,
+    },
+    bonus: true,
   },
 ];
 
@@ -141,6 +183,15 @@ export const soilTypes = [
   },
   {
     name: "Mulch",
+  },
+  {
+    name: "Mycelium",
+  },
+  {
+    name: "Loamy",
+  },
+  {
+    name: "Chalky",
   },
 ];
 
