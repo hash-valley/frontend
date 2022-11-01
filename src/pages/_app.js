@@ -24,6 +24,8 @@ import React, { useEffect } from "react";
 import { ModalProvider } from "../Hooks/ModalProvider";
 import PendingModal from "../Components/PendingModal";
 
+import ComingSoon from "../Components/ComingSoon";
+
 const AppContainer = styled.div`
   text-align: center;
   min-height: calc(100vh - 70px);
@@ -82,6 +84,17 @@ function MyApp({ Component, pageProps }) {
       false
     );
   }, []);
+
+  if (process.env.NEXT_PUBLIC_PREVIEW_MODE === "true") {
+    return (
+      <>
+        <Head>
+          <title>Hash Valley Winery</title>
+        </Head>
+        <ComingSoon />
+      </>
+    );
+  }
 
   return (
     <ApolloProvider client={apolloClient}>

@@ -118,6 +118,24 @@ body {
   }
 }
 
+@keyframes vint2 {
+  0% {
+    text-shadow: -138px -68px #a6d9f770, -102px -38px #dec0f150;
+  }
+  25% {
+    text-shadow: -138px -68px #dec0f100, -102px -38px #b2ef9b90;
+  }
+  50% {
+    text-shadow: -138px -68px #b2ef9b90, -102px -38px #a6d9f700;
+  }
+  75% {
+    text-shadow: -138px -68px #a6d9f770, -102px -38px #dec0f150;
+  }
+  100% {
+    text-shadow: -138px -68px #a6d9f770, -102px -38px #dec0f150;
+  }
+}
+
 @keyframes fallingsparkles {
   from {
     transform: translateY(0);
