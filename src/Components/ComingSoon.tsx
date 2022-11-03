@@ -22,7 +22,7 @@ const Container = styled.div`
     monospace;
 
   padding: 32px;
-  width: 518px;
+  max-width: 518px;
   margin: -64px auto auto auto;
   user-select: none;
 
