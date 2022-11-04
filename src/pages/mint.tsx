@@ -1,7 +1,6 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import { locations, soilTypes } from "../Utils/attributes";
 import { newVineyards, newVineyardsGiveaway } from "../Utils/vineyardContract";
-import { giveawayBalance } from "../Utils/giveawayToken";
 import {
   GridContainer,
   GridItem,
@@ -28,6 +27,15 @@ const Step = styled.div`
 
 const Sign = styled.div`
   margin: 32px 0 12px 0;
+`;
+
+const RevealedText = styled.div`
+  margin: auto;
+  background: linear-gradient(to right, #da9100, #c5b358);
+  font-weight: bold;
+  max-width: 160px;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 `;
 
 const revealedAt = (i: number) =>
@@ -178,8 +186,9 @@ const MintContainer = () => {
                   ) : (
                     <>
                       <br />
-                      <i>Revealed at {revealedAt(index)} mints</i>
-                      <br />
+                      <RevealedText>
+                        Revealed at {revealedAt(index)} mints
+                      </RevealedText>
                     </>
                   )}
                   <i>Merchant Token required</i>
@@ -210,7 +219,7 @@ const MintContainer = () => {
               ? `At low elevations you're more likely to harvest red and white
             wines. At higher elevations you're more likely to get sparkling
             and rosés`
-              : `Special locations have their own set of wines they and only they can grow`}
+              : `Special locations have their own set of wines only they can grow`}
           </p>
           <br />
           {minElev(city) != maxElev(city) && (
