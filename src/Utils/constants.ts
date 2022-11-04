@@ -2,13 +2,12 @@ import { BigNumber, providers } from "ethers";
 
 interface Addresses {
   [key: number]: {
-    [key: string]: string | number;
+    [key: string]: string;
   };
 }
 
 const addresses: Addresses = {
   420: {
-    startBlock: 2383347,
     vine_address: "0x8610977AE603f75E159b343b49cEcaE600402a5e",
     cellar_address: "0x99Cff2A07D60Ea0C10022f606a485ccf94b5c364",
     bottle_address: "0x2e3512569d2168D759444776baCa8a3F12E86970",
@@ -39,7 +38,6 @@ const addresses: Addresses = {
     multi_address: "0x5Ed66afD0428F2F8D7045Cb6DFFc5420319816B9",
   },
   31337: {
-    startBlock: 1,
     vine_address: "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
     cellar_address: "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707",
     bottle_address: "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853",
