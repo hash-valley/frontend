@@ -12,7 +12,7 @@ import { DAY, ipfs_gateway } from "../Utils/constants";
 import styled from "styled-components";
 import Select from "rc-select";
 import { support, retort, complete } from "../Utils/votableUri";
-import { hours, minutes, seconds } from "../Utils/utils";
+import { getEns, hours, minutes, seconds } from "../Utils/utils";
 import { BigNumber } from "ethers";
 import { useSigner } from "wagmi";
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
@@ -191,6 +191,11 @@ const InProgress: FC<any> = ({ uri, bottles, vineyards }) => {
     (bottle: any) => !uri.votes.includes(bottle.tokenId)
   );
 
+  const [ensData, setEns] = useState<null | string>();
+  getEns(uri.artist).then((x) => {
+    if (x) setEns(x);
+  });
+
   const { openModal, closeModal }: any = useContext(ModalContext);
 
   const sendSupport = async () => {
@@ -298,7 +303,12 @@ const InProgress: FC<any> = ({ uri, bottles, vineyards }) => {
         <b>New URI:</b> {uri.newUri}
       </BreakWords>
       <BreakWords>
-        <b>New Artist:</b> {uri.artist}
+        <b>New Artist:</b>{" "}
+        {ensData === undefined
+          ? "..."
+          : ensData === null
+          ? uri.artist
+          : ensData}
       </BreakWords>
       <div>
         {voteEnds > now ? (

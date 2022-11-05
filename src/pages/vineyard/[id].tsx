@@ -11,7 +11,7 @@ import {
   buySprinkler,
   harvestGrapes,
 } from "../../Utils/vineyardContract";
-import { hours, minutes, seconds, toDate } from "../../Utils/utils";
+import { getEns, hours, minutes, seconds, toDate } from "../../Utils/utils";
 import { useCurrSeason } from "../../Hooks/useCurrSeason";
 import { useQuery } from "@apollo/client";
 import { VINEYARD_QUERY } from "../../Utils/queries";
@@ -50,6 +50,9 @@ const VineyardPage = () => {
   const [uriVersion, setUriVersion] = useState(0);
   const [streak, setStreak] = useState(0);
   const [refetching, setRefetching] = useState(false);
+  const [ensData, setEns] = useState<null | string>();
+
+  console.log(ensData);
 
   const [farmable, setFarmable] = useState<Farmable>({
     canPlant: false,
@@ -59,6 +62,11 @@ const VineyardPage = () => {
 
   const { loading, error, data, refetch } = useQuery(VINEYARD_QUERY, {
     variables: { id: id?.toString() },
+    onCompleted: (_data) => {
+      getEns(_data?.vineyard?.owner.id).then((x) => {
+        if (x) setEns(x);
+      });
+    },
   });
 
   const changeImage = async (n: number) => {
@@ -436,7 +444,13 @@ const VineyardPage = () => {
         <p>
           Owned by{" "}
           <GreyLink href={"/account/" + data.vineyard.owner.id}>
-            <a>{data.vineyard.owner.id}</a>
+            <a>
+              {ensData === undefined
+                ? "..."
+                : ensData === null
+                ? data.vineyard.owner.id
+                : ensData}
+            </a>
           </GreyLink>
         </p>
       )}

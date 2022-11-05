@@ -35,10 +35,14 @@ class MyDocument extends Document {
         <Head>
           <link rel="icon" href="/favicon.ico" />
           <link rel="preload" href="/fancy-font.ttf" as="font" crossOrigin="" />
-          <link rel="preload" href="/NunitoSans-Regular.ttf" as="font" crossOrigin="" />
+          <link
+            rel="preload"
+            href="/NunitoSans-Regular.ttf"
+            as="font"
+            crossOrigin=""
+          />
           <meta name="theme-color" content="#000000" />
-          
-          <title>Hash Valley WInery</title>
+
           <meta name="description" content="Cultivate fine wines on Ethereum" />
 
           <meta property="og:url" content="https://hashvalley.xyz/" />
@@ -55,10 +59,7 @@ class MyDocument extends Document {
 
           <meta name="twitter:card" content="summary_large_image" />
           <meta property="twitter:domain" content="hashvalley.xyz" />
-          <meta
-            property="twitter:url"
-            content="https://hashvalley.xyz/"
-          />
+          <meta property="twitter:url" content="https://hashvalley.xyz/" />
           <meta name="twitter:title" content="Hash Valley Winery" />
           <meta
             name="twitter:description"

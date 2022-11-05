@@ -34,6 +34,7 @@ import {
   chanceOfSpoil,
   ageOnRemove,
   formatNum,
+  getEns,
 } from "../../Utils/utils";
 import Select from "rc-select";
 import { BigNumber } from "ethers";
@@ -60,11 +61,15 @@ const BottlePage = () => {
   });
   const [imageUri, setImageUri] = useState("");
   const cellarStuff: any = useRef(null);
+  const [ensData, setEns] = useState<null | string>();
 
   const { loading, error, data, refetch } = useQuery(BOTTLE_QUERY, {
     variables: { id: id?.toString() },
     onCompleted: async (_data: any) => {
       if (_data.bottle) {
+        getEns(data?.bottle?.owner.id).then((x) => {
+          if (x) setEns(x);
+        });
         setNullData(false);
         setIsApproved(await isCellarApproved(_data.bottle.owner.id));
 
@@ -374,7 +379,13 @@ const BottlePage = () => {
         <p>
           Owned by{" "}
           <GreyLink href={"/account/" + data.bottle.owner.id}>
-            <a>{data.bottle.owner.id}</a>
+            <a>
+              {ensData === undefined
+                ? "..."
+                : ensData === null
+                ? data.bottle.owner.id
+                : ensData}
+            </a>
           </GreyLink>
         </p>
       ) : null}
