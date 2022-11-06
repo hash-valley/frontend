@@ -66,7 +66,7 @@ const ComingSoon = () => {
 
       <Container>
         <h2>
-          l2 native <HText2>on-chain</HText2> gameplay
+          on-chain <HText2>pvp/co-op</HText2> gameplay
         </h2>
         <h2>
           first-of-its-kind <HText1>revenue sharing</HText1>
