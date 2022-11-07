@@ -50,9 +50,7 @@ const VineyardPage = () => {
   const [uriVersion, setUriVersion] = useState(0);
   const [streak, setStreak] = useState(0);
   const [refetching, setRefetching] = useState(false);
-  const [ensData, setEns] = useState<null | string>();
-
-  console.log(ensData);
+  const [ensData, setEns] = useState<undefined | null | string>();
 
   const [farmable, setFarmable] = useState<Farmable>({
     canPlant: false,
@@ -63,9 +61,10 @@ const VineyardPage = () => {
   const { loading, error, data, refetch } = useQuery(VINEYARD_QUERY, {
     variables: { id: id?.toString() },
     onCompleted: (_data) => {
-      getEns(_data?.vineyard?.owner.id).then((x) => {
-        if (x) setEns(x);
-      });
+      if (_data?.vineyard?.owner.id)
+        getEns(_data?.vineyard?.owner.id).then((x) => {
+          setEns(x);
+        });
     },
   });
 
