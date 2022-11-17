@@ -1,4 +1,4 @@
-import { BigNumber, providers } from "ethers";
+import { BigNumber, constants, providers } from "ethers";
 
 interface Addresses {
   [key: number]: {
@@ -74,7 +74,7 @@ export const MulticallAddress = addresses[chainId].multi_address;
 export const AlchemyAddress = addresses[chainId].alchemy_address;
 export const GrapeAddress = addresses[chainId].grape_address;
 
-export const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
+export const ZERO_ADDRESS = constants.AddressZero;
 
 export const viewProvider = new providers.JsonRpcProvider(providerUrl);
 
