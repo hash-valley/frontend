@@ -4,7 +4,7 @@ import { Page, Header, HeaderBack, GreyLink } from "../Styles/Components";
 import { useRouter } from "next/router";
 import { Button } from "antd";
 import { useCurrSeason } from "../Hooks/useCurrSeason";
-import { BigNumber, utils } from "ethers";
+import { BigNumber, constants, ethers, utils } from "ethers";
 import { useAccount } from "wagmi";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useQuery } from "@apollo/client";
@@ -192,7 +192,10 @@ const Mint: FC<MintProps> = ({ ownPage }) => {
       </h3>
       {minted < 1000 ? (
         <h3>
-          <p>{1000 - minted} free vineyards remaining then 0.01 Ξ</p>
+          <p>
+            {1000 - minted} free vineyards remaining then 0.01{" "}
+            {constants.EtherSymbol}
+          </p>
           <p>-</p>
           <i>
             You&apos;ve claimed {data?.account?.vineyards.length ?? 0} / 5 free
@@ -202,8 +205,10 @@ const Mint: FC<MintProps> = ({ ownPage }) => {
       ) : (
         minted < max && (
           <h3>
-            <p>{price} Ξ</p>
-            <i>Price increases 0.01 Ξ every 500 mints</i>
+            <p>
+              {price} {constants.EtherSymbol}
+            </p>
+            <i>Price increases 0.01 {constants.EtherSymbol} every 500 mints</i>
           </h3>
         )
       )}
