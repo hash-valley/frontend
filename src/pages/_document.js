@@ -43,14 +43,22 @@ class MyDocument extends Document {
           />
           <meta name="theme-color" content="#000000" />
 
-          <meta name="description" content="Cultivate fine wines on Ethereum" />
+          {/* <meta name="description" content="Cultivate fine wines on Ethereum" /> */}
+          <meta
+            name="description"
+            content="Hash Valley Winery launching soon"
+          />
 
           <meta property="og:url" content="https://hashvalley.xyz/" />
           <meta property="og:type" content="website" />
           <meta property="og:title" content="Hash Valley Winery" />
-          <meta
+          {/* <meta
             property="og:description"
             content="Cultivate fine wines on Ethereum"
+          /> */}
+          <meta
+            property="og:description"
+            content="Hash Valley Winery launching soon"
           />
           <meta
             property="og:image"
@@ -61,9 +69,13 @@ class MyDocument extends Document {
           <meta property="twitter:domain" content="hashvalley.xyz" />
           <meta property="twitter:url" content="https://hashvalley.xyz/" />
           <meta name="twitter:title" content="Hash Valley Winery" />
-          <meta
+          {/* <meta
             name="twitter:description"
             content="Cultivate fine wines on Ethereum"
+          /> */}
+          <meta
+            name="twitter:description"
+            content="Hash Valley Winery launching soon"
           />
           <meta
             name="twitter:image"
