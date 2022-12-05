@@ -31,7 +31,7 @@ const Container = styled.div`
   box-shadow: 21px 21px 61px #d6a7d2, -21px -21px 61px #ffe7ff;
 `;
 
-const TwitterLink = styled.a`
+const SocialLink = styled.a`
   color: black;
 `;
 
@@ -77,10 +77,16 @@ const ComingSoon = () => {
         <h2>
           retroactive <HText4>public goods funding</HText4>
         </h2>
+
         <h2>
-          <TwitterLink href="https://twitter.com/hash_valley">
+          <SocialLink href="https://twitter.com/hash_valley">
             &#10140; twitter
-          </TwitterLink>
+          </SocialLink>
+        </h2>
+        <h2>
+          <SocialLink href="https://discord.gg/7MRymWsVhr">
+            &#10140; discord
+          </SocialLink>
         </h2>
 
         <h2 className="loading">mint event loading</h2>
