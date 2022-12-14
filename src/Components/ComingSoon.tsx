@@ -18,8 +18,7 @@ const Header = styled.h1`
 `;
 
 const Container = styled.div`
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 
   padding: 32px;
   max-width: 518px;
@@ -79,14 +78,10 @@ const ComingSoon = () => {
         </h2>
 
         <h2>
-          <SocialLink href="https://twitter.com/hash_valley">
-            &#10140; twitter
-          </SocialLink>
+          <SocialLink href="https://twitter.com/hash_valley">&#10140; twitter</SocialLink>
         </h2>
         <h2>
-          <SocialLink href="https://discord.gg/7MRymWsVhr">
-            &#10140; discord
-          </SocialLink>
+          <SocialLink href="https://discord.gg/7MRymWsVhr">&#10140; discord</SocialLink>
         </h2>
 
         <h2 className="loading">mint event loading</h2>

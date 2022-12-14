@@ -85,21 +85,11 @@ const Splash = () => {
       <Hero>
         <HeadDiv>
           <LeftCorner>
-            <Image
-              src="/vine_svgs/left_corner.svg"
-              alt="corner"
-              height={220}
-              width={220}
-            />
+            <Image src="/vine_svgs/left_corner.svg" alt="corner" height={220} width={220} />
           </LeftCorner>
           <VintHeader>Hash Valley</VintHeader>
           <RightCorner>
-            <Image
-              src="/vine_svgs/right_corner.svg"
-              alt="corner"
-              height={160}
-              width={160}
-            />
+            <Image src="/vine_svgs/right_corner.svg" alt="corner" height={160} width={160} />
           </RightCorner>
           <SubHeader>The on-chain winery franchise</SubHeader>
         </HeadDiv>
@@ -116,11 +106,7 @@ const Splash = () => {
           height="48px"
           opacity={0.75}
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M19 13l-7 7-7-7m14-8l-7 7-7-7"
-          />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M19 13l-7 7-7-7m14-8l-7 7-7-7" />
         </svg>
       </Chevron>
 

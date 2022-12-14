@@ -86,9 +86,7 @@ const AccountPage = () => {
 
   const sendPlantMultiple = async () => {
     openModal();
-    let tokens = data.account.vineyards.filter(
-      (e: any, i: number) => farmables[i].canPlant
-    );
+    let tokens = data.account.vineyards.filter((e: any, i: number) => farmables[i].canPlant);
     let ids: string[] = tokens.map((t: any) => t.tokenId);
     const tx = await plantMultiple(signer, ids);
     if (!tx) {
@@ -108,9 +106,7 @@ const AccountPage = () => {
 
   const sendWaterMultiple = async () => {
     openModal();
-    let tokens = data.account.vineyards.filter(
-      (e: any, i: number) => farmables[i].canWater
-    );
+    let tokens = data.account.vineyards.filter((e: any, i: number) => farmables[i].canWater);
     let ids: string[] = tokens.map((t: any) => t.tokenId);
     const tx = await waterMultiple(signer, ids);
     if (!tx) {
@@ -129,9 +125,7 @@ const AccountPage = () => {
   };
 
   const sendHarvestMultiple = async () => {
-    let tokens = data.account.vineyards.filter(
-      (e: any, i: number) => farmables[i].canHarvest
-    );
+    let tokens = data.account.vineyards.filter((e: any, i: number) => farmables[i].canHarvest);
     let ids: string[] = tokens.map((t: any) => t.tokenId);
     const tx = await harvestMultiple(signer, ids);
     addRecentTransaction({
@@ -153,25 +147,17 @@ const AccountPage = () => {
       ) : (
         <div>
           <h2>
-            {userAddress === address && "You own"}{" "}
-            {data.account.vineyards.length} Vineyard
-            {data.account.vineyards.length === 1 ? "" : "s"},{" "}
-            {data.account.bottles.length} Bottle
+            {userAddress === address && "You own"} {data.account.vineyards.length} Vineyard
+            {data.account.vineyards.length === 1 ? "" : "s"}, {data.account.bottles.length} Bottle
             {data.account.bottles.length === 1 ? "" : "s"},{" "}
             {formatNum(formatEther(data.account.vinegarBalance))} Vinegar and{" "}
             {formatNum(formatEther(data.account.grapeBalance))} Grapes
           </h2>
-          {data.account.earlySupporter && (
-            <Tag color="purple">Early Supporter</Tag>
-          )}
+          {data.account.earlySupporter && <Tag color="purple">Early Supporter</Tag>}
           <div>
             {view == "bottles" && (
               <div>
-                <Spaced
-                  type="default"
-                  shape="round"
-                  onClick={() => setView("vineyards")}
-                >
+                <Spaced type="default" shape="round" onClick={() => setView("vineyards")}>
                   Vineyards
                 </Spaced>
                 <Spaced type="primary" shape="round">
@@ -184,11 +170,7 @@ const AccountPage = () => {
                 <Spaced type="primary" shape="round">
                   Vineyards
                 </Spaced>
-                <Spaced
-                  type="default"
-                  shape="round"
-                  onClick={() => setView("bottles")}
-                >
+                <Spaced type="default" shape="round" onClick={() => setView("bottles")}>
                   Bottles
                 </Spaced>
               </div>
@@ -198,29 +180,17 @@ const AccountPage = () => {
             {status === "connected" && userAddress === address ? (
               <div>
                 {mults.canPlant > 0 ? (
-                  <Spaced
-                    type="primary"
-                    shape="round"
-                    onClick={sendPlantMultiple}
-                  >
+                  <Spaced type="primary" shape="round" onClick={sendPlantMultiple}>
                     Plant All
                   </Spaced>
                 ) : null}
                 {mults.canWater > 0 ? (
-                  <Spaced
-                    type="primary"
-                    shape="round"
-                    onClick={sendWaterMultiple}
-                  >
+                  <Spaced type="primary" shape="round" onClick={sendWaterMultiple}>
                     Water All
                   </Spaced>
                 ) : null}
                 {mults.canHarvest > 0 ? (
-                  <Spaced
-                    type="primary"
-                    shape="round"
-                    onClick={sendHarvestMultiple}
-                  >
+                  <Spaced type="primary" shape="round" onClick={sendHarvestMultiple}>
                     Harvest All
                   </Spaced>
                 ) : null}
@@ -245,15 +215,9 @@ const AccountPage = () => {
                   <div>Elevation: {token.elevation}</div>
                   <div>Soil: {soilTypes[token.soil].name}</div>
                   <div>XP: {token.xp}</div>
-                  <SuccessText>
-                    {farmables[index]?.canPlant ? "Plantable" : null}
-                  </SuccessText>
-                  <SuccessText>
-                    {farmables[index]?.canWater ? "Waterable" : null}
-                  </SuccessText>
-                  <SuccessText>
-                    {farmables[index]?.canHarvest ? "Harvestable" : null}
-                  </SuccessText>
+                  <SuccessText>{farmables[index]?.canPlant ? "Plantable" : null}</SuccessText>
+                  <SuccessText>{farmables[index]?.canWater ? "Waterable" : null}</SuccessText>
+                  <SuccessText>{farmables[index]?.canHarvest ? "Harvestable" : null}</SuccessText>
                 </GridItem>
               ))}
             </GridContainer>
@@ -279,9 +243,7 @@ const AccountPage = () => {
                   <div>Name: {getBottleName(token.attributes)}</div>
                   {token.inCellar && <div>Aging in cellar</div>}
                   {token.canEnterCellar && <div>Can be aged in cellar</div>}
-                  {!token.canEnterCellar && !token.inCellar && (
-                    <div>Already aged in cellar</div>
-                  )}
+                  {!token.canEnterCellar && !token.inCellar && <div>Already aged in cellar</div>}
                   {token.spoiled && <div>Spoiled to vinegar</div>}
                 </GridItem>
               ))}

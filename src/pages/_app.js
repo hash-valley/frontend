@@ -47,13 +47,8 @@ function MyApp({ Component, pageProps }) {
           var size = Math.ceil(Math.random() * 10 * i) + "px";
           elem.style.position = "fixed";
           elem.style.zIndex = 6;
-          elem.style.top =
-            e.pageY -
-            window.scrollY +
-            Math.round(Math.random() * j - j / 2) +
-            "px";
-          elem.style.left =
-            e.pageX + Math.round(Math.random() * j - j / 2) + "px";
+          elem.style.top = e.pageY - window.scrollY + Math.round(Math.random() * j - j / 2) + "px";
+          elem.style.left = e.pageX + Math.round(Math.random() * j - j / 2) + "px";
           elem.style.width = size;
           elem.style.height = size;
           elem.style.animation = "fallingsparkles 1s";

@@ -107,11 +107,7 @@ export const VINEYARD_QUERY = gql`
         remaining
       }
     }
-    newUris(
-      orderBy: version
-      orderDirection: desc
-      where: { completed: true, type: VINEYARD }
-    ) {
+    newUris(orderBy: version, orderDirection: desc, where: { completed: true, type: VINEYARD }) {
       newUri
       version
     }
@@ -144,11 +140,7 @@ export const BOTTLE_QUERY = gql`
         id
       }
     }
-    newUris(
-      orderBy: version
-      orderDirection: desc
-      where: { completed: true, type: BOTTLE }
-    ) {
+    newUris(orderBy: version, orderDirection: desc, where: { completed: true, type: BOTTLE }) {
       newUri
       version
     }
@@ -165,12 +157,7 @@ export const GET_BOTTLES = gql`
 
 export const BOTTLE_URIS = gql`
   query BottleUris {
-    newUris(
-      orderBy: startTimestamp
-      orderDirection: desc
-      first: 1
-      where: { type: BOTTLE }
-    ) {
+    newUris(orderBy: startTimestamp, orderDirection: desc, first: 1, where: { type: BOTTLE }) {
       startTimestamp
       completed
       votesFor
@@ -181,12 +168,7 @@ export const BOTTLE_URIS = gql`
 
 export const VINE_URIS = gql`
   query VineUris {
-    newUris(
-      orderBy: startTimestamp
-      orderDirection: desc
-      first: 1
-      where: { type: VINEYARD }
-    ) {
+    newUris(orderBy: startTimestamp, orderDirection: desc, first: 1, where: { type: VINEYARD }) {
       startTimestamp
       completed
       votesFor
@@ -197,11 +179,7 @@ export const VINE_URIS = gql`
 
 export const NEW_URI = gql`
   query GetUri($type: String!, $address: Bytes!) {
-    newUris(
-      where: { type: $type }
-      orderBy: startTimestamp
-      orderDirection: desc
-    ) {
+    newUris(where: { type: $type }, orderBy: startTimestamp, orderDirection: desc) {
       type
       startTimestamp
       votesFor

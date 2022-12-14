@@ -55,12 +55,7 @@ const PendingModal = () => {
           top: "-16px",
         }}
       >
-        <Image
-          src="/vine_svgs/flourish.svg"
-          alt="flourish"
-          height={70}
-          width={200}
-        />
+        <Image src="/vine_svgs/flourish.svg" alt="flourish" height={70} width={200} />
       </div>
       <PouringAnimation />
     </Modal>

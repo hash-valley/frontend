@@ -31,8 +31,7 @@ const VintHeader = styled(Header)`
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
 
-  text-shadow: -138px -68px #b2ef9b90, -102px -38px #a6d9f770,
-    -48px -19px #dec0f150;
+  text-shadow: -138px -68px #b2ef9b90, -102px -38px #a6d9f770, -48px -19px #dec0f150;
 
   animation: vint 0.6s infinite;
 `;
@@ -47,11 +46,7 @@ const ProgressContainer = styled.div`
   box-shadow: 5px 5px 10px #dbdbdb, -5px -5px 10px #ffffff;
 
   background: rgb(255, 150, 207);
-  background: linear-gradient(
-    120deg,
-    rgba(255, 150, 207, 1) 0%,
-    rgba(218, 122, 215, 1) 100%
-  );
+  background: linear-gradient(120deg, rgba(255, 150, 207, 1) 0%, rgba(218, 122, 215, 1) 100%);
 `;
 
 const Progress = styled.div`
@@ -106,15 +101,7 @@ const Centered = styled.div`
 const BonusText = styled.div`
   margin: auto;
   max-width: 275px;
-  background: linear-gradient(
-    to right,
-    #ef5350,
-    #f48fb1,
-    #7e57c2,
-    #2196f3,
-    #26c6da,
-    #43a047
-  );
+  background: linear-gradient(to right, #ef5350, #f48fb1, #7e57c2, #2196f3, #26c6da, #43a047);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 `;
@@ -181,9 +168,7 @@ const Mint: FC<MintProps> = ({ ownPage }) => {
       </HeaderBack>
       <ProgressContainer>
         <Progress>
-          <ProgressBar
-            style={{ width: ((100 * minted) / max).toString() + "%" }}
-          ></ProgressBar>
+          <ProgressBar style={{ width: ((100 * minted) / max).toString() + "%" }}></ProgressBar>
         </Progress>
       </ProgressContainer>
       <br />
@@ -193,14 +178,10 @@ const Mint: FC<MintProps> = ({ ownPage }) => {
       {minted < 1000 ? (
         <h3>
           <p>
-            {1000 - minted} free vineyards remaining then 0.01{" "}
-            {constants.EtherSymbol}
+            {1000 - minted} free vineyards remaining then 0.01 {constants.EtherSymbol}
           </p>
           <p>-</p>
-          <i>
-            You&apos;ve claimed {data?.account?.vineyards.length ?? 0} / 5 free
-            vineyards
-          </i>
+          <i>You&apos;ve claimed {data?.account?.vineyards.length ?? 0} / 5 free vineyards</i>
         </h3>
       ) : (
         minted < max && (
@@ -212,9 +193,7 @@ const Mint: FC<MintProps> = ({ ownPage }) => {
           </h3>
         )
       )}
-      {minted >= 5000 && (
-        <BonusText>Bonus: 5000 $GRAPE, 5000 $VINEGAR</BonusText>
-      )}
+      {minted >= 5000 && <BonusText>Bonus: 5000 $GRAPE, 5000 $VINEGAR</BonusText>}
       <br />
       <br />
       {minted < max ? (
@@ -238,24 +217,17 @@ const Mint: FC<MintProps> = ({ ownPage }) => {
       ) : (
         <h2>All Vineyards have been minted!</h2>
       )}
-      {minted >= max &&
-        BigNumber.from(data?.account?.giveawayBalance ?? 0).gte(DECIMALS) && (
-          <Button
-            type="primary"
-            shape="round"
-            size="large"
-            onClick={() => router.push(`/mint`)}
-          >
-            Use Merchant Token ({formatUnits(data.account.giveawayBalance)})
-          </Button>
-        )}
+      {minted >= max && BigNumber.from(data?.account?.giveawayBalance ?? 0).gte(DECIMALS) && (
+        <Button type="primary" shape="round" size="large" onClick={() => router.push(`/mint`)}>
+          Use Merchant Token ({formatUnits(data.account.giveawayBalance)})
+        </Button>
+      )}
 
       <div>
         <PGF>
           <GreyLink href="https://medium.com/ethereum-optimism/retroactive-public-goods-funding-33c9b7d00f0c">
             <a target="_blank" rel="noreferrer">
-              🔥{pgfPercent(minted, max)}% &#10140;{" "}
-              {pgfPercent(minted + 1, max)}% donated to PGF 🔥
+              🔥{pgfPercent(minted, max)}% &#10140; {pgfPercent(minted + 1, max)}% donated to PGF 🔥
             </a>
           </GreyLink>
         </PGF>

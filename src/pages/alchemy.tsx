@@ -7,12 +7,7 @@ import { useContext, useEffect, useState } from "react";
 import { useAccount, useSigner } from "wagmi";
 import { ModalContext } from "../Hooks/ModalProvider";
 import { useCurrSeason } from "../Hooks/useCurrSeason";
-import {
-  AlchemyBack,
-  CenteredSelect,
-  Page,
-  ListItem,
-} from "../Styles/Components";
+import { AlchemyBack, CenteredSelect, Page, ListItem } from "../Styles/Components";
 import { castSpell } from "../Utils/alchemyContract";
 import { locations, soilTypes } from "../Utils/attributes";
 import { DAY, FIRST_SEASON_DAYS, SEASON_DAYS, SPELL } from "../Utils/constants";
@@ -108,10 +103,7 @@ const Alchemy = () => {
     switch (spell) {
       case SPELL.WITHER:
         return (
-          5000 +
-          (1 -
-            percentSeason(protocol.season, Number(protocol.startTime), time)) *
-            15000
+          5000 + (1 - percentSeason(protocol.season, Number(protocol.startTime), time)) * 15000
         );
       case SPELL.DEFEND:
         return 2000;
@@ -159,17 +151,13 @@ const Alchemy = () => {
       <AlchemyBack />
       <Page color="white" shadow="black">
         <h2 style={{ color: "white" }}>
-          You own {formatNum(formatEther(data?.account?.vinegarBalance ?? 0))}{" "}
-          Vinegar and {formatNum(formatEther(data?.account?.grapeBalance ?? 0))}{" "}
-          Grapes
+          You own {formatNum(formatEther(data?.account?.vinegarBalance ?? 0))} Vinegar and{" "}
+          {formatNum(formatEther(data?.account?.grapeBalance ?? 0))} Grapes
         </h2>
         <br />
 
         <h2 style={{ color: "white" }}>Select a Spell</h2>
-        <CenteredSelect
-          value={spell}
-          onChange={(event: any) => setSpell(event)}
-        >
+        <CenteredSelect value={spell} onChange={(event: any) => setSpell(event)}>
           <Select.Option key={0} value={SPELL.WITHER}>
             Wither
           </Select.Option>
@@ -190,9 +178,7 @@ const Alchemy = () => {
             <div>
               <b>Vineyard ID:</b> {v.tokenId}
             </div>
-            {v.witherDeadline && (
-              <div>Withers at: {toDate(v.witherDeadline)}</div>
-            )}
+            {v.witherDeadline && <div>Withers at: {toDate(v.witherDeadline)}</div>}
             <div>
               <b>Location:</b> {locations[v.location].name}
             </div>

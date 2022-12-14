@@ -32,11 +32,7 @@ const withSigner = (signer: any) => {
   return VineyardContract.connect(signer);
 };
 
-const viewVineyardContract = new Contract(
-  VineyardAddress,
-  VineyardABI,
-  viewProvider
-);
+const viewVineyardContract = new Contract(VineyardAddress, VineyardABI, viewProvider);
 
 export interface TokenParams {
   id: number;
@@ -67,11 +63,7 @@ export const currentSeason = async (): Promise<number> => {
  *
  * @param params [location, elevation, elevationIsNegative, soil]
  */
-export const newVineyards = async (
-  params: number[],
-  wallet: any,
-  value: string
-) => {
+export const newVineyards = async (params: number[], wallet: any, value: string) => {
   const vineyardWithSigner = withSigner(wallet);
 
   // send tx
@@ -103,9 +95,7 @@ export const getStreak = async (tokenId: number): Promise<number> => {
   return streak;
 };
 
-export const fetchTokenParams = async (
-  tokenId: number
-): Promise<TokenParams> => {
+export const fetchTokenParams = async (tokenId: number): Promise<TokenParams> => {
   const xp = await viewVineyardContract.xp(tokenId);
   const streak = await viewVineyardContract.currentStreak(tokenId);
   const params = await viewVineyardContract.getTokenAttributes(tokenId);
@@ -196,10 +186,7 @@ export const harvestGrapes = async (wallet: any, tokenId: number) => {
   }
 };
 
-export const plantMultiple = async (
-  wallet: any,
-  tokenIds: number[] | string[]
-) => {
+export const plantMultiple = async (wallet: any, tokenIds: number[] | string[]) => {
   const vineyardWithSigner = withSigner(wallet);
 
   try {
@@ -211,10 +198,7 @@ export const plantMultiple = async (
   }
 };
 
-export const waterMultiple = async (
-  wallet: any,
-  tokenIds: number[] | string[]
-) => {
+export const waterMultiple = async (wallet: any, tokenIds: number[] | string[]) => {
   const vineyardWithSigner = withSigner(wallet);
 
   try {
@@ -226,10 +210,7 @@ export const waterMultiple = async (
   }
 };
 
-export const harvestMultiple = async (
-  wallet: any,
-  tokenIds: number[] | string[]
-) => {
+export const harvestMultiple = async (wallet: any, tokenIds: number[] | string[]) => {
   const vineyardWithSigner = withSigner(wallet);
 
   try {

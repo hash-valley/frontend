@@ -130,30 +130,18 @@ const NewProposal = () => {
     if (!errors) {
       openModal();
       let tx;
-      toast.info(
-        "Pinning to IPFS (artwork may take a few minutes to appear on the council page)"
-      );
+      toast.info("Pinning to IPFS (artwork may take a few minutes to appear on the council page)");
       if (pType == "Vineyards") {
-        await pinHashToIPFS(
-          cid,
-          "VINEYARD-" + address,
-          "VINEYARD",
-          wallet?.address!
-        );
+        await pinHashToIPFS(cid, "VINEYARD-" + address, "VINEYARD", wallet?.address!);
         tx = await suggest(signer, Number(bottleId), cid, address, "VINEYARD");
       } else if (pType == "Bottles") {
-        await pinHashToIPFS(
-          cid,
-          "BOTTLE-" + address,
-          "BOTTLE",
-          wallet?.address!
-        );
+        await pinHashToIPFS(cid, "BOTTLE-" + address, "BOTTLE", wallet?.address!);
         tx = await suggest(signer, Number(bottleId), cid, address, "BOTTLE");
       }
       if (!tx) {
-      closeModal();
-      return;
-    }
+        closeModal();
+        return;
+      }
       addRecentTransaction({
         hash: tx.hash,
         description: `Create ${pType} proposal with bottle ${Number(bottleId)}`,
@@ -191,14 +179,8 @@ const NewProposal = () => {
       <Error hidden={open || !addressError}>Invalid address</Error>
       <br />
       <br />
-      <p>
-        Select the token id of the bottle to vote with (higher age carries more
-        weight)
-      </p>
-      <CenteredSelect
-        value={bottleId}
-        onChange={(event: any) => setBottleId(event)}
-      >
+      <p>Select the token id of the bottle to vote with (higher age carries more weight)</p>
+      <CenteredSelect value={bottleId} onChange={(event: any) => setBottleId(event)}>
         {bottleData?.data?.bottles.map((bottle: any) => (
           <Select.Option key={bottle.tokenId} value={bottle.tokenId}>
             Token ID {bottle.tokenId}
@@ -206,8 +188,8 @@ const NewProposal = () => {
         ))}
       </CenteredSelect>
       <Error hidden={open || !bottleError}>
-        Please select a bottle to vote with. If there are none available you may
-        need to wait a few days before trying again.
+        Please select a bottle to vote with. If there are none available you may need to wait a few
+        days before trying again.
       </Error>
       <br />
       <br />
@@ -227,12 +209,8 @@ const NewProposal = () => {
           Bottles
         </Select.Option>
       </CenteredSelect>
-      <Error hidden={open || !vineCooldown}>
-        Too soon to make a new Vineyard proposal
-      </Error>
-      <Error hidden={open || !bottleCooldown}>
-        Too soon to make a new Bottle proposal
-      </Error>
+      <Error hidden={open || !vineCooldown}>Too soon to make a new Vineyard proposal</Error>
+      <Error hidden={open || !bottleCooldown}>Too soon to make a new Bottle proposal</Error>
       <br />
       <br />
       {showButton && wallet?.address ? (

@@ -23,11 +23,7 @@ const Circle = styled.div`
 
 const Feedback = () => (
   <Circle>
-    <a
-      href="https://forms.gle/XcvChnFL5waNHviP8"
-      target="_blank"
-      rel="noreferrer"
-    >
+    <a href="https://forms.gle/XcvChnFL5waNHviP8" target="_blank" rel="noreferrer">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"

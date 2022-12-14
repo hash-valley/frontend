@@ -95,9 +95,7 @@ const VineyardPage = () => {
       if (data.vineyard) {
         setNullData(false);
         setStreak(await getStreak(Number(id)));
-        const farmableParams = (
-          await getFarmingStatsMulti([parseInt(id.toString())])
-        )[0];
+        const farmableParams = (await getFarmingStatsMulti([parseInt(id.toString())]))[0];
         setFarmable(farmableParams);
 
         let waterCountdown: number = -1;
@@ -255,10 +253,7 @@ const VineyardPage = () => {
       <h2>Vineyard {id} </h2>
       <TokenFrame src={imageUri} frameBorder="0" />
       <br />
-      <CenteredSelect
-        value={uriVersion}
-        onChange={(event: any) => changeImage(event)}
-      >
+      <CenteredSelect value={uriVersion} onChange={(event: any) => changeImage(event)}>
         {data.newUris.map((n: any) => (
           <Select.Option key={n.version} value={n.version}>
             Version {n.version}
@@ -332,16 +327,14 @@ const VineyardPage = () => {
               <SuccessText>Already harvested this season</SuccessText>
             ) : farmable.canWater ? (
               <SuccessText>
-                Can water until {hours(waterStatus)}:{minutes(waterStatus)}:
-                {seconds(waterStatus)}
+                Can water until {hours(waterStatus)}:{minutes(waterStatus)}:{seconds(waterStatus)}
               </SuccessText>
             ) : waterStatus >= 0 ? (
               data.vineyard.sprinklerExpires ? (
                 <SuccessText>Sprinkling</SuccessText>
               ) : (
                 <SuccessText>
-                  Can water in {hours(waterStatus)}:{minutes(waterStatus)}:
-                  {seconds(waterStatus)}
+                  Can water in {hours(waterStatus)}:{minutes(waterStatus)}:{seconds(waterStatus)}
                 </SuccessText>
               )
             ) : farmable.canPlant ? (
@@ -367,13 +360,11 @@ const VineyardPage = () => {
               % chance
             </div>
             <div>
-              <b>Harvestable Grapes:</b>{" "}
-              {data.vineyard.grapeStatus[0].remaining}
+              <b>Harvestable Grapes:</b> {data.vineyard.grapeStatus[0].remaining}
             </div>
             <div>
               <>
-                <b>Grapes Harvested this Season:</b>{" "}
-                {data.vineyard.grapeStatus[0].harvested}
+                <b>Grapes Harvested this Season:</b> {data.vineyard.grapeStatus[0].harvested}
               </>
             </div>
           </>
@@ -414,20 +405,10 @@ const VineyardPage = () => {
 
       {address?.toLowerCase() === data.vineyard.owner.id ? (
         <div>
-          <Spaced
-            type="primary"
-            shape="round"
-            disabled={!farmable.canWater}
-            onClick={sendWater}
-          >
+          <Spaced type="primary" shape="round" disabled={!farmable.canWater} onClick={sendWater}>
             Water
           </Spaced>
-          <Spaced
-            type="primary"
-            shape="round"
-            disabled={!farmable.canPlant}
-            onClick={sendPlant}
-          >
+          <Spaced type="primary" shape="round" disabled={!farmable.canPlant} onClick={sendPlant}>
             Plant
           </Spaced>
           <Spaced
@@ -444,11 +425,7 @@ const VineyardPage = () => {
           Owned by{" "}
           <GreyLink href={"/account/" + data.vineyard.owner.id}>
             <a>
-              {ensData === undefined
-                ? "..."
-                : ensData === null
-                ? data.vineyard.owner.id
-                : ensData}
+              {ensData === undefined ? "..." : ensData === null ? data.vineyard.owner.id : ensData}
             </a>
           </GreyLink>
         </p>
@@ -456,9 +433,7 @@ const VineyardPage = () => {
 
       <a
         href={`${
-          chainId === 10
-            ? "https://qx.app/asset"
-            : "https://testnet.qx.app/asset"
+          chainId === 10 ? "https://qx.app/asset" : "https://testnet.qx.app/asset"
         }/${VineyardAddress}/${id}`}
         target="_blank"
         rel="noreferrer"

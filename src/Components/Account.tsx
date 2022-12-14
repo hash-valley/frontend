@@ -115,14 +115,8 @@ const Account = () => {
           <Inline>
             {status === "connected" && (
               <AccountEth>
-                <b>
-                  {protocol.season === 0
-                    ? "⌛ Pre-season"
-                    : `Season ${protocol.season}`}
-                </b>
-                <b>
-                  {protocol.season > 0 ? ` | ${protocol.daysLeft} days` : ``}
-                </b>
+                <b>{protocol.season === 0 ? "⌛ Pre-season" : `Season ${protocol.season}`}</b>
+                <b>{protocol.season > 0 ? ` | ${protocol.daysLeft} days` : ``}</b>
                 {protocol.season > 0 && protocol.plant ? (
                   <b> | Planting 🌱</b>
                 ) : protocol.season > 0 && protocol.harvest ? (
@@ -142,31 +136,19 @@ const Account = () => {
                         items={[
                           {
                             label: (
-                              <div
-                                onClick={() =>
-                                  router.push(`/council/vineyards`)
-                                }
-                              >
-                                Vineyards
-                              </div>
+                              <div onClick={() => router.push(`/council/vineyards`)}>Vineyards</div>
                             ),
                             key: "1",
                           },
                           {
                             label: (
-                              <div
-                                onClick={() => router.push(`/council/bottles`)}
-                              >
-                                Bottles
-                              </div>
+                              <div onClick={() => router.push(`/council/bottles`)}>Bottles</div>
                             ),
                             key: "2",
                           },
                           {
                             label: (
-                              <div onClick={() => router.push(`/council/new`)}>
-                                New Proposal
-                              </div>
+                              <div onClick={() => router.push(`/council/new`)}>New Proposal</div>
                             ),
                             key: "3",
                           },
@@ -224,11 +206,7 @@ const Account = () => {
                     {
                       label:
                         status === "connected" ? (
-                          <div
-                            onClick={() => router.push(`/account/${address}`)}
-                          >
-                            Portfolio
-                          </div>
+                          <div onClick={() => router.push(`/account/${address}`)}>Portfolio</div>
                         ) : (
                           <>Not Connected</>
                         ),
@@ -239,21 +217,14 @@ const Account = () => {
                       type: "divider",
                     },
                     {
-                      label: (
-                        <div onClick={() => router.push(`/alchemy`)}>
-                          Alchemy🔮
-                        </div>
-                      ),
+                      label: <div onClick={() => router.push(`/alchemy`)}>Alchemy🔮</div>,
                       key: "6",
                     },
                     {
                       type: "divider",
                     },
                     {
-                      label:
-                        protocol.season === 0
-                          ? "Pre-season"
-                          : `Season ${protocol.season}`,
+                      label: protocol.season === 0 ? "Pre-season" : `Season ${protocol.season}`,
                       key: "8",
                     },
                     {
@@ -276,26 +247,16 @@ const Account = () => {
                     },
                     {
                       label: (
-                        <div onClick={() => router.push(`/council/vineyards`)}>
-                          Vineyards 📜
-                        </div>
+                        <div onClick={() => router.push(`/council/vineyards`)}>Vineyards 📜</div>
                       ),
                       key: "12",
                     },
                     {
-                      label: (
-                        <div onClick={() => router.push(`/council/bottles`)}>
-                          Bottles 📜
-                        </div>
-                      ),
+                      label: <div onClick={() => router.push(`/council/bottles`)}>Bottles 📜</div>,
                       key: "13",
                     },
                     {
-                      label: (
-                        <div onClick={() => router.push(`/council/new`)}>
-                          New Proposal
-                        </div>
-                      ),
+                      label: <div onClick={() => router.push(`/council/new`)}>New Proposal</div>,
                       key: "14",
                     },
                   ]}

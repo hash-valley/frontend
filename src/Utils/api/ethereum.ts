@@ -1,10 +1,5 @@
 import { Contract, providers } from "ethers";
-import {
-  VineyardAddress,
-  BottleAddress,
-  providerUrl,
-  subgraphUrl,
-} from "../constants";
+import { VineyardAddress, BottleAddress, providerUrl, subgraphUrl } from "../constants";
 
 const abi = [
   "function artists(uint version) public view returns(address)",
@@ -27,18 +22,12 @@ const bottleAbi = [
 ];
 
 const viewProvider = new providers.JsonRpcProvider(providerUrl);
-const viewVineyardContract = new Contract(
-  VineyardAddress,
-  vineAbi,
-  viewProvider
-);
+const viewVineyardContract = new Contract(VineyardAddress, vineAbi, viewProvider);
 const viewBottleContract = new Contract(BottleAddress, bottleAbi, viewProvider);
 
 export const vineData = async (version_: number, token: number) => {
   const data = await viewVineyardContract.tokenURI(token);
-  const json = JSON.parse(
-    Buffer.from(data.slice(29), "base64").toString("ascii")
-  );
+  const json = JSON.parse(Buffer.from(data.slice(29), "base64").toString("ascii"));
 
   const { newUri, artist, version } = await gqlQuery("VINEYARD", version_);
   json["version"] = version;
@@ -53,9 +42,7 @@ export const vineData = async (version_: number, token: number) => {
 
 export const bottleData = async (version_: number, token: number) => {
   const data = await viewBottleContract.tokenURI(token);
-  const json = JSON.parse(
-    Buffer.from(data.slice(29), "base64").toString("ascii")
-  );
+  const json = JSON.parse(Buffer.from(data.slice(29), "base64").toString("ascii"));
 
   const { newUri, artist, version } = await gqlQuery("BOTTLE", version_);
   json["version"] = version;

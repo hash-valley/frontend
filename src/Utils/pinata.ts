@@ -1,12 +1,7 @@
 import axios from "axios";
 // import basePathConverter from "base-path-converter";
 
-export const pinHashToIPFS = (
-  hashToPin: string,
-  name: string,
-  type: string,
-  creator: string
-) => {
+export const pinHashToIPFS = (hashToPin: string, name: string, type: string, creator: string) => {
   if (hashToPin.length === 53) {
     hashToPin = hashToPin.substring(7);
   }

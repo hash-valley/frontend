@@ -1,11 +1,6 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
-import {
-  bottleAge,
-  isCellarApproved,
-  approveCellar,
-  rejuvenate,
-} from "../../Utils/bottleContract";
+import { bottleAge, isCellarApproved, approveCellar, rejuvenate } from "../../Utils/bottleContract";
 import { stake, withdraw } from "../../Utils/cellarContract";
 import { useQuery } from "@apollo/client";
 import { BOTTLE_QUERY } from "../../Utils/queries";
@@ -80,9 +75,7 @@ const BottlePage = () => {
         changeImage(_data.newUris.length - 1, _data, fetchedAge);
 
         if (_data.bottle.inCellar) {
-          const stakeTime = Math.floor(
-            Date.now() / 1000 - _data?.bottle?.stakedAt
-          );
+          const stakeTime = Math.floor(Date.now() / 1000 - _data?.bottle?.stakedAt);
           const ageR = BigNumber.from(ageOnRemove(stakeTime).toString());
           cellarStuff.current = {
             stakeTime,
@@ -187,10 +180,7 @@ const BottlePage = () => {
     await tx.wait();
     closeModal();
 
-    setTimeout(
-      async () => setIsApproved(await isCellarApproved(data.bottle.owner.id)),
-      2000
-    );
+    setTimeout(async () => setIsApproved(await isCellarApproved(data.bottle.owner.id)), 2000);
   };
 
   return loading ? (
@@ -213,10 +203,7 @@ const BottlePage = () => {
       <br />
       <TokenFrame src={imageUri} frameBorder="0" />
       <br />
-      <CenteredSelect
-        value={uriVersion}
-        onChange={(event: any) => changeImage(event)}
-      >
+      <CenteredSelect value={uriVersion} onChange={(event: any) => changeImage(event)}>
         {data.newUris.map((n: any) => (
           <Select.Option key={n.version} value={n.version}>
             Version {n.version}
@@ -254,8 +241,7 @@ const BottlePage = () => {
               <i>Aging in cellar</i>
             </div>
             <div>
-              <b>Staked for:</b>{" "}
-              {secondsToString(cellarStuff?.current?.stakeTime ?? 0)}
+              <b>Staked for:</b> {secondsToString(cellarStuff?.current?.stakeTime ?? 0)}
             </div>
             <div>
               <b>Chance of spoil:</b> {cellarStuff?.current?.spoilChance}%
@@ -265,8 +251,7 @@ const BottlePage = () => {
               {cellarStuff?.current?.vinegar}
             </div>
             <div>
-              <b>Age on removal if not spoiled:</b> {cellarStuff?.current?.age}{" "}
-              years
+              <b>Age on removal if not spoiled:</b> {cellarStuff?.current?.age} years
             </div>
             <div>
               <b>Era on removal if not spoiled: </b>
@@ -274,20 +259,14 @@ const BottlePage = () => {
             </div>
           </>
         )}
-        {!data.bottle.inCellar && !data.bottle.canEnterCellar && (
-          <div>Already aged in cellar</div>
-        )}
+        {!data.bottle.inCellar && !data.bottle.canEnterCellar && <div>Already aged in cellar</div>}
         {data.bottle.spoiled && <div>Spoiled to vinegar</div>}
       </TokenSign>
 
       {data.bottle.rejuvenatedTo && (
         <div>
           Burnt to revive{" "}
-          <GreyLink
-            href={
-              "/bottle/" + parseInt(data.bottle.rejuvenatedTo.id).toString()
-            }
-          >
+          <GreyLink href={"/bottle/" + parseInt(data.bottle.rejuvenatedTo.id).toString()}>
             <a>Bottle #{parseInt(data.bottle.rejuvenatedTo.id)}</a>
           </GreyLink>
         </div>
@@ -295,11 +274,7 @@ const BottlePage = () => {
       {data.bottle.rejuvenatedFrom && (
         <div>
           Rejuvenated from{" "}
-          <GreyLink
-            href={
-              "/bottle/" + parseInt(data.bottle.rejuvenatedFrom.id).toString()
-            }
-          >
+          <GreyLink href={"/bottle/" + parseInt(data.bottle.rejuvenatedFrom.id).toString()}>
             <a>Bottle #{parseInt(data.bottle.rejuvenatedFrom.id)}</a>
           </GreyLink>
         </div>
@@ -307,9 +282,7 @@ const BottlePage = () => {
       {data.bottle.from && (
         <div>
           Harvested from{" "}
-          <GreyLink
-            href={"/vineyard/" + parseInt(data.bottle.from.id).toString()}
-          >
+          <GreyLink href={"/vineyard/" + parseInt(data.bottle.from.id).toString()}>
             <a>Vineyard #{parseInt(data.bottle.from.id)}</a>
           </GreyLink>
         </div>
@@ -318,9 +291,7 @@ const BottlePage = () => {
 
       <a
         href={`${
-          chainId === 10
-            ? "https://qx.app/asset"
-            : "https://testnet.qx.app/asset"
+          chainId === 10 ? "https://qx.app/asset" : "https://testnet.qx.app/asset"
         }/${BottleAddress}/${id}`}
         target="_blank"
         rel="noreferrer"
@@ -344,9 +315,7 @@ const BottlePage = () => {
             <Spaced
               type="primary"
               shape="round"
-              disabled={
-                data.bottle.inCellar && !data.bottle.spoiled ? false : true
-              }
+              disabled={data.bottle.inCellar && !data.bottle.spoiled ? false : true}
               onClick={sendWithdraw}
             >
               Withdraw from Cellar
@@ -360,8 +329,7 @@ const BottlePage = () => {
                 )}
                 onClick={sendRejuve}
               >
-                Rejuvenate for{" "}
-                {formatNum(formatEther(data.bottle.rejuvenateCost))} Vinegar
+                Rejuvenate for {formatNum(formatEther(data.bottle.rejuvenateCost))} Vinegar
               </Spaced>
             )}
           </div>
@@ -380,11 +348,7 @@ const BottlePage = () => {
           Owned by{" "}
           <GreyLink href={"/account/" + data.bottle.owner.id}>
             <a>
-              {ensData === undefined
-                ? "..."
-                : ensData === null
-                ? data.bottle.owner.id
-                : ensData}
+              {ensData === undefined ? "..." : ensData === null ? data.bottle.owner.id : ensData}
             </a>
           </GreyLink>
         </p>

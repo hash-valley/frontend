@@ -38,11 +38,7 @@ export const suggest = async (
   }
 };
 
-export const support = async (
-  wallet: any,
-  tokenId: number,
-  uriType: UriType
-) => {
+export const support = async (wallet: any, tokenId: number, uriType: UriType) => {
   const contractWithSigner = withSigner(wallet, uriType);
 
   try {
@@ -54,11 +50,7 @@ export const support = async (
   }
 };
 
-export const retort = async (
-  wallet: any,
-  tokenId: number,
-  uriType: UriType
-) => {
+export const retort = async (wallet: any, tokenId: number, uriType: UriType) => {
   const contractWithSigner = withSigner(wallet, uriType);
 
   try {

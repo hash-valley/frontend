@@ -51,8 +51,7 @@ const Bar = styled.div<BarProps>`
       : "0"};
 
   border-top-left-radius: ${(props) => (props.color == "green" ? "5px" : "")};
-  border-bottom-left-radius: ${(props) =>
-    props.color == "green" ? "5px" : ""};
+  border-bottom-left-radius: ${(props) => (props.color == "green" ? "5px" : "")};
 
   border-top-right-radius: ${(props) => (props.color == "red" ? "5px" : "")};
   border-bottom-right-radius: ${(props) => (props.color == "red" ? "5px" : "")};
@@ -127,8 +126,7 @@ const VoteBar: FC<VoteBarTypes> = ({ votesFor, votesAgainst, completed }) => {
   );
 };
 
-const defaultUri = (uri: string) =>
-  ipfs_gateway + uri.substring(7) + "/?seed=" + "0-0-0-0-0"; //TODO: actual values
+const defaultUri = (uri: string) => ipfs_gateway + uri.substring(7) + "/?seed=" + "0-0-0-0-0"; //TODO: actual values
 
 const bottleUri = (uri: string, bottle: any) =>
   ipfs_gateway +
@@ -183,13 +181,9 @@ const InProgress: FC<any> = ({ uri, bottles, vineyards }) => {
   const voteEnds = parseInt(uri.startTimestamp) + 1.5 * DAY;
   const completedAt = parseInt(uri.startTimestamp) + 2 * DAY;
 
-  const passing = BigNumber.from(uri.votesFor).gt(
-    BigNumber.from(uri.votesAgainst)
-  );
+  const passing = BigNumber.from(uri.votesFor).gt(BigNumber.from(uri.votesAgainst));
 
-  const filteredBottles = bottles.filter(
-    (bottle: any) => !uri.votes.includes(bottle.tokenId)
-  );
+  const filteredBottles = bottles.filter((bottle: any) => !uri.votes.includes(bottle.tokenId));
 
   const [ensData, setEns] = useState<null | string>();
   getEns(uri.artist).then((x) => {
@@ -245,8 +239,7 @@ const InProgress: FC<any> = ({ uri, bottles, vineyards }) => {
 
   const previewFrame = (event: any) => {
     setViewId(vineyards[event].tokenId);
-    if (uri.type == "VINEYARD")
-      setViewUri(vineyardUri(uri.newUri, vineyards[event]));
+    if (uri.type == "VINEYARD") setViewUri(vineyardUri(uri.newUri, vineyards[event]));
     if (uri.type == "BOTTLE") setViewUri(bottleUri(uri.newUri, bottles[event]));
   };
 
@@ -294,8 +287,7 @@ const InProgress: FC<any> = ({ uri, bottles, vineyards }) => {
 
       {completedAt > now && (
         <Countdown>
-          Ending in {hours(timeStatus)}:{minutes(timeStatus)}:
-          {seconds(timeStatus)}
+          Ending in {hours(timeStatus)}:{minutes(timeStatus)}:{seconds(timeStatus)}
         </Countdown>
       )}
 
@@ -303,20 +295,12 @@ const InProgress: FC<any> = ({ uri, bottles, vineyards }) => {
         <b>New URI:</b> {uri.newUri}
       </BreakWords>
       <BreakWords>
-        <b>New Artist:</b>{" "}
-        {ensData === undefined
-          ? "..."
-          : ensData === null
-          ? uri.artist
-          : ensData}
+        <b>New Artist:</b> {ensData === undefined ? "..." : ensData === null ? uri.artist : ensData}
       </BreakWords>
       <div>
         {voteEnds > now ? (
           <>
-            <CenteredSelect
-              value={bottleId}
-              onChange={(event: any) => setBottleId(event)}
-            >
+            <CenteredSelect value={bottleId} onChange={(event: any) => setBottleId(event)}>
               {filteredBottles.map((bottle: any) => (
                 <Select.Option key={bottle.tokenId} value={bottle.tokenId}>
                   Token ID {bottle.tokenId}
@@ -369,16 +353,12 @@ const Council: FC<CouncilTypes> = ({ newUris, bottles, vineyards }) => {
   return (
     <Page>
       {newUris
-        .filter(
-          (uri: any) => !(uri.votesFor === "0" && uri.votesAgainst === "0")
-        )
+        .filter((uri: any) => !(uri.votesFor === "0" && uri.votesAgainst === "0"))
         .map((uri: any) => (
           <div key={uri.startTimestamp}>
             {uri.completed ||
             (timeNow > parseInt(uri.startTimestamp) + 172800 &&
-              BigNumber.from(uri.votesAgainst).gt(
-                BigNumber.from(uri.votesFor)
-              )) ? (
+              BigNumber.from(uri.votesAgainst).gt(BigNumber.from(uri.votesFor))) ? (
               <Outcome uri={uri} />
             ) : (
               <InProgress uri={uri} bottles={bottles} vineyards={vineyards} />

@@ -58,12 +58,7 @@ const Footer = () => {
         }
         target="_blank"
       >
-        <Image
-          src={`/qx${darkMode ? "_dark" : ""}.svg`}
-          alt="quixotic"
-          height={24}
-          width={24}
-        />
+        <Image src={`/qx${darkMode ? "_dark" : ""}.svg`} alt="quixotic" height={24} width={24} />
       </FooterLink>
       <FooterLink
         href={
@@ -81,23 +76,10 @@ const Footer = () => {
         />
       </FooterLink>
       <FooterLink href="https://github.com/hash-valley" target="_blank">
-        <Image
-          src={`/github${darkMode ? "_dark" : ""}.svg`}
-          alt="github"
-          height={24}
-          width={24}
-        />
+        <Image src={`/github${darkMode ? "_dark" : ""}.svg`} alt="github" height={24} width={24} />
       </FooterLink>
-      <FooterLink
-        href="https://inathan-m.gitbook.io/hash-valley-winery/"
-        target="_blank"
-      >
-        <Image
-          src={`/docs${darkMode ? "_dark" : ""}.svg`}
-          alt="docs"
-          height={24}
-          width={24}
-        />
+      <FooterLink href="https://inathan-m.gitbook.io/hash-valley-winery/" target="_blank">
+        <Image src={`/docs${darkMode ? "_dark" : ""}.svg`} alt="docs" height={24} width={24} />
       </FooterLink>
     </FooterContainer>
   );

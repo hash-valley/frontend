@@ -6,11 +6,7 @@ const Sketch = dynamic(() => import("react-p5").then((mod) => mod.default), {
   ssr: false,
 });
 
-const MintSketch: React.FC<any> = ({
-  vine_location,
-  vine_elevation,
-  vine_soil,
-}) => {
+const MintSketch: React.FC<any> = ({ vine_location, vine_elevation, vine_soil }) => {
   const day = 86400;
   const offsets = [2, 9, -7, -10, -2, 5, 9, 7, 6, -4, -4, 7, 8, -4, 2];
 
@@ -74,9 +70,9 @@ const MintSketch: React.FC<any> = ({
 
       fillNextColor() {
         p5.fill(
-          `rgb(${parseInt(p5.random(0, 255))},${parseInt(
+          `rgb(${parseInt(p5.random(0, 255))},${parseInt(p5.random(0, 255))},${parseInt(
             p5.random(0, 255)
-          )},${parseInt(p5.random(0, 255))})`
+          )})`
         );
       }
 
@@ -168,16 +164,7 @@ const MintSketch: React.FC<any> = ({
       p5.noFill();
       p5.strokeWeight(weight);
       p5.stroke("#169bf7");
-      p5.bezier(
-        x,
-        y,
-        x + xVary,
-        y + length / 2,
-        x - xVary,
-        y + length,
-        x,
-        y + length * 2
-      );
+      p5.bezier(x, y, x + xVary, y + length / 2, x - xVary, y + length, x, y + length * 2);
       p5.noStroke();
     }
 
@@ -632,14 +619,7 @@ const MintSketch: React.FC<any> = ({
       if (vine_location == 16) p5.fill("#white");
       // else p5.fill("#black");
       p5.ellipse(cloudX, cloudY, 12, 12);
-      p5.triangle(
-        cloudX - 4,
-        cloudY + 2,
-        cloudX + 4,
-        cloudY - 2,
-        cloudX - 64,
-        cloudY - 64
-      );
+      p5.triangle(cloudX - 4, cloudY + 2, cloudX + 4, cloudY - 2, cloudX - 64, cloudY - 64);
     }
 
     function manor() {

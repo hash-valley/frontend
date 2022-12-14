@@ -62,8 +62,7 @@ export const Page = styled.div<{ color?: string; shadow?: string }>`
   padding: 0px 12px 60px 12px;
   font-family: Nunito;
   color: ${(props) => (props.color ? props.color : "black")};
-  ${(props) =>
-    props.shadow ? `filter: drop-shadow(2px 2px 3px ${props.shadow});` : ""}
+  ${(props) => (props.shadow ? `filter: drop-shadow(2px 2px 3px ${props.shadow});` : "")}
 `;
 
 export const GridItem = styled.div<{ selected?: boolean }>`
@@ -71,16 +70,14 @@ export const GridItem = styled.div<{ selected?: boolean }>`
   width: 20rem;
   padding: 1.6rem 0;
   border-radius: 19px;
-  background: ${(props) =>
-    props.selected ? "rgba(255,150,207,0.48)" : "#eee"};
+  background: ${(props) => (props.selected ? "rgba(255,150,207,0.48)" : "#eee")};
   box-shadow: 5px 5px 10px #bebebe, -5px -5px 10px #ffffff;
   transition: all 200ms ease-out;
 
   &:hover {
     background: #f5f5f5;
 
-    background: ${(props) =>
-      props.selected ? "rgba(255,150,207,0.48)" : "#f5f5f5"};
+    background: ${(props) => (props.selected ? "rgba(255,150,207,0.48)" : "#f5f5f5")};
     transform: translate(0, -4px);
     transition: all 200ms ease-out;
 

@@ -1,10 +1,4 @@
-import {
-  Flourish,
-  GridContainer,
-  Page,
-  Header,
-  HeaderBack,
-} from "../Styles/Components";
+import { Flourish, GridContainer, Page, Header, HeaderBack } from "../Styles/Components";
 import styled from "styled-components";
 import { VineyardAddress } from "../Utils/constants";
 import Image from "next/image";
@@ -234,9 +228,7 @@ const About = () => {
         <VintHeader>The Blueprint</VintHeader>
       </HeaderBack>
       <Info1>
-        <Subtitle side="left">
-          Hash Valley&apos;s destiny is shaped by its owners
-        </Subtitle>
+        <Subtitle side="left">Hash Valley&apos;s destiny is shaped by its owners</Subtitle>
         <SubSubtitle>
           <ol>
             <li>Cultivate a vineyard of your choosing</li>
@@ -250,8 +242,8 @@ const About = () => {
               <i>Vineyards</i>
             </h2>
             <Explain>
-              Mintable tokens that yield Wine Bottles if they are planted,
-              watered and harvested every season
+              Mintable tokens that yield Wine Bottles if they are planted, watered and harvested
+              every season
             </Explain>
           </InfoPanel>
           <InfoPanel>
@@ -259,8 +251,8 @@ const About = () => {
               <i>Wine Bottles</i>
             </h2>
             <Explain>
-              Grown from a carefully tended Vineyard, age it in the Cellar to
-              increase rarity and vote for the remix you want featured next
+              Grown from a carefully tended Vineyard, age it in the Cellar to increase rarity and
+              vote for the remix you want featured next
             </Explain>
           </InfoPanel>
           <InfoPanel>
@@ -268,8 +260,8 @@ const About = () => {
               <i>Council</i>
             </h2>
             <Explain>
-              Remix the art to flex your skills and claim all secondary sale
-              royalties + a bonus or vote for your favorite creator
+              Remix the art to flex your skills and claim all secondary sale royalties + a bonus or
+              vote for your favorite creator
             </Explain>
           </InfoPanel>
         </GridContainer>
@@ -281,19 +273,11 @@ const About = () => {
           <div>
             <SubSubtitle>
               You&apos;ll need some ETH on{" "}
-              <a
-                href="https://www.optimism.io"
-                target="_blank"
-                rel="noreferrer"
-              >
+              <a href="https://www.optimism.io" target="_blank" rel="noreferrer">
                 Optimism
               </a>{" "}
               to get started. You can use{" "}
-              <a
-                href="https://www.optimism.io/apps/bridges"
-                target="_blank"
-                rel="noreferrer"
-              >
+              <a href="https://www.optimism.io/apps/bridges" target="_blank" rel="noreferrer">
                 a bridge
               </a>{" "}
               to move your assets over.
@@ -311,21 +295,18 @@ const About = () => {
               >
                 Secondary Market
               </a>
-              . Plant during the first week of the season, water everyday (or
-              buy a sprinkler) then harvest in the final week.
+              . Plant during the first week of the season, water everyday (or buy a sprinkler) then
+              harvest in the final week.
+            </SubSubtitle>
+            <SubSubtitle>Each season is 12 weeks except the first which is only three!</SubSubtitle>
+            <SubSubtitle>
+              With a Wine Bottle in hand take your chances aging in the cellar or submit a remix to
+              the Council. Winners will be featured for 7+ days and receive all secondary royalties.
             </SubSubtitle>
             <SubSubtitle>
-              Each season is 12 weeks except the first which is only three!
-            </SubSubtitle>
-            <SubSubtitle>
-              With a Wine Bottle in hand take your chances aging in the cellar
-              or submit a remix to the Council. Winners will be featured for 7+
-              days and receive all secondary royalties.
-            </SubSubtitle>
-            <SubSubtitle>
-              Wine bottle age = Council clout. Maximize this with the Wine
-              Cellar&apos;s Hyperbolic Time Acceleration Technology&trade; but
-              stay sharp - leave a bottle too long and it may spoil.
+              Wine bottle age = Council clout. Maximize this with the Wine Cellar&apos;s Hyperbolic
+              Time Acceleration Technology&trade; but stay sharp - leave a bottle too long and it
+              may spoil.
             </SubSubtitle>
             <SubSubtitle>
               <a
@@ -333,8 +314,7 @@ const About = () => {
                 target="_blank"
                 rel="noreferrer"
               >
-                Check out the announcement post on Mirror for a full protocol
-                description
+                Check out the announcement post on Mirror for a full protocol description
               </a>
             </SubSubtitle>
           </div>
@@ -375,13 +355,11 @@ const About = () => {
               Earn $GRAPE and $VINEGAR from early harvests and spoiled bottles
             </SubSubtitle>
             <SubSubtitle color="white">
-              Use $VINEGAR to recover lost bottles or put a curse on your
-              nemesis&apos; vineyard
+              Use $VINEGAR to recover lost bottles or put a curse on your nemesis&apos; vineyard
             </SubSubtitle>
             <SubSubtitle color="white">
-              Defend your vineyards from attacks with $GRAPE or power up their
-              stats during planting season for increased yield to stay ahead of
-              the competition
+              Defend your vineyards from attacks with $GRAPE or power up their stats during planting
+              season for increased yield to stay ahead of the competition
             </SubSubtitle>
           </div>
         </CustomGridContainer2>
@@ -407,8 +385,7 @@ const About = () => {
               >
                 public goods
               </a>{" "}
-              without needing to bake in a profit model and is a critical part
-              of{" "}
+              without needing to bake in a profit model and is a critical part of{" "}
               <a
                 href="https://community.optimism.io/docs/governance/economics/#revenue-is-distributed-to-public-goods"
                 target="_blank"
@@ -418,8 +395,8 @@ const About = () => {
               </a>
             </SubSubtitle>
             <SubSubtitle>
-              Every Hash Valley vineyard mint increases the portion of total
-              sales donated directly to{" "}
+              Every Hash Valley vineyard mint increases the portion of total sales donated directly
+              to{" "}
               <a
                 href="https://optimistic.etherscan.io/address/0x15DdA60616Ffca20371ED1659dBB78E888f65556"
                 target="_blank"
@@ -513,11 +490,7 @@ const About = () => {
             Read the docs
           </a>{" "}
           or take a look at the{" "}
-          <a
-            href="https://github.com/hash-valley"
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a href="https://github.com/hash-valley" target="_blank" rel="noreferrer">
             codebase
           </a>{" "}
           to see more. Happy vinting!
@@ -526,12 +499,7 @@ const About = () => {
 
       <Flourish>
         <br />
-        <Image
-          src="/vine_svgs/flourish.svg"
-          alt="flourish"
-          height={80}
-          width={300}
-        />
+        <Image src="/vine_svgs/flourish.svg" alt="flourish" height={80} width={300} />
         <br />
       </Flourish>
     </>

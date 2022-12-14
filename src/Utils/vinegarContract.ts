@@ -10,11 +10,7 @@ const vinegarABI = [
   "function approve(address spender, uint256 amount) external returns (bool)",
 ];
 
-const viewVinegarContract = new Contract(
-  VinegarAddress,
-  vinegarABI,
-  viewProvider
-);
+const viewVinegarContract = new Contract(VinegarAddress, vinegarABI, viewProvider);
 
 export const vinegarBalance = async (address: string) => {
   return await viewVinegarContract.balanceOf(address);
@@ -24,11 +20,7 @@ export const vinegarAllowance = async (owner: string, spender: string) => {
   return await viewVinegarContract.allowance(owner, spender);
 };
 
-export const approveVinegar = async (
-  signer: any,
-  spender: string,
-  amount: number
-) => {
+export const approveVinegar = async (signer: any, spender: string, amount: number) => {
   const VinegarContract = new Contract(VinegarAddress, vinegarABI, signer);
   const vinegarWithSigner = VinegarContract.connect(signer);
 
@@ -41,11 +33,7 @@ export const approveVinegar = async (
   }
 };
 
-export const transferVinegar = async (
-  signer: any,
-  recipient: string,
-  amount: number
-) => {
+export const transferVinegar = async (signer: any, recipient: string, amount: number) => {
   const VinegarContract = new Contract(VinegarAddress, vinegarABI, signer);
   const vinegarWithSigner = VinegarContract.connect(signer);
 

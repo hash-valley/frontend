@@ -25,12 +25,11 @@ const Roadmap: React.FC<Props> = ({ items }) => {
       <Timeline mode="alternate">
         {items.map((item: Item, index: number) =>
           item.complete ? (
-            <Timeline.Item color="green" key={index}>{item.text}</Timeline.Item>
+            <Timeline.Item color="green" key={index}>
+              {item.text}
+            </Timeline.Item>
           ) : (
-            <Timeline.Item
-              dot={<ClockCircleOutlined style={{ fontSize: "18px" }} />}
-              key={index}
-            >
+            <Timeline.Item dot={<ClockCircleOutlined style={{ fontSize: "18px" }} />} key={index}>
               {item.text}
             </Timeline.Item>
           )

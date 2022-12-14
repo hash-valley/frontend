@@ -22,11 +22,7 @@ const BottleBoard = () => {
       </h4>
     </Page>
   ) : data?.newUris.length > 1 ? (
-    <Council
-      newUris={data.newUris}
-      bottles={data.bottles || []}
-      vineyards={data.vineyards || []}
-    />
+    <Council newUris={data.newUris} bottles={data.bottles || []} vineyards={data.vineyards || []} />
   ) : (
     <Page>
       <h2>

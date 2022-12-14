@@ -1,13 +1,7 @@
 import { useState, useContext } from "react";
 import { locations, soilTypes } from "../Utils/attributes";
 import { newVineyards, newVineyardsGiveaway } from "../Utils/vineyardContract";
-import {
-  GridContainer,
-  GridItem,
-  Page,
-  Spaced,
-  RoundedImg,
-} from "../Styles/Components";
+import { GridContainer, GridItem, Page, Spaced, RoundedImg } from "../Styles/Components";
 import styled from "styled-components";
 import { useCurrSeason } from "../Hooks/useCurrSeason";
 import { useAccount, useNetwork, useSigner } from "wagmi";
@@ -38,8 +32,7 @@ const RevealedText = styled.div`
   -webkit-text-fill-color: transparent;
 `;
 
-const revealedAt = (i: number) =>
-  i === 15 ? 500 : i === 16 ? 2500 : i === 17 ? 5000 : 5500;
+const revealedAt = (i: number) => (i === 15 ? 500 : i === 16 ? 2500 : i === 17 ? 5000 : 5500);
 
 const MintContainer = () => {
   const { address, status } = useAccount();
@@ -73,11 +66,7 @@ const MintContainer = () => {
   };
 
   const selectCity = (num: number, bonus: boolean) => {
-    if (
-      bonus &&
-      BigNumber.from(data?.account?.giveawayBalance ?? 0).lt(DECIMALS)
-    )
-      return;
+    if (bonus && BigNumber.from(data?.account?.giveawayBalance ?? 0).lt(DECIMALS)) return;
     if (num > protocol.locales) return;
     setCity(num);
     setStep(1);
@@ -101,11 +90,7 @@ const MintContainer = () => {
 
   const mint = async () => {
     openModal();
-    const tx = await newVineyards(
-      [city, elev, soil],
-      signer,
-      protocol.currentPrice
-    );
+    const tx = await newVineyards([city, elev, soil], signer, protocol.currentPrice);
     if (!tx) {
       closeModal();
       return;
@@ -146,28 +131,19 @@ const MintContainer = () => {
     <Page>
       <h2>Mint a Vineyard</h2>
 
-      {step > 0 && (
-        <MintSketch
-          vine_elevation={elev}
-          vine_location={city}
-          vine_soil={soil}
-        />
-      )}
+      {step > 0 && <MintSketch vine_elevation={elev} vine_location={city} vine_soil={soil} />}
 
       {step == 0 ? (
         <Step>
           <h3>Select a Location</h3>
           <p>
-            Location will affect the elevations you can plant at. Climate will
-            affect the notes on the bottles you harvest
+            Location will affect the elevations you can plant at. Climate will affect the notes on
+            the bottles you harvest
           </p>
           <GridContainer>
             {locations.map((loc, index) =>
               loc.bonus ? (
-                <GridItem
-                  key={loc.name}
-                  onClick={() => selectCity(index, true)}
-                >
+                <GridItem key={loc.name} onClick={() => selectCity(index, true)}>
                   <RoundedImg
                     src={
                       index <= protocol.locales
@@ -186,18 +162,13 @@ const MintContainer = () => {
                   ) : (
                     <>
                       <br />
-                      <RevealedText>
-                        Revealed at {revealedAt(index)} mints
-                      </RevealedText>
+                      <RevealedText>Revealed at {revealedAt(index)} mints</RevealedText>
                     </>
                   )}
                   <i>Merchant Token required</i>
                 </GridItem>
               ) : (
-                <GridItem
-                  key={loc.name}
-                  onClick={() => selectCity(index, false)}
-                >
+                <GridItem key={loc.name} onClick={() => selectCity(index, false)}>
                   <RoundedImg
                     src={`/thumbnails/vineyards/${index}.png`}
                     height={120}
@@ -241,12 +212,7 @@ const MintContainer = () => {
           <Spaced size="large" type="default" shape="round" onClick={back}>
             Back
           </Spaced>
-          <Spaced
-            size="large"
-            type="primary"
-            shape="round"
-            onClick={() => selectElev(elev)}
-          >
+          <Spaced size="large" type="primary" shape="round" onClick={() => selectElev(elev)}>
             Confirm
           </Spaced>
         </Step>
@@ -258,16 +224,8 @@ const MintContainer = () => {
             <br />
             <GridContainer>
               {soilTypes.map((_soil, index) => (
-                <GridItem
-                  selected={soil === index}
-                  key={_soil.name}
-                  onClick={() => setSoil(index)}
-                >
-                  <RoundedImg
-                    src={`/thumbnails/dirt/${index}.png`}
-                    height={130}
-                    width={120}
-                  />
+                <GridItem selected={soil === index} key={_soil.name} onClick={() => setSoil(index)}>
+                  <RoundedImg src={`/thumbnails/dirt/${index}.png`} height={130} width={120} />
                   <div>{_soil.name}</div>
                 </GridItem>
               ))}
@@ -277,12 +235,7 @@ const MintContainer = () => {
             <Spaced size="large" type="default" shape="round" onClick={back}>
               Back
             </Spaced>
-            <Spaced
-              size="large"
-              type="primary"
-              shape="round"
-              onClick={() => selectSoil()}
-            >
+            <Spaced size="large" type="primary" shape="round" onClick={() => selectSoil()}>
               Confirm
             </Spaced>
           </div>
@@ -291,8 +244,7 @@ const MintContainer = () => {
         <Step>
           <p>
             <i>
-              Your vineyard is dynamic and will develop as you care for it over
-              time.
+              Your vineyard is dynamic and will develop as you care for it over time.
               <br />
               Voting in the council will unlock new art updates
             </i>
@@ -312,22 +264,12 @@ const MintContainer = () => {
             </div>
           </Sign>
           {mintHash ? (
-            <Spaced
-              size="large"
-              type="default"
-              shape="round"
-              onClick={startOver}
-            >
+            <Spaced size="large" type="default" shape="round" onClick={startOver}>
               Mint Another
             </Spaced>
           ) : status === "connected" && address ? (
             <>
-              <Spaced
-                size="large"
-                type="default"
-                shape="round"
-                onClick={startOver}
-              >
+              <Spaced size="large" type="default" shape="round" onClick={startOver}>
                 Start over
               </Spaced>
               {chain?.id === chainId ? (
@@ -346,14 +288,8 @@ const MintContainer = () => {
                   <>
                     <br />
                     {checkMerchantToken() && (
-                      <Spaced
-                        size="large"
-                        type="primary"
-                        shape="round"
-                        onClick={mintGiveaway}
-                      >
-                        Use Merchant Token (
-                        {formatUnits(data.account.giveawayBalance)})
+                      <Spaced size="large" type="primary" shape="round" onClick={mintGiveaway}>
+                        Use Merchant Token ({formatUnits(data.account.giveawayBalance)})
                       </Spaced>
                     )}
                   </>
