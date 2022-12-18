@@ -21,13 +21,20 @@ const VintHeader = styled(Header)`
   animation: blueprint 3s infinite;
 `;
 
+const RoadmapInfo = styled(Page)`
+  // background: white;
+  margin-top: 0;
+  padding-top: 3.1rem;
+`;
+
 const Info1 = styled(Page)`
   padding-top: 3rem;
   margin-bottom: 36px;
 `;
 
 const Info2 = styled(Page)`
-  background: #f0f0ee;
+  background: #f8f8f6;
+
   margin-top: 16px;
   padding-top: 3rem;
 `;
@@ -39,10 +46,9 @@ const Info3 = styled(Page)`
 `;
 
 const Info4 = styled(Page)`
-  background-image: url("pgf_back.png");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
+  background: rgb(255, 255, 255);
+  background: linear-gradient(144deg, rgba(255, 255, 255, 1) 56%, rgba(196, 255, 247, 1) 100%);
+
   margin-top: 0;
   padding-top: 5rem;
 `;
@@ -463,7 +469,33 @@ const About = () => {
         </CustomGridContainer2>
       </Info4>
 
-      <Info1>
+      <MintInfo>
+        <Subtitle side="right">Mint Now</Subtitle>
+        <CustomGridContainer3>
+          <CenteredDiv>
+            <ImageBox4>
+              <Image
+                src="/jazz.png"
+                alt="logo"
+                height={600}
+                width={600}
+                unoptimized={true}
+                loading="eager"
+              />
+            </ImageBox4>
+          </CenteredDiv>
+          <div>
+            <BorderDiv>
+              <CenterSubSub color="black">
+                Choose where to plant your grapes and get your vineyard started! 🍷✨
+              </CenterSubSub>
+              <MintButton />
+            </BorderDiv>
+          </div>
+        </CustomGridContainer3>
+      </MintInfo>
+
+      <RoadmapInfo>
         <Subtitle side="left">Roadmap</Subtitle>
 
         <Roadmap
@@ -519,33 +551,7 @@ const About = () => {
             },
           ]}
         />
-      </Info1>
-
-      <MintInfo>
-        <Subtitle side="right">Mint Now</Subtitle>
-        <CustomGridContainer3>
-          <CenteredDiv>
-            <ImageBox4>
-              <Image
-                src="/jazz.png"
-                alt="logo"
-                height={600}
-                width={600}
-                unoptimized={true}
-                loading="eager"
-              />
-            </ImageBox4>
-          </CenteredDiv>
-          <div>
-            <BorderDiv>
-              <CenterSubSub color="black">
-                Choose where to plant your grapes and get your vineyard started! 🍷✨
-              </CenterSubSub>
-              <MintButton />
-            </BorderDiv>
-          </div>
-        </CustomGridContainer3>
-      </MintInfo>
+      </RoadmapInfo>
 
       <Info1>
         <Subtitle side="left">Wanna go Deeper?</Subtitle>
