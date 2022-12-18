@@ -4,6 +4,7 @@ import { VineyardAddress } from "../Utils/constants";
 import Image from "next/image";
 import Link from "next/link";
 import Roadmap from "./Roadmap";
+import MintButton from "./MintButton";
 
 const VintHeader = styled(Header)`
   padding: 25px;
@@ -39,6 +40,15 @@ const Info3 = styled(Page)`
 
 const Info4 = styled(Page)`
   background-image: url("pgf_back.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  margin-top: 0;
+  padding-top: 5rem;
+`;
+
+const MintInfo = styled(Page)`
+  background-image: url("blurbg.png");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
@@ -82,6 +92,10 @@ const SubSubtitle = styled.h2<{ color?: string }>`
   ${(props) => (props.color ? `color: ${props.color};` : "")}
 `;
 
+const CenterSubSub = styled(SubSubtitle)`
+  text-align: center;
+`;
+
 const Explain = styled.p`
   font-size: 1rem;
 `;
@@ -100,6 +114,18 @@ const CustomGridContainer = styled(GridContainer)`
 
 const CustomGridContainer2 = styled(GridContainer)`
   grid-template-columns: fit-content(30%) fit-content(70%);
+
+  @media screen and (max-width: 1280px) {
+    grid-template-columns: auto auto;
+  }
+
+  @media screen and (max-width: 960px) {
+    grid-template-columns: auto;
+  }
+`;
+
+const CustomGridContainer3 = styled(GridContainer)`
+  grid-template-columns: fit-content(60%) fit-content(40%);
 
   @media screen and (max-width: 1280px) {
     grid-template-columns: auto auto;
@@ -216,9 +242,25 @@ const ImageBox3 = styled.div`
   }
 `;
 
+const ImageBox4 = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 6px;
+
+  @media screen and (min-width: 961px) {
+    margin-top: -96px;
+  }
+`;
+
 const CenteredDiv = styled.div`
   justify-content: center;
   display: flex;
+`;
+
+const BorderDiv = styled.div`
+  border: 2px solid black;
+  border-radius: 24px;
+  padding: 0 0 48px 0;
 `;
 
 const About = () => {
@@ -478,6 +520,32 @@ const About = () => {
           ]}
         />
       </Info1>
+
+      <MintInfo>
+        <Subtitle side="right">Mint Now</Subtitle>
+        <CustomGridContainer3>
+          <CenteredDiv>
+            <ImageBox4>
+              <Image
+                src="/jazz.png"
+                alt="logo"
+                height={600}
+                width={600}
+                unoptimized={true}
+                loading="eager"
+              />
+            </ImageBox4>
+          </CenteredDiv>
+          <div>
+            <BorderDiv>
+              <CenterSubSub color="black">
+                Choose where to plant your grapes and get your vineyard started! 🍷✨
+              </CenterSubSub>
+              <MintButton />
+            </BorderDiv>
+          </div>
+        </CustomGridContainer3>
+      </MintInfo>
 
       <Info1>
         <Subtitle side="left">Wanna go Deeper?</Subtitle>

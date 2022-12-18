@@ -313,10 +313,10 @@ const MintSketch: React.FC<any> = ({ vine_location, vine_elevation, vine_soil })
         p5.fill("#CCD8D9");
         p5.triangle(-100, 275, 70, mHeight(275), 300, 275);
         p5.triangle(200, 275, 425, mHeight(275), 900, 275);
-        p5.fill("#B8CBCD");
-        p5.triangle(-200, 375, 270, mHeight(375), 1000, 375);
         p5.fill("#94AEB2");
         p5.triangle(60, 275, 280, mHeight(275), 490, 275);
+        p5.fill("#B8CBCD");
+        p5.triangle(-200, 375, 270, mHeight(375), 1000, 375);
         p5.fill("#6E9091");
         p5.triangle(100, 425, 320, mHeight(425), 600, 425);
         p5.fill("#416C6C");
