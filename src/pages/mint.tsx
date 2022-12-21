@@ -113,7 +113,7 @@ const MintContainer = () => {
     }
     addRecentTransaction({
       hash: tx.hash,
-      description: "Mint new vineyard with Merchant token",
+      description: "Mint new vineyard with VIP token",
     });
 
     await tx.wait();
@@ -123,7 +123,7 @@ const MintContainer = () => {
     setMintHash(tx?.hash);
   };
 
-  const checkMerchantToken = () =>
+  const checkVIPToken = () =>
     BigNumber.from(data?.account?.giveawayBalance ?? 0).gte(DECIMALS) &&
     (protocol.mintedVineyards >= 1000 || city > 14);
 
@@ -165,7 +165,7 @@ const MintContainer = () => {
                       <RevealedText>Revealed at {revealedAt(index)} mints</RevealedText>
                     </>
                   )}
-                  <i>Merchant Token required</i>
+                  <i>VIP Token required</i>
                 </GridItem>
               ) : (
                 <GridItem key={loc.name} onClick={() => selectCity(index, false)}>
@@ -287,9 +287,9 @@ const MintContainer = () => {
                   )}
                   <>
                     <br />
-                    {checkMerchantToken() && (
+                    {checkVIPToken() && (
                       <Spaced size="large" type="primary" shape="round" onClick={mintGiveaway}>
-                        Use Merchant Token ({formatUnits(data.account.giveawayBalance)})
+                        Use VIP Token ({formatUnits(data.account.giveawayBalance)})
                       </Spaced>
                     )}
                   </>

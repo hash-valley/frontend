@@ -111,7 +111,7 @@ const MintButton = () => {
       )}
       {minted >= max && BigNumber.from(data?.account?.giveawayBalance ?? 0).gte(DECIMALS) && (
         <Button type="primary" shape="round" size="large" onClick={() => router.push(`/mint`)}>
-          Use Merchant Token ({formatUnits(data.account.giveawayBalance)})
+          Use VIP Token ({formatUnits(data.account.giveawayBalance)})
         </Button>
       )}
     </>
