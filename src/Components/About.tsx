@@ -418,11 +418,7 @@ const About = () => {
         <CustomGridContainer2>
           <div>
             <SubSubtitle>
-              <a
-                href="https://medium.com/ethereum-optimism/retroactive-public-goods-funding-33c9b7d00f0c"
-                target="_blank"
-                rel="noreferrer"
-              >
+              <a href="https://app.optimism.io/retropgf" target="_blank" rel="noreferrer">
                 Retroactive public goods funding
               </a>{" "}
               is a way to fund{" "}
@@ -433,14 +429,8 @@ const About = () => {
               >
                 public goods
               </a>{" "}
-              without needing to bake in a profit model and is a critical part of{" "}
-              <a
-                href="https://community.optimism.io/docs/governance/economics/#revenue-is-distributed-to-public-goods"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Optimism&apos;s economic model
-              </a>
+              without needing to bake in a profit model and is a critical part of Optimism&apos;s
+              economic model
             </SubSubtitle>
             <SubSubtitle>
               Every Hash Valley vineyard mint increases the portion of total sales donated directly
