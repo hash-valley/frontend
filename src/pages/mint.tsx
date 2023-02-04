@@ -32,7 +32,7 @@ const RevealedText = styled.div`
   -webkit-text-fill-color: transparent;
 `;
 
-const revealedAt = (i: number) => (i === 15 ? 500 : i === 16 ? 2500 : i === 17 ? 5000 : 5500);
+const revealedAt = (i: number) => (i === 15 ? 500 : i === 16 ? 2000 : i === 17 ? 4000 : 4500);
 
 const MintContainer = () => {
   const { address, status } = useAccount();

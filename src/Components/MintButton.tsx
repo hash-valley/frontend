@@ -81,11 +81,11 @@ const MintButton = () => {
             <p>
               {price} {constants.EtherSymbol}
             </p>
-            <i>Price increases 0.01 {constants.EtherSymbol} every 500 mints</i>
+            <i>Price increases 0.01 {constants.EtherSymbol} every 1000 mints</i>
           </h3>
         )
       )}
-      {minted >= 5000 && <BonusText>Bonus: 5000 $GRAPE, 5000 $VINEGAR</BonusText>}
+      {minted >= 4000 && <BonusText>Bonus: 5000 $GRAPE, 5000 $VINEGAR</BonusText>}
       <br />
       <br />
       {minted < max ? (
