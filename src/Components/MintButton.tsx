@@ -96,9 +96,10 @@ const MintButton = () => {
               shape="round"
               size="large"
               onClick={() => router.push(`/mint`)}
-              disabled={!canMint}
+              // disabled={!canMint}
+              disabled={true}
             >
-              Mint
+              Sale Not Open 
             </Button>
           ) : (
             <Centered>
