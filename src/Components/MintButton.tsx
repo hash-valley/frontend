@@ -55,7 +55,7 @@ const MintButton = () => {
     }
     if (!loading) {
       setCanMint(
-        protocol.mintedVineyards >= 1000 ||
+        protocol.mintedVineyards >= 1500 ||
           data.account === null ||
           data?.account?.vineyards.length < 5
       );
@@ -67,10 +67,10 @@ const MintButton = () => {
       <h3>
         {minted} / {max} vineyards minted
       </h3>
-      {minted < 1000 ? (
+      {minted < 1500 ? (
         <h3>
           <p>
-            {1000 - minted} free vineyards remaining then 0.01 {constants.EtherSymbol}
+            {1500 - minted} free vineyards remaining then 0.01 {constants.EtherSymbol}
           </p>
           <p>-</p>
           <i>You&apos;ve claimed {data?.account?.vineyards.length ?? 0} / 5 free vineyards</i>
