@@ -56,7 +56,7 @@ const MintButton = () => {
     if (!loading) {
       setCanMint(
         protocol.mintedVineyards >= 1500 ||
-          data.account === null ||
+          (data?.account === null || data?.account === undefined) ||
           data?.account?.vineyards.length < 5
       );
     }
