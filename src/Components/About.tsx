@@ -411,11 +411,11 @@ const About = () => {
             </SubSubtitle>
             <SubSubtitle>
               <a
-                href="https://mirror.xyz/0x00000023F6B4ED7185E7B8928072a8bfEC660ff3/..."
+                href="https://mirror.xyz/0x00000023F6B4ED7185E7B8928072a8bfEC660ff3/an7EKftox9cgXEzrClaAv5uSIBb7lhcVxH1p1tsWYIY"
                 target="_blank"
                 rel="noreferrer"
               >
-                V2 update post on Mirror
+                Read more on Mirror
               </a>
             </SubSubtitle>
           </div>
