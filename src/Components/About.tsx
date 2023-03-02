@@ -409,6 +409,15 @@ const About = () => {
               Defend your vineyards from attacks with $GRAPE or power up their stats during planting
               season for increased yield to stay ahead of the competition
             </SubSubtitle>
+            <SubSubtitle>
+              <a
+                href="https://mirror.xyz/0x00000023F6B4ED7185E7B8928072a8bfEC660ff3/..."
+                target="_blank"
+                rel="noreferrer"
+              >
+                V2 update post on Mirror
+              </a>
+            </SubSubtitle>
           </div>
         </CustomGridContainer2>
       </Info3>
@@ -490,7 +499,7 @@ const About = () => {
 
         <Roadmap
           items={[
-            { text: "Vineyard mint opens", complete: false },
+            { text: "Vineyard mint opens", complete: true },
             {
               text: "500 mints -> first bonus location unlocks",
               complete: false,
