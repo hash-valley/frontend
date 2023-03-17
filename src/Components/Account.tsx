@@ -105,6 +105,7 @@ const Account = () => {
                 width={50}
                 unoptimized={true}
                 loading="eager"
+                style={{ borderRadius: "50%"}}
               />
             </a>
           </Link>

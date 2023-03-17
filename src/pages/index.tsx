@@ -10,6 +10,7 @@ const LeftCorner = styled.div`
   margin-right: -22rem;
   margin-left: auto;
   filter: drop-shadow(2px 2px #fff);
+  color: #fff;
 `;
 
 const RightCorner = styled.div`
@@ -27,7 +28,7 @@ const HeadDiv = styled.div`
     margin-top: -6rem;
   }
 
-  text-shadow: 2px 2px #fff;
+  text-shadow: 3px 3px #000;
 `;
 
 const Chevron = styled.div`
@@ -63,6 +64,7 @@ const Hero = styled(Page)`
   margin-top: -16px;
   padding-top: 200px;
   background-image: url("landscape.png");
+  background-opacity: 50%;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
@@ -71,6 +73,11 @@ const Hero = styled(Page)`
 
 const VintHeader = styled(Header)`
   margin: 10rem auto 7rem auto;
+  color: #fff;
+`;
+
+const CustomSubHeader = styled(SubHeader)`
+  color: #fff;
 `;
 
 const Splash = () => {
@@ -91,7 +98,7 @@ const Splash = () => {
           <RightCorner>
             <Image src="/vine_svgs/right_corner.svg" alt="corner" height={160} width={160} />
           </RightCorner>
-          <SubHeader>The on-chain winery franchise</SubHeader>
+          <CustomSubHeader>The on-chain winery franchise</CustomSubHeader>
         </HeadDiv>
       </Hero>
 
