@@ -186,7 +186,7 @@ const ImageBox2 = styled.div`
   border: 0.5rem solid white;
   box-shadow: -10px 10px grey;
   margin: auto 24px;
-  background-color: white;
+  background-color: black;
   border-radius: 16px;
   padding: 6px;
   transition: all 200ms ease-out;
@@ -369,11 +369,11 @@ const About = () => {
           <CenteredDiv>
             <ImageBox>
               <FunImage
-                src="/bottles.png"
+                src="/jazzy-bottle.png"
                 alt="logo"
                 height={600}
                 width={600}
-                unoptimized={true}
+                // unoptimized={true}
                 loading="eager"
               />
             </ImageBox>
@@ -389,11 +389,11 @@ const About = () => {
           <CenteredDiv>
             <ImageBox2>
               <FunImage
-                src="/alchemy.png"
+                src="/arcane.png"
                 alt="logo"
                 height={600}
                 width={600}
-                unoptimized={true}
+                // unoptimized={true}
                 loading="eager"
               />
             </ImageBox2>
