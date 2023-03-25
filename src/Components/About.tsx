@@ -252,10 +252,10 @@ const ImageBox3 = styled.div`
 const ImageBox4 = styled.div`
   display: flex;
   justify-content: center;
-  padding: 6px;
+  margin: auto 6px;
 
   @media screen and (min-width: 961px) {
-    margin-top: -96px;
+    margin-top: -10%;
   }
 `;
 
@@ -303,8 +303,8 @@ const About = () => {
         <Subtitle side="left">Hash Valley&apos;s destiny is shaped by its owners</Subtitle>
         <SubSubtitle>
           <ol>
-            <li>Cultivate a vineyard of your choosing</li>
-            <li>Discover rare vintages</li>
+            <li>Cultivate a vineyard</li>
+            <li>Discover rare wines</li>
             <li>Remix the artwork - earn ETH</li>
           </ol>
         </SubSubtitle>
@@ -314,8 +314,7 @@ const About = () => {
               <i>Vineyards</i>
             </h2>
             <Explain>
-              Mintable tokens that yield Wine Bottles if they are planted, watered and harvested
-              every season
+              <b>Yield Wine Bottles</b> if they are planted, watered and harvested every season
             </Explain>
           </InfoPanel>
           <InfoPanel>
@@ -323,8 +322,8 @@ const About = () => {
               <i>Wine Bottles</i>
             </h2>
             <Explain>
-              Grown from a carefully tended Vineyard, age it in the Cellar to increase rarity and
-              vote for the remix you want featured next
+              Grown from a well tended Vineyard - age in the cellar to <b>increase rarity</b> and
+              vote for your favorite remix
             </Explain>
           </InfoPanel>
           <InfoPanel>
@@ -332,8 +331,8 @@ const About = () => {
               <i>Council</i>
             </h2>
             <Explain>
-              Remix the art to flex your skills and claim all secondary sale royalties + a bonus or
-              vote for your favorite creator
+              Remix the art to flex your skills and <b>claim all secondary royalties + a bonus</b>{" "}
+              or vote for your favorite creator
             </Explain>
           </InfoPanel>
         </GridContainer>
@@ -343,7 +342,7 @@ const About = () => {
         <Subtitle side="right">How Do I Join?</Subtitle>
         <CustomGridContainer>
           <div>
-            <SubSubtitle>
+            {/* <SubSubtitle>
               You&apos;ll need some ETH on{" "}
               <a href="https://www.optimism.io" target="_blank" rel="noreferrer">
                 Optimism
@@ -353,7 +352,7 @@ const About = () => {
                 a bridge
               </a>{" "}
               to move your assets over.
-            </SubSubtitle>
+            </SubSubtitle> */}
             <SubSubtitle>
               Get a Vineyard from the <Link href="/mint">Mint</Link> or{" "}
               <a
@@ -367,18 +366,18 @@ const About = () => {
               >
                 Secondary Market
               </a>
-              . Plant during the first week of the season, water everyday (or buy a sprinkler) then
-              harvest in the final week.
+              . <b>Plant</b> during the first week of the season, <b>water</b> everyday (or buy a
+              sprinkler) then <b>harvest</b> in the final week.
             </SubSubtitle>
             <SubSubtitle>Each season is 12 weeks except the first which is only three!</SubSubtitle>
             <SubSubtitle>
-              With a Wine Bottle in hand take your chances aging in the cellar or submit a remix to
-              the Council. Winners will be featured for 7+ days and receive all secondary royalties.
+              Age your Bottle in the cellar or submit a remix to the Council.{" "}
+              <b>Winners will be featured for 7+ days</b> and receive all secondary royalties.
             </SubSubtitle>
             <SubSubtitle>
-              Wine bottle age = Council clout. Maximize this with the Wine Cellar&apos;s Hyperbolic
-              Time Acceleration Technology&trade; but stay sharp - leave a bottle too long and it
-              may spoil.
+              <b>Wine bottle age = Council clout.</b> Maximize this with the Cellar&apos;s
+              Hyperbolic Time Acceleration Technology&trade; but stay sharp - leave a bottle too
+              long and it may spoil.
             </SubSubtitle>
             <SubSubtitle>
               <a
@@ -397,7 +396,6 @@ const About = () => {
                 alt="logo"
                 height={600}
                 width={600}
-                // unoptimized={true}
                 loading="eager"
               />
             </ImageBox>
@@ -412,26 +410,20 @@ const About = () => {
         <CustomGridContainer2>
           <CenteredDiv>
             <ImageBox2>
-              <FunImage
-                src="/arcane.png"
-                alt="logo"
-                height={600}
-                width={600}
-                // unoptimized={true}
-                loading="eager"
-              />
+              <FunImage src="/arcane.png" alt="logo" width={600} height={600} loading="eager" />
             </ImageBox2>
           </CenteredDiv>
           <div>
             <SubSubtitle color="white">
-              Earn $GRAPE and $VINEGAR from early harvests and spoiled bottles
+              <b>Earn $GRAPE and $VINEGAR tokens</b> from early harvests and spoiled bottles
             </SubSubtitle>
             <SubSubtitle color="white">
-              Use $VINEGAR to recover lost bottles or put a curse on your nemesis&apos; vineyard
+              Use <b>$VINEGAR</b> to recover lost bottles or put a curse on your nemesis&apos;
+              vineyard
             </SubSubtitle>
             <SubSubtitle color="white">
-              Defend your vineyards from attacks with $GRAPE or power up their stats during planting
-              season for increased yield to stay ahead of the competition
+              Defend your vineyards from attacks with <b>$GRAPE</b> or power up their stats for{" "}
+              <b>increased yield</b>
             </SubSubtitle>
             <SubSubtitle>
               <a
@@ -466,8 +458,8 @@ const About = () => {
               economic model
             </SubSubtitle>
             <SubSubtitle>
-              Every Hash Valley vineyard mint increases the portion of total sales donated directly
-              to{" "}
+              Every Hash Valley vineyard mint increases the portion of total sales{" "}
+              <b>donated directly</b> to{" "}
               <a
                 href="https://optimistic.etherscan.io/address/0x15DdA60616Ffca20371ED1659dBB78E888f65556"
                 target="_blank"
@@ -479,14 +471,7 @@ const About = () => {
           </div>
           <CenteredDiv>
             <ImageBox3>
-              <FunImage
-                src="/pgf.jpeg"
-                alt="PGF"
-                height={351}
-                width={500}
-                unoptimized={true}
-                loading="eager"
-              />
+              <FunImage src="/pgf.jpeg" alt="PGF" height={351} width={500} loading="eager" />
             </ImageBox3>
           </CenteredDiv>
         </CustomGridContainer2>
@@ -578,14 +563,7 @@ const About = () => {
         <CustomGridContainer3>
           <CenteredDiv>
             <ImageBox4>
-              <Image
-                src="/jazz.png"
-                alt="logo"
-                height={600}
-                width={600}
-                unoptimized={true}
-                loading="eager"
-              />
+              <Image src="/jazz.png" alt="logo" height={600} width={600} loading="eager" />
             </ImageBox4>
           </CenteredDiv>
           <div>
