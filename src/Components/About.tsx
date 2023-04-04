@@ -512,6 +512,10 @@ const About = () => {
               text: "Launch DAO for protocol management",
               complete: false,
             },
+            {
+              text: "Distribute ownership of Hash Valley Winery to DAO members",
+              complete: false,
+            },
           ]}
         />
         <h2>
@@ -550,7 +554,7 @@ const About = () => {
             <a href="https://github.com/hash-valley" target="_blank" rel="noreferrer">
               codebase
             </a>{" "}
-            to see more. Happy vinting!
+            (we're open source!) to see more. Happy vinting!
           </SubSubtitle>
           <BumpedFlourish>
             <Image src="/vine_svgs/flourish.svg" alt="flourish" height={80} width={300} />
