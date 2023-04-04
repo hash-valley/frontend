@@ -392,7 +392,7 @@ const About = () => {
           <CenteredDiv>
             <ImageBox>
               <FunImage
-                src="/jazzy-bottle.png"
+                src="/bottles-patio.png"
                 alt="logo"
                 height={600}
                 width={600}
