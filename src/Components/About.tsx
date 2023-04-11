@@ -184,8 +184,8 @@ const ImageBox = styled.div`
 const ImageBox2 = styled.div`
   display: flex;
   justify-content: center;
-  border: 0.5rem solid white;
-  box-shadow: -10px 10px grey;
+  border: 0.5rem solid black;
+  box-shadow: -10px 10px #f8e1b0;
   margin: auto 24px;
   background-color: black;
   border-radius: 16px;
@@ -201,16 +201,16 @@ const ImageBox2 = styled.div`
 
   @keyframes shadow {
     0% {
-      box-shadow: -10px 10px grey;
+      box-shadow: -10px 10px #f8e1b0;
     }
     6% {
-      box-shadow: -14px 14px red, -28px 28px purple;
+      box-shadow: -14px 14px #e33b55, -28px 28px #3d1273;
     }
     50% {
-      box-shadow: -14px 14px red, -28px 28px purple;
+      box-shadow: -14px 14px #e33b55, -28px 28px #3d1273;
     }
     56% {
-      box-shadow: -10px 10px grey;
+      box-shadow: -10px 10px #f8e1b0;
     }
   }
 `;
@@ -410,7 +410,7 @@ const About = () => {
         <CustomGridContainer2>
           <CenteredDiv>
             <ImageBox2>
-              <FunImage src="/arcane.png" alt="logo" width={600} height={600} loading="eager" />
+              <FunImage src="/magic.png" alt="logo" width={600} height={600} loading="eager" />
             </ImageBox2>
           </CenteredDiv>
           <div>
@@ -471,7 +471,7 @@ const About = () => {
           </div>
           <CenteredDiv>
             <ImageBox3>
-              <FunImage src="/pgf.jpeg" alt="PGF" height={351} width={500} loading="eager" />
+              <FunImage src="/pgf2.png" alt="PGF" height={333} width={500} loading="eager" />
             </ImageBox3>
           </CenteredDiv>
         </CustomGridContainer2>
