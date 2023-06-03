@@ -4,13 +4,14 @@ import { NEW_URI } from "../../Utils/queries";
 import { Page, BigLink } from "../../Styles/Components";
 import Link from "next/link";
 import { useAccount } from "wagmi";
+import { constants } from "ethers";
 
 const BottleBoard = () => {
   const { address } = useAccount();
   const { loading, error, data } = useQuery(NEW_URI, {
     variables: {
       type: "BOTTLE",
-      address: address?.toString().toLowerCase(),
+      address: address?.toString().toLowerCase() ?? constants.AddressZero,
     },
     pollInterval: 10000,
   });
