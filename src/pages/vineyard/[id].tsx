@@ -311,7 +311,7 @@ const VineyardPage = () => {
                 "..."
               ) : (
                 <Button type="text" size="middle" onClick={sendBuySprinkler}>
-                  Buy Sprinkler (0.01 Ξ)
+                  Buy Sprinkler (Sale: 0 Ξ)
                 </Button>
               )}
             </>
@@ -417,7 +417,7 @@ const VineyardPage = () => {
             disabled={!farmable.canHarvest}
             onClick={sendHarvest}
           >
-            Harvest
+            Harvest Wine Bottle
           </Spaced>
         </div>
       ) : (
