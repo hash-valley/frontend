@@ -30,7 +30,7 @@ const NewProposal = () => {
   const router = useRouter();
   const addRecentTransaction = useAddRecentTransaction();
   const [cid, setCid] = useState("");
-  const [address, setAddress] = useState("");
+  const [address, setAddress] = useState(wallet?.address?.toString().toLowerCase() ?? "");
   const [bottleId, setBottleId] = useState("Token ID #");
   const [pType, setPType] = useState("Vineyards");
   const [open, setOpen] = useState(true);
@@ -88,7 +88,7 @@ const NewProposal = () => {
   const sendProposal = async () => {
     setOpen(false);
     let errors = false;
-    if (cid == "") {
+    if (cid == "" || !cid.startsWith("ipfs://") || !(cid.length == 66 || cid.length == 53)) {
       errors = true;
       setCidError(true);
     } else {
@@ -158,15 +158,17 @@ const NewProposal = () => {
       <h2>New Proposal</h2>
       <br />
       <p>
-        Enter the cid your script is hosted at{" "}
-        <i>(if its on IPFS please make sure this is functional and pinned!)</i>
+        Enter the IPFS CID your script is hosted at{" "}
+        <i>(please make sure this is functional and pinned!)</i>
       </p>
       <ProposalInput
-        placeholder="i.e. ipfs://QmVobcYpvpNfS84yEwZtjuuAFabf3nL4Gso8MyDa4QGWzu"
+        placeholder="ipfs://QmVobcYpvpNfS84yEwZtjuuAFabf3nL4Gso8MyDa4QGWzu"
         value={cid}
         onChange={(e) => setCid(e.target.value)}
       />
-      <Error hidden={open || !cidError}>Invalid cid</Error>
+      <Error hidden={open || !cidError}>
+        Invalid CID, must be a valid V0 or V1 IPFS CID and start with "ipfs://"
+      </Error>
       <br />
       <br />
       <p>Enter an address to receive secondary market royalties</p>
