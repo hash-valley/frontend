@@ -167,7 +167,7 @@ const NewProposal = () => {
         onChange={(e) => setCid(e.target.value)}
       />
       <Error hidden={open || !cidError}>
-        Invalid CID, must be a valid V0 or V1 IPFS CID and start with "ipfs://"
+        Invalid CID, must be a valid V0 or V1 IPFS CID and start with &quot;ipfs://&quot;
       </Error>
       <br />
       <br />
