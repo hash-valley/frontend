@@ -226,9 +226,10 @@ export const buySprinkler = async (wallet: any, tokenId: number) => {
   const vineyardWithSigner = withSigner(wallet);
 
   try {
-    const tx = await vineyardWithSigner.buySprinkler(tokenId, {
-      value: parseEther("0.01"),
-    });
+    const tx = await vineyardWithSigner.buySprinkler(
+      tokenId
+      // {value: parseEther("0.01")}
+    );
     return tx;
   } catch (err: any) {
     console.error(err);
