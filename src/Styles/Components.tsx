@@ -188,6 +188,11 @@ export const Tag = styled.span<{ color: string; text?: string }>`
   font-weight: bold;
 `;
 
+export const AlchemyPage = styled(Page)`
+  max-height: 82vh;
+  overflow-y: scroll;
+`;
+
 export const AlchemyBack = styled.div`
   background-color: black !important;
   background: url("/symbol_trace.svg");

@@ -7,7 +7,7 @@ import { useContext, useEffect, useState } from "react";
 import { useAccount, useSigner } from "wagmi";
 import { ModalContext } from "../Hooks/ModalProvider";
 import { useCurrSeason } from "../Hooks/useCurrSeason";
-import { AlchemyBack, CenteredSelect, Page, ListItem } from "../Styles/Components";
+import { AlchemyBack, CenteredSelect, Page, ListItem, AlchemyPage } from "../Styles/Components";
 import { castSpell } from "../Utils/alchemyContract";
 import { locations, soilTypes } from "../Utils/attributes";
 import { DAY, FIRST_SEASON_DAYS, SEASON_DAYS, SPELL } from "../Utils/constants";
@@ -139,9 +139,7 @@ const Alchemy = () => {
     return (
       <>
         <AlchemyBack />
-        <Page color="white" shadow="black">
-          <h2 style={{ color: "white" }}>Available Soon...</h2>
-        </Page>
+        <Page color="white" shadow="black"></Page>
       </>
     );
   }
@@ -149,7 +147,7 @@ const Alchemy = () => {
   return (
     <>
       <AlchemyBack />
-      <Page color="white" shadow="black">
+      <AlchemyPage color="white" shadow="black">
         <h2 style={{ color: "white" }}>
           You own {formatNum(formatEther(data?.account?.vinegarBalance ?? 0))} Vinegar and{" "}
           {formatNum(formatEther(data?.account?.grapeBalance ?? 0))} Grapes
@@ -207,7 +205,7 @@ const Alchemy = () => {
             {index < data?.vineyards.length - 1 && <hr />}
           </ListItem>
         ))}
-      </Page>
+      </AlchemyPage>
     </>
   );
 };
