@@ -7,7 +7,16 @@ import { useContext, useEffect, useState } from "react";
 import { useAccount, useSigner } from "wagmi";
 import { ModalContext } from "../Hooks/ModalProvider";
 import { useCurrSeason } from "../Hooks/useCurrSeason";
-import { AlchemyBack, CenteredSelect, Page, ListItem, AlchemyPage } from "../Styles/Components";
+import {
+  AlchemyBack,
+  CenteredSelect,
+  Page,
+  ListItem,
+  AlchemyPage,
+  AlchemyLink,
+  AlchemyHelpText,
+  AlchemyInput,
+} from "../Styles/Components";
 import { castSpell } from "../Utils/alchemyContract";
 import { locations, soilTypes } from "../Utils/attributes";
 import { DAY, FIRST_SEASON_DAYS, SEASON_DAYS, SPELL } from "../Utils/constants";
@@ -15,13 +24,15 @@ import {
   ALCHEMY_DEFENSE_QUERY,
   ALCHEMY_VITALIZE_QUERY,
   ALCHEMY_WITHER_QUERY,
+  ALCHEMY_WITHER_QUERY_SEARCH,
 } from "../Utils/queries";
 import { formatNum, toDate } from "../Utils/utils";
+import Link from "next/link";
 
-const getQuery = (spell: SPELL) => {
+const getQuery = (spell: SPELL, searchAddress: string) => {
   switch (spell) {
     case SPELL.WITHER:
-      return ALCHEMY_WITHER_QUERY;
+      return !!searchAddress ? ALCHEMY_WITHER_QUERY_SEARCH : ALCHEMY_WITHER_QUERY;
     case SPELL.DEFEND:
       return ALCHEMY_DEFENSE_QUERY;
     case SPELL.VITALIZE:
@@ -34,11 +45,11 @@ const getQuery = (spell: SPELL) => {
 const helpText = (spell: SPELL) => {
   switch (spell) {
     case SPELL.WITHER:
-      return "Targeted vineyard will die for this season in 8-16 hours. Costs Vinegar";
+      return "Targeted vineyard will die for this season in 8-16 hours. If a vineyard has not been planted there will be no effect. Can be blocked by Defend. Costs Vinegar. Price decreases as season progresses.";
     case SPELL.DEFEND:
-      return "Block a withering spell that has been cast on a vineyard. Costs Grapes";
+      return "Block a withering spell that has been cast on a vineyard. Costs Grapes. Constant price.";
     case SPELL.VITALIZE:
-      return "Double xp gain for a planted vineyard if it completes a successful harvest. Must be cast during planting season. Costs Grapes";
+      return "Double xp gain for a planted vineyard if it completes a successful harvest. Must be cast during planting season, vineyard can only be vitalized once. Costs Grapes. Constant price.";
     default:
       return "Select a spell";
   }
@@ -71,13 +82,18 @@ const percentSeason = (season: number, start: number, now: number) => {
 const Alchemy = () => {
   const [spell, setSpell] = useState<SPELL>(SPELL.WITHER);
   const [time, setTime] = useState<number>(0);
-  const { address, status } = useAccount();
+  const [searchAddress, setSearchAddress] = useState("");
+  const { address } = useAccount();
   const { data: signer } = useSigner();
   const addRecentTransaction = useAddRecentTransaction();
   const protocol = useCurrSeason();
 
-  const { loading, error, data, refetch } = useQuery(getQuery(spell), {
-    variables: { address: address?.toLowerCase(), timestamp: time.toString() },
+  const { data, error } = useQuery(getQuery(spell, searchAddress), {
+    variables: {
+      address: address?.toLowerCase(),
+      timestamp: time.toString(),
+      searchAddress,
+    },
   });
 
   useEffect(() => setTime(Math.floor(Date.now() / 1000)), [spell]);
@@ -167,15 +183,37 @@ const Alchemy = () => {
           </Select.Option>
         </CenteredSelect>
         <br />
-        <i>{helpText(spell)}</i>
+        <AlchemyHelpText>
+          <i>{helpText(spell)}</i>
+        </AlchemyHelpText>
         <br />
         <br />
 
+        {spell === SPELL.WITHER && (
+          <>
+            <p>Search for an Ethereum address to view their vineyards</p>
+            <AlchemyInput
+              placeholder="0x..."
+              value={searchAddress}
+              onChange={(e) => setSearchAddress(e.target.value)}
+            />
+          </>
+        )}
+
         {data?.vineyards.map((v: any, index: number) => (
           <ListItem key={v.tokenId}>
-            <div>
-              <b>Vineyard ID:</b> {v.tokenId}
-            </div>
+            <Link href={`/vineyard/${v.tokenId}`}>
+              <AlchemyLink className="underline">
+                <b>Vineyard #{v.tokenId}</b>
+              </AlchemyLink>
+            </Link>
+            {v.owner && (
+              <Link href={`/account/${v.owner.id}`}>
+                <AlchemyLink className="underline">
+                  <b>Owner:</b> {v.owner.id}
+                </AlchemyLink>
+              </Link>
+            )}
             {v.witherDeadline && <div>Withers at: {toDate(v.witherDeadline)}</div>}
             <div>
               <b>Location:</b> {locations[v.location].name}

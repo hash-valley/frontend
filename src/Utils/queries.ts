@@ -240,7 +240,39 @@ export const ALCHEMY_VITALIZE_QUERY = gql`
 
 export const ALCHEMY_WITHER_QUERY = gql`
   query Alchemy($address: Bytes!) {
-    vineyards(where: { witherDeadline: 0, owner_not: $address }) {
+    vineyards(
+      where: { witherDeadline: 0, owner_not: $address }
+      orderBy: xp
+      orderDirection: desc
+      first: 500
+    ) {
+      owner {
+        id
+      }
+      tokenId
+      location
+      elevation
+      soil
+      xp
+    }
+    account(id: $address) {
+      id
+      vinegarBalance
+      grapeBalance
+    }
+  }
+`;
+
+export const ALCHEMY_WITHER_QUERY_SEARCH = gql`
+  query Alchemy($address: Bytes!, $searchAddress: Bytes!) {
+    vineyards(
+      where: { witherDeadline: 0, owner_not: $address, owner: $searchAddress }
+      orderBy: xp
+      orderDirection: desc
+    ) {
+      owner {
+        id
+      }
       tokenId
       location
       elevation

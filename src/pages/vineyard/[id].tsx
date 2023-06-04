@@ -306,11 +306,11 @@ const VineyardPage = () => {
             </>
           ) : (
             <>
-              <b>No Sprinkler</b>
+              <br />
               {refetching ? (
                 "..."
               ) : (
-                <Button type="text" size="middle" onClick={sendBuySprinkler}>
+                <Button type="primary" size="middle" onClick={sendBuySprinkler}>
                   Buy Sprinkler (Sale: 0 Ξ)
                 </Button>
               )}

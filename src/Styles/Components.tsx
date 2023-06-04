@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Link from "next/link";
 import Image from "next/image";
-import { Button, Select } from "antd";
+import { Button, Input, Select } from "antd";
 
 export const RoundedImg = styled(Image)`
   border-radius: 4px;
@@ -213,4 +213,33 @@ export const AlchemyBack = styled.div`
 export const ListItem = styled.div`
   max-width: 500px;
   margin: auto;
+`;
+
+export const AlchemyLink = styled.div`
+  text-decoration: underline;
+  cursor: pointer;
+  transition-duration: 0.2s;
+
+  &:hover {
+    opacity: 0.8;
+    transition-duration: 0.2s;
+  }
+`;
+
+export const AlchemyHelpText = styled.div`
+  max-width: 560px;
+  margin: auto;
+`;
+
+export const ProposalInput = styled(Input)`
+  max-width: 32rem;
+`;
+
+export const AlchemyInput = styled(ProposalInput)`
+  max-width: 32rem;
+  margin-bottom: 3rem;
+`;
+
+export const Error = styled.p`
+  color: red;
 `;

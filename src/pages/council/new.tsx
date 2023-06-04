@@ -1,10 +1,9 @@
 import { useContext, useEffect, useState } from "react";
-import { Page, CenteredSelect } from "../../Styles/Components";
-import { Input, Button } from "antd";
+import { Page, CenteredSelect, ProposalInput, Error } from "../../Styles/Components";
+import { Button } from "antd";
 import { useQuery } from "@apollo/client";
 import { GET_BOTTLES, VINE_URIS, BOTTLE_URIS } from "../../Utils/queries";
 import Select from "rc-select";
-import styled from "styled-components";
 import { suggest } from "../../Utils/votableUri";
 import { BigNumber } from "ethers";
 import { isAddress } from "ethers/lib/utils";
@@ -15,14 +14,6 @@ import { DAY } from "../../Utils/constants";
 import { useRouter } from "next/router";
 import { pinHashToIPFS } from "../../Utils/pinata";
 import { ModalContext } from "../../Hooks/ModalProvider";
-
-const ProposalInput = styled(Input)`
-  max-width: 32rem;
-`;
-
-const Error = styled.p`
-  color: red;
-`;
 
 const NewProposal = () => {
   const wallet = useAccount();
