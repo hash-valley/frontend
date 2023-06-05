@@ -149,7 +149,7 @@ export const BOTTLE_QUERY = gql`
 
 export const GET_BOTTLES = gql`
   query GetBottles($address: Bytes!) {
-    bottles(where: { owner: $address }) {
+    bottles(where: { owner: $address, inCellar: false }) {
       tokenId
     }
   }
