@@ -328,7 +328,7 @@ const InProgress: FC<any> = ({ uri, bottles, vineyards }) => {
           </>
         ) : completedAt > now ? (
           passing ? (
-            <Spaced type="default" shape="round" onClick={sendComplete}>
+            <Spaced type="primary" shape="round" onClick={sendComplete}>
               Finalize
             </Spaced>
           ) : (
