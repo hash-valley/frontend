@@ -62,7 +62,7 @@ const BottlePage = () => {
     variables: { id: id?.toString() },
     onCompleted: async (_data: any) => {
       if (_data.bottle) {
-        getEns(data?.bottle?.owner.id).then((x) => {
+        getEns(_data?.bottle?.owner.id).then((x) => {
           if (x) setEns(x);
         });
         setNullData(false);

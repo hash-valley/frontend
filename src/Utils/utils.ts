@@ -1,6 +1,11 @@
 import { JsonRpcProvider } from "@ethersproject/providers";
 import { bottleEras, bottleTypes } from "./attributes";
 import { DAY } from "./constants";
+import { BigNumber } from "ethers";
+
+const bigNumberYear = BigNumber.from("31536000");
+const bigNumberDay = BigNumber.from("86400");
+const bigNumberHour = BigNumber.from("3600");
 
 const mainnetProvider = new JsonRpcProvider(process.env.NEXT_PUBLIC_MAINNET_RPC);
 
@@ -13,17 +18,21 @@ export const formatNum = (num: string, decimals: number = 3) => {
 };
 
 export const secondsToString = (seconds: string): string => {
-  let bigSeconds = BigInt(seconds);
-  const years = bigSeconds / BigInt(31536000);
-  if (years > 0) {
-    bigSeconds %= years;
+  let bigSeconds = BigNumber.from(seconds);
+  const years = bigSeconds.div(bigNumberYear);
+  if (years.gt(0)) {
+    bigSeconds = bigSeconds.mod(bigNumberYear);
   }
-  const days = bigSeconds / BigInt(86400);
-  if (days > 0) {
-    bigSeconds %= days;
+  const days = bigSeconds.div(bigNumberDay);
+  if (days.gt(0)) {
+    bigSeconds = bigSeconds.mod(bigNumberDay);
   }
-  const hours = bigSeconds / BigInt(3600);
-  return `${years} years, ${days} days, ${hours} hours`;
+  const hours = bigSeconds.div(bigNumberHour);
+  if (years.gt(0)) {
+    return `${years.toString()} years, ${days.toString()} days, ${hours.toString()} hours`;
+  } else {
+    return `${days.toString()} days, ${hours.toString()} hours`;
+  }
 };
 
 export const hours = (time: number): string => `${Math.floor(time / 3600)}`;
