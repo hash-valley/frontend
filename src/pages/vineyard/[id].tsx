@@ -36,6 +36,7 @@ import { useAccount, useSigner } from "wagmi";
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
 import { getFarmingStatsMulti } from "../../Utils/multicall";
 import { ModalContext } from "../../Hooks/ModalProvider";
+import LoadingSpinner from "../../Components/LoadingSpinner";
 
 const VineyardPage = () => {
   const { address } = useAccount();
@@ -239,7 +240,7 @@ const VineyardPage = () => {
       <h2>Vineyard: {id}</h2>
       <br />
       <h3>
-        <i>Loading</i>
+        <LoadingSpinner />
       </h3>
     </Page>
   ) : nullData ? (

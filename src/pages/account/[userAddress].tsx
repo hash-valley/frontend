@@ -24,6 +24,7 @@ import { useAccount, useSigner } from "wagmi";
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
 import { getFarmingStatsMulti } from "../../Utils/multicall";
 import { ModalContext } from "../../Hooks/ModalProvider";
+import LoadingSpinner from "../../Components/LoadingSpinner";
 
 interface Mults {
   canWater: number;
@@ -140,7 +141,7 @@ const AccountPage = () => {
     <Page>
       {loading || loadingContract ? (
         <h3>
-          <i>Loading</i>
+          <LoadingSpinner />
         </h3>
       ) : nullData ? (
         <h2>No assets found for this account</h2>

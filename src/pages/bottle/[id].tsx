@@ -37,6 +37,7 @@ import { useAccount, useSigner } from "wagmi";
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
 import { formatEther } from "ethers/lib/utils";
 import { ModalContext } from "../../Hooks/ModalProvider";
+import LoadingSpinner from "../../Components/LoadingSpinner";
 
 const BottlePage = () => {
   const { status, address } = useAccount();
@@ -188,7 +189,7 @@ const BottlePage = () => {
       <h2>Bottle: {id}</h2>
       <br />
       <h3>
-        <i>Loading</i>
+        <LoadingSpinner />
       </h3>
     </Page>
   ) : nullData ? (

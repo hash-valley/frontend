@@ -5,6 +5,7 @@ import { Page, BigLink } from "../../Styles/Components";
 import Link from "next/link";
 import { useAccount } from "wagmi";
 import { constants } from "ethers";
+import LoadingSpinner from "../../Components/LoadingSpinner";
 
 const VineBoard = () => {
   const { address } = useAccount();
@@ -19,7 +20,7 @@ const VineBoard = () => {
   return loading ? (
     <Page>
       <h4>
-        <i>Loading</i>
+        <LoadingSpinner />
       </h4>
     </Page>
   ) : data?.newUris.length > 1 ? (
