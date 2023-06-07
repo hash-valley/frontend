@@ -387,7 +387,9 @@ const VineyardPage = () => {
           type="primary"
           shape="round"
           onClick={sendHarvestGrapes}
-          disabled={farmable.canPlant || season.season === 0}
+          disabled={
+            farmable.canPlant || season.season === 0 || (waterStatus <= 0 && !farmable.canPlant)
+          }
         >
           Harvest Grapes
         </Spaced>
