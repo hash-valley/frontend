@@ -554,7 +554,7 @@ const About = () => {
             <a href="https://github.com/hash-valley" target="_blank" rel="noreferrer">
               codebase
             </a>{" "}
-            (we're open source!) to see more. Happy vinting!
+            (we&apos;re open source!) to see more. Happy vinting!
           </SubSubtitle>
           <BumpedFlourish>
             <Image src="/vine_svgs/flourish.svg" alt="flourish" height={80} width={300} />

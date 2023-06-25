@@ -209,6 +209,7 @@ const AccountPage = () => {
                     src={`/thumbnails/vineyards/${token.location}.png`}
                     height={120}
                     width={120}
+                    alt="thumbnail"
                   />
                   <div>TokenId: {token.tokenId}</div>
                   <div>Location: {locations[token.location].name}</div>
@@ -238,6 +239,7 @@ const AccountPage = () => {
                     }
                     height={120}
                     width={120}
+                    alt="thumbnail"
                   />
                   <div>TokenId: {token.tokenId}</div>
                   <div>Type: {getBottleClass(token.attributes)}</div>

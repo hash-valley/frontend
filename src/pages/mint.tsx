@@ -153,6 +153,7 @@ const MintContainer = () => {
                     height={120}
                     width={120}
                     unoptimized={true}
+                    alt="thumbnail"
                   />
                   {index <= protocol.locales ? (
                     <>
@@ -174,6 +175,7 @@ const MintContainer = () => {
                     height={120}
                     width={120}
                     unoptimized={true}
+                    alt="thumbnail"
                   />
                   <div>{loc.name}</div>
                   <div>{loc.climate.name}</div>
@@ -225,7 +227,7 @@ const MintContainer = () => {
             <GridContainer>
               {soilTypes.map((_soil, index) => (
                 <GridItem selected={soil === index} key={_soil.name} onClick={() => setSoil(index)}>
-                  <RoundedImg src={`/thumbnails/dirt/${index}.png`} height={130} width={120} />
+                  <RoundedImg src={`/thumbnails/dirt/${index}.png`} height={130} width={120} alt="thumbnail" />
                   <div>{_soil.name}</div>
                 </GridItem>
               ))}
