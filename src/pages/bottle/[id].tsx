@@ -268,7 +268,7 @@ const BottlePage = () => {
         <div>
           Burnt to revive{" "}
           <GreyLink href={"/bottle/" + parseInt(data.bottle.rejuvenatedTo.id).toString()}>
-            <a>Bottle #{parseInt(data.bottle.rejuvenatedTo.id)}</a>
+            Bottle #{parseInt(data.bottle.rejuvenatedTo.id)}
           </GreyLink>
         </div>
       )}
@@ -276,7 +276,7 @@ const BottlePage = () => {
         <div>
           Rejuvenated from{" "}
           <GreyLink href={"/bottle/" + parseInt(data.bottle.rejuvenatedFrom.id).toString()}>
-            <a>Bottle #{parseInt(data.bottle.rejuvenatedFrom.id)}</a>
+            Bottle #{parseInt(data.bottle.rejuvenatedFrom.id)}
           </GreyLink>
         </div>
       )}
@@ -284,7 +284,7 @@ const BottlePage = () => {
         <div>
           Harvested from{" "}
           <GreyLink href={"/vineyard/" + parseInt(data.bottle.from.id).toString()}>
-            <a>Vineyard #{parseInt(data.bottle.from.id)}</a>
+            Vineyard #{parseInt(data.bottle.from.id)}
           </GreyLink>
         </div>
       )}
@@ -348,9 +348,7 @@ const BottlePage = () => {
         <p>
           Owned by{" "}
           <GreyLink href={"/account/" + data.bottle.owner.id}>
-            <a>
-              {ensData === undefined ? "..." : ensData === null ? data.bottle.owner.id : ensData}
-            </a>
+            {ensData === undefined ? "..." : ensData === null ? data.bottle.owner.id : ensData}
           </GreyLink>
         </p>
       ) : null}
