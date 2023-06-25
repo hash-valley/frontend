@@ -427,9 +427,7 @@ const VineyardPage = () => {
         <p>
           Owned by{" "}
           <GreyLink href={"/account/" + data.vineyard.owner.id}>
-            <a>
-              {ensData === undefined ? "..." : ensData === null ? data.vineyard.owner.id : ensData}
-            </a>
+            {ensData === undefined ? "..." : ensData === null ? data.vineyard.owner.id : ensData}
           </GreyLink>
         </p>
       )}
@@ -453,7 +451,7 @@ const VineyardPage = () => {
           {data.vineyard.bottles.map((bottle: any) => (
             <div key={bottle.id}>
               <GreyLink href={"/bottle/" + parseInt(bottle.id).toString()}>
-                <a>Bottle #{parseInt(bottle.id)}</a>
+                Bottle #{parseInt(bottle.id)}
               </GreyLink>
             </div>
           ))}

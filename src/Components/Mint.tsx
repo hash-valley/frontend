@@ -149,10 +149,8 @@ const Mint: FC<MintProps> = ({ ownPage }) => {
 
       <div>
         <PGF>
-          <GreyLink href="https://medium.com/ethereum-optimism/retroactive-public-goods-funding-33c9b7d00f0c">
-            <a target="_blank" rel="noreferrer">
+          <GreyLink href="https://medium.com/ethereum-optimism/retroactive-public-goods-funding-33c9b7d00f0c" target="_blank" rel="noreferrer">
               🔥{pgfPercent(minted, max)}% &#10140; {pgfPercent(minted + 1, max)}% donated to PGF 🔥
-            </a>
           </GreyLink>
         </PGF>
       </div>
