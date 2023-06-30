@@ -4,7 +4,7 @@ import { Button, Select } from "antd";
 import { BigNumber } from "ethers";
 import { formatEther, parseEther } from "ethers/lib/utils";
 import { useContext, useEffect, useState } from "react";
-import { useAccount, useSigner } from "wagmi";
+import { useAccount, useWalletClient } from "wagmi";
 import { ModalContext } from "../Hooks/ModalProvider";
 import { useCurrSeason } from "../Hooks/useCurrSeason";
 import {
@@ -84,11 +84,11 @@ const Alchemy = () => {
   const [time, setTime] = useState<number>(0);
   const [searchAddress, setSearchAddress] = useState("");
   const { address } = useAccount();
-  const { data: signer } = useSigner();
+  const { data: walletClient } = useWalletClient()
   const addRecentTransaction = useAddRecentTransaction();
   const protocol = useCurrSeason();
 
-  const { data, error } = useQuery(getQuery(spell, searchAddress), {
+  const { data } = useQuery(getQuery(spell, searchAddress), {
     variables: {
       address: address?.toLowerCase(),
       timestamp: time.toString(),
@@ -101,7 +101,7 @@ const Alchemy = () => {
 
   const cast = async (target: number) => {
     openModal();
-    const tx = await castSpell(signer, target, spell);
+    const tx = await castSpell(walletClient, target, spell);
     if (!tx) {
       closeModal();
       return;

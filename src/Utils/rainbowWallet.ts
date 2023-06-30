@@ -1,10 +1,11 @@
-import { getDefaultWallets } from "@rainbow-me/rainbowkit";
-import { chain, configureChains, createClient } from "wagmi";
-import { chainId, providerUrl } from "../Utils/constants";
+import { configureChains, createConfig } from "wagmi";
+import { providerUrl } from "../Utils/constants";
 import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
+import { createPublicClient, http } from "viem";
+import { optimism } from "wagmi/chains";
 
-export const { chains, provider, webSocketProvider } = configureChains(
-  [chainId === 10 ? chain.optimism : chainId === 420 ? chain.optimismGoerli : chain.hardhat],
+export const { chains, publicClient, webSocketPublicClient } = configureChains(
+  [optimism],
   [
     jsonRpcProvider({
       rpc: (_) => ({
@@ -15,14 +16,10 @@ export const { chains, provider, webSocketProvider } = configureChains(
   ]
 );
 
-const { connectors } = getDefaultWallets({
-  appName: "Hash Valley Winery",
-  chains,
-});
-
-export const wagmiClient = createClient({
+export const wagmiClient = createConfig({
   autoConnect: true,
-  connectors,
-  provider,
-  webSocketProvider,
+  publicClient: createPublicClient({
+    chain: optimism,
+    transport: http(),
+  }),
 });
