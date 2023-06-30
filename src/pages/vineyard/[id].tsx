@@ -93,7 +93,7 @@ const VineyardPage = () => {
   useEffect(() => {
     let myInterval: any;
     const fetchBalance = async () => {
-      if (data.vineyard) {
+      if (data.vineyard && id) {
         setNullData(false);
         setStreak(await getStreak(Number(id)));
         const farmableParams = (await getFarmingStatsMulti([parseInt(id.toString())]))[0];

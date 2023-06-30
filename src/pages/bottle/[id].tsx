@@ -59,10 +59,10 @@ const BottlePage = () => {
   const cellarStuff: any = useRef(null);
   const [ensData, setEns] = useState<null | string>();
 
-  const { loading, error, data, refetch } = useQuery(BOTTLE_QUERY, {
+  const { loading, data, refetch } = useQuery(BOTTLE_QUERY, {
     variables: { id: id?.toString() },
     onCompleted: async (_data: any) => {
-      if (_data.bottle) {
+      if (_data.bottle && id) {
         getEns(_data?.bottle?.owner.id).then((x) => {
           if (x) setEns(x);
         });

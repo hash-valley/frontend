@@ -9,7 +9,7 @@ import LoadingSpinner from "../../Components/LoadingSpinner";
 
 const VineBoard = () => {
   const { address } = useAccount();
-  const { loading, error, data } = useQuery(NEW_URI, {
+  const { loading, data } = useQuery(NEW_URI, {
     variables: {
       type: "VINEYARD",
       address: address?.toString().toLowerCase() ?? constants.AddressZero,
