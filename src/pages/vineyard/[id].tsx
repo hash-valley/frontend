@@ -301,22 +301,21 @@ const VineyardPage = () => {
         )}
         <div>
           {data.vineyard.sprinklerExpires &&
-          Number(data.vineyard.sprinklerExpires) > Date.now() / 1000 ? (
-            <>
-              <b>Sprinkler expires:</b> {toDate(data.vineyard.sprinklerExpires)}
-            </>
-          ) : (
-            <>
-              <br />
-              {refetching ? (
-                "..."
-              ) : (
-                <Button type="primary" size="middle" onClick={sendBuySprinkler}>
-                  Buy Sprinkler (Sale: 0 Ξ)
-                </Button>
-              )}
-            </>
-          )}
+            Number(data.vineyard.sprinklerExpires) > Date.now() / 1000 && (
+              <>
+                <b>Sprinkler expires:</b> {toDate(data.vineyard.sprinklerExpires)}
+              </>
+            )}
+          <>
+            <br />
+            {refetching ? (
+              "..."
+            ) : (
+              <Button type="primary" size="middle" onClick={sendBuySprinkler}>
+                Buy Sprinkler - add 3 months (Sale: 0 Ξ)
+              </Button>
+            )}
+          </>
         </div>
         <br />
 
@@ -427,7 +426,7 @@ const VineyardPage = () => {
         <p>
           Owned by{" "}
           <GreyLink href={"/account/" + data.vineyard.owner.id}>
-              {ensData === undefined ? "..." : ensData === null ? data.vineyard.owner.id : ensData}
+            {ensData === undefined ? "..." : ensData === null ? data.vineyard.owner.id : ensData}
           </GreyLink>
         </p>
       )}

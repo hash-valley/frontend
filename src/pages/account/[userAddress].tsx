@@ -54,17 +54,17 @@ const AccountPage = () => {
       if (_data.account) {
         setNullData(false);
 
-        const farmables = await getFarmingStatsMulti(
+        const _farmables = await getFarmingStatsMulti(
           _data.account.vineyards.map((v: any) => v.tokenId)
         );
-        setFarmables(farmables);
+        setFarmables(_farmables);
 
         let multAccumulator: Mults = {
           canWater: 0,
           canPlant: 0,
           canHarvest: 0,
         };
-        farmables.forEach((e: any) => {
+        _farmables.forEach((e: any) => {
           multAccumulator.canWater += e.canWater ? 1 : 0;
           multAccumulator.canPlant += e.canPlant ? 1 : 0;
           multAccumulator.canHarvest += e.canHarvest ? 1 : 0;
