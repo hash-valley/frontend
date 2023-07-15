@@ -248,7 +248,7 @@ const MintContainer = () => {
             <i>
               Your vineyard is dynamic and will develop as you care for it over time.
               <br />
-              Voting in the council will unlock new art updates
+              Voting in the council will unlock new art updates (currently rendering V1)
             </i>
           </p>
           <Sign>
