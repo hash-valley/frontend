@@ -82,6 +82,7 @@ function MyApp({ Component, pageProps }) {
     <ApolloProvider client={apolloClient}>
       <WagmiConfig client={wagmiClient}>
         <RainbowKitProvider
+          coolMode
           chains={chains}
           showRecentTransactions={true}
           appInfo={{
