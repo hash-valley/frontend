@@ -102,7 +102,6 @@ const Account = () => {
               alt="logo"
               height={50}
               width={50}
-              unoptimized={true}
               loading="eager"
               style={{ borderRadius: "15%" }}
             />

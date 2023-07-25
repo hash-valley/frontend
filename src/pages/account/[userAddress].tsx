@@ -206,7 +206,7 @@ const AccountPage = () => {
                   onClick={() => router.push(`/vineyard/${token.tokenId}`)}
                 >
                   <RoundedImg
-                    src={`/thumbnails/vineyards/${token.location}.png`}
+                    src={`/thumbnails/vineyards/${token.location}.jpg`}
                     height={120}
                     width={120}
                     alt="thumbnail"
@@ -234,8 +234,8 @@ const AccountPage = () => {
                   <RoundedImg
                     src={
                       token.attributes[0] === 3
-                        ? `/thumbnails/bottles/${token.attributes[0]}-${token.attributes[1]}.png`
-                        : `/thumbnails/bottles/${token.attributes[0]}.png`
+                        ? `/thumbnails/bottles/${token.attributes[0]}-${token.attributes[1]}.jpg`
+                        : `/thumbnails/bottles/${token.attributes[0]}.jpg`
                     }
                     height={120}
                     width={120}

@@ -147,8 +147,8 @@ const MintContainer = () => {
                   <RoundedImg
                     src={
                       index <= protocol.locales
-                        ? `/thumbnails/vineyards/${index}.png`
-                        : `/thumbnails/vineyards/question.png`
+                        ? `/thumbnails/vineyards/${index}.jpg`
+                        : `/thumbnails/vineyards/question.jpg`
                     }
                     height={120}
                     width={120}
@@ -171,7 +171,7 @@ const MintContainer = () => {
               ) : (
                 <GridItem key={loc.name} onClick={() => selectCity(index, false)}>
                   <RoundedImg
-                    src={`/thumbnails/vineyards/${index}.png`}
+                    src={`/thumbnails/vineyards/${index}.jpg`}
                     height={120}
                     width={120}
                     unoptimized={true}
