@@ -53,7 +53,7 @@ const Info4 = styled(Page)`
 `;
 
 const MintInfo = styled(Page)`
-  background-image: url("blurbg.png");
+  background-image: url("blurbg.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
@@ -272,7 +272,7 @@ const BorderDiv = styled.div`
 `;
 
 const BackgroundPanel = styled(Page)`
-  background-image: url("italy_vector.png");
+  background-image: url("italy_vector.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
@@ -392,7 +392,7 @@ const About = () => {
           <CenteredDiv>
             <ImageBox>
               <FunImage
-                src="/bottles-patio.png"
+                src="/bottles-patio.jpg"
                 alt="logo"
                 height={600}
                 width={600}
@@ -410,7 +410,7 @@ const About = () => {
         <CustomGridContainer2>
           <CenteredDiv>
             <ImageBox2>
-              <FunImage src="/magic.png" alt="logo" width={600} height={600} loading="eager" />
+              <FunImage src="/magic.jpg" alt="logo" width={600} height={600} loading="eager" />
             </ImageBox2>
           </CenteredDiv>
           <div>
@@ -471,7 +471,7 @@ const About = () => {
           </div>
           <CenteredDiv>
             <ImageBox3>
-              <FunImage src="/pgf2.png" alt="PGF" height={333} width={500} loading="eager" />
+              <FunImage src="/pgf.jpg" alt="PGF" height={333} width={500} loading="eager" />
             </ImageBox3>
           </CenteredDiv>
         </CustomGridContainer2>

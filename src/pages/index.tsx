@@ -63,7 +63,7 @@ const Chevron = styled.div`
 const Hero = styled(Page)`
   margin-top: -16px;
   padding-top: 200px;
-  background-image: url("landscape.png");
+  background-image: url("landscape.jpg");
   background-opacity: 50%;
   background-repeat: no-repeat;
   background-size: cover;
