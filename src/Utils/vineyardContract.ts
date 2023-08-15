@@ -120,12 +120,8 @@ export const fetchTokenParams = async (tokenId: number): Promise<TokenParams> =>
 // };
 
 export const untilCanWater = async (tokenId: number): Promise<number> => {
-  const [minTime, watered] = await Promise.all([
-    viewVineyardContract.minWaterTime(tokenId),
-    viewVineyardContract.watered(tokenId),
-  ]);
-  const now = Math.floor(Date.now() / 1000);
-  return Number(watered) + Number(minTime) - now;
+  const minTime = await viewVineyardContract.minWaterTime(tokenId);
+  return Number(minTime);
 };
 
 export const canWaterUntil = async (tokenId: number): Promise<number> => {
