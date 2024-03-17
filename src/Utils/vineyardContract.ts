@@ -44,6 +44,7 @@ export interface TokenParams {
 }
 
 export interface Farmable {
+  isDead: boolean;
   canWater: boolean;
   canPlant: boolean;
   canHarvest: boolean;

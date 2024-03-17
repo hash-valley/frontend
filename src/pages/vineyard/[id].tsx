@@ -54,6 +54,7 @@ const VineyardPage = () => {
   const [ensData, setEns] = useState<undefined | null | string>();
 
   const [farmable, setFarmable] = useState<Farmable>({
+    isDead: false,
     canPlant: false,
     canWater: false,
     canHarvest: false,
@@ -62,10 +63,11 @@ const VineyardPage = () => {
   const { loading, error, data, refetch } = useQuery(VINEYARD_QUERY, {
     variables: { id: id?.toString() },
     onCompleted: (_data) => {
-      if (_data?.vineyard?.owner.id)
+      if (_data?.vineyard?.owner.id) {
         getEns(_data?.vineyard?.owner.id).then((x) => {
           setEns(x);
         });
+      }
     },
   });
 
@@ -100,7 +102,7 @@ const VineyardPage = () => {
         setFarmable(farmableParams);
 
         let waterCountdown: number = -1;
-        if (!farmableParams.canPlant) {
+        if (!farmableParams.canPlant && !farmableParams.isDead) {
           if (farmableParams.canWater) {
             waterCountdown = await canWaterUntil(Number(id));
           } else {
@@ -284,7 +286,7 @@ const VineyardPage = () => {
         <div>
           <b>Streak:</b> {streak}
         </div>
-        {data.vineyard.vitalized && (
+        {data.vineyard.vitalized && !farmable.isDead && (
           <>
             <Tag color="green">Vitalized</Tag>
             <br />
@@ -387,7 +389,10 @@ const VineyardPage = () => {
           shape="round"
           onClick={sendHarvestGrapes}
           disabled={
-            farmable.canPlant || season.season === 0 || (waterStatus <= 0 && !farmable.canPlant)
+            farmable.canPlant ||
+            season.season === 0 ||
+            (waterStatus <= 0 && !farmable.canPlant) ||
+            data.vineyard.seasonsHarvested.includes(season.season)
           }
         >
           Harvest Grapes
