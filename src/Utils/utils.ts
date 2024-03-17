@@ -1,13 +1,12 @@
-import { JsonRpcProvider } from "@ethersproject/providers";
 import { bottleEras, bottleTypes } from "./attributes";
 import { DAY } from "./constants";
-import { BigNumber } from "ethers";
+import { BigNumber, providers } from "ethers";
 
 const bigNumberYear = BigNumber.from("31536000");
 const bigNumberDay = BigNumber.from("86400");
 const bigNumberHour = BigNumber.from("3600");
 
-const mainnetProvider = new JsonRpcProvider(process.env.NEXT_PUBLIC_MAINNET_RPC);
+const mainnetProvider = new providers.JsonRpcProvider(process.env.NEXT_PUBLIC_MAINNET_RPC);
 
 export const getEns = async (address: string): Promise<string | null> =>
   await mainnetProvider.lookupAddress(address);

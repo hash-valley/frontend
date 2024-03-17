@@ -13,6 +13,7 @@
     "gsap": "^3.11.3",
     "next": "^13.4.7",
     "next-plugin-antd-less": "^1.8.0",
+    "rc-select": "^14.13.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-modal": "^3.16.1",
